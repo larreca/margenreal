@@ -1,37 +1,25 @@
-const V11 = {
-  version: "11.0-alpha",
-  bcMinStock: 30,
-  b2bMinOrder: 300000,
-  academy: [
-    ["K-Beauty desde cero","Inicio"],
-    ["Cómo recomendar una rutina","Inicio"],
-    ["Ingredientes que debes conocer","Vendedor"],
-    ["Vender más sin descontar","Vendedor"],
-    ["Cómo exhibir K-Beauty","Especialista"],
-    ["Instagram, TikTok y WhatsApp","Especialista"],
-    ["Comprar y controlar stock","Negocio"],
-    ["Venta responsable de cosméticos","Negocio"]
-  ]
-};
-
+const V11={version:"11.1-alpha",bcMinStock:30,b2bMinOrder:300000,academy:[["K-Beauty desde cero","Inicio"],["Cómo recomendar una rutina","Inicio"],["Ingredientes que debes conocer","Vendedor"],["Vender más sin descontar","Vendedor"],["Cómo exhibir K-Beauty","Especialista"],["Instagram, TikTok y WhatsApp","Especialista"],["Comprar y controlar stock","Negocio"],["Venta responsable de cosméticos","Negocio"]]};
+const KEY="yeppoB2BV11State";
+let state={clients:[],tasks:[],interactions:[],pipeline:[],imports:[],notes:""};
 function money(n){return new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(Number(n)||0)}
 function el(id){return document.getElementById(id)}
-function renderAcademy(){
-  el("academy").innerHTML=V11.academy.map((m,i)=>`<article class="module"><small>MÓDULO ${i+1} · ${m[1]}</small><h3>${m[0]}</h3><p>Microlección práctica + misión comercial aplicada al negocio.</p><button onclick="alert('La asignación a clientes se conecta en la siguiente migración de datos V10 → V11.')">Asignar</button></article>`).join("");
-}
-function aiScript(){
- const goal=el("goal").value, channel=el("channel").value;
- const scripts={
- "Recompra":"Quería revisar contigo cómo viene tu stock y anticiparnos a la próxima reposición. Podemos priorizar lo que más te rota y evitar sobrecargar el pedido.",
- "Reactivar":"Hace un tiempo que no hacemos reposición. Antes de ofrecerte algo prefiero entender qué cambió y ver si podemos armar un regreso pequeño y de bajo riesgo.",
- "Crecer":"Veo una oportunidad para ampliar tu surtido sin desordenar lo que ya funciona. Podemos revisar uno o dos productos complementarios con sentido comercial.",
- "2da compra":"Quería saber cómo te fue con la primera compra y qué productos se movieron mejor. Con eso podemos afinar una segunda compra más segura."
- };
- el("aiout").textContent=(channel==="Llamada"?"APERTURA: ":"Hola, ¿cómo estás? ")+scripts[goal]+" ¿Te parece si lo revisamos?";
-}
-function saveNote(){localStorage.setItem("yeppoV11Notes",el("notes").value);el("saved").textContent="Guardado";}
-function backup(){
- const blob=new Blob([JSON.stringify({version:V11.version,notes:el("notes").value,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"});
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="yeppo-b2b-v11-backup.json";a.click();
-}
-document.addEventListener("DOMContentLoaded",()=>{renderAcademy();el("notes").value=localStorage.getItem("yeppoV11Notes")||"";});
+function load(){try{state={...state,...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch(e){}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function daysSince(d){if(!d)return null;return Math.floor((Date.now()-new Date(d).getTime())/86400000)}
+function priority(c){const d=daysSince(c.lastPurchase);if(c.orders===1)return"P1";if(d!=null&&c.cycle&&d>c.cycle*1.25)return"P1";if(d!=null&&c.cycle&&d>c.cycle*.85)return"P2";return"P3"}
+function renderKPIs(){const cs=state.clients, b2b=cs.filter(c=>c.isB2B),p1=b2b.filter(c=>priority(c)==="P1");el("kpis").innerHTML=[["Clientes",b2b.length],["P1 hoy",p1.length],["Tareas pendientes",state.tasks.filter(t=>!t.done).length],["Gestiones",state.interactions.length],["$ ganado",money(state.interactions.reduce((a,x)=>a+(+x.won||0),0))]].map(x=>`<div class="metric"><small>${x[0]}</small><b>${x[1]}</b></div>`).join("")}
+function renderClients(){const q=(el("search")?.value||"").toLowerCase();const rows=state.clients.filter(c=>c.isB2B&&(!q||JSON.stringify(c).toLowerCase().includes(q))).sort((a,b)=>priority(a).localeCompare(priority(b))).slice(0,500);el("clientRows").innerHTML=rows.map(c=>`<tr onclick="openClient('${c.id}')"><td><b>${esc(c.name)}</b><br><small>${esc(c.email||c.phone||"")}</small></td><td><span class="pill ${priority(c)}">${priority(c)}</span></td><td>${c.orders||0}</td><td>${c.lastPurchase||"—"}</td><td>${c.cycle?c.cycle+" días":"Sin patrón"}</td><td>${money(c.total||0)}</td><td>${esc(c.b2bReason||"Base B2B")}</td></tr>`).join("")}
+function openClient(id){const c=state.clients.find(x=>x.id==id);if(!c)return;el("clientPanel").classList.add("open");el("clientDetail").innerHTML=`<button class="close" onclick="el('clientPanel').classList.remove('open')">×</button><h2>${esc(c.name)}</h2><p><b>Prioridad:</b> ${priority(c)} · <b>Pedidos:</b> ${c.orders||0} · <b>Venta:</b> ${money(c.total||0)}</p><p><b>Última compra:</b> ${c.lastPurchase||"—"} · <b>Ciclo:</b> ${c.cycle?c.cycle+" días":"sin patrón suficiente"}</p><p><b>Señal B2B:</b> ${esc(c.b2bReason||"Base B2B")}</p><label>Resultado de contacto</label><select id="result"><option>Contactado</option><option>Respondió</option><option>Propuesta enviada</option><option>Pedido realizado</option><option>Sin respuesta</option></select><label>Monto ganado</label><input id="won" type="number" value="0"><label>Nota</label><textarea id="contactNote"></textarea><button onclick="registerContact('${c.id}')">Registrar gestión</button><button class="soft" onclick="prepareClientAI('${c.id}')">Preparar contacto IA</button><div id="clientAI" class="aiout"></div>`}
+function registerContact(id){state.interactions.unshift({id:crypto.randomUUID(),clientId:id,date:new Date().toISOString(),result:el("result").value,won:+el("won").value||0,note:el("contactNote").value});save();renderAll();alert("Gestión registrada")}
+function prepareClientAI(id){const c=state.clients.find(x=>x.id==id),p=priority(c),d=daysSince(c.lastPurchase);let why=p==="P1"?"prioridad alta":p==="P2"?"cerca de su recompra":"seguimiento preventivo";el("clientAI").textContent=`Objetivo: ${c.orders===1?"activar segunda compra":p==="P1"?"recompra/reactivación":"crecimiento"}. Motivo: ${why}${d!=null?", "+d+" días desde la última compra":""}.\n\nGuion: Hola, ¿cómo estás? Quería revisar cómo viene tu stock y qué productos te funcionaron mejor. Podemos preparar una reposición enfocada en rotación, evitando sobrecargar el pedido. ¿Te parece si lo vemos?`}
+function renderFunnel(){const i=state.interactions;const n=k=>new Set(i.filter(x=>x.result===k).map(x=>x.clientId)).size;el("funnel").innerHTML=[["Contactados",new Set(i.map(x=>x.clientId)).size],["Respondieron",n("Respondió")],["Propuestas",n("Propuesta enviada")],["Pedidos",n("Pedido realizado")],["$ generado",money(i.reduce((a,x)=>a+(+x.won||0),0))]].map(x=>`<div class="metric"><small>${x[0]}</small><b>${x[1]}</b></div>`).join("")}
+function renderAcademy(){el("academy").innerHTML=V11.academy.map((m,i)=>`<article class="module"><small>MÓDULO ${i+1} · ${m[1]}</small><h3>${m[0]}</h3><p>Microlección + misión aplicada al negocio.</p><button onclick="alert('Selecciona un cliente desde Base maestra para asociar el seguimiento de Academia.')">Asignar</button></article>`).join("")}
+function normalizeRow(r,idx){const g=(...ks)=>{for(const k of Object.keys(r)){if(ks.some(x=>k.toLowerCase().includes(x)))return r[k]}return""};const total=+(String(g("total","monto","venta")).replace(/[^0-9.-]/g,""))||0;const channel=String(g("canal","channel"));const tags=String(g("tag","etiqueta"));const reason=total>=V11.b2bMinOrder?"Pedido ≥ $300.000":/astro|b2b|mayor|por mayor/i.test(channel+" "+tags)?"Canal/etiqueta B2B":"Importado";return{id:String(g("id","cliente id","customer id")||"imp-"+idx+"-"+Date.now()),name:String(g("nombre","cliente","customer","name")||"Sin nombre"),email:String(g("email","correo")),phone:String(g("telefono","phone")),orders:+g("pedidos","orders")||1,lastPurchase:String(g("ultima compra","fecha","last purchase")).slice(0,10),cycle:+g("ciclo","recompra","cycle")||0,total,b2bReason:reason,isB2B:total>=V11.b2bMinOrder||/astro|b2b|mayor|por mayor/i.test(channel+" "+tags)||/b2b/i.test(reason)}}
+function parseCSV(text){const lines=text.replace(/\r/g,"").split("\n").filter(Boolean),h=lines.shift().split(",").map(x=>x.trim());return lines.map(l=>{const v=l.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)||[];return Object.fromEntries(h.map((k,i)=>[k,(v[i]||"").replace(/^"|"$/g,"").replace(/""/g,'"')]))})}
+function previewImport(inp){const f=inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const raw=f.name.endsWith(".json")?JSON.parse(rd.result):parseCSV(rd.result);const rows=(Array.isArray(raw)?raw:raw.clients||[]).map(normalizeRow);window.pendingImport=rows;el("importPreview").innerHTML=`<b>${rows.length}</b> filas · <b>${rows.filter(x=>x.isB2B).length}</b> señales B2B <button onclick="applyImport()">Aplicar importación</button>`}catch(e){el("importPreview").textContent="No pude interpretar el archivo: "+e.message}};rd.readAsText(f)}
+function applyImport(){const rows=window.pendingImport||[];const map=new Map(state.clients.map(c=>[c.id,c]));rows.forEach(c=>map.set(c.id,{...(map.get(c.id)||{}),...c}));state.clients=[...map.values()];state.imports.unshift({date:new Date().toISOString(),rows:rows.length});save();renderAll();el("importPreview").textContent="Importación aplicada. Historial manual conservado."}
+function backup(){const b=new Blob([JSON.stringify({...state,version:V11.version,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="yeppo-b2b-v11-backup.json";a.click()}
+function restore(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state={...state,...JSON.parse(r.result)};save();renderAll();alert("Backup restaurado")}catch(e){alert("Backup inválido")}};r.readAsText(f)}
+function renderAll(){renderKPIs();renderClients();renderFunnel();renderAcademy()}
+document.addEventListener("DOMContentLoaded",()=>{load();renderAll()});
