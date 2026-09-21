@@ -214,3 +214,13 @@ body{background:radial-gradient(circle at 48% 0,#f0f1ff 0,transparent 28%),#fbfc
 .shopifyLiveStatus{position:fixed;right:16px;bottom:16px;z-index:9997;width:min(360px,calc(100vw - 32px));display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;background:#fff;border:1px solid #eadfea;border-radius:14px;padding:11px 12px;box-shadow:0 12px 38px rgba(44,30,56,.16);font-family:system-ui,sans-serif}
 .shopifyLiveStatus b{font-size:10px;color:#2f2434}.shopifyLiveStatus span{grid-column:1/2;font-size:8px;line-height:1.35;color:#756d79}.shopifyLiveStatus button{grid-column:2;grid-row:1/3;width:auto!important;min-width:110px!important;padding:8px 10px!important;border:0!important;border-radius:9px!important;background:#e44895!important;color:#fff!important;font-size:8px!important;font-weight:800!important}
 @media(max-width:760px){.shopifyBridge{display:flex!important}.shopifyLiveBtn{max-width:120px!important}.shopifyLiveStatus{bottom:10px;right:10px;width:calc(100vw - 20px)}}
+
+/* Pipeline: 20 cuentas visibles por etapa y desplazamiento interno. */
+#pipeline .kanban{align-items:start;padding-bottom:10px}
+#pipeline .kanban>.col{position:relative;overflow:visible;scrollbar-gutter:stable}
+#pipeline .kanban>.col.pipelineScrollable{max-height:var(--pipeline-visible-height);overflow-y:auto;overscroll-behavior:contain;padding-right:7px;scrollbar-width:thin;scrollbar-color:#e69abb #f4edf2}
+#pipeline .kanban>.col.pipelineScrollable h3{position:sticky;top:-9px;z-index:3;margin:-9px -7px 9px -9px;padding:12px 10px 10px;background:#eef0f5;border-bottom:1px solid #dddde6;box-shadow:0 5px 10px #24304a0a}
+#pipeline .kanban>.col.pipelineScrollable::-webkit-scrollbar{width:8px}
+#pipeline .kanban>.col.pipelineScrollable::-webkit-scrollbar-track{background:#f4edf2;border-radius:999px}
+#pipeline .kanban>.col.pipelineScrollable::-webkit-scrollbar-thumb{background:#e69abb;border-radius:999px;border:2px solid #f4edf2}
+#pipeline .kanban>.col.pipelineScrollable:focus-visible{outline:3px solid #ef3d8f33;outline-offset:3px}
