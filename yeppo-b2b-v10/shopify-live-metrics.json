@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-09-21T08:05:00-03:00",
+  "source": "Shopify Yeppo",
+  "currency": "CLP",
+  "scope": "store_total_sales",
+  "today": {
+    "orders": 24,
+    "totalSales": 2286490,
+    "averageOrderValue": 92110.75
+  },
+  "sales7": [
+    {
+      "date": "2026-09-15",
+      "orders": 287,
+      "sales": 12350781,
+      "aov": 38755.114
+    },
+    {
+      "date": "2026-09-16",
+      "orders": 401,
+      "sales": 13260982,
+      "aov": 28315.399
+    },
+    {
+      "date": "2026-09-17",
+      "orders": 264,
+      "sales": 9349540,
+      "aov": 30948.42
+    },
+    {
+      "date": "2026-09-18",
+      "orders": 65,
+      "sales": 1880819,
+      "aov": 25785.753
+    },
+    {
+      "date": "2026-09-19",
+      "orders": 72,
+      "sales": 2278508,
+      "aov": 27979.055
+    },
+    {
+      "date": "2026-09-20",
+      "orders": 123,
+      "sales": 8692890,
+      "aov": 67686.065
+    },
+    {
+      "date": "2026-09-21",
+      "orders": 24,
+      "sales": 2286490,
+      "aov": 92110.75
+    }
+  ]
+}
