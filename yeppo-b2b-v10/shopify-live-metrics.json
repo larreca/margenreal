@@ -1,55 +1,55 @@
 {
-  "generatedAt": "2026-09-21T08:05:00-03:00",
+  "generatedAt": "2026-09-21T12:12:49.322Z",
   "source": "Shopify Yeppo",
   "currency": "CLP",
-  "scope": "store_total_sales",
+  "scope": "b2b_only",
+  "criteria": [
+    "cliente con etiqueta B2B/mayorista/astroselling/wholesale",
+    "cliente ya definido en cartera B2B",
+    "pedido >= 300000 CLP incorpora al cliente como B2B"
+  ],
+  "definedB2BCustomers": 296,
+  "newB2BCustomersDetected": 1,
   "today": {
-    "orders": 24,
-    "totalSales": 2286490,
-    "averageOrderValue": 92110.75
+    "date": "2026-09-21",
+    "orders": 1,
+    "totalSales": 1462377
   },
   "sales7": [
     {
       "date": "2026-09-15",
-      "orders": 287,
-      "sales": 12350781,
-      "aov": 38755.114
+      "orders": 4,
+      "sales": 3549937
     },
     {
       "date": "2026-09-16",
-      "orders": 401,
-      "sales": 13260982,
-      "aov": 28315.399
+      "orders": 0,
+      "sales": 0
     },
     {
       "date": "2026-09-17",
-      "orders": 264,
-      "sales": 9349540,
-      "aov": 30948.42
+      "orders": 3,
+      "sales": 905750
     },
     {
       "date": "2026-09-18",
-      "orders": 65,
-      "sales": 1880819,
-      "aov": 25785.753
+      "orders": 0,
+      "sales": 0
     },
     {
       "date": "2026-09-19",
-      "orders": 72,
-      "sales": 2278508,
-      "aov": 27979.055
+      "orders": 0,
+      "sales": 0
     },
     {
       "date": "2026-09-20",
-      "orders": 123,
-      "sales": 8692890,
-      "aov": 67686.065
+      "orders": 1,
+      "sales": 4710066
     },
     {
       "date": "2026-09-21",
-      "orders": 24,
-      "sales": 2286490,
-      "aov": 92110.75
+      "orders": 1,
+      "sales": 1462377
     }
   ]
 }
