@@ -12,10 +12,58 @@ const norm=s=>String(s||"").trim().toLowerCase();const esc=s=>String(s??"").repl
 
 function qaDate(offset){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+offset);return d.toISOString().slice(0,10)}
 let qaFixture=null,liveShopify=null;const LIVE_SHOPIFY_KEY="yeppoCRMv10ShopifyLive";
-function mergeLiveShopify(data){if(!data||typeof data!=="object"||typeof state==="undefined"||!Array.isArray(state.clients))return false;liveShopify=data;window.SHOPIFY_LIVE_DATA=data;const byEmail=new Map(state.clients.filter(c=>c.email).map(c=>[norm(c.email),c]));(data.customers||[]).forEach((x,i)=>{const email=norm(x.email),found=email?byEmail.get(email):null;if(found){found.cliente=x.name||found.cliente;found.contacto=x.name||found.contacto;found.email=x.email||found.email;found.telefono=x.phone||found.telefono;found.b2bConfirmedOrders=+x.orders||found.b2bConfirmedOrders||0;found.pedidos=+x.orders||found.pedidos||0;found.totalSpent=+x.spent||found.totalSpent||0;found.shopifyLive=true}else{state.clients.push({id:970000+i,cliente:x.name||x.email||"Cliente",contacto:x.name||x.email||"Cliente",email:x.email||"",telefono:x.phone||"",b2bConfirmedOrders:+x.orders||0,pedidos:+x.orders||0,totalSpent:+x.spent||0,createdAt:x.createdAt||"",shopifyLive:true})}});window.SHOPIFY_LIVE_PRODUCTS_BY_SKU={};(data.products||[]).forEach(p=>(p.variants||[]).forEach(v=>{if(v.sku)window.SHOPIFY_LIVE_PRODUCTS_BY_SKU[norm(v.sku)]={...v,product:p.title,vendor:p.vendor,type:p.type,totalProductStock:+p.stock||0}}));return true}
+function mergeLiveShopify(data){
+  if(!data||typeof data!=="object"||typeof state==="undefined"||!Array.isArray(state.clients))return false;
+  liveShopify=data;window.SHOPIFY_LIVE_DATA=data;
+  const byEmail=new Map(state.clients.filter(c=>c.email).map(c=>[norm(c.email),c]));
+  (data.customers||[]).forEach((x,i)=>{
+    const email=norm(x.email),found=email?byEmail.get(email):null;
+    const last=(x.lastOrderDate||x.lastOrder?.date||"").slice(0,10);
+    const hist=(x.ordersHistory||[]).map(o=>({date:String(o.date||o.createdAt||"").slice(0,10),amount:+(o.total||o.amount||0),total:+(o.total||o.amount||0),name:o.name||""})).filter(o=>o.date);
+    const patch={
+      cliente:x.name||x.customer||x.email||"Cliente",
+      contacto:x.name||x.customer||x.email||"Cliente",
+      email:x.email||"",
+      telefono:x.phone||"",
+      b2bConfirmedOrders:+(x.orders||x.ordersCount||0),
+      pedidos:+(x.orders||x.ordersCount||0),
+      totalSpent:+(x.spent||x.totalSpent||0),
+      ordersHistory:hist,
+      shopifyLive:true
+    };
+    if(last){patch.ultimaB2B=last;patch.ultima=last}
+    if(found)Object.assign(found,patch);
+    else state.clients.push({id:970000+i,...patch,createdAt:x.createdAt||""});
+    if(typeof SKU_HISTORY_90D!=="undefined"&&x.email&&Array.isArray(x.skuHistory)){
+      SKU_HISTORY_90D[norm(x.email)]=x.skuHistory.map(h=>({sku:h.sku||"",product:h.product||"",orders:+h.orders||0,units:+h.units||0,sales:+h.sales||0,first:(h.first||"").slice(0,10),last:(h.last||h.lastDate||last||"").slice(0,10),cycle:+h.cycle||0,bc:typeof h.bc==="number"?h.bc:0}));
+    }
+  });
+  window.SHOPIFY_LIVE_PRODUCTS_BY_SKU={};
+  (data.products||[]).forEach(p=>(p.variants||[]).forEach(v=>{
+    if(!v.sku)return;const stock=+(v.stock??v.inventory??v.inventoryQuantity??0)||0;
+    const row={...v,product:p.title||p.product||"",vendor:p.vendor||"",type:p.type||p.productType||"",totalProductStock:+(p.stock??p.totalInventory??0)||0,stock};
+    window.SHOPIFY_LIVE_PRODUCTS_BY_SKU[norm(v.sku)]=row;
+    if(typeof BC_STOCK_BY_SKU!=="undefined")BC_STOCK_BY_SKU[v.sku]={product:row.product,stock};
+  }));
+  return true;
+}
 function loadLocalShopifyLive(){try{const raw=localStorage.getItem(LIVE_SHOPIFY_KEY);if(!raw)return false;return mergeLiveShopify(JSON.parse(raw))}catch(e){console.error("Shopify live local:",e);return false}}
-function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!Array.isArray(data.customers)||!Array.isArray(data.sales7)||!Array.isArray(data.products))throw new Error("Formato Shopify Live no válido");localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));resolve(data)}catch(e){reject(e)}};r.onerror=reject;r.readAsText(file)})}
-function addShopifyBridgeControl(){const host=document.querySelector(".crmTopRightV2");if(!host||document.getElementById("shopifyLiveBtn"))return;const wrap=document.createElement("div");wrap.className="shopifyBridge";wrap.innerHTML=`<input id="shopifyLiveFile" type="file" accept=".json,application/json" hidden><button id="shopifyLiveBtn" class="shopifyLiveBtn" title="Cargar datos reales de Shopify">${liveShopify?"Shopify real ✓":"Cargar Shopify"}</button>`;host.prepend(wrap);const inp=wrap.querySelector("#shopifyLiveFile"),btn=wrap.querySelector("#shopifyLiveBtn");btn.onclick=()=>inp.click();inp.onchange=async()=>{const file=inp.files?.[0];if(!file)return;btn.textContent="Cargando…";try{await importShopifyLiveFile(file);btn.textContent="Shopify real ✓";location.reload()}catch(e){btn.textContent="Error Shopify";alert("No pude cargar los datos Shopify: "+e.message)}}}
+function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!Array.isArray(data.customers)||!Array.isArray(data.sales7)||!Array.isArray(data.products))throw new Error("Formato Shopify Live no válido");if(!mergeLiveShopify(data))throw new Error("No pude integrar los datos al CRM");localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));resolve(data)}catch(e){reject(e)}};r.onerror=reject;r.readAsText(file)})}
+function shopifyLiveLabel(){if(!liveShopify)return "Shopify sin cargar";const c=liveShopify.customers?.length||0,p=liveShopify.products?.length||0,d=liveShopify.sales7?.length||0;return "Shopify real ✓ · "+c+" clientes · "+p+" productos · "+d+" días"}
+function addShopifyBridgeControl(){
+  const host=document.querySelector(".crmTopRightV2");if(!host||document.getElementById("shopifyLiveBtn"))return;
+  const wrap=document.createElement("div");wrap.className="shopifyBridge";
+  wrap.innerHTML=`<input id="shopifyLiveFile" type="file" accept=".json,application/json" hidden><button id="shopifyLiveBtn" class="shopifyLiveBtn ${liveShopify?"loaded":"empty"}" title="Cargar o reemplazar datos reales de Shopify">${shopifyLiveLabel()}</button>`;
+  host.prepend(wrap);
+  const inp=wrap.querySelector("#shopifyLiveFile"),btn=wrap.querySelector("#shopifyLiveBtn");
+  btn.onclick=()=>inp.click();
+  inp.onchange=async()=>{const file=inp.files?.[0];if(!file)return;btn.textContent="Cargando Shopify…";try{const data=await importShopifyLiveFile(file);btn.textContent=shopifyLiveLabel();btn.classList.add("loaded");btn.classList.remove("empty");setTimeout(()=>location.reload(),250)}catch(e){btn.textContent="Error al cargar";alert("No pude cargar los datos Shopify: "+e.message)}};
+  let status=document.getElementById("shopifyLiveStatus");
+  if(!status){status=document.createElement("div");status.id="shopifyLiveStatus";status.className="shopifyLiveStatus";document.body.appendChild(status)}
+  status.innerHTML=liveShopify?`<b>Shopify real cargado</b><span>${liveShopify.customers?.length||0} clientes · ${liveShopify.products?.length||0} productos · actualizado ${new Date(liveShopify.generatedAt||Date.now()).toLocaleString("es-CL")}</span><button class="shopifyReplace">Reemplazar datos</button>`:`<b>Faltan datos reales de Shopify</b><span>El CRM todavía está usando su base local. Carga el JSON real para activar ventas, clientes y SKU.</span><button class="shopifyReplace">Cargar Shopify ahora</button>`;
+  status.querySelector(".shopifyReplace").onclick=()=>inp.click();
+}
+
 
 async function loadShopifyQaFixture(){
   if(!QA_MODE||typeof state==="undefined"||!Array.isArray(state.clients))return;
@@ -48,7 +96,7 @@ async function loadShopifyQaFixture(){
     customers.slice(0,20).forEach((q,i)=>{
       const id=base+i;
       pipeline[id]={stage:STAGES[i%STAGES.length],amount:i%6===5?Math.round((+q.totalSpent||0)/Math.max(1,+q.ordersCount||1)):0,updatedAt:new Date().toISOString()};
-      nextActions.push({id:"qa-shopify-action-"+i,clientId:id,type:["Seguimiento","Cotización","Recompra","Llamada"][i%4],date:qaDate((i%5)-2),note:"QA con métricas anonimizadas de Shopify.",done:false,createdAt:new Date().toISOString()});
+      nextActions.push({id:"qa-shopify-action-"+i,clientId:id,type:["Seguimiento","Cotización","Recompra","Llamada"][i%4],date:qaDate((i%5)-2),note:"QA Shopify.",done:false,createdAt:new Date().toISOString()});
       if(i<Math.min(6,incoming.length)){waiting.push({clientId:id,sku:incoming[i].sku,product:incoming[i].product,note:"QA: cliente en espera",active:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()})}
     });
     localStorage.setItem(KEY,JSON.stringify(incoming));
@@ -57,7 +105,7 @@ async function loadShopifyQaFixture(){
     localStorage.setItem(PIPE_KEY,JSON.stringify(pipeline));
     document.documentElement.dataset.qaMode="shopify";
     const old=document.querySelector(".qaModeBadge");if(old)old.remove();
-    const badge=document.createElement("div");badge.className="qaModeBadge";badge.textContent="MODO QA · SHOPIFY REAL ANONIMIZADO";document.body.appendChild(badge);
+    const badge=document.createElement("div");badge.className="qaModeBadge";badge.textContent="MODO QA · SHOPIFY";document.body.appendChild(badge);
   }catch(e){
     console.error("QA Shopify fixture:",e);
     const badge=document.createElement("div");badge.className="qaModeBadge";badge.textContent="QA · ERROR CARGANDO SHOPIFY";document.body.appendChild(badge);
