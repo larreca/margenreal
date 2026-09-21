@@ -523,6 +523,7 @@
         <button data-user-action="portfolio"><i class="fa-solid fa-address-book"></i> Mi cartera</button>
         <button data-user-action="tasks"><i class="fa-solid fa-list-check"></i> Mis tareas</button>
         <button data-user-action="activity"><i class="fa-solid fa-clock-rotate-left"></i> Mi actividad</button>
+        <button data-user-action="settings"><i class="fa-solid fa-user-gear"></i> Usuarios y KAM</button>
         <button data-user-action="switch"><i class="fa-solid fa-users"></i> Cambiar usuario</button>
         <button data-user-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>`;
       document.body.appendChild(menu);
@@ -534,6 +535,11 @@
         tab?.click();
       };
       menu.querySelector('[data-user-action="activity"]').onclick = () => openActivity();
+      menu.querySelector('[data-user-action="settings"]').onclick = () => {
+        menu.classList.remove("open");
+        if (typeof window.crmActivateV2 === "function") window.crmActivateV2("settings");
+        else [...document.querySelectorAll(".tabs .tab")].find(item => item.dataset.tab === "v10security")?.click();
+      };
       menu.querySelector('[data-user-action="switch"]').onclick = () => connected() ? alert("Para cambiar de usuario, cierra la sesión actual.") : openLocalSwitcher();
       menu.querySelector('[data-user-action="logout"]').onclick = logout;
       document.addEventListener("click", () => menu.classList.remove("open"));
