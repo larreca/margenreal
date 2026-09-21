@@ -1,0 +1,1705 @@
+{
+  "meta": {
+    "source": "Shopify Yeppo",
+    "generatedAt": "2026-09-21T02:47:26.273Z",
+    "currency": "CLP",
+    "privacy": "Customer PII removed. Values and operational metrics derive from live Shopify data."
+  },
+  "dashboard": {
+    "today": {
+      "orders": 121,
+      "totalSales": 8596560,
+      "averageOrderValue": 68109.462
+    },
+    "salesLast7Days": [
+      {
+        "date": "2026-09-13",
+        "orders": 127,
+        "totalSales": 4302870,
+        "averageOrderValue": 30707.732
+      },
+      {
+        "date": "2026-09-14",
+        "orders": 358,
+        "totalSales": 14040684,
+        "averageOrderValue": 34994.533
+      },
+      {
+        "date": "2026-09-15",
+        "orders": 287,
+        "totalSales": 12350781,
+        "averageOrderValue": 38755.114
+      },
+      {
+        "date": "2026-09-16",
+        "orders": 401,
+        "totalSales": 13260982,
+        "averageOrderValue": 28315.399
+      },
+      {
+        "date": "2026-09-17",
+        "orders": 264,
+        "totalSales": 9349540,
+        "averageOrderValue": 30948.42
+      },
+      {
+        "date": "2026-09-18",
+        "orders": 65,
+        "totalSales": 1880819,
+        "averageOrderValue": 25785.753
+      },
+      {
+        "date": "2026-09-19",
+        "orders": 72,
+        "totalSales": 2278508,
+        "averageOrderValue": 27979.055
+      },
+      {
+        "date": "2026-09-20",
+        "orders": 121,
+        "totalSales": 8596560,
+        "averageOrderValue": 68109.462
+      }
+    ],
+    "returningCustomers30d": [
+      {
+        "date": "2026-08-21",
+        "newCustomers": 140,
+        "returningCustomers": 141,
+        "returningRate": 0.501779359430605
+      },
+      {
+        "date": "2026-08-22",
+        "newCustomers": 138,
+        "returningCustomers": 134,
+        "returningRate": 0.50187265917603
+      },
+      {
+        "date": "2026-08-23",
+        "newCustomers": 104,
+        "returningCustomers": 29,
+        "returningRate": 0.21804511278195488
+      },
+      {
+        "date": "2026-08-24",
+        "newCustomers": 157,
+        "returningCustomers": 136,
+        "returningRate": 0.4689655172413793
+      },
+      {
+        "date": "2026-08-25",
+        "newCustomers": 152,
+        "returningCustomers": 80,
+        "returningRate": 0.3448275862068966
+      },
+      {
+        "date": "2026-08-26",
+        "newCustomers": 145,
+        "returningCustomers": 91,
+        "returningRate": 0.3855932203389831
+      },
+      {
+        "date": "2026-08-27",
+        "newCustomers": 154,
+        "returningCustomers": 105,
+        "returningRate": 0.41015625
+      },
+      {
+        "date": "2026-08-28",
+        "newCustomers": 174,
+        "returningCustomers": 161,
+        "returningRate": 0.48493975903614456
+      },
+      {
+        "date": "2026-08-29",
+        "newCustomers": 208,
+        "returningCustomers": 202,
+        "returningRate": 0.5024875621890548
+      },
+      {
+        "date": "2026-08-30",
+        "newCustomers": 143,
+        "returningCustomers": 45,
+        "returningRate": 0.2393617021276596
+      },
+      {
+        "date": "2026-08-31",
+        "newCustomers": 224,
+        "returningCustomers": 253,
+        "returningRate": 0.5405982905982906
+      },
+      {
+        "date": "2026-09-01",
+        "newCustomers": 226,
+        "returningCustomers": 199,
+        "returningRate": 0.47494033412887826
+      },
+      {
+        "date": "2026-09-02",
+        "newCustomers": 184,
+        "returningCustomers": 196,
+        "returningRate": 0.5268817204301075
+      },
+      {
+        "date": "2026-09-03",
+        "newCustomers": 174,
+        "returningCustomers": 187,
+        "returningRate": 0.520891364902507
+      },
+      {
+        "date": "2026-09-04",
+        "newCustomers": 166,
+        "returningCustomers": 220,
+        "returningRate": 0.5759162303664922
+      },
+      {
+        "date": "2026-09-05",
+        "newCustomers": 167,
+        "returningCustomers": 213,
+        "returningRate": 0.56951871657754
+      },
+      {
+        "date": "2026-09-06",
+        "newCustomers": 105,
+        "returningCustomers": 76,
+        "returningRate": 0.4198895027624309
+      },
+      {
+        "date": "2026-09-07",
+        "newCustomers": 312,
+        "returningCustomers": 144,
+        "returningRate": 0.31929046563192903
+      },
+      {
+        "date": "2026-09-08",
+        "newCustomers": 205,
+        "returningCustomers": 132,
+        "returningRate": 0.3987915407854985
+      },
+      {
+        "date": "2026-09-09",
+        "newCustomers": 139,
+        "returningCustomers": 122,
+        "returningRate": 0.4728682170542636
+      },
+      {
+        "date": "2026-09-10",
+        "newCustomers": 136,
+        "returningCustomers": 124,
+        "returningRate": 0.48249027237354086
+      },
+      {
+        "date": "2026-09-11",
+        "newCustomers": 107,
+        "returningCustomers": 104,
+        "returningRate": 0.49760765550239233
+      },
+      {
+        "date": "2026-09-12",
+        "newCustomers": 121,
+        "returningCustomers": 169,
+        "returningRate": 0.5909090909090909
+      },
+      {
+        "date": "2026-09-13",
+        "newCustomers": 93,
+        "returningCustomers": 34,
+        "returningRate": 0.2677165354330709
+      },
+      {
+        "date": "2026-09-14",
+        "newCustomers": 148,
+        "returningCustomers": 143,
+        "returningRate": 0.49310344827586206
+      },
+      {
+        "date": "2026-09-15",
+        "newCustomers": 125,
+        "returningCustomers": 109,
+        "returningRate": 0.4698275862068966
+      },
+      {
+        "date": "2026-09-16",
+        "newCustomers": 155,
+        "returningCustomers": 179,
+        "returningRate": 0.5474006116207951
+      },
+      {
+        "date": "2026-09-17",
+        "newCustomers": 105,
+        "returningCustomers": 106,
+        "returningRate": 0.5096153846153846
+      },
+      {
+        "date": "2026-09-18",
+        "newCustomers": 50,
+        "returningCustomers": 15,
+        "returningRate": 0.23076923076923078
+      },
+      {
+        "date": "2026-09-19",
+        "newCustomers": 54,
+        "returningCustomers": 18,
+        "returningRate": 0.25
+      },
+      {
+        "date": "2026-09-20",
+        "newCustomers": 98,
+        "returningCustomers": 21,
+        "returningRate": 0.17355371900826447
+      }
+    ]
+  },
+  "topProducts30d": [
+    {
+      "rank": 1,
+      "title": "345 Relief Cream 50 ml de Dr. Althea",
+      "grossSales": 9660901,
+      "netSales": 9507593,
+      "orders": 263
+    },
+    {
+      "rank": 2,
+      "title": "Youthful Formula Ultimate Moisturizing Cream 100 ml",
+      "grossSales": 7782572,
+      "netSales": 7719122,
+      "orders": 417
+    },
+    {
+      "rank": 3,
+      "title": "PDRN Pink Collagen Capsule Cream 55 g – Medicube",
+      "grossSales": 5728944,
+      "netSales": 5580799,
+      "orders": 116
+    },
+    {
+      "rank": 4,
+      "title": "Madeca Cream Time Reverse 50ml/15ml",
+      "grossSales": 5653106,
+      "netSales": 5541712,
+      "orders": 293
+    },
+    {
+      "rank": 5,
+      "title": "345 Relief Cream Mist (2 Tamaños)",
+      "grossSales": 5421942,
+      "netSales": 5294455,
+      "orders": 236
+    },
+    {
+      "rank": 6,
+      "title": "Cemenrete Calcium Multi Balm 9g",
+      "grossSales": 5356369,
+      "netSales": 5301925,
+      "orders": 265
+    },
+    {
+      "rank": 7,
+      "title": "1025 Dokdo Cleanser",
+      "grossSales": 5295165,
+      "netSales": 5097100,
+      "orders": 300
+    },
+    {
+      "rank": 8,
+      "title": "PDRN Pink Peptide Serum",
+      "grossSales": 5256413,
+      "netSales": 5064193,
+      "orders": 153
+    },
+    {
+      "rank": 9,
+      "title": "Expert Madeca Cream Active Renew PDRN 50 ml",
+      "grossSales": 4799904,
+      "netSales": 4777593,
+      "orders": 173
+    },
+    {
+      "rank": 10,
+      "title": "Madagascar Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++ (2 Tamaños)",
+      "grossSales": 4746906,
+      "netSales": 4699391,
+      "orders": 155
+    }
+  ],
+  "recentOrders": [
+    {
+      "id": "ORD-001",
+      "date": "2026-09-21T02:44:46Z",
+      "total": 34390,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 01"
+    },
+    {
+      "id": "ORD-002",
+      "date": "2026-09-21T02:43:45Z",
+      "total": 31792,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 02"
+    },
+    {
+      "id": "ORD-003",
+      "date": "2026-09-21T02:23:54Z",
+      "total": 5890,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 03"
+    },
+    {
+      "id": "ORD-004",
+      "date": "2026-09-21T02:19:25Z",
+      "total": 14990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 04"
+    },
+    {
+      "id": "ORD-005",
+      "date": "2026-09-21T02:09:02Z",
+      "total": 27243,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 05"
+    },
+    {
+      "id": "ORD-006",
+      "date": "2026-09-21T01:54:34Z",
+      "total": 53970,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 3,
+      "customer": "Cliente Shopify 06"
+    },
+    {
+      "id": "ORD-007",
+      "date": "2026-09-21T01:54:21Z",
+      "total": 27540,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 07"
+    },
+    {
+      "id": "ORD-008",
+      "date": "2026-09-21T01:48:30Z",
+      "total": 33935,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 08"
+    },
+    {
+      "id": "ORD-009",
+      "date": "2026-09-21T01:41:07Z",
+      "total": 20106,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 09"
+    },
+    {
+      "id": "ORD-010",
+      "date": "2026-09-21T01:39:54Z",
+      "total": 50280,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 3,
+      "customer": "Cliente Shopify 10"
+    },
+    {
+      "id": "ORD-011",
+      "date": "2026-09-21T01:23:15Z",
+      "total": 20106,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 11"
+    },
+    {
+      "id": "ORD-012",
+      "date": "2026-09-21T01:17:26Z",
+      "total": 12702,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 12"
+    },
+    {
+      "id": "ORD-013",
+      "date": "2026-09-21T01:16:33Z",
+      "total": 28565,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 13"
+    },
+    {
+      "id": "ORD-014",
+      "date": "2026-09-21T01:16:24Z",
+      "total": 32280,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 14"
+    },
+    {
+      "id": "ORD-015",
+      "date": "2026-09-21T01:06:19Z",
+      "total": 19290,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 15"
+    },
+    {
+      "id": "ORD-016",
+      "date": "2026-09-21T00:45:54Z",
+      "total": 7590,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 16"
+    },
+    {
+      "id": "ORD-017",
+      "date": "2026-09-21T00:45:54Z",
+      "total": 16980,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 17"
+    },
+    {
+      "id": "ORD-018",
+      "date": "2026-09-21T00:38:15Z",
+      "total": 25990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 18"
+    },
+    {
+      "id": "ORD-019",
+      "date": "2026-09-21T00:38:06Z",
+      "total": 10890,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 19"
+    },
+    {
+      "id": "ORD-020",
+      "date": "2026-09-21T00:36:25Z",
+      "total": 126303,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 5,
+      "customer": "Cliente Shopify 20"
+    },
+    {
+      "id": "ORD-021",
+      "date": "2026-09-21T00:35:39Z",
+      "total": 29993,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 21"
+    },
+    {
+      "id": "ORD-022",
+      "date": "2026-09-21T00:24:48Z",
+      "total": 20748,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 22"
+    },
+    {
+      "id": "ORD-023",
+      "date": "2026-09-21T00:24:40Z",
+      "total": 22690,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 23"
+    },
+    {
+      "id": "ORD-024",
+      "date": "2026-09-21T00:14:20Z",
+      "total": 19990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 24"
+    },
+    {
+      "id": "ORD-025",
+      "date": "2026-09-21T00:13:16Z",
+      "total": 80970,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 3,
+      "customer": "Cliente Shopify 25"
+    },
+    {
+      "id": "ORD-026",
+      "date": "2026-09-21T00:03:55Z",
+      "total": 103160,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 4,
+      "customer": "Cliente Shopify 26"
+    },
+    {
+      "id": "ORD-027",
+      "date": "2026-09-21T00:03:36Z",
+      "total": 38990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 27"
+    },
+    {
+      "id": "ORD-028",
+      "date": "2026-09-21T00:02:01Z",
+      "total": 56980,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 28"
+    },
+    {
+      "id": "ORD-029",
+      "date": "2026-09-21T00:01:13Z",
+      "total": 56031,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 3,
+      "customer": "Cliente Shopify 29"
+    },
+    {
+      "id": "ORD-030",
+      "date": "2026-09-20T23:55:31Z",
+      "total": 57683,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 30"
+    },
+    {
+      "id": "ORD-031",
+      "date": "2026-09-20T23:51:11Z",
+      "total": 11980,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 31"
+    },
+    {
+      "id": "ORD-032",
+      "date": "2026-09-20T23:43:08Z",
+      "total": 19492,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 32"
+    },
+    {
+      "id": "ORD-033",
+      "date": "2026-09-20T23:41:32Z",
+      "total": 34390,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 33"
+    },
+    {
+      "id": "ORD-034",
+      "date": "2026-09-20T23:29:30Z",
+      "total": 14990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 34"
+    },
+    {
+      "id": "ORD-035",
+      "date": "2026-09-20T23:25:54Z",
+      "total": 4710066,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 389,
+      "customer": "Cliente Shopify 35"
+    },
+    {
+      "id": "ORD-036",
+      "date": "2026-09-20T23:19:00Z",
+      "total": 10890,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 36"
+    },
+    {
+      "id": "ORD-037",
+      "date": "2026-09-20T23:17:31Z",
+      "total": 28692,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 37"
+    },
+    {
+      "id": "ORD-038",
+      "date": "2026-09-20T23:16:36Z",
+      "total": 26163,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 38"
+    },
+    {
+      "id": "ORD-039",
+      "date": "2026-09-20T22:49:54Z",
+      "total": 32790,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 39"
+    },
+    {
+      "id": "ORD-040",
+      "date": "2026-09-20T22:48:48Z",
+      "total": 19101,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 40"
+    },
+    {
+      "id": "ORD-041",
+      "date": "2026-09-20T22:48:43Z",
+      "total": 23122,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 41"
+    },
+    {
+      "id": "ORD-042",
+      "date": "2026-09-20T22:40:35Z",
+      "total": 20990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 42"
+    },
+    {
+      "id": "ORD-043",
+      "date": "2026-09-20T22:40:28Z",
+      "total": 7590,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 43"
+    },
+    {
+      "id": "ORD-044",
+      "date": "2026-09-20T22:40:13Z",
+      "total": 15990,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 44"
+    },
+    {
+      "id": "ORD-045",
+      "date": "2026-09-20T22:25:13Z",
+      "total": 17660,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 45"
+    },
+    {
+      "id": "ORD-046",
+      "date": "2026-09-20T22:24:09Z",
+      "total": 37040,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 46"
+    },
+    {
+      "id": "ORD-047",
+      "date": "2026-09-20T22:21:34Z",
+      "total": 47854,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 47"
+    },
+    {
+      "id": "ORD-048",
+      "date": "2026-09-20T22:18:01Z",
+      "total": 45992,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 2,
+      "customer": "Cliente Shopify 48"
+    },
+    {
+      "id": "ORD-049",
+      "date": "2026-09-20T22:13:40Z",
+      "total": 151650,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 8,
+      "customer": "Cliente Shopify 49"
+    },
+    {
+      "id": "ORD-050",
+      "date": "2026-09-20T22:08:46Z",
+      "total": 15950,
+      "currency": "CLP",
+      "financialStatus": "PAID",
+      "fulfillmentStatus": "UNFULFILLED",
+      "lineItemCount": 1,
+      "customer": "Cliente Shopify 50"
+    }
+  ],
+  "b2bCustomerSample": [
+    {
+      "id": "B2B-001",
+      "customer": "Cliente B2B 01",
+      "ordersCount": 2,
+      "totalSpent": 606084,
+      "currency": "CLP",
+      "customerSince": "2026-09-02T01:00:15Z"
+    },
+    {
+      "id": "B2B-002",
+      "customer": "Cliente B2B 02",
+      "ordersCount": 2,
+      "totalSpent": 624142,
+      "currency": "CLP",
+      "customerSince": "2026-08-24T17:15:27Z"
+    },
+    {
+      "id": "B2B-003",
+      "customer": "Cliente B2B 03",
+      "ordersCount": 9,
+      "totalSpent": 385233,
+      "currency": "CLP",
+      "customerSince": "2026-08-03T15:05:22Z"
+    },
+    {
+      "id": "B2B-004",
+      "customer": "Cliente B2B 04",
+      "ordersCount": 4,
+      "totalSpent": 514291,
+      "currency": "CLP",
+      "customerSince": "2026-07-30T19:27:32Z"
+    },
+    {
+      "id": "B2B-005",
+      "customer": "Cliente B2B 05",
+      "ordersCount": 3,
+      "totalSpent": 944431,
+      "currency": "CLP",
+      "customerSince": "2026-07-28T23:20:13Z"
+    },
+    {
+      "id": "B2B-006",
+      "customer": "Cliente B2B 06",
+      "ordersCount": 2,
+      "totalSpent": 346270,
+      "currency": "CLP",
+      "customerSince": "2026-07-25T20:26:17Z"
+    },
+    {
+      "id": "B2B-007",
+      "customer": "Cliente B2B 07",
+      "ordersCount": 3,
+      "totalSpent": 372590,
+      "currency": "CLP",
+      "customerSince": "2026-07-22T15:48:56Z"
+    },
+    {
+      "id": "B2B-008",
+      "customer": "Cliente B2B 08",
+      "ordersCount": 4,
+      "totalSpent": 309530,
+      "currency": "CLP",
+      "customerSince": "2026-07-17T20:51:46Z"
+    },
+    {
+      "id": "B2B-009",
+      "customer": "Cliente B2B 09",
+      "ordersCount": 4,
+      "totalSpent": 387100,
+      "currency": "CLP",
+      "customerSince": "2026-07-17T17:16:49Z"
+    },
+    {
+      "id": "B2B-010",
+      "customer": "Cliente B2B 10",
+      "ordersCount": 2,
+      "totalSpent": 1307438,
+      "currency": "CLP",
+      "customerSince": "2026-07-14T19:29:44Z"
+    },
+    {
+      "id": "B2B-011",
+      "customer": "Cliente B2B 11",
+      "ordersCount": 3,
+      "totalSpent": 1385307,
+      "currency": "CLP",
+      "customerSince": "2026-07-06T15:35:58Z"
+    },
+    {
+      "id": "B2B-012",
+      "customer": "Cliente B2B 12",
+      "ordersCount": 21,
+      "totalSpent": 541160,
+      "currency": "CLP",
+      "customerSince": "2026-07-03T21:09:16Z"
+    },
+    {
+      "id": "B2B-013",
+      "customer": "Cliente B2B 13",
+      "ordersCount": 12,
+      "totalSpent": 15741313,
+      "currency": "CLP",
+      "customerSince": "2026-07-03T05:55:29Z"
+    },
+    {
+      "id": "B2B-014",
+      "customer": "Cliente B2B 14",
+      "ordersCount": 2,
+      "totalSpent": 385270,
+      "currency": "CLP",
+      "customerSince": "2026-07-02T06:38:06Z"
+    },
+    {
+      "id": "B2B-015",
+      "customer": "Cliente B2B 15",
+      "ordersCount": 3,
+      "totalSpent": 306850,
+      "currency": "CLP",
+      "customerSince": "2026-06-25T16:09:14Z"
+    },
+    {
+      "id": "B2B-016",
+      "customer": "Cliente B2B 16",
+      "ordersCount": 2,
+      "totalSpent": 631313,
+      "currency": "CLP",
+      "customerSince": "2026-06-18T15:05:09Z"
+    },
+    {
+      "id": "B2B-017",
+      "customer": "Cliente B2B 17",
+      "ordersCount": 25,
+      "totalSpent": 1391400,
+      "currency": "CLP",
+      "customerSince": "2026-06-10T20:12:06Z"
+    },
+    {
+      "id": "B2B-018",
+      "customer": "Cliente B2B 18",
+      "ordersCount": 6,
+      "totalSpent": 301081,
+      "currency": "CLP",
+      "customerSince": "2026-06-10T19:14:59Z"
+    },
+    {
+      "id": "B2B-019",
+      "customer": "Cliente B2B 19",
+      "ordersCount": 5,
+      "totalSpent": 2487056,
+      "currency": "CLP",
+      "customerSince": "2026-06-02T20:51:07Z"
+    },
+    {
+      "id": "B2B-020",
+      "customer": "Cliente B2B 20",
+      "ordersCount": 14,
+      "totalSpent": 1287702,
+      "currency": "CLP",
+      "customerSince": "2026-06-02T17:51:08Z"
+    },
+    {
+      "id": "B2B-021",
+      "customer": "Cliente B2B 21",
+      "ordersCount": 5,
+      "totalSpent": 313340,
+      "currency": "CLP",
+      "customerSince": "2026-06-01T22:20:16Z"
+    },
+    {
+      "id": "B2B-022",
+      "customer": "Cliente B2B 22",
+      "ordersCount": 3,
+      "totalSpent": 509440,
+      "currency": "CLP",
+      "customerSince": "2026-05-30T18:33:16Z"
+    },
+    {
+      "id": "B2B-023",
+      "customer": "Cliente B2B 23",
+      "ordersCount": 4,
+      "totalSpent": 353740,
+      "currency": "CLP",
+      "customerSince": "2026-05-26T20:37:53Z"
+    },
+    {
+      "id": "B2B-024",
+      "customer": "Cliente B2B 24",
+      "ordersCount": 4,
+      "totalSpent": 1889936,
+      "currency": "CLP",
+      "customerSince": "2026-05-23T16:48:09Z"
+    },
+    {
+      "id": "B2B-025",
+      "customer": "Cliente B2B 25",
+      "ordersCount": 5,
+      "totalSpent": 328816,
+      "currency": "CLP",
+      "customerSince": "2026-05-14T13:27:08Z"
+    },
+    {
+      "id": "B2B-026",
+      "customer": "Cliente B2B 26",
+      "ordersCount": 4,
+      "totalSpent": 1249630,
+      "currency": "CLP",
+      "customerSince": "2026-05-13T21:19:35Z"
+    },
+    {
+      "id": "B2B-027",
+      "customer": "Cliente B2B 27",
+      "ordersCount": 2,
+      "totalSpent": 335880,
+      "currency": "CLP",
+      "customerSince": "2026-05-13T19:35:49Z"
+    },
+    {
+      "id": "B2B-028",
+      "customer": "Cliente B2B 28",
+      "ordersCount": 4,
+      "totalSpent": 3221856,
+      "currency": "CLP",
+      "customerSince": "2026-05-09T22:12:47Z"
+    },
+    {
+      "id": "B2B-029",
+      "customer": "Cliente B2B 29",
+      "ordersCount": 3,
+      "totalSpent": 306650,
+      "currency": "CLP",
+      "customerSince": "2026-05-07T22:47:49Z"
+    },
+    {
+      "id": "B2B-030",
+      "customer": "Cliente B2B 30",
+      "ordersCount": 3,
+      "totalSpent": 2195079,
+      "currency": "CLP",
+      "customerSince": "2026-05-06T19:00:14Z"
+    },
+    {
+      "id": "B2B-031",
+      "customer": "Cliente B2B 31",
+      "ordersCount": 3,
+      "totalSpent": 347150,
+      "currency": "CLP",
+      "customerSince": "2026-05-04T15:14:37Z"
+    },
+    {
+      "id": "B2B-032",
+      "customer": "Cliente B2B 32",
+      "ordersCount": 11,
+      "totalSpent": 428070,
+      "currency": "CLP",
+      "customerSince": "2026-04-30T21:01:20Z"
+    },
+    {
+      "id": "B2B-033",
+      "customer": "Cliente B2B 33",
+      "ordersCount": 4,
+      "totalSpent": 334524,
+      "currency": "CLP",
+      "customerSince": "2026-04-30T18:35:56Z"
+    },
+    {
+      "id": "B2B-034",
+      "customer": "Cliente B2B 34",
+      "ordersCount": 9,
+      "totalSpent": 380880,
+      "currency": "CLP",
+      "customerSince": "2026-04-29T16:05:30Z"
+    },
+    {
+      "id": "B2B-035",
+      "customer": "Cliente B2B 35",
+      "ordersCount": 20,
+      "totalSpent": 628510,
+      "currency": "CLP",
+      "customerSince": "2026-04-24T20:08:14Z"
+    },
+    {
+      "id": "B2B-036",
+      "customer": "Cliente B2B 36",
+      "ordersCount": 8,
+      "totalSpent": 413920,
+      "currency": "CLP",
+      "customerSince": "2026-04-23T22:14:56Z"
+    },
+    {
+      "id": "B2B-037",
+      "customer": "Cliente B2B 37",
+      "ordersCount": 7,
+      "totalSpent": 308660,
+      "currency": "CLP",
+      "customerSince": "2026-04-21T15:31:22Z"
+    },
+    {
+      "id": "B2B-038",
+      "customer": "Cliente B2B 38",
+      "ordersCount": 25,
+      "totalSpent": 8154903,
+      "currency": "CLP",
+      "customerSince": "2026-04-16T16:31:57Z"
+    },
+    {
+      "id": "B2B-039",
+      "customer": "Cliente B2B 39",
+      "ordersCount": 17,
+      "totalSpent": 617572,
+      "currency": "CLP",
+      "customerSince": "2026-04-11T21:40:25Z"
+    },
+    {
+      "id": "B2B-040",
+      "customer": "Cliente B2B 40",
+      "ordersCount": 5,
+      "totalSpent": 369261,
+      "currency": "CLP",
+      "customerSince": "2026-04-06T21:08:30Z"
+    },
+    {
+      "id": "B2B-041",
+      "customer": "Cliente B2B 41",
+      "ordersCount": 3,
+      "totalSpent": 3377615,
+      "currency": "CLP",
+      "customerSince": "2026-04-06T20:50:43Z"
+    },
+    {
+      "id": "B2B-042",
+      "customer": "Cliente B2B 42",
+      "ordersCount": 4,
+      "totalSpent": 752807,
+      "currency": "CLP",
+      "customerSince": "2026-04-06T16:30:39Z"
+    },
+    {
+      "id": "B2B-043",
+      "customer": "Cliente B2B 43",
+      "ordersCount": 21,
+      "totalSpent": 710351,
+      "currency": "CLP",
+      "customerSince": "2026-04-06T15:18:15Z"
+    },
+    {
+      "id": "B2B-044",
+      "customer": "Cliente B2B 44",
+      "ordersCount": 6,
+      "totalSpent": 345450,
+      "currency": "CLP",
+      "customerSince": "2026-04-06T02:18:04Z"
+    },
+    {
+      "id": "B2B-045",
+      "customer": "Cliente B2B 45",
+      "ordersCount": 4,
+      "totalSpent": 2646628,
+      "currency": "CLP",
+      "customerSince": "2026-04-05T23:00:29Z"
+    },
+    {
+      "id": "B2B-046",
+      "customer": "Cliente B2B 46",
+      "ordersCount": 13,
+      "totalSpent": 438800,
+      "currency": "CLP",
+      "customerSince": "2026-04-04T19:37:00Z"
+    },
+    {
+      "id": "B2B-047",
+      "customer": "Cliente B2B 47",
+      "ordersCount": 6,
+      "totalSpent": 323786,
+      "currency": "CLP",
+      "customerSince": "2026-04-03T16:03:20Z"
+    },
+    {
+      "id": "B2B-048",
+      "customer": "Cliente B2B 48",
+      "ordersCount": 4,
+      "totalSpent": 667040,
+      "currency": "CLP",
+      "customerSince": "2026-04-01T15:14:47Z"
+    },
+    {
+      "id": "B2B-049",
+      "customer": "Cliente B2B 49",
+      "ordersCount": 4,
+      "totalSpent": 456627,
+      "currency": "CLP",
+      "customerSince": "2026-03-28T01:50:27Z"
+    },
+    {
+      "id": "B2B-050",
+      "customer": "Cliente B2B 50",
+      "ordersCount": 6,
+      "totalSpent": 419990,
+      "currency": "CLP",
+      "customerSince": "2026-03-27T17:51:03Z"
+    }
+  ],
+  "catalogSample": [
+    {
+      "id": "P01",
+      "title": "Pure Essence Mask (11 Tipos)",
+      "vendor": "Holika Holika",
+      "productType": "Mascarilla",
+      "totalInventory": 7685,
+      "variants": [
+        {
+          "sku": "Holika-021",
+          "title": "Te Verde",
+          "price": 1990,
+          "inventoryQuantity": 941
+        },
+        {
+          "sku": "Holika-022",
+          "title": "Rosa Damascena",
+          "price": 1990,
+          "inventoryQuantity": 586
+        },
+        {
+          "sku": "Holika-023",
+          "title": "Pepino",
+          "price": 1990,
+          "inventoryQuantity": 0
+        },
+        {
+          "sku": "Holika-024",
+          "title": "Palta",
+          "price": 1990,
+          "inventoryQuantity": 681
+        },
+        {
+          "sku": "Holika-025",
+          "title": "Acai",
+          "price": 1990,
+          "inventoryQuantity": 1792
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Waterism Glow Mini Tint",
+      "vendor": "TirTir",
+      "productType": "Maquillaje",
+      "totalInventory": 3655,
+      "variants": [
+        {
+          "sku": "Tir-025",
+          "title": "01 MAUVE ROSE",
+          "price": 9990,
+          "inventoryQuantity": 200
+        },
+        {
+          "sku": "Tir-026",
+          "title": "03 SAND MOND",
+          "price": 9990,
+          "inventoryQuantity": 277
+        },
+        {
+          "sku": "Tir-027",
+          "title": "05 SCOTCH SHOT",
+          "price": 9990,
+          "inventoryQuantity": 254
+        },
+        {
+          "sku": "Tir-028",
+          "title": "08 SUMMER PUMPKIN",
+          "price": 9990,
+          "inventoryQuantity": 267
+        },
+        {
+          "sku": "Tir-029",
+          "title": "09 SALMON SYRUP",
+          "price": 9990,
+          "inventoryQuantity": 298
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Waterism Glow Mini Tint (16 tonos)",
+      "vendor": "TirTir",
+      "productType": "Maquillaje",
+      "totalInventory": 3449,
+      "variants": [
+        {
+          "sku": "Tir-009",
+          "title": "02 MERRY CORAL",
+          "price": 9990,
+          "inventoryQuantity": 256
+        },
+        {
+          "sku": "Tir-010",
+          "title": "04 FIG PEACH",
+          "price": 9990,
+          "inventoryQuantity": 250
+        },
+        {
+          "sku": "Tir-011",
+          "title": "06 HONEY NUT",
+          "price": 9990,
+          "inventoryQuantity": 159
+        },
+        {
+          "sku": "Tir-012",
+          "title": "07 CASSIS PLUM",
+          "price": 9990,
+          "inventoryQuantity": 277
+        },
+        {
+          "sku": "Tir-013",
+          "title": "11 APPLUM",
+          "price": 9990,
+          "inventoryQuantity": 219
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Acne Pimple Master Patch",
+      "vendor": "CosRx",
+      "productType": "Mascarilla",
+      "totalInventory": 2519,
+      "variants": [
+        {
+          "sku": "Cosrx-012",
+          "title": "Default Title",
+          "price": 4890,
+          "inventoryQuantity": 2519
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "Catch Me Patch 27 Calmante (Clean Touch)",
+      "vendor": "Nico Medical",
+      "productType": "Tratamiento",
+      "totalInventory": 2123,
+      "variants": [
+        {
+          "sku": "Nico-007",
+          "title": "Default Title",
+          "price": 4990,
+          "inventoryQuantity": 2123
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "title": "Parche de hidrocoloides : Catch Me Patch 27",
+      "vendor": "Nico Medical",
+      "productType": "Tratamiento",
+      "totalInventory": 1948,
+      "variants": [
+        {
+          "sku": "Nico-001",
+          "title": "Default Title",
+          "price": 4990,
+          "inventoryQuantity": 1948
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "title": "Clear Fit Master Patch",
+      "vendor": "CosRx",
+      "productType": "Tratamiento",
+      "totalInventory": 1800,
+      "variants": [
+        {
+          "sku": "Cosrx-027",
+          "title": "Default Title",
+          "price": 4890,
+          "inventoryQuantity": 1800
+        }
+      ]
+    },
+    {
+      "id": "P08",
+      "title": "Catch Me Patch 22pcs (Sin Clean Touch)",
+      "vendor": "Nico Medical",
+      "productType": "Tratamiento",
+      "totalInventory": 1666,
+      "variants": [
+        {
+          "sku": "Nico-004",
+          "title": "Default Title",
+          "price": 2990,
+          "inventoryQuantity": 1666
+        }
+      ]
+    },
+    {
+      "id": "P09",
+      "title": "Rutina Capilar Protein Bonding Shampoo + Treatment (3 Aromas)",
+      "vendor": "KUNDAL",
+      "productType": "",
+      "totalInventory": 1433,
+      "variants": [
+        {
+          "sku": "",
+          "title": "Ylang Ylang / Ylang Ylang",
+          "price": 25990,
+          "inventoryQuantity": 161
+        },
+        {
+          "sku": "",
+          "title": "Ylang Ylang / Violet Muguet",
+          "price": 25990,
+          "inventoryQuantity": 135
+        },
+        {
+          "sku": "",
+          "title": "Ylang Ylang / Leather Iris",
+          "price": 25990,
+          "inventoryQuantity": 161
+        },
+        {
+          "sku": "",
+          "title": "Violet Muguet / Ylang Ylang",
+          "price": 25990,
+          "inventoryQuantity": 154
+        },
+        {
+          "sku": "",
+          "title": "Violet Muguet / Violet Muguet",
+          "price": 25990,
+          "inventoryQuantity": 135
+        }
+      ]
+    },
+    {
+      "id": "P10",
+      "title": "Madeca Derma Mask III Brightening Formula 23 ml",
+      "vendor": "Centellian24",
+      "productType": "Mascarilla",
+      "totalInventory": 1393,
+      "variants": [
+        {
+          "sku": "Cent-002",
+          "title": "Default Title",
+          "price": 1990,
+          "inventoryQuantity": 1393
+        }
+      ]
+    },
+    {
+      "id": "P11",
+      "title": "Madagascar Centella Travel Kit",
+      "vendor": "SKIN1004",
+      "productType": "Otro",
+      "totalInventory": 1375,
+      "variants": [
+        {
+          "sku": "Skin1004-012",
+          "title": "Default Title",
+          "price": 35990,
+          "inventoryQuantity": 1375
+        }
+      ]
+    },
+    {
+      "id": "P12",
+      "title": "345 Relief Cream 50 ml de Dr. Althea",
+      "vendor": "Dr.Althea",
+      "productType": "Cremas",
+      "totalInventory": 1370,
+      "variants": [
+        {
+          "sku": "Althea-001",
+          "title": "Default Title",
+          "price": 33990,
+          "inventoryQuantity": 1370
+        }
+      ]
+    },
+    {
+      "id": "P13",
+      "title": "Madagascar Centella Tone Brightening Capsule Ampoule (3 Tamaños)",
+      "vendor": "SKIN1004",
+      "productType": "Serum y esencia",
+      "totalInventory": 1298,
+      "variants": [
+        {
+          "sku": "Skin1004-015",
+          "title": "50ml",
+          "price": 18990,
+          "inventoryQuantity": 274
+        },
+        {
+          "sku": "Skin1004-005",
+          "title": "100ml",
+          "price": 27990,
+          "inventoryQuantity": 445
+        },
+        {
+          "sku": "Skin1004-020",
+          "title": "30ml",
+          "price": 13990,
+          "inventoryQuantity": 579
+        }
+      ]
+    },
+    {
+      "id": "P14",
+      "title": "Aloe Hydro Formula 96% Soothing Gel 250ml",
+      "vendor": "Holika Holika",
+      "productType": "Cuerpo y manos",
+      "totalInventory": 1224,
+      "variants": [
+        {
+          "sku": "Holika-040",
+          "title": "250ml",
+          "price": 9990,
+          "inventoryQuantity": 345
+        },
+        {
+          "sku": "Holika-041",
+          "title": "55ml",
+          "price": 3990,
+          "inventoryQuantity": 879
+        }
+      ]
+    },
+    {
+      "id": "P15",
+      "title": "Fuerte Removedor Puntos Negros (Kit 3-en-1)",
+      "vendor": "Holika Holika",
+      "productType": "Mascarilla",
+      "totalInventory": 1191,
+      "variants": [
+        {
+          "sku": "Holika-051",
+          "title": "Default Title",
+          "price": 2990,
+          "inventoryQuantity": 1191
+        }
+      ]
+    },
+    {
+      "id": "P16",
+      "title": "Mask Fit Red Cushion Mini (8 Tonos)",
+      "vendor": "TirTir",
+      "productType": "Maquillaje",
+      "totalInventory": 1156,
+      "variants": [
+        {
+          "sku": "Tir-001",
+          "title": "17N VANILLA",
+          "price": 17990,
+          "inventoryQuantity": 186
+        },
+        {
+          "sku": "Tir-002",
+          "title": "21N IVORY",
+          "price": 17990,
+          "inventoryQuantity": 5
+        },
+        {
+          "sku": "Tir-003",
+          "title": "22N SHELL BEIGE",
+          "price": 17990,
+          "inventoryQuantity": 135
+        },
+        {
+          "sku": "Tir-004",
+          "title": "23N SAND",
+          "price": 17990,
+          "inventoryQuantity": 119
+        },
+        {
+          "sku": "Tir-005",
+          "title": "24N LATTE",
+          "price": 17990,
+          "inventoryQuantity": 184
+        }
+      ]
+    },
+    {
+      "id": "P17",
+      "title": "Retinol Intense Reactivating Mask",
+      "vendor": "SOMEBYMI",
+      "productType": "Mascarilla",
+      "totalInventory": 1109,
+      "variants": [
+        {
+          "sku": "SBM-001",
+          "title": "Default Title",
+          "price": 2990,
+          "inventoryQuantity": 1109
+        }
+      ]
+    },
+    {
+      "id": "P18",
+      "title": "Bio Watery Sun Cream SPF50+/ PA++++",
+      "vendor": "Tocobo",
+      "productType": "Protección solar",
+      "totalInventory": 1062,
+      "variants": [
+        {
+          "sku": "Tocobo-004",
+          "title": "Default Title",
+          "price": 24990,
+          "inventoryQuantity": 1062
+        }
+      ]
+    },
+    {
+      "id": "P19",
+      "title": "Sugar Wrapping Tint Gloss Mini (6 Tonos)",
+      "vendor": "lilybyred",
+      "productType": "Maquillaje",
+      "totalInventory": 1054,
+      "variants": [
+        {
+          "sku": "Lily-290",
+          "title": "#01 Peach Syrup",
+          "price": 7990,
+          "inventoryQuantity": 149
+        },
+        {
+          "sku": "Lily-291",
+          "title": "#02 Fig Caramel",
+          "price": 7990,
+          "inventoryQuantity": 175
+        },
+        {
+          "sku": "Lily-292",
+          "title": "#03 Grape Sweets",
+          "price": 7990,
+          "inventoryQuantity": 149
+        },
+        {
+          "sku": "Lily-293",
+          "title": "#04 Honey Tomato",
+          "price": 7990,
+          "inventoryQuantity": 175
+        },
+        {
+          "sku": "Lily-294",
+          "title": "#05Cherry Candy",
+          "price": 7990,
+          "inventoryQuantity": 167
+        }
+      ]
+    },
+    {
+      "id": "P20",
+      "title": "Madagascar Centella Ampoule (3 Tamaños)",
+      "vendor": "SKIN1004",
+      "productType": "Serum y esencia",
+      "totalInventory": 1052,
+      "variants": [
+        {
+          "sku": "Skin1004-004",
+          "title": "100ml",
+          "price": 29990,
+          "inventoryQuantity": 184
+        },
+        {
+          "sku": "Skin1004-011",
+          "title": "55ml",
+          "price": 20990,
+          "inventoryQuantity": 205
+        },
+        {
+          "sku": "Skin1004-008",
+          "title": "30ml",
+          "price": 12990,
+          "inventoryQuantity": 663
+        }
+      ]
+    }
+  ]
+}
