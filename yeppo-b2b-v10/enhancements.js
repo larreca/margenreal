@@ -44,7 +44,7 @@ async function crmDbHydrate(){
   }catch(e){console.error("CRM DB hydrate:",e);return false}
 }
 
-async function loadShopifyMetrics(){try{const r=await fetch("shopify-live-metrics.json?v=20260921-b2b2",{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);shopifyMetrics=await r.json();window.SHOPIFY_LIVE_METRICS=shopifyMetrics;await crmDbUpsert(shopifyMetrics,"shopify-metrics");const store=shopifyMetrics.scope==="b2b_only"?"b2bSalesDaily":"salesDaily",hist=await crmDbAll(store);if(hist.length){shopifyMetrics.sales7=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7);shopifyMetrics.today=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)}return true}catch(e){console.error("Shopify metrics:",e);const hist=(await crmDbAll("b2bSalesDaily").catch(()=>[]));if(hist.length){shopifyMetrics={generatedAt:new Date().toISOString(),source:"indexeddb-b2b-fallback",scope:"b2b_only",sales7:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7),today:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)};window.SHOPIFY_LIVE_METRICS=shopifyMetrics;return true}return false}}
+async function loadShopifyMetrics(){try{const r=await fetch("shopify-live-metrics.json?v=20260922-full1",{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);shopifyMetrics=await r.json();window.SHOPIFY_LIVE_METRICS=shopifyMetrics;await crmDbUpsert(shopifyMetrics,"shopify-metrics");const store=shopifyMetrics.scope==="b2b_only"?"b2bSalesDaily":"salesDaily",hist=await crmDbAll(store);if(hist.length){shopifyMetrics.sales7=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7);shopifyMetrics.today=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)}return true}catch(e){console.error("Shopify metrics:",e);const hist=(await crmDbAll("b2bSalesDaily").catch(()=>[]));if(hist.length){shopifyMetrics={generatedAt:new Date().toISOString(),source:"indexeddb-b2b-fallback",scope:"b2b_only",sales7:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7),today:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)};window.SHOPIFY_LIVE_METRICS=shopifyMetrics;return true}return false}}
 function mergeLiveShopify(data){
   if(!data||typeof data!=="object"||typeof state==="undefined"||!Array.isArray(state.clients))return false;
   liveShopify=data;window.SHOPIFY_LIVE_DATA=data;
@@ -61,6 +61,10 @@ function mergeLiveShopify(data){
       b2bConfirmedOrders:+(x.orders||x.ordersCount||0),
       pedidos:+(x.orders||x.ordersCount||0),
       totalSpent:+(x.spent||x.totalSpent||0),
+      reorderMedian:+(x.reorderMedian||x.reorderDays||0)||undefined,
+      reorderDays:+(x.reorderDays||x.reorderMedian||0)||undefined,
+      shopifyId:x.shopifyId||x.id||"",
+      shopifyTags:Array.isArray(x.tags)?x.tags:[],
       ordersHistory:incomingHist,
       shopifyLive:true
     };
@@ -89,8 +93,13 @@ function decodeShopifySyncFragment(){
     const bin=atob(pad),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))
   }catch(e){console.error("Shopify sync fragment:",e);return null}
 }
+function expandCompactShopifySync(data){
+  if(!data||!Array.isArray(data.compactCustomers))return data;
+  data.customers=data.compactCustomers.map(a=>({id:a[0],shopifyId:a[0],name:a[1],email:a[2],phone:a[3]||"",orders:+a[4]||0,spent:+a[5]||0,lastOrderDate:a[6]||"",lastOrderName:a[7]||"",lastOrderTotal:+a[8]||0,reorderMedian:+a[9]||0,reorderDays:+a[9]||0,tags:Array.isArray(a[10])?a[10]:[],createdAt:a[11]||"",updatedAt:a[12]||""}));
+  return data
+}
 async function consumeShopifySyncFragment(){
-  const data=decodeShopifySyncFragment();if(!data)return false;
+  const raw=decodeShopifySyncFragment();if(!raw)return false;const data=expandCompactShopifySync(raw);
   await crmDbUpsert(data,"chatgpt-shopify-sync");
   mergeLiveShopify(data);
   try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
