@@ -93,8 +93,13 @@ function decodeShopifySyncFragment(){
     const bin=atob(pad),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))
   }catch(e){console.error("Shopify sync fragment:",e);return null}
 }
+function expandCompactShopifySync(data){
+  if(!data||!Array.isArray(data.compactCustomers))return data;
+  data.customers=data.compactCustomers.map(a=>({id:a[0],shopifyId:a[0],name:a[1],email:a[2],phone:a[3]||"",orders:+a[4]||0,spent:+a[5]||0,lastOrderDate:a[6]||"",lastOrderName:a[7]||"",lastOrderTotal:+a[8]||0,reorderMedian:+a[9]||0,reorderDays:+a[9]||0,tags:Array.isArray(a[10])?a[10]:[],createdAt:a[11]||"",updatedAt:a[12]||""}));
+  return data
+}
 async function consumeShopifySyncFragment(){
-  const data=decodeShopifySyncFragment();if(!data)return false;
+  const raw=decodeShopifySyncFragment();if(!raw)return false;const data=expandCompactShopifySync(raw);
   await crmDbUpsert(data,"chatgpt-shopify-sync");
   mergeLiveShopify(data);
   try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
