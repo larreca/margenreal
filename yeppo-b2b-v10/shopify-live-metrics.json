@@ -12,12 +12,14 @@
   "audit": {
     "periodStart": "2026-09-16",
     "periodEnd": "2026-09-22",
-    "customerCount": 297,
     "orders": 22,
     "weeklySales": 23355245,
     "todayOrders": 13,
     "todaySales": 14693843,
-    "unassignedHighValueOrders": 1
+    "unassignedHighValueOrders": 1,
+    "taggedCustomerCount": 297,
+    "ruleAddedCustomers": 1,
+    "identifiableB2BCustomers": 298
   },
   "today": {
     "orders": 13,
