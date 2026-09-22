@@ -61,6 +61,10 @@ function mergeLiveShopify(data){
       b2bConfirmedOrders:+(x.orders||x.ordersCount||0),
       pedidos:+(x.orders||x.ordersCount||0),
       totalSpent:+(x.spent||x.totalSpent||0),
+      reorderMedian:+(x.reorderMedian||x.reorderDays||0)||undefined,
+      reorderDays:+(x.reorderDays||x.reorderMedian||0)||undefined,
+      shopifyId:x.shopifyId||x.id||"",
+      shopifyTags:Array.isArray(x.tags)?x.tags:[],
       ordersHistory:incomingHist,
       shopifyLive:true
     };
