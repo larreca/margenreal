@@ -279,7 +279,7 @@
       created_at: new Date().toISOString()
     };
     activities.unshift(row);
-    activities = activities.slice(0, 500);
+    activities = activities.slice(0, 5000);
     if (!connected()) {
       writeJSON(LOCAL_ACTIVITY_KEY, activities);
       return row;
@@ -496,6 +496,7 @@
     mounted = true;
     mountProfileMenu(context);
     mountSettings();
+    mountActivityReport(context);
     refreshIdentityUi();
     if (profile.role === "readonly") document.documentElement.classList.add("crmReadOnly");
   }
@@ -523,6 +524,7 @@
         <button data-user-action="portfolio"><i class="fa-solid fa-address-book"></i> Mi cartera</button>
         <button data-user-action="tasks"><i class="fa-solid fa-list-check"></i> Mis tareas</button>
         <button data-user-action="activity"><i class="fa-solid fa-clock-rotate-left"></i> Mi actividad</button>
+        <button data-user-action="team-activity"><i class="fa-solid fa-chart-column"></i> Actividad del equipo</button>
         <button data-user-action="settings"><i class="fa-solid fa-user-gear"></i> Usuarios y KAM</button>
         <button data-user-action="switch"><i class="fa-solid fa-users"></i> Cambiar usuario</button>
         <button data-user-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>`;
@@ -535,6 +537,11 @@
         tab?.click();
       };
       menu.querySelector('[data-user-action="activity"]').onclick = () => openActivity();
+      menu.querySelector('[data-user-action="team-activity"]').onclick = () => {
+        menu.classList.remove("open");
+        [...document.querySelectorAll(".tabs .tab")].find(item => item.dataset.tab === "dashboard")?.click();
+        setTimeout(() => document.getElementById("crmTeamActivityReport")?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+      };
       menu.querySelector('[data-user-action="settings"]').onclick = () => {
         menu.classList.remove("open");
         if (typeof window.crmActivateV2 === "function") window.crmActivateV2("settings");
@@ -554,6 +561,7 @@
         menu.querySelector(".crmProfileHead b").textContent = profile.full_name;
         menu.querySelector(".crmProfileHead small").textContent = `${ROLE_LABELS[profile.role] || profile.role}${connected() ? " · conectado" : " · piloto local"}`;
         menu.querySelector('[data-user-action="switch"]').hidden = connected();
+        menu.querySelector('[data-user-action="team-activity"]').hidden = !can("supervise");
         menu.classList.toggle("open");
       };
     }
@@ -602,6 +610,117 @@
     const visible = profile.role === "kam" ? activities.filter(item => item.actor_id === profile.id || item.actor_name === profile.full_name) : activities;
     const body = modalShell("Bitácora de actividad", "Registro de quién hizo cada acción, con fecha y hora");
     body.innerHTML = `<div class="crmActivityList">${visible.map(item => `<article><i>${safe((item.actor_name || "U").slice(0, 1).toUpperCase())}</i><div><b>${safe(item.summary)}</b><span>${safe(item.actor_name)} · ${new Date(item.created_at).toLocaleString("es-CL")}</span><small>${safe(item.entity_type)} ${safe(item.entity_id)}</small></div></article>`).join("") || "<p>Todavía no hay acciones registradas.</p>"}</div>`;
+  }
+
+  const ACTIVITY_LABELS = {
+    task_saved: "Tarea creada o actualizada", task_completed: "Tarea completada", task_deleted: "Tarea eliminada",
+    pipeline_updated: "Pipeline actualizado", client_created: "Cliente creado", client_updated: "Cliente editado",
+    whatsapp_opened: "WhatsApp abierto", email_draft_opened: "Gmail abierto", waiting_sku_added: "Espera de SKU creada",
+    waiting_sku_cleared: "Espera de SKU cerrada", product_cost_saved: "Costo actualizado",
+    product_costs_imported: "Costos importados", user_role_updated: "Rol de usuario modificado",
+    user_status_updated: "Estado de usuario modificado", user_created: "Usuario creado"
+  };
+
+  function activityGroup(action = "") {
+    if (action.startsWith("task_")) return "tasks";
+    if (action.startsWith("pipeline_")) return "pipeline";
+    if (action.startsWith("client_") || action.startsWith("waiting_")) return "clients";
+    if (["whatsapp_opened", "email_draft_opened"].includes(action)) return "contact";
+    if (action.startsWith("product_cost")) return "costs";
+    if (action.startsWith("user_") || action.includes("assignment")) return "users";
+    return "other";
+  }
+
+  function activityDetails(item) {
+    const details = item?.details && typeof item.details === "object" ? item.details : {};
+    if (item.action === "whatsapp_opened") return "Se abrió WhatsApp; el CRM no confirma envío ni respuesta.";
+    if (item.action === "email_draft_opened") return "Se abrió un borrador en Gmail; el CRM no confirma envío ni respuesta.";
+    if (item.action === "pipeline_updated") {
+      const before = details.before?.stage || "Sin etapa", after = details.after?.stage || details.stage || "Nueva etapa";
+      return `${before} → ${after}${Number(details.after?.amount || 0) ? ` · ${new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(details.after.amount)}` : ""}`;
+    }
+    if (item.action === "task_completed") return "Finalización registrada dentro del CRM.";
+    if (item.action === "product_cost_saved") return `Costo con IVA: ${new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(details.costGross || 0)}`;
+    if (item.action === "product_costs_imported") return `${details.loaded || 0} costo(s) cargados · ${details.ignored || 0} omitidos`;
+    return item.entity_type ? `${item.entity_type}${item.entity_id ? ` · ${item.entity_id}` : ""}` : "Acción registrada";
+  }
+
+  function activityEvidence(item) {
+    if (["whatsapp_opened", "email_draft_opened"].includes(item.action)) return "Apertura, no envío";
+    if (item.action === "task_completed") return "Completada en CRM";
+    if (item.action === "pipeline_updated") return "Cambio registrado";
+    return "Registro de sistema";
+  }
+
+  async function activityReportSource(from = "", to = "") {
+    if (connected()) {
+      let path = "crm_activity_log?select=*";
+      if (from) path += `&created_at=gte.${encodeURIComponent(new Date(`${from}T00:00:00`).toISOString())}`;
+      if (to) path += `&created_at=lte.${encodeURIComponent(new Date(`${to}T23:59:59.999`).toISOString())}`;
+      path += "&order=created_at.desc&limit=5000";
+      const remote = await rest(path).catch(() => null);
+      if (Array.isArray(remote)) activities = remote;
+    }
+    return activities.slice();
+  }
+
+  function exportActivityReport(rows, clients, from, to) {
+    const names = new Map((clients || []).map(client => [String(client.id), client.cliente || client.contacto || client.email || "Cliente"]));
+    const data = rows.map(item => ({
+      Fecha: new Date(item.created_at).toLocaleString("es-CL"), Usuario: item.actor_name || "Usuario",
+      Cliente: names.get(String(item.client_id || "")) || "", Tipo: ACTIVITY_LABELS[item.action] || item.action,
+      Accion: item.summary || "", Detalle: activityDetails(item), Evidencia: activityEvidence(item)
+    }));
+    const filename = `Actividad_equipo_${from || "inicio"}_${to || "hoy"}.xlsx`;
+    if (window.XLSX) {
+      const book = XLSX.utils.book_new(), sheet = XLSX.utils.json_to_sheet(data);
+      sheet["!cols"] = [{ wch: 20 }, { wch: 22 }, { wch: 28 }, { wch: 26 }, { wch: 54 }, { wch: 48 }, { wch: 22 }];
+      XLSX.utils.book_append_sheet(book, sheet, "Actividad");
+      XLSX.writeFile(book, filename);
+      return;
+    }
+    const headers = Object.keys(data[0] || { Fecha: "", Usuario: "", Cliente: "", Tipo: "", Accion: "", Detalle: "", Evidencia: "" });
+    const quote = value => `"${String(value ?? "").replace(/"/g, '""')}"`;
+    const csv = [headers.join(";"), ...data.map(row => headers.map(key => quote(row[key])).join(";"))].join("\r\n");
+    const url = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" })), link = document.createElement("a");
+    link.href = url; link.download = filename.replace(/\.xlsx$/, ".csv"); link.click(); setTimeout(() => URL.revokeObjectURL(url), 500);
+  }
+
+  function mountActivityReport(context = {}) {
+    if (!can("supervise") || document.getElementById("crmTeamActivityReport")) return;
+    const panel = document.getElementById("dashboard");
+    if (!panel) return;
+    const clients = context.clients || (typeof state !== "undefined" ? state.clients : []) || [], names = new Map(clients.map(client => [String(client.id), client.cliente || client.contacto || client.email || "Cliente"]));
+    const today = new Date(), fromDate = new Date(today); fromDate.setDate(fromDate.getDate() - 6);
+    const iso = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    const host = document.createElement("section");
+    host.id = "crmTeamActivityReport"; host.className = "crmTeamActivityReport";
+    host.innerHTML = `<div class="crmActivityReportHead"><div><small>GESTIÓN Y TRAZABILIDAD</small><h2>Actividad del equipo</h2><p>Muestra acciones registradas dentro del CRM. No interpreta cantidad de clics como productividad.</p></div><button type="button" class="crmActivityExport"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button></div><div class="crmActivityTruth"><i class="fa-solid fa-circle-info"></i><span><b>Lectura correcta:</b> WhatsApp y Gmail solo confirman que se abrió la aplicación o el borrador; no prueban que el mensaje fue enviado o respondido.</span></div><div class="crmActivityFilters"><label>Desde<input type="date" name="from" value="${iso(fromDate)}"></label><label>Hasta<input type="date" name="to" value="${iso(today)}"></label><label>Usuario<select name="user"><option value="">Todos los usuarios</option>${profiles.filter(user => user.active !== false).map(user => `<option value="${safe(user.full_name)}">${safe(user.full_name)}</option>`).join("")}</select></label><label>Tipo<select name="group"><option value="">Todas las acciones</option><option value="tasks">Tareas</option><option value="pipeline">Pipeline</option><option value="clients">Clientes y SKU</option><option value="contact">WhatsApp y Gmail</option><option value="costs">Costos</option><option value="users">Usuarios</option><option value="other">Otras</option></select></label><button type="button" class="crmActivityRefresh">Actualizar</button></div><div class="crmActivityReportStatus"></div><div class="crmActivityReportKpis"></div><div class="crmActivityTable"><div class="crmActivityTableHead"><span>Fecha</span><span>Usuario</span><span>Cliente / registro</span><span>Acción</span><span>Resultado o evidencia</span></div><div class="crmActivityTableRows"></div></div><div class="crmActivityPager"></div>`;
+    const profit = panel.querySelector("#crmProfitabilityReport"); profit ? profit.after(host) : panel.prepend(host);
+    let filtered = [], page = 0; const pageSize = 50;
+    const renderRows = () => {
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize)); page = Math.max(0, Math.min(page, totalPages - 1));
+      const visible = filtered.slice(page * pageSize, (page + 1) * pageSize), rows = host.querySelector(".crmActivityTableRows");
+      rows.innerHTML = visible.length ? visible.map(item => { const client = names.get(String(item.client_id || "")) || (item.entity_type === "client" ? item.entity_id : `${item.entity_type || "Registro"} ${item.entity_id || ""}`); return `<article><time>${new Date(item.created_at).toLocaleString("es-CL", { dateStyle: "short", timeStyle: "short" })}</time><span><i>${safe((item.actor_name || "U").slice(0, 1).toUpperCase())}</i><b>${safe(item.actor_name || "Usuario")}</b></span><span>${safe(client)}</span><span><b>${safe(ACTIVITY_LABELS[item.action] || item.action)}</b><small>${safe(item.summary || "")}</small></span><span><b>${safe(activityEvidence(item))}</b><small>${safe(activityDetails(item))}</small></span></article>`; }).join("") : '<p class="crmActivityReportEmpty">No hay actividad registrada para los filtros seleccionados.</p>';
+      const pager = host.querySelector(".crmActivityPager"); pager.innerHTML = `<button type="button" class="crmActivityPrev" ${page === 0 ? "disabled" : ""}>‹ Anterior</button><span>Mostrando ${filtered.length ? page * pageSize + 1 : 0}–${Math.min((page + 1) * pageSize, filtered.length)} de ${filtered.length}</span><button type="button" class="crmActivityNext" ${page >= totalPages - 1 ? "disabled" : ""}>Siguiente ›</button>`;
+      pager.querySelector(".crmActivityPrev").onclick = () => { page--; renderRows(); };
+      pager.querySelector(".crmActivityNext").onclick = () => { page++; renderRows(); };
+    };
+    const refresh = async () => {
+      const status = host.querySelector(".crmActivityReportStatus"); status.textContent = "Actualizando actividad…";
+      const from = host.querySelector('[name="from"]').value, to = host.querySelector('[name="to"]').value, userSelect = host.querySelector('[name="user"]'), user = userSelect.value, group = host.querySelector('[name="group"]').value, source = await activityReportSource(from, to);
+      const reportUsers = [...new Set([...profiles.map(item => item.full_name), ...source.map(item => item.actor_name)].filter(Boolean))].sort((a, b) => a.localeCompare(b));
+      userSelect.innerHTML = `<option value="">Todos los usuarios</option>${reportUsers.map(name => `<option value="${safe(name)}">${safe(name)}</option>`).join("")}`; userSelect.value = user;
+      const start = from ? new Date(`${from}T00:00:00`) : null, end = to ? new Date(`${to}T23:59:59.999`) : null;
+      filtered = source.filter(item => { const date = new Date(item.created_at); return (!start || date >= start) && (!end || date <= end) && (!user || item.actor_name === user) && (!group || activityGroup(item.action) === group); }).sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+      page = 0; const clientsTouched = new Set(filtered.map(item => item.client_id).filter(Boolean)).size, completed = filtered.filter(item => item.action === "task_completed").length, pipeline = filtered.filter(item => item.action === "pipeline_updated").length, contact = filtered.filter(item => ["whatsapp_opened", "email_draft_opened"].includes(item.action)).length;
+      host.querySelector(".crmActivityReportKpis").innerHTML = [["Acciones registradas", filtered.length], ["Clientes gestionados", clientsTouched], ["Tareas completadas", completed], ["Cambios de pipeline", pipeline], ["Contactos abiertos", contact]].map(([label, value]) => `<article><span>${label}</span><b>${value}</b></article>`).join("");
+      status.textContent = connected() ? `Base compartida · hasta ${filtered.length} registros para este período` : `Piloto local · actividad registrada en este navegador (${filtered.length})`;
+      renderRows();
+    };
+    host.querySelector(".crmActivityRefresh").onclick = refresh;
+    host.querySelector(".crmActivityExport").onclick = () => filtered.length ? exportActivityReport(filtered, clients, host.querySelector('[name="from"]').value, host.querySelector('[name="to"]').value) : alert("No hay actividad para exportar con estos filtros.");
+    refresh();
   }
 
   function openLocalSwitcher() {
@@ -669,6 +788,7 @@
         user.active = user.active === false;
         if (connected()) await rest(`crm_profiles?id=eq.${encodeURIComponent(user.id)}`, { method: "PATCH", body: { active: user.active, updated_at: new Date().toISOString() }, prefer: "return=minimal" });
         else writeJSON(LOCAL_USERS_KEY, profiles);
+        await audit("user_status_updated", "user", user.id, `${user.active ? "Activó" : "Desactivó"} a ${user.full_name}`, { active: user.active });
         renderUsersSettings(host);
       };
     });
@@ -689,12 +809,14 @@
             await new Promise(resolve => setTimeout(resolve, 350));
             await rest(`crm_profiles?id=eq.${encodeURIComponent(created.user.id)}`, { method: "PATCH", body: { role: data.role, updated_at: new Date().toISOString() }, prefer: "return=minimal" });
           }
+          await audit("user_created", "user", created.user?.id || data.email, `Creó el usuario ${data.name}`, { email: data.email, role: data.role });
           status.textContent = "Usuario registrado. Si Supabase exige confirmación, recibirá un correo.";
           setTimeout(async () => { profiles = await rest("crm_profiles?select=*&order=full_name.asc"); renderUsersSettings(host); }, 1200);
         } else {
           if (data.pin.length < 4) throw new Error("El PIN debe tener al menos 4 dígitos.");
           profiles.push({ id: `local-${uid()}`, full_name: data.name.trim(), email: data.email.trim(), role: data.role, active: true, local: true, pin_hash: await pinHash(data.pin) });
           writeJSON(LOCAL_USERS_KEY, profiles);
+          await audit("user_created", "user", profiles.at(-1).id, `Creó el usuario ${data.name}`, { email: data.email, role: data.role });
           status.textContent = "Usuario piloto creado.";
           addForm.reset();
           renderUsersSettings(host);
