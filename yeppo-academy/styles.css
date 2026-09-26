@@ -405,3 +405,58 @@
  .buyer-personas-grid,.case-stories,.need-to-basket,.trust-stack,.ninety-day-plan{grid-template-columns:1fr}
  .assortment-pyramid .tier{width:100%}
 }
+
+
+/* Chapter 2 — deep course additions */
+.market-maturity-flow,.purchase-trigger-map,.isp-checker-visual{display:flex;gap:8px;align-items:stretch;overflow-x:auto;margin:24px 0;padding-bottom:4px}
+.market-maturity-flow>div,.purchase-trigger-map>div,.isp-checker-visual>div{min-width:150px;flex:1;padding:15px;border:1px solid #e7eaf3;border-radius:14px;background:#fff}
+.market-maturity-flow>i,.purchase-trigger-map>i,.isp-checker-visual>i{align-self:center;font-style:normal;color:#c97aa0;font-size:18px}
+.market-maturity-flow span,.purchase-trigger-map small,.isp-checker-visual span{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#c62f73;margin-bottom:5px}
+.market-maturity-flow b,.purchase-trigger-map b,.isp-checker-visual b{display:block;font-size:14px;color:#111858;margin-bottom:4px}
+.market-maturity-flow p,.purchase-trigger-map span,.isp-checker-visual p{font-size:12px!important;line-height:1.45!important;color:#68739b!important;margin:0!important}
+.channel-playbook,.case-transfer{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:22px 0}
+.channel-playbook article,.case-transfer>div{padding:15px;border:1px solid #e7eaf3;border-radius:14px;background:linear-gradient(145deg,#fff,#fbfaff)}
+.channel-playbook b,.case-transfer b{display:block;font-size:14px;color:#111858;margin-bottom:5px}
+.channel-playbook p,.case-transfer span{font-size:12px!important;line-height:1.5!important;color:#68739b!important;margin:0!important}
+.case-transfer{padding:18px;border-radius:16px;background:#f8f7fc}
+.case-transfer h4{grid-column:1/-1;font-size:18px;margin:0 0 3px;color:#111858}
+.starter-assortment{margin:26px 0;padding:19px;border-radius:17px;background:#f8f7fc}
+.starter-assortment h4{font-size:19px;margin:0 0 6px;color:#111858}
+.starter-assortment>p{font-size:13px!important;line-height:1.55!important;color:#66719a!important;margin:0 0 13px!important}
+.starter-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.starter-grid>div{padding:14px;border-radius:13px;background:#fff;border:1px solid #e7eaf3}
+.starter-grid b{display:block;font-size:17px;color:#c52f73}
+.starter-grid span{display:block;font-size:12px;font-weight:850;color:#111858;margin:4px 0}
+.starter-grid small{font-size:10px;line-height:1.4;color:#6b759d}
+.margin-calculator{margin:26px 0;padding:20px;border-radius:18px;background:linear-gradient(135deg,#f5f2ff,#fff5fa);border:1px solid #e7e3f1}
+.calc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:13px}
+.calc-head small{display:block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#c42f73}
+.calc-head h4{font-size:19px;margin:3px 0;color:#111858}
+.calc-head>span{font-size:10px;color:#7a84a6}
+.calc-inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.calc-inputs label{font-size:10px;font-weight:850;color:#5f6b94}
+.calc-inputs input{display:block;width:100%;margin-top:5px;border:1px solid #dfe2ec;border-radius:10px;padding:10px;background:#fff;color:#111858}
+.margin-calculator .primary{margin-top:10px}
+.calc-result{margin-top:10px;padding:12px;border-radius:11px;background:#fff;font-size:13px;line-height:1.55;color:#58658e}
+.b2b-benchmark{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:24px 0;padding:18px;border-radius:17px;background:linear-gradient(135deg,#edf9f5,#f4efff)}
+.b2b-benchmark h4,.b2b-benchmark>p{grid-column:1/-1}
+.b2b-benchmark h4{font-size:19px;margin:0;color:#111858}
+.b2b-benchmark>p{font-size:13px!important;line-height:1.6!important;color:#59658e!important;margin:0 0 5px!important}
+.b2b-benchmark>div{padding:13px;border-radius:12px;background:#ffffffc9}
+.b2b-benchmark b{display:block;font-size:13px;color:#111858}
+.b2b-benchmark span{font-size:11px;color:#68739b}
+.weekly-growth-loop{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:25px 0}
+.weekly-growth-loop>span{grid-column:1/-1;font-size:9px;font-weight:900;letter-spacing:.08em;color:#c52f73}
+.weekly-growth-loop>div{padding:15px;border-radius:14px;border:1px solid #e7eaf3;background:#fff}
+.weekly-growth-loop b{font-size:13px;color:#111858}
+.weekly-growth-loop p{font-size:11px!important;line-height:1.45!important;color:#68739b!important;margin:5px 0 0!important}
+@media(max-width:1000px){
+ .starter-grid{grid-template-columns:repeat(3,1fr)}
+ .calc-inputs{grid-template-columns:repeat(2,1fr)}
+ .b2b-benchmark,.weekly-growth-loop{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+ .channel-playbook,.case-transfer,.starter-grid,.calc-inputs,.b2b-benchmark,.weekly-growth-loop{grid-template-columns:1fr}
+ .case-transfer h4,.b2b-benchmark h4,.b2b-benchmark>p,.weekly-growth-loop>span{grid-column:auto}
+ .calc-head{align-items:flex-start;flex-direction:column}
+}
