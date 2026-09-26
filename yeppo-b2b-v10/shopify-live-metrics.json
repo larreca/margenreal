@@ -1,73 +1,39 @@
 {
-  "generatedAt": "2026-09-22T20:10:00-03:00",
+  "generatedAt": "2026-09-25T22:49:34.846000-03:00",
   "source": "Shopify Yeppo",
   "currency": "CLP",
   "scope": "b2b_only",
   "criteria": [
-    "cliente con etiqueta B2B",
-    "pedido con etiqueta Astroselling o Por-Mayor",
-    "sourceName https://b2b.yeppo.cl",
-    "pedido >= 300000 CLP se clasifica B2B"
+    "pedido >= 300000 CLP",
+    "etiqueta de pedido Astroselling o Por-Mayor",
+    "cliente con etiqueta B2B, mayorista o por mayor"
   ],
   "audit": {
-    "periodStart": "2026-09-16",
-    "periodEnd": "2026-09-22",
-    "orders": 22,
-    "weeklySales": 23355245,
-    "todayOrders": 13,
-    "todaySales": 14693843,
+    "periodStart": "2026-09-19",
+    "periodEnd": "2026-09-25",
+    "orders": 40,
+    "weeklySales": 39036910,
+    "todayOrders": 7,
+    "todaySales": 3748051,
+    "affectedCustomers": 29,
+    "newIdentifiableCustomers": 5,
     "unassignedHighValueOrders": 1,
-    "taggedCustomerCount": 297,
-    "ruleAddedCustomers": 1,
-    "identifiableB2BCustomers": 298
+    "customerUniverseAfterUpdate": 319,
+    "stockSnapshot": "2026-09-18"
   },
   "today": {
-    "orders": 13,
-    "totalSales": 14693843,
-    "averageOrderValue": 1130295.6153846155
+    "date": "2026-09-25",
+    "orders": 7,
+    "sales": 3748051,
+    "aov": 535435.8571428572
   },
   "sales7": [
-    {
-      "date": "2026-09-16",
-      "orders": 0,
-      "sales": 0,
-      "aov": 0
-    },
-    {
-      "date": "2026-09-17",
-      "orders": 3,
-      "sales": 905750,
-      "aov": 301916.6666666667
-    },
-    {
-      "date": "2026-09-18",
-      "orders": 0,
-      "sales": 0,
-      "aov": 0
-    },
-    {
-      "date": "2026-09-19",
-      "orders": 0,
-      "sales": 0,
-      "aov": 0
-    },
-    {
-      "date": "2026-09-20",
-      "orders": 1,
-      "sales": 4710066,
-      "aov": 4710066
-    },
-    {
-      "date": "2026-09-21",
-      "orders": 5,
-      "sales": 3045586,
-      "aov": 609117.2
-    },
-    {
-      "date": "2026-09-22",
-      "orders": 13,
-      "sales": 14693843,
-      "aov": 1130295.6153846155
-    }
+    {"date":"2026-09-19","orders":0,"sales":0,"aov":0},
+    {"date":"2026-09-20","orders":1,"sales":4710066,"aov":4710066},
+    {"date":"2026-09-21","orders":6,"sales":3988204,"aov":664700.6666666666},
+    {"date":"2026-09-22","orders":19,"sales":22622655,"aov":1190666.0526315789},
+    {"date":"2026-09-23","orders":5,"sales":2871538,"aov":574307.6},
+    {"date":"2026-09-24","orders":2,"sales":1096396,"aov":548198},
+    {"date":"2026-09-25","orders":7,"sales":3748051,"aov":535435.8571428572}
   ]
 }
