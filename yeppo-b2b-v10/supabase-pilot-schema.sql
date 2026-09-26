@@ -8,7 +8,7 @@ create table if not exists public.crm_profiles (
   full_name text not null default 'Usuario',
   email text not null default '',
   role text not null default 'kam' check (role in ('admin','supervisor','kam','readonly')),
-  active boolean not null default true,
+  active boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -25,16 +25,13 @@ returns trigger
 language plpgsql
 security definer set search_path = public
 as $$
-declare
-  first_role text;
 begin
-  select case when exists(select 1 from public.crm_profiles) then 'kam' else 'admin' end into first_role;
-  insert into public.crm_profiles(id, full_name, email, role)
+  insert into public.crm_profiles(id, full_name, email, role, active)
   values (
     new.id,
     coalesce(nullif(new.raw_user_meta_data->>'full_name',''), split_part(coalesce(new.email,''),'@',1), 'Usuario'),
     coalesce(new.email,''),
-    first_role
+    'kam', false
   )
   on conflict (id) do nothing;
   return new;
@@ -162,7 +159,8 @@ alter table public.crm_client_overrides enable row level security;
 alter table public.crm_activity_log enable row level security;
 
 drop policy if exists crm_profiles_read on public.crm_profiles;
-create policy crm_profiles_read on public.crm_profiles for select to authenticated using (true);
+create policy crm_profiles_read on public.crm_profiles for select to authenticated
+  using (id = auth.uid() or public.crm_can_supervise());
 drop policy if exists crm_profiles_admin_update on public.crm_profiles;
 create policy crm_profiles_admin_update on public.crm_profiles for update to authenticated
   using (public.crm_current_role() = 'admin') with check (public.crm_current_role() = 'admin');
@@ -229,3 +227,95 @@ select id, coalesce(nullif(raw_user_meta_data->>'full_name',''), split_part(coal
        case when position = 1 and not exists(select 1 from public.crm_profiles) then 'admin' else 'kam' end
 from ranked_users
 on conflict (id) do nothing;
+
+-- Una cuenta nueva queda inactiva hasta que un administrador la habilite.
+-- Tras crear y confirmar la cuenta inicial, habilita solo su correo desde SQL Editor:
+-- update public.crm_profiles set role = 'admin', active = true
+-- where email = 'CORREO_DEL_ADMINISTRADOR';
+alter table public.crm_profiles alter column active set default false;
+
+create table if not exists public.crm_shopify_orders (
+  order_id text primary key,
+  payload jsonb not null,
+  generated_at timestamptz not null,
+  imported_at timestamptz not null default now(),
+  imported_by uuid references public.crm_profiles(id)
+);
+create table if not exists public.crm_shopify_sales_daily (
+  date date primary key,
+  orders integer not null default 0,
+  sales numeric not null default 0,
+  aov numeric not null default 0,
+  generated_at timestamptz not null,
+  imported_at timestamptz not null default now(),
+  imported_by uuid references public.crm_profiles(id)
+);
+create table if not exists public.crm_shopify_customers (
+  customer_id text primary key,
+  payload jsonb not null,
+  generated_at timestamptz not null,
+  imported_at timestamptz not null default now(),
+  imported_by uuid references public.crm_profiles(id)
+);
+create table if not exists public.crm_shopify_products (
+  sku text primary key,
+  payload jsonb not null,
+  generated_at timestamptz not null,
+  imported_at timestamptz not null default now(),
+  imported_by uuid references public.crm_profiles(id)
+);
+create table if not exists public.crm_shopify_sync (
+  id text primary key check (id = 'main'),
+  generated_at timestamptz not null,
+  source text not null default '',
+  order_count integer not null default 0,
+  sales_day_count integer not null default 0,
+  customer_count integer not null default 0,
+  product_count integer not null default 0,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references public.crm_profiles(id)
+);
+
+create or replace function public.crm_stamp_shopify_import()
+returns trigger language plpgsql security invoker as $$
+begin
+  if tg_table_name = 'crm_shopify_sync' then
+    new.updated_at := now();
+    new.updated_by := auth.uid();
+  else
+    new.imported_at := now();
+    new.imported_by := auth.uid();
+  end if;
+  return new;
+end;
+$$;
+
+do $$
+declare table_name text;
+begin
+  foreach table_name in array array['crm_shopify_orders','crm_shopify_sales_daily','crm_shopify_customers','crm_shopify_products','crm_shopify_sync'] loop
+    execute format('drop trigger if exists crm_stamp_import on public.%I', table_name);
+    execute format('create trigger crm_stamp_import before insert or update on public.%I for each row execute function public.crm_stamp_shopify_import()', table_name);
+  end loop;
+end $$;
+
+alter table public.crm_shopify_orders enable row level security;
+alter table public.crm_shopify_sales_daily enable row level security;
+alter table public.crm_shopify_customers enable row level security;
+alter table public.crm_shopify_products enable row level security;
+alter table public.crm_shopify_sync enable row level security;
+
+do $$
+declare table_name text;
+begin
+  foreach table_name in array array['crm_shopify_orders','crm_shopify_sales_daily','crm_shopify_customers','crm_shopify_products','crm_shopify_sync'] loop
+    execute format('drop policy if exists crm_shopify_read on public.%I', table_name);
+    execute format('create policy crm_shopify_read on public.%I for select to authenticated using (public.crm_current_role() is not null)', table_name);
+    execute format('drop policy if exists crm_shopify_insert on public.%I', table_name);
+    execute format('create policy crm_shopify_insert on public.%I for insert to authenticated with check (public.crm_can_supervise())', table_name);
+    execute format('drop policy if exists crm_shopify_update on public.%I', table_name);
+    execute format('create policy crm_shopify_update on public.%I for update to authenticated using (public.crm_can_supervise()) with check (public.crm_can_supervise())', table_name);
+    execute format('revoke all on public.%I from anon', table_name);
+    execute format('grant select, insert, update on public.%I to authenticated', table_name);
+  end loop;
+end $$;

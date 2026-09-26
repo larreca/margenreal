@@ -25,6 +25,10 @@ async function crmPersistWeeklyPayload(data,source="import"){
   try{await crmDbUpsert(payload,"weekly-"+source)}catch(e){console.warn("CRM weekly IndexedDB:",e)}
   return true;
 }
+async function crmPublishSharedShopify(data){
+  if(window.CRMShopifyCloud?.isConfigured())return window.CRMShopifyCloud.publish(data);
+  return {shared:false};
+}
 function crmInstallUniversalJsonCapture(){
   if(document.documentElement.dataset.crmJsonCapture==="1")return;
   document.documentElement.dataset.crmJsonCapture="1";
@@ -185,14 +189,15 @@ function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const
     await crmPersistWeeklyPayload(nativeLive,"crm-native-backup");
     liveShopify=nativeLive;window.SHOPIFY_LIVE_DATA=nativeLive;
     try{localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(nativeLive))}catch(e){console.warn("Shopify live cache:",e)}
+    await crmPublishSharedShopify(nativeLive);
     resolve(data);return;
   }
   if(!Array.isArray(data.customers))data.customers=[];if(!Array.isArray(data.sales7))data.sales7=[];if(!Array.isArray(data.products))data.products=[];if(!Array.isArray(data.recentOrders))data.recentOrders=[];
   const ordersOnly=data.scope==="b2b_only"&&data.recentOrders.length&&!data.customers.length&&!data.products.length;
   if(!ordersOnly&&!data.customers.length&&!data.sales7.length&&!data.products.length&&!data.recentOrders.length)throw new Error("Formato no reconocido. Usa un respaldo CRM con clients o un paquete Shopify con customers/sales7/products/recentOrders");
-  if(ordersOnly){await crmDbUpsert(data,"shopify-b2b-orders");await crmPersistWeeklyPayload(data,"shopify-b2b-orders");resolve(data);return}
+  if(ordersOnly){await crmDbUpsert(data,"shopify-b2b-orders");await crmPersistWeeklyPayload(data,"shopify-b2b-orders");await crmPublishSharedShopify(data);resolve(data);return}
   if(!mergeLiveShopify(data))throw new Error("No pude integrar los datos al CRM");
-  localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));await crmDbUpsert(data,"shopify-live");await crmPersistWeeklyPayload(data,"shopify-live");resolve(data)
+  localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));await crmDbUpsert(data,"shopify-live");await crmPersistWeeklyPayload(data,"shopify-live");await crmPublishSharedShopify(data);resolve(data)
 }catch(e){reject(e)}};r.onerror=()=>reject(r.error||new Error("No pude leer el archivo"));r.readAsText(file)})}
 function shopifyLiveLabel(){const w=crmWeeklyCacheLoad(),wo=w?.recentOrders?.length||0;if(!liveShopify)return wo?"B2B ✓ · "+wo+" pedidos detallados":"Shopify sin cargar";const c=liveShopify.customers?.length||0,p=liveShopify.products?.length||0,d=liveShopify.sales7?.length||0;return "Shopify real ✓ · "+c+" clientes · "+p+" productos · "+d+" días · "+wo+" pedidos"}
 function addShopifyBridgeControl(){
@@ -208,6 +213,16 @@ function addShopifyBridgeControl(){
   (document.getElementById("v10security")||document.body).prepend(status);
   status.innerHTML=liveShopify?`<b>Shopify real cargado</b><span>${liveShopify.customers?.length||0} clientes · ${liveShopify.products?.length||0} productos · actualizado ${new Date(liveShopify.generatedAt||Date.now()).toLocaleString("es-CL")}</span><button class="shopifyReplace">Actualizar Shopify</button>`:`<b>Base CRM activa</b><span>Los datos de Shopify se actualizan cuando cargas un archivo preparado en el chat. Clientes, pedidos y SKU se acumulan sin borrar históricos.</span><button class="shopifyReplace">Actualizar Shopify</button>`;crmDbStats().then(st=>{const span=status.querySelector("span");if(span)span.textContent+=(span.textContent?" · ":"")+`Base: ${st.customers} clientes · ${st.orders} pedidos · ${st.products} SKU · ${st.costs||0} costos · ${st.b2bSales||0} días B2B`});
   status.querySelector(".shopifyReplace").onclick=()=>inp.click();
+  if(window.CRMShopifyCloud?.isConfigured()&&window.CRMUsers?.can?.("supervise")){
+    const publish=document.createElement("button");publish.type="button";publish.className="shopifyPublishLocal";publish.textContent="Compartir datos de este equipo";status.appendChild(publish);
+    publish.onclick=async()=>{publish.disabled=true;publish.textContent="Publicando…";try{
+      const [orders,sales,customers,products]=await Promise.all(["orders","b2bSalesDaily","customers","products"].map(store=>crmDbAll(store).catch(()=>[]))),weekly=crmWeeklyCacheLoad();
+      const data={generatedAt:weekly?.generatedAt||new Date().toISOString(),source:"CRM local a base compartida",scope:"b2b_only",recentOrders:weekly?.recentOrders?.length?weekly.recentOrders:orders,sales7:weekly?.sales7?.length?weekly.sales7:sales,customers,products};
+      const result=await window.CRMShopifyCloud.publish(data);
+      await window.CRMUsers?.audit?.("shopify_shared","shopify","main",`Publicó ${result.orders} pedidos B2B para el equipo`,result);
+      publish.textContent=`Compartido ✓ · ${result.orders} pedidos`;
+    }catch(error){publish.textContent="No se pudo compartir";alert(error.message);publish.disabled=false}}
+  }
 }
 
 
@@ -474,7 +489,15 @@ async function init(){
   const started=performance.now();
   try{
     await window.CRMUsers?.init?.();
-    const hasLive=loadLocalShopifyLive(),localSnapshot=hasLive&&liveShopify?liveShopify:null;
+    const remoteShopify=await window.CRMShopifyCloud?.load?.().catch(error=>{console.error("Shared Shopify:",error);return null});
+    const hasLive=remoteShopify?false:loadLocalShopifyLive(),localSnapshot=hasLive&&liveShopify?liveShopify:null;
+    if(remoteShopify){
+      await crmDbUpsert(remoteShopify,"shared-cloud");
+      try{localStorage.setItem(WEEKLY_CACHE_KEY,JSON.stringify(remoteShopify))}catch(error){console.warn("Shared weekly cache:",error)}
+      window.CRM_WEEKLY_CACHE=remoteShopify;window.CRM_SHARED_SHOPIFY=remoteShopify;
+      if(remoteShopify.customers?.length)mergeLiveShopify(remoteShopify);
+      else{liveShopify=remoteShopify;window.SHOPIFY_LIVE_DATA=remoteShopify}
+    }
     const [shared]=await Promise.all([
       window.CRMUsers?.hydrate?.({pipeline,nextActions}),
       consumeShopifySyncFragment(),

@@ -158,7 +158,7 @@
             <label>Correo<input class="crmAuthEmail" type="email" autocomplete="username" required></label>
             <label>Contraseña<input class="crmAuthPassword" type="password" autocomplete="current-password" required></label>
             <button class="primary crmAuthSubmit" type="submit">Ingresar</button>
-            <button class="soft crmAuthSignup" type="button">Crear primer administrador</button>
+            <button class="soft crmAuthSignup" type="button">Registrar cuenta inicial</button>
             <button class="soft crmAuthLocal" type="button">Volver al modo piloto local</button>
             <small class="crmAuthStatus"></small>
           </form>`;
@@ -194,18 +194,20 @@
           status.textContent = "Escribe un correo y una contraseña de al menos 6 caracteres.";
           return;
         }
-        const fullName = prompt("Nombre del primer administrador", "Matías")?.trim();
+        const fullName = prompt("Tu nombre", "Matías")?.trim();
         if (!fullName) return;
-        status.textContent = "Creando administrador…";
+        status.textContent = "Registrando cuenta…";
         try {
           const result = await authRequest("signup", { email, password, data: { full_name: fullName } });
           if (result.access_token) {
             session = { ...result, expires_at: result.expires_at || Math.floor(Date.now() / 1000) + (result.expires_in || 3600) };
             writeJSON(SESSION_KEY, session);
-            await loadRemoteIdentity();
-            overlay.remove();
-            resolve(true);
-          } else status.textContent = "Usuario creado. Confirma el correo y luego ingresa.";
+            try {
+              await loadRemoteIdentity();
+              overlay.remove();
+              resolve(true);
+            } catch (_) { status.textContent = "Cuenta registrada. Confirma el correo y espera la activación del administrador."; }
+          } else status.textContent = "Cuenta registrada. Confirma el correo y espera la activación del administrador.";
         } catch (error) { status.textContent = error.message; }
       };
       overlay.querySelector(".crmAuthLocal").onclick = () => {
@@ -761,9 +763,9 @@
       </div>
       <div class="crmUsersCard">
         <small>BASE COMPARTIDA</small><h2>Conexión Supabase Free</h2>
-        <p>Al conectar, usuarios, asignaciones, pipeline, tareas y bitácora se comparten entre equipos.</p>
+        <p>Al conectar, usuarios, pedidos Shopify, clientes, SKU, ventas diarias, tareas y bitácora se comparten entre equipos autorizados.</p>
         <form class="crmSupabaseConfig"><label>Project URL<input name="url" type="url" placeholder="https://xxxxx.supabase.co" value="${safe(config?.url || "")}"></label><label>Anon public key<input name="anonKey" type="password" placeholder="sb_publishable_... o anon key"></label><div><button class="primary" type="submit">Guardar y conectar</button>${config ? '<button class="soft crmDisconnect" type="button">Desconectar</button>' : ""}</div><span class="crmConfigStatus"></span></form>
-        <div class="crmSupabaseSteps"><b>Para activar la prueba compartida:</b><ol><li>Crea un proyecto gratuito en Supabase.</li><li>Ejecuta el archivo <code>supabase-pilot-schema.sql</code> en SQL Editor.</li><li>Configura esta URL del CRM como Site URL en Authentication.</li><li>Copia Project URL y la clave pública en este formulario.</li><li>El primer usuario registrado queda como Administrador.</li></ol></div>
+        <div class="crmSupabaseSteps"><b>Para activar la base compartida:</b><ol><li>Crea un proyecto en Supabase.</li><li>Ejecuta <code>supabase-pilot-schema.sql</code> en SQL Editor.</li><li>Configura esta URL del CRM en Authentication.</li><li>Copia Project URL y la clave pública en este formulario.</li><li>Registra tu cuenta, confirma el correo y habilita al primer administrador desde SQL Editor según la guía.</li></ol></div>
       </div>`;
     section.appendChild(host);
     renderUsersSettings(host);
@@ -805,9 +807,9 @@
         if (connected()) {
           if (!data.email || data.pin.length < 6) throw new Error("Correo y contraseña temporal de al menos 6 caracteres.");
           const created = await authRequest("signup", { email: data.email, password: data.pin, data: { full_name: data.name } });
-          if (created.user?.id && data.role !== "kam") {
+          if (created.user?.id) {
             await new Promise(resolve => setTimeout(resolve, 350));
-            await rest(`crm_profiles?id=eq.${encodeURIComponent(created.user.id)}`, { method: "PATCH", body: { role: data.role, updated_at: new Date().toISOString() }, prefer: "return=minimal" });
+            await rest(`crm_profiles?id=eq.${encodeURIComponent(created.user.id)}`, { method: "PATCH", body: { role: data.role, active: true, updated_at: new Date().toISOString() }, prefer: "return=minimal" });
           }
           await audit("user_created", "user", created.user?.id || data.email, `Creó el usuario ${data.name}`, { email: data.email, role: data.role });
           status.textContent = "Usuario registrado. Si Supabase exige confirmación, recibirá un correo.";

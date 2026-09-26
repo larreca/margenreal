@@ -1,56 +1,38 @@
-# Activar usuarios compartidos en Yeppo B2B CRM
+# Base compartida · Yeppo B2B CRM
 
-El CRM puede probarse sin costo en dos modalidades:
+El CRM publicado en GitHub Pages no puede guardar pedidos para otros equipos por sí solo: IndexedDB y LocalStorage pertenecen a cada navegador. La base Supabase agrega persistencia central para pedidos, ventas diarias, clientes, SKU, cambios comerciales y actividad. La carga de Shopify sigue siendo manual a través del chat durante la prueba.
 
-- **Piloto local:** usuarios, roles, PIN y bitácora en un mismo navegador.
-- **Supabase Free:** usuarios reales y datos compartidos entre distintos computadores.
+## Activar la base
 
-## 1. Crear el proyecto gratuito
+1. Crea un proyecto de Supabase bajo la cuenta de Yeppo. Conserva el acceso administrativo del proyecto en la empresa.
+2. Ejecuta `supabase-pilot-schema.sql` completo en **SQL Editor**. También funciona como migración de un piloto ya existente.
+3. En **Authentication > URL Configuration**, fija como Site URL y Redirect URL: `https://larreca.github.io/margenreal/yeppo-b2b-v10/`.
+4. Abre **Configuración > Usuarios y KAM** en el CRM, e ingresa **Project URL** y la clave pública `publishable` o `anon`. Nunca ingreses `service_role` ni una clave secreta en el navegador.
+5. Registra la cuenta inicial, confirma el correo si Supabase lo solicita y, desde **SQL Editor**, habilita únicamente ese correo:
 
-1. Ingresar a [Supabase](https://supabase.com/) y crear un proyecto Free.
-2. Esperar a que termine la preparación de la base.
-3. En **SQL Editor**, abrir un nuevo query.
-4. Copiar y ejecutar el contenido completo de `supabase-pilot-schema.sql`.
+   ```sql
+   update public.crm_profiles
+   set role = 'admin', active = true, updated_at = now()
+   where email = 'CORREO_EXACTO_DEL_ADMINISTRADOR';
+   ```
 
-## 2. Configurar autenticación
+6. Inicia sesión nuevamente en el CRM como administrador. En **Configuración > Usuarios y KAM**, crea los demás usuarios y asigna roles. Cada uno debe ingresar desde su PC con correo y contraseña propios. Las cuentas nuevas se crean inactivas y solo un administrador puede activarlas.
 
-En **Authentication > URL Configuration**:
+## Compartir los datos que ya cargamos
 
-- Site URL: `https://larreca.github.io/margenreal/yeppo-b2b-v10/`
-- Agregar la misma dirección en Redirect URLs.
+En el navegador donde están los 40 pedidos, entra al CRM con la cuenta de administrador o supervisor y pulsa **Compartir datos de este equipo** en Configuración. El resultado debe indicar **Compartido ✓ · 40 pedidos**. Si estás cargando un archivo nuevo, el importador B2B lo publicará automáticamente cuando la conexión y la sesión estén activas; exige el mensaje **Base compartida: publicada**.
 
-Para una prueba rápida se puede mantener la confirmación por correo. El usuario deberá confirmar su correo antes de ingresar.
+Después, abre el CRM desde otro navegador, configura la misma Project URL y clave pública, e inicia sesión con otro usuario activo. El CRM descarga el historial compartido y muestra las mismas ventas, categorías, SKU y clientes. Nuevas cargas hacen *upsert*: actualizan los registros con el mismo ID sin borrar pedidos históricos.
 
-## 3. Conectar el CRM
+## Control de acceso
 
-1. Abrir el CRM como Matías.
-2. Entrar en **Configuración > Usuarios y KAM**.
-3. En **Conexión Supabase Free**, ingresar:
-   - Project URL.
-   - `anon` key o `publishable` key pública.
-4. Presionar **Guardar y conectar**.
-5. En la pantalla de acceso, seleccionar **Crear primer administrador**.
+- Administrador y supervisor publican datos Shopify; todos los usuarios activos pueden consultar esa base.
+- Las políticas RLS del esquema impiden que una sesión anónima lea la información central.
+- El sistema registra usuario y fecha de cada importación en las tablas compartidas.
+- Desactivar un perfil corta sus permisos sobre la base central.
+- El código de acceso V10 protege la interfaz cifrada actual, pero no sustituye las cuentas individuales de Supabase. Cambia ese código antes de distribuirlo al equipo, pues ya fue compartido fuera de la aplicación.
+- No publiques archivos de pedidos con nombres y datos de clientes en el repositorio público. Usa el importador autenticado.
 
-El primer usuario registrado queda como Administrador. Los siguientes se crean desde la sección Usuarios y KAM.
+## Alcance de la prueba
 
-## Seguridad
-
-- Usar únicamente la clave pública `anon`/`publishable` en el CRM.
-- **Nunca** copiar la clave `service_role` al navegador o al repositorio.
-- Las políticas RLS del archivo SQL limitan las modificaciones según el rol activo.
-- Administrador y Supervisor pueden revisar la bitácora completa.
-- KAM modifica su cartera y consulta su propia actividad.
-- Solo lectura puede consultar, pero no modificar.
-
-## Información compartida
-
-Al activar Supabase se sincronizan:
-
-- perfiles y roles;
-- asignación de clientes a KAM;
-- cambios de pipeline;
-- tareas y próximas acciones;
-- modificaciones manuales de fichas;
-- bitácora con usuario, acción, fecha y hora.
-
-Los datos originales de Shopify continúan usando la carga actual del CRM. Supabase almacena las modificaciones comerciales y la trazabilidad del equipo.
+La carga no consulta Shopify en segundo plano: Matías pide la actualización por chat, se prepara el JSON y un administrador o supervisor lo importa. El almacenamiento local sigue sirviendo como copia de trabajo por equipo; la confirmación de publicación en Supabase es la señal de que el equipo entero puede ver la actualización.
