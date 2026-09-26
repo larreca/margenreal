@@ -58,9 +58,24 @@ function showHome(){
  $("#homeView").hidden=false;$("#chapterView").hidden=true;editorOpen=false;$("#editorPanel").hidden=true;renderNav();renderHome();renderProgress();$("#searchInput").value="";$("#goHomeBtn").style.display="none";$("#editorToggle").style.display="none"
 }
 function renderObjectives(c){
- const arr=c.objectives||[];
- $("#chapterObjectives").innerHTML=arr.length?'<div class="objectivesHead"><span class="eyebrow">Al terminar podrás</span><b>'+arr.length+' objetivos de aprendizaje</b></div><div class="objectiveGrid">'+arr.map((x,i)=>'<div><i>'+String(i+1).padStart(2,"0")+'</i><span>'+esc(x)+'</span></div>').join("")+'</div>':"";
- $("#railObjectives").innerHTML=arr.length?arr.map(x=>'<span>• '+esc(x)+'</span>').join(""):'<span>Objetivos en desarrollo.</span>'
+  $("#chapterObjectives").innerHTML="";
+  $("#railObjectives").innerHTML='<span class="railHint">Selecciona una sección para saltar dentro del capítulo.</span>';
+}
+function renderToc(){
+  const root=$("#chapterContent"),rail=$("#railObjectives");
+  const sections=[...root.querySelectorAll("[data-toc]")];
+  if(!sections.length){rail.innerHTML='<span class="railHint">Contenido continuo.</span>';return}
+  rail.innerHTML="";
+  sections.forEach((section,i)=>{
+    const id="cap-section-"+(i+1);
+    section.id=id;
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="railTocBtn";
+    b.textContent=section.dataset.toc||("Sección "+(i+1));
+    b.addEventListener("click",()=>section.scrollIntoView({behavior:"smooth",block:"start"}));
+    rail.appendChild(b);
+  });
 }
 function renderMedia(c){
  let out="";
@@ -77,7 +92,7 @@ function showChapter(){
  $("#homeView").hidden=true;$("#chapterView").hidden=false;$("#goHomeBtn").style.display="";$("#editorToggle").style.display="";
  const c=chapter();selectedSchool=c.schoolId;renderNav();renderProgress();
  $("#chapterSchoolCrumb").textContent=c.schoolName;$("#chapterEyebrow").textContent="Capítulo "+c.n+" · "+c.schoolName;$("#chapterTitle").textContent=c.title;$("#chapterSummary").textContent=c.summary||"";
- renderObjectives(c);$("#chapterContent").innerHTML=c.richHtml||'<div class="simpleBody">'+esc(c.body||"Contenido en desarrollo.").replace(/\n\n/g,"</p><p>").replace(/^/,"<p>").replace(/$/,"</p>")+'</div>';renderMedia(c);renderQuiz(c);
+ renderObjectives(c);$("#chapterContent").innerHTML=c.richHtml||'<div class="simpleBody">'+esc(c.body||"Contenido en desarrollo.").replace(/\n\n/g,"</p><p>").replace(/^/,"<p>").replace(/$/,"</p>")+'</div>';renderToc();renderMedia(c);renderQuiz(c);
  const done=!!progress[c.id];$("#completeBtn").textContent=done?"✓ Capítulo completado":"Marcar como completado";$("#completeBtn").className=done?"ghost":"primary";$("#completeBtn").onclick=()=>{progress[c.id]=!progress[c.id];saveProgress();showChapter()};
  const all=allChapters(),i=idxOf(),prev=all[i-1],next=all[i+1];
  setupNavButton($("#prevChapter"),prev,"← Anterior");setupNavButton($("#railPrev"),prev,"← Capítulo anterior");
@@ -97,7 +112,40 @@ function restoreChapter(){
 }
 function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="yeppo-academy-content.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function importData(file){const fr=new FileReader();fr.onload=()=>{try{const x=JSON.parse(fr.result);if(!x||!Array.isArray(x.schools))throw 0;data=x;localStorage.setItem(KEY_DRAFT,JSON.stringify(data));toast("Contenido importado");route()}catch{toast("Formato inválido")}};fr.readAsText(file)}
-document.addEventListener("click",e=>{const btn=e.target.closest(".challenge-submit");if(!btn)return;const box=btn.closest("[data-challenge]");if(!box)return;const qs=[...box.querySelectorAll(".challenge-q")];let score=0,answered=0;qs.forEach(q=>{const picked=q.querySelector('input[type="radio"]:checked');if(!picked)return;answered++;if(String(picked.value)===String(q.dataset.answer))score++});const out=box.querySelector(".challenge-result");if(answered<qs.length){out.textContent="Responde las "+qs.length+" preguntas antes de corregir.";out.style.color="#b42318";return}out.textContent=score+"/5 correctas · "+(score>=4?"Capítulo dominado: puedes avanzar.":score===3?"Buen punto de partida: revisa las respuestas y vuelve a intentarlo.":"Conviene repasar los conceptos clave antes de avanzar.");out.style.color=score>=4?"#157b53":"#b06013"});
+document.addEventListener("click",e=>{
+  const level=e.target.closest(".level-btn");
+  if(level){
+    const wrap=level.closest("[data-level-switch]");
+    const key=level.dataset.level;
+    wrap.querySelectorAll(".level-btn").forEach(b=>b.classList.toggle("active",b===level));
+    wrap.querySelectorAll("[data-level-panel]").forEach(p=>p.classList.toggle("active",p.dataset.levelPanel===key));
+    return;
+  }
+  const choice=e.target.closest("[data-decision-game] article button");
+  if(choice){
+    const card=choice.closest("article");
+    const correct=card.dataset.correct;
+    const picked=choice.dataset.choice;
+    const feedback=card.querySelector(".decision-feedback");
+    card.querySelectorAll("button").forEach(b=>b.classList.remove("chosen","correctChoice"));
+    choice.classList.add("chosen");
+    if(picked===correct){
+      choice.classList.add("correctChoice");
+      const msg=correct==="test"
+        ?"Correcto: hay interés, pero primero valida rotación e incrementalidad."
+        :correct==="escala"
+        ?"Correcto: venta sostenida, reposición y margen justifican profundizar stock."
+        :"Correcto: duplicar función sin demanda o margen claro aumenta complejidad e inventario.";
+      feedback.textContent=msg;
+      feedback.className="decision-feedback good";
+    }else{
+      feedback.textContent="Revisa la señal comercial: viralidad no equivale a rotación y más variedad no siempre mejora el surtido.";
+      feedback.className="decision-feedback bad";
+    }
+    return;
+  }
+});
+document.addEventListener("click",e=>{const btn=e.target.closest(".challenge-submit");if(!btn)return;const box=btn.closest("[data-challenge]");if(!box)return;const qs=[...box.querySelectorAll(".challenge-q")];let score=0,answered=0;qs.forEach(q=>{const picked=q.querySelector('input[type="radio"]:checked');if(!picked)return;answered++;if(String(picked.value)===String(q.dataset.answer))score++});const out=box.querySelector(".challenge-result");if(answered<qs.length){out.textContent="Responde las "+qs.length+" preguntas antes de corregir.";out.style.color="#b42318";return}const target=Math.max(1,qs.length-1);out.textContent=score+"/"+qs.length+" correctas · "+(score>=target?"Capítulo dominado: puedes avanzar.":score>=Math.ceil(qs.length*.6)?"Buen punto de partida: revisa las respuestas y vuelve a intentarlo.":"Conviene repasar los conceptos clave antes de avanzar.");out.style.color=score>=target?"#157b53":"#b06013"});
 $("#searchInput").addEventListener("input",()=>{if($("#homeView").hidden)goHome(selectedSchool);search()});
 $("#goHomeBtn").onclick=()=>goHome(selectedSchool);$("#backToMap").onclick=()=>goHome(selectedSchool);
 $("#editorToggle").onclick=()=>{editorOpen=!editorOpen;$("#editorPanel").hidden=!editorOpen;if(editorOpen){fillEditor();$("#editorPanel").scrollIntoView({behavior:"smooth",block:"start"})}};
