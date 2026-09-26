@@ -2,6 +2,7 @@ import {NextResponse} from "next/server";
 import bcrypt from "bcryptjs";
 import {ensureSchema,getDb} from "@/lib/db";
 import {setSession} from "@/lib/auth";
+import {seedAcademyContent} from "@/lib/academy";
 export async function POST(req){
   try{
     const {token,email,password,name}=await req.json();
@@ -12,6 +13,7 @@ export async function POST(req){
     if(existing[0].count>0)return NextResponse.json({error:"La academia ya fue configurada."},{status:409});
     const hash=await bcrypt.hash(password,12);
     const rows=await sql`INSERT INTO academy_users(email,name,password_hash,role) VALUES(${email.toLowerCase()},${name||"Super Admin"},${hash},'super_admin') RETURNING id,email,name,role,organization_id`;
-    await setSession(rows[0]);return NextResponse.json({ok:true});
+    const seeded=await seedAcademyContent(rows[0].id);
+    await setSession(rows[0]);return NextResponse.json({ok:true,seeded});
   }catch(e){return NextResponse.json({error:e.message||"No se pudo configurar."},{status:500})}
 }
