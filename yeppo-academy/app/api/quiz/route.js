@@ -1,0 +1,2 @@
+import {NextResponse} from "next/server";import {readSession} from "@/lib/auth";import {recordQuizAttempt} from "@/lib/academy";
+export async function POST(req){const s=await readSession();if(!s)return NextResponse.json({error:"No autorizado"},{status:401});const b=await req.json();const score=Number(b.total)>0?Number(b.correct)/Number(b.total)*100:Number(b.score||0);return NextResponse.json(await recordQuizAttempt(s.id,b.chapterId,score,b.answers||null))}
