@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fbfcff">
+<title>Yeppo Academy · K-Beauty B2B</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><b>YEPPO <span>Academy</span></b><small>FORMACIÓN B2B · K-BEAUTY</small></div>
+    <div class="nav-title">Escuelas</div>
+    <nav id="schoolNav" aria-label="Escuelas de la academia"></nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <label class="search" aria-label="Buscar"><span>⌕</span><input id="searchInput" placeholder="Buscar capítulo, ingrediente, venta, stock..."></label>
+      <div class="top-actions">
+        <button id="editorToggle" class="ghost" type="button">Editar contenido</button>
+        <button id="exportBtn" class="ghost" type="button">Exportar</button>
+        <button id="importBtn" class="ghost" type="button">Importar</button>
+        <input id="importFile" type="file" accept="application/json" hidden>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-main">
+        <span class="eyebrow">Yeppo B2B Academy · V1</span>
+        <h1>Aprender K-Beauty para vender mejor.</h1>
+        <p>Una academia práctica para convertir conocimiento de piel, ingredientes, producto y negocio en mejor asesoría, mayor rotación y recompra.</p>
+      </div>
+      <article class="progress-card">
+        <small>Tu progreso en la ruta</small>
+        <b id="progressPct">0%</b>
+        <div class="meter"><i id="progressBar"></i></div>
+        <small id="progressText">0 de 50 capítulos completados</small>
+      </article>
+    </section>
+
+    <section class="stats" aria-label="Resumen de la academia">
+      <article class="stat"><span>Escuelas</span><b id="schoolCount">10</b></article>
+      <article class="stat"><span>Capítulos</span><b id="chapterCount">50</b></article>
+      <article class="stat"><span>Ruta actual</span><b id="currentSchoolName">Negocio</b></article>
+      <article class="stat"><span>Modo</span><b id="modeLabel">Alumno</b></article>
+    </section>
+
+    <section class="layout">
+      <div>
+        <article class="card catalog">
+          <div class="section-head">
+            <div><span class="eyebrow">Mapa de aprendizaje</span><h2 id="catalogTitle">Capítulos</h2></div>
+            <small id="catalogMeta"></small>
+          </div>
+          <div id="chapterGrid" class="chapter-grid"></div>
+        </article>
+
+        <article id="editorPanel" class="card editor" aria-live="polite">
+          <div class="section-head">
+            <div><span class="eyebrow">Edición local</span><h2>Editar capítulo seleccionado</h2></div>
+            <small>Los cambios no modifican Git hasta exportarlos y publicarlos.</small>
+          </div>
+          <div class="row">
+            <label>Título<input id="editTitle"></label>
+            <label>Resumen<input id="editSummary"></label>
+          </div>
+          <label>Objetivos (uno por línea)<textarea id="editObjectives"></textarea></label>
+          <label>Contenido principal<textarea id="editBody"></textarea></label>
+          <label>Consejo comercial<textarea id="editTip"></textarea></label>
+          <div class="row">
+            <label>URL video<input id="editVideo" placeholder="YouTube o Vimeo"></label>
+            <label>URL imagen<input id="editImage" placeholder="https://..."></label>
+          </div>
+          <label>URL diapositivas / recurso<input id="editSlides" placeholder="Google Slides, PDF o enlace"></label>
+          <div class="row">
+            <label>Pregunta trivia<input id="editQuizQ"></label>
+            <label>Opciones (una por línea)<textarea id="editQuizOptions"></textarea></label>
+          </div>
+          <label>Respuesta correcta (1, 2, 3...)<input id="editQuizAnswer" type="number" min="1" step="1"></label>
+          <div class="editor-actions">
+            <button id="saveEdit" class="primary" type="button">Guardar borrador local</button>
+            <button id="resetChapter" class="ghost" type="button">Restaurar capítulo</button>
+          </div>
+          <p class="editor-note">Para publicar cambios de verdad: exporta el JSON. Ese archivo se puede consolidar después en Git como una nueva versión.</p>
+        </article>
+      </div>
+
+      <aside class="side-stack">
+        <article class="card reader" id="reader"></article>
+        <article class="card side-card">
+          <h3>Ruta de aprendizaje</h3>
+          <p>Marca capítulos completados a medida que avanzas. El progreso queda guardado en este navegador.</p>
+          <div class="checklist">
+            <label><input type="checkbox" disabled checked> Teoría aplicada</label>
+            <label><input type="checkbox" disabled checked> Caso / consejo comercial</label>
+            <label><input type="checkbox" disabled checked> Multimedia configurable</label>
+            <label><input type="checkbox" disabled checked> Trivia por capítulo</label>
+          </div>
+        </article>
+        <article class="card side-card">
+          <h3>V1 editable</h3>
+          <p>Videos, imágenes y diapositivas se agregan por URL. En una versión posterior podemos incorporar usuarios, certificados, panel administrador y analítica centralizada.</p>
+        </article>
+      </aside>
+    </section>
+  </main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
