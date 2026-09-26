@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<rect width="1200" height="800" fill="#fff"/><text x="70" y="80" font-family="Arial" font-size="34" font-weight="700" fill="#101858">La barrera cutánea: “ladrillos y mortero”</text><text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Modelo pedagógico del estrato córneo</text>
+<g transform="translate(80,180)">
+<rect width="740" height="460" rx="28" fill="#faf7fb" stroke="#e5e6ef"/>
+<g fill="#f4c7da" stroke="#ed3489" stroke-width="2">
+<rect x="40" y="55" width="170" height="80" rx="16"/><rect x="240" y="55" width="170" height="80" rx="16"/><rect x="440" y="55" width="170" height="80" rx="16"/>
+<rect x="140" y="165" width="170" height="80" rx="16"/><rect x="340" y="165" width="170" height="80" rx="16"/><rect x="540" y="165" width="150" height="80" rx="16"/>
+<rect x="40" y="275" width="170" height="80" rx="16"/><rect x="240" y="275" width="170" height="80" rx="16"/><rect x="440" y="275" width="170" height="80" rx="16"/>
+</g>
+<text x="55" y="102" font-family="Arial" font-size="18" font-weight="700" fill="#101858">CORNEOCITOS</text>
+<text x="268" y="102" font-family="Arial" font-size="17" fill="#101858">NMF + queratina</text>
+<text x="150" y="215" font-family="Arial" font-size="17" fill="#101858">“ladrillos”</text>
+<g stroke="#745fd8" stroke-width="10"><line x1="210" y1="145" x2="240" y2="145"/><line x1="410" y1="145" x2="440" y2="145"/><line x1="310" y1="255" x2="340" y2="255"/></g>
+<text x="170" y="410" font-family="Arial" font-size="20" font-weight="700" fill="#745fd8">Lípidos intercelulares = “mortero”</text><text x="170" y="440" font-family="Arial" font-size="18" fill="#33364b">ceramidas · colesterol · ácidos grasos libres</text>
+</g>
+<g transform="translate(865,190)"><text x="0" y="0" font-family="Arial" font-size="24" font-weight="700" fill="#101858">Cuando funciona bien</text><text x="0" y="48" font-family="Arial" font-size="18" fill="#33364b">✓ limita pérdida excesiva de agua</text><text x="0" y="83" font-family="Arial" font-size="18" fill="#33364b">✓ dificulta entrada de irritantes</text><text x="0" y="118" font-family="Arial" font-size="18" fill="#33364b">✓ mantiene hidratación superficial</text>
+<text x="0" y="190" font-family="Arial" font-size="24" font-weight="700" fill="#ed3489">TEWL</text><text x="0" y="230" font-family="Arial" font-size="18" fill="#33364b">Pérdida transepidérmica de agua:</text><text x="0" y="260" font-family="Arial" font-size="18" fill="#33364b">una medida usada para evaluar</text><text x="0" y="290" font-family="Arial" font-size="18" fill="#33364b">función de barrera.</text>
+<text x="0" y="365" font-family="Arial" font-size="16" fill="#686b80">Basado en revisiones PubMed/PMC</text><text x="0" y="390" font-family="Arial" font-size="16" fill="#686b80">sobre estrato córneo y lípidos.</text></g>
+</svg>
