@@ -1,1 +1,56 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Importador B2B</title></head><body><h1>Importador B2B CRM V10</h1><p>Preparando módulo de importación segura.</p></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Importador B2B · Yeppo CRM V10</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f7f7fb;color:#20263a;min-height:100vh;display:grid;place-items:center;padding:24px}
+.card{width:min(760px,100%);background:#fff;border:1px solid #ececf4;border-radius:24px;padding:30px;box-shadow:0 20px 70px rgba(40,32,70,.10)}
+h1{margin:0 0 8px;font-size:28px;color:#2c376c}.sub{margin:0 0 24px;color:#70758d}
+.drop{display:block;border:2px dashed #d5cce9;background:#fbf9ff;border-radius:18px;padding:30px;text-align:center;cursor:pointer}.drop:hover{border-color:#704a91}
+.drop b{display:block;font-size:18px;margin-bottom:6px}.drop span{font-size:14px;color:#77738a}
+input{display:none}.status{margin-top:22px;border-radius:16px;padding:18px;background:#f4f5fb;min-height:76px;white-space:pre-line;line-height:1.55}
+.ok{background:#eef9f5;border:1px solid #c9eadc}.err{background:#fff1f3;border:1px solid #f2c6cf}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}.kpi{padding:14px;background:#f7f4fb;border-radius:14px}.kpi span{display:block;font-size:12px;color:#73758c}.kpi b{display:block;margin-top:4px;font-size:18px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;text-decoration:none}.primary{background:#342f68;color:#fff}.secondary{background:#eee9f7;color:#342f68}.muted{font-size:12px;color:#888ca0;margin-top:18px}
+@media(max-width:650px){.kpis{grid-template-columns:1fr 1fr}.card{padding:20px}}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Importador de pedidos B2B · CRM V10</h1>
+  <p class="sub">Carga el JSON de pedidos. Este módulo escribe directamente en la base local que usa el dashboard y luego verifica la persistencia.</p>
+  <label class="drop" for="file"><b>Seleccionar JSON B2B</b><span>Compatible con recentOrders + sales7. No reemplaza clientes, tareas, notas ni pipeline.</span></label>
+  <input id="file" type="file" accept=".json,application/json">
+  <div id="status" class="status">Esperando archivo.</div>
+  <div class="kpis">
+    <div class="kpi"><span>Pedidos archivo</span><b id="kOrders">—</b></div>
+    <div class="kpi"><span>Con detalle SKU</span><b id="kDetail">—</b></div>
+    <div class="kpi"><span>Líneas</span><b id="kLines">—</b></div>
+    <div class="kpi"><span>Ventas</span><b id="kSales">—</b></div>
+  </div>
+  <div class="actions">
+    <button id="verify" class="btn secondary" type="button">Verificar base local</button>
+    <a id="openCrm" class="btn primary" href="./">Abrir CRM V10</a>
+  </div>
+  <p class="muted">La validación correcta debe indicar que los pedidos fueron escritos y leídos nuevamente desde IndexedDB.</p>
+</main>
+<script>
+const DB_NAME="yeppoB2BCRM",DB_VERSION=3,WEEKLY_KEY="yeppoCRMv10B2BWeeklyDetail";
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(+n||0);
+function openDb(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{const db=r.result;if(!db.objectStoreNames.contains("salesDaily"))db.createObjectStore("salesDaily",{keyPath:"date"});if(!db.objectStoreNames.contains("b2bSalesDaily"))db.createObjectStore("b2bSalesDaily",{keyPath:"date"});if(!db.objectStoreNames.contains("customers"))db.createObjectStore("customers",{keyPath:"id"});if(!db.objectStoreNames.contains("orders"))db.createObjectStore("orders",{keyPath:"id"});if(!db.objectStoreNames.contains("products"))db.createObjectStore("products",{keyPath:"sku"});if(!db.objectStoreNames.contains("productCosts"))db.createObjectStore("productCosts",{keyPath:"id"});if(!db.objectStoreNames.contains("syncs"))db.createObjectStore("syncs",{keyPath:"id",autoIncrement:true})};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.onblocked=()=>reject(new Error("IndexedDB bloqueada. Cierra otras pestañas del CRM y vuelve a intentar."))})}
+async function all(store){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(store,"readonly"),q=tx.objectStore(store).getAll();q.onsuccess=()=>resolve(q.result||[]);q.onerror=()=>reject(q.error)})}
+function normalize(raw){const d=raw?.payload||raw?.data||raw;if(!d||typeof d!=="object")throw new Error("JSON vacío o no reconocido.");const orders=Array.isArray(d.recentOrders)?d.recentOrders:[],sales7=Array.isArray(d.sales7)?d.sales7:[];if(!orders.length)throw new Error("El archivo no contiene recentOrders.");return{generatedAt:d.generatedAt||new Date().toISOString(),scope:"b2b_only",source:d.source||"importador-b2b-v10",recentOrders:orders,sales7}}
+function stats(d){const detail=d.recentOrders.filter(o=>Array.isArray(o.lineItems)&&o.lineItems.length);return{orders:d.recentOrders.length,detail:detail.length,lines:detail.reduce((s,o)=>s+o.lineItems.length,0),sales:d.recentOrders.reduce((s,o)=>s+(+o.total||0),0)}}
+function paint(s){$("kOrders").textContent=s.orders;$("kDetail").textContent=s.detail;$("kLines").textContent=s.lines;$("kSales").textContent=money(s.sales)}
+async function persist(d){localStorage.setItem(WEEKLY_KEY,JSON.stringify(d));localStorage.setItem("yeppoCRMv10LastWeeklyImport",JSON.stringify({at:new Date().toISOString(),orders:d.recentOrders.length,generatedAt:d.generatedAt}));const db=await openDb();await new Promise((resolve,reject)=>{const tx=db.transaction(["b2bSalesDaily","orders","syncs"],"readwrite"),ss=tx.objectStore("b2bSalesDaily"),os=tx.objectStore("orders");d.sales7.forEach(x=>{const date=String(x.date||"").slice(0,10);if(date)ss.put({date,orders:+x.orders||0,sales:+(x.sales??x.totalSales)||0,aov:+(x.aov??x.averageOrderValue)||0,source:"standalone-import",updatedAt:d.generatedAt})});d.recentOrders.forEach((o,i)=>{const id=String(o.id||o.name||("order-"+i));os.put({...o,id,source:"standalone-import",lastSyncedAt:d.generatedAt})});tx.objectStore("syncs").add({at:new Date().toISOString(),source:"standalone-import",generatedAt:d.generatedAt,sales:d.sales7.length,orders:d.recentOrders.length});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}
+async function verify(expected=null){const orders=await all("orders"),sales=await all("b2bSalesDaily");let cache=null;try{cache=JSON.parse(localStorage.getItem(WEEKLY_KEY)||"null")}catch(e){}const recent=orders.filter(o=>o.source==="standalone-import"||o.source==="weekly-captured-file"||o.source==="weekly-shopify-b2b-orders"||o.source==="shopify-b2b-orders"),withLines=recent.filter(o=>Array.isArray(o.lineItems)&&o.lineItems.length),lines=withLines.reduce((s,o)=>s+o.lineItems.length,0),ok=(expected?recent.length>=expected.orders:recent.length>0)&&cache?.recentOrders?.length>0;$("status").className="status "+(ok?"ok":"err");$("status").textContent=ok?"VALIDACIÓN OK\nIndexedDB: "+recent.length+" pedidos · "+withLines.length+" con detalle · "+lines+" líneas.\nLocalStorage semanal: "+cache.recentOrders.length+" pedidos.\nVentas diarias guardadas: "+sales.length+" fechas.\nYa puedes abrir el CRM.":"VALIDACIÓN INCOMPLETA\nIndexedDB: "+recent.length+" pedidos.\nLocalStorage semanal: "+(cache?.recentOrders?.length||0)+" pedidos.\nSi acabas de importar, cierra otras pestañas del CRM y vuelve a cargar.";return ok}
+$("file").addEventListener("click",e=>{e.currentTarget.value=""});
+$("file").addEventListener("change",async e=>{const file=e.target.files?.[0];if(!file)return;$("status").className="status";$("status").textContent="Leyendo y validando "+file.name+"…";try{const raw=JSON.parse((await file.text()).replace(/^\uFEFF/,"")),d=normalize(raw),s=stats(d);paint(s);$("status").textContent="Archivo válido. Escribiendo directamente en la base local…";await persist(d);await verify(s)}catch(err){$("status").className="status err";$("status").textContent="ERROR\n"+(err?.message||String(err))}});
+$("verify").onclick=()=>verify().catch(err=>{$("status").className="status err";$("status").textContent="ERROR DE VERIFICACIÓN\n"+err.message});
+verify().catch(()=>{});
+</script>
+</body>
+</html>
