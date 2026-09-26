@@ -164,6 +164,22 @@ document.addEventListener("click",e=>{
   }
 });
 document.addEventListener("click",e=>{
+  const stock=e.target.closest("[data-stock-answer]");
+  if(stock){
+    const wrap=stock.closest("[data-stock-game]");
+    wrap.querySelectorAll("[data-stock-answer]").forEach(b=>b.classList.toggle("selected",b===stock));
+    const out=wrap.querySelector(".stock-feedback");
+    const k=stock.dataset.stockAnswer;
+    const messages={
+      test:"TEST PEQUEÑO: hay interés, pero todavía falta historial propio. Compra poca profundidad, mide velocidad, attach rate y consultas antes de escalar.",
+      scale:"PROFUNDIZAR: venta sostenida + margen + reposición son señales más fuertes que la viralidad. Revisa cobertura y evita quiebre.",
+      stop:"NO INCORPORAR AÚN: otro SKU casi idéntico aumenta complejidad e inmoviliza capital si no tiene una razón clara para existir."
+    };
+    out.textContent=messages[k]||"Selecciona un escenario.";
+    return;
+  }
+});
+document.addEventListener("click",e=>{
   const level=e.target.closest(".level-btn");
   if(level){
     const wrap=level.closest("[data-level-switch]");
