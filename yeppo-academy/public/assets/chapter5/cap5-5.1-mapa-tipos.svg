@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Mapa práctico de tipo de piel</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Infografía Yeppo Academy · clasificación cosmética orientativa, no diagnóstico</text>
+<g transform="translate(70 180)">
+<rect width="250" height="500" rx="28" fill="#f8f7fb" stroke="#e5e6ef"/><text x="30" y="55" font-family="Arial" font-size="26" font-weight="700" fill="#101858">NORMAL</text>
+<circle cx="125" cy="190" r="78" fill="#fde8ef"/><path d="M75 180 Q125 140 175 180" fill="none" stroke="#ed3489" stroke-width="5"/><path d="M80 225 Q125 250 170 225" fill="none" stroke="#745fd8" stroke-width="4"/>
+<text x="30" y="315" font-family="Arial" font-size="18" fill="#33364b">• sin brillo excesivo</text><text x="30" y="350" font-family="Arial" font-size="18" fill="#33364b">• sin tirantez marcada</text><text x="30" y="385" font-family="Arial" font-size="18" fill="#33364b">• confort estable</text><text x="30" y="435" font-family="Arial" font-size="16" fill="#686b80">No significa “perfecta”.</text>
+</g>
+<g transform="translate(345 180)">
+<rect width="250" height="500" rx="28" fill="#fff7ec" stroke="#e5e6ef"/><text x="30" y="55" font-family="Arial" font-size="26" font-weight="700" fill="#101858">SECA</text>
+<circle cx="125" cy="190" r="78" fill="#f8d9c8"/><g stroke="#c97652" stroke-width="3"><line x1="75" y1="170" x2="110" y2="155"/><line x1="140" y1="160" x2="175" y2="175"/><line x1="85" y1="215" x2="120" y2="205"/><line x1="135" y1="220" x2="165" y2="210"/></g>
+<text x="30" y="315" font-family="Arial" font-size="18" fill="#33364b">• tirantez frecuente</text><text x="30" y="350" font-family="Arial" font-size="18" fill="#33364b">• textura áspera</text><text x="30" y="385" font-family="Arial" font-size="18" fill="#33364b">• poca oleosidad</text><text x="30" y="435" font-family="Arial" font-size="16" fill="#686b80">Puede empeorar con clima.</text>
+</g>
+<g transform="translate(620 180)">
+<rect width="250" height="500" rx="28" fill="#eef8ff" stroke="#e5e6ef"/><text x="30" y="55" font-family="Arial" font-size="26" font-weight="700" fill="#101858">GRASA</text>
+<circle cx="125" cy="190" r="78" fill="#f7dce7"/><ellipse cx="105" cy="165" rx="22" ry="12" fill="#8ed4f5"/><ellipse cx="145" cy="205" rx="25" ry="13" fill="#8ed4f5"/><ellipse cx="115" cy="230" rx="18" ry="9" fill="#8ed4f5"/>
+<text x="30" y="315" font-family="Arial" font-size="18" fill="#33364b">• brillo recurrente</text><text x="30" y="350" font-family="Arial" font-size="18" fill="#33364b">• más sebo visible</text><text x="30" y="385" font-family="Arial" font-size="18" fill="#33364b">• texturas ligeras suelen gustar</text><text x="30" y="435" font-family="Arial" font-size="16" fill="#686b80">Grasa ≠ sucia.</text>
+</g>
+<g transform="translate(895 180)">
+<rect width="235" height="500" rx="28" fill="#f4efff" stroke="#e5e6ef"/><text x="25" y="55" font-family="Arial" font-size="26" font-weight="700" fill="#101858">MIXTA</text>
+<circle cx="118" cy="190" r="78" fill="#f8dce9"/><path d="M95 115 L140 115 L140 265 L95 265 Z" fill="#8ed4f5" opacity=".8"/><path d="M40 190 Q118 110 196 190 Q118 270 40 190" fill="none" stroke="#ed3489" stroke-width="4"/>
+<text x="25" y="315" font-family="Arial" font-size="18" fill="#33364b">• zonas con más sebo</text><text x="25" y="350" font-family="Arial" font-size="18" fill="#33364b">• otras normales o secas</text><text x="25" y="385" font-family="Arial" font-size="18" fill="#33364b">• T-zone frecuente</text><text x="25" y="435" font-family="Arial" font-size="16" fill="#686b80">La cara puede requerir 2 estrategias.</text>
+</g>
+<text x="70" y="760" font-family="Arial" font-size="18" font-weight="700" fill="#101858">El patrón puede cambiar por edad, hormonas, clima, rutina y zona del rostro.</text>
+</svg>
