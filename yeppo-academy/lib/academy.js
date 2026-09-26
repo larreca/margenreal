@@ -61,3 +61,44 @@ export async function getAdminStats(){
   const sql=getDb();if(!sql)return{users:0,organizations:0,completions:0,versions:0,database:false};
   try{const [u,o,c,v]=await Promise.all([sql`SELECT COUNT(*)::int count FROM academy_users WHERE active=TRUE`,sql`SELECT COUNT(*)::int count FROM academy_organizations WHERE active=TRUE`,sql`SELECT COUNT(*)::int count FROM academy_progress WHERE completed_at IS NOT NULL`,sql`SELECT COUNT(*)::int count FROM academy_chapter_versions`]);return{users:u[0].count,organizations:o[0].count,completions:c[0].count,versions:v[0].count,database:true}}catch{return{users:0,organizations:0,completions:0,versions:0,database:false}}
 }
+
+export async function getAdminChapterRows(){
+  const data=await getAcademyData();const sql=getDb();let statusRows=[];
+  if(sql){try{statusRows=await sql`SELECT chapter_id,status,version,updated_at,published_at FROM academy_chapters`}catch{}}
+  const status=new Map(statusRows.map(r=>[r.chapter_id,r]));
+  return data.schools.flatMap(s=>s.chapters.map(ch=>({
+    id:ch.id,n:ch.n,title:ch.title,school:s.name,
+    status:status.get(ch.id)?.status||"seed",
+    version:Number(status.get(ch.id)?.version||0),
+    updatedAt:status.get(ch.id)?.updated_at||null,
+    publishedAt:status.get(ch.id)?.published_at||null
+  })));
+}
+
+export async function getOrganizationsAndUsers(){
+  const sql=getDb();if(!sql)return{organizations:[],users:[]};
+  try{
+    const [organizations,users]=await Promise.all([
+      sql`SELECT id,name,active,created_at FROM academy_organizations ORDER BY name`,
+      sql`SELECT u.id,u.email,u.name,u.role,u.active,u.last_login_at,u.organization_id,o.name organization_name
+          FROM academy_users u LEFT JOIN academy_organizations o ON o.id=u.organization_id
+          ORDER BY COALESCE(o.name,''),u.name`
+    ]);
+    return{organizations,users};
+  }catch{return{organizations:[],users:[]}}
+}
+
+export async function getOrganizationProgress(organizationId){
+  const sql=getDb();if(!sql||!organizationId)return[];
+  try{return await sql`
+    SELECT u.id,u.name,u.email,
+      COUNT(p.chapter_id)::int AS touched,
+      COUNT(*) FILTER (WHERE p.completed_at IS NOT NULL)::int AS completed,
+      MAX(p.last_activity_at) AS last_activity
+    FROM academy_users u
+    LEFT JOIN academy_progress p ON p.user_id=u.id
+    WHERE u.organization_id=${organizationId}::uuid AND u.active=TRUE
+    GROUP BY u.id,u.name,u.email
+    ORDER BY u.name
+  `}catch{return[]}
+}
