@@ -27,10 +27,10 @@ export default function ContentEditor({initial,role,versions=[]}){
  function switchModule(i){commitSurface();setIndex(i)}
  function command(cmd,value=null){surface.current?.focus();document.execCommand(cmd,false,value)}
  function addBlock(kind){if(!canEdit)return;surface.current?.focus();document.execCommand("insertHTML",false,BLOCKS[kind]||BLOCKS.text)}
- async function action(kind){
+ async function action(kind,versionId=null){
    setBusy(true);setMessage("");let payload;
    if(kind==="save"){const next=commitSurface();payload={action:"save",chapter:next}}
-   else payload={action:kind,chapterId:chapter.id};
+   else payload={action:kind,chapterId:chapter.id,versionId};
    const r=await fetch("/api/admin/chapters",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
    const j=await r.json();setBusy(false);setMessage(r.ok?(kind==="save"?"Borrador guardado.":kind==="review"?"Enviado a revisión.":"Versión publicada."):(j.error||"No se pudo completar la acción."));
    if(r.ok)router.refresh();
@@ -59,7 +59,7 @@ export default function ContentEditor({initial,role,versions=[]}){
     <a className="ya-btn ya-secondary" href={"/academy/chapter/"+chapter.id} target="_blank">Vista alumno ↗</a>
    </div>
    {message&&<div className="ya-alert" style={{background:message.includes("No se")?"#fff0f1":"#eaf8f2",color:message.includes("No se")?"#982139":"#136c4a"}}>{message}</div>}
-   <div className="ya-card" style={{padding:18,marginTop:18}}><b>Historial de versiones</b><div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:10}}>{versions.length?versions.map(v=><span className="ya-version" key={v.id}>v{v.version} · {new Date(v.published_at).toLocaleString("es-CL")}</span>):<span className="ya-version">Aún no hay versiones anteriores publicadas.</span>}</div></div>
+   <div className="ya-card" style={{padding:18,marginTop:18}}><b>Historial de versiones</b><div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:10}}>{versions.length?versions.map(v=><span className="ya-version" key={v.id} style={{display:"inline-flex",alignItems:"center",gap:6}}>v{v.version} · {new Date(v.published_at).toLocaleString("es-CL")}{canEdit&&<button className="ya-btn ya-secondary" style={{padding:"5px 8px"}} onClick={()=>action("restore",v.id)}>Restaurar a borrador</button>}</span>):<span className="ya-version">Aún no hay versiones anteriores publicadas.</span>}</div></div>
   </div>
  </div>
 }
