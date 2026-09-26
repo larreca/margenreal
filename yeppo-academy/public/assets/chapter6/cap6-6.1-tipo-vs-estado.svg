@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Tipo de piel vs estado de la piel</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">El tipo orienta la base; el estado puede cambiar en días o semanas</text>
+<rect x="80" y="185" width="450" height="480" rx="30" fill="#eef0fb"/>
+<text x="120" y="235" font-family="Arial" font-size="28" font-weight="700" fill="#101858">TIPO</text>
+<text x="120" y="275" font-family="Arial" font-size="18" fill="#33364b">Patrón relativamente estable</text>
+<text x="120" y="335" font-family="Arial" font-size="22" fill="#33364b">• seca</text>
+<text x="120" y="380" font-family="Arial" font-size="22" fill="#33364b">• grasa</text>
+<text x="120" y="425" font-family="Arial" font-size="22" fill="#33364b">• mixta</text>
+<text x="120" y="470" font-family="Arial" font-size="22" fill="#33364b">• normal</text>
+<text x="120" y="550" font-family="Arial" font-size="17" fill="#686b80">Ayuda a elegir:</text>
+<text x="120" y="585" font-family="Arial" font-size="17" fill="#686b80">limpieza · textura · hidratación base</text>
+<rect x="670" y="185" width="450" height="480" rx="30" fill="#fff1f7"/>
+<text x="710" y="235" font-family="Arial" font-size="28" font-weight="700" fill="#101858">ESTADO</text>
+<text x="710" y="275" font-family="Arial" font-size="18" fill="#33364b">Condición actual y más cambiante</text>
+<text x="710" y="335" font-family="Arial" font-size="22" fill="#33364b">• deshidratada</text>
+<text x="710" y="380" font-family="Arial" font-size="22" fill="#33364b">• sensibilizada/reactiva</text>
+<text x="710" y="425" font-family="Arial" font-size="22" fill="#33364b">• barrera alterada</text>
+<text x="710" y="470" font-family="Arial" font-size="22" fill="#33364b">• irritada/enrojecida</text>
+<text x="710" y="550" font-family="Arial" font-size="17" fill="#686b80">Puede cambiar por:</text>
+<text x="710" y="585" font-family="Arial" font-size="17" fill="#686b80">clima · rutina · irritantes · tratamientos</text>
+<path d="M545 425 H655" stroke="#745fd8" stroke-width="7"/><polygon points="655,425 630,410 630,440" fill="#745fd8"/>
+<text x="510" y="720" font-family="Arial" font-size="19" font-weight="700" fill="#ed3489">Una piel grasa puede estar deshidratada. Una piel seca puede estar sensibilizada.</text>
+</svg>
