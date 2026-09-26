@@ -79,7 +79,7 @@ function attachInteractions(container,onAssessment){
  return()=>cleanups.forEach(fn=>fn());
 }
 
-export default function ChapterReader({chapter,initialPercent=0,initialPassed=false}){
+export default function ChapterReader({chapter,initialPercent=0,initialPassed=false,previewMode=false}){
  const modules=chapter.modules||[];
  const initialIndex=modules.length?Math.min(modules.length-1,Math.max(0,Math.floor((initialPercent/100)*modules.length))):0;
  const [index,setIndex]=useState(initialIndex);
@@ -91,15 +91,15 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const shown=Math.max(initialPercent,modules.length?Math.round(((index+1)/modules.length)*100):0);
 
  useEffect(()=>{
-   return attachInteractions(stageRef.current,async(correct,total)=>{
+   return attachInteractions(stageRef.current,async(correct,total)=>{\n     if(previewMode)return;
      const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chapterId:chapter.id,correct,total})});
      const j=await r.json();
      setPassed(Boolean(j.passed));
      setAssessmentMsg(j.passed?"Evaluación aprobada. Ya puedes completar el capítulo.":"Resultado guardado. Necesitas 80% para aprobar.");
    });
- },[index,m.html,chapter.id]);
+ },[index,m.html,chapter.id,previewMode]);
 
- async function save(nextIndex=index,complete=false){
+ async function save(nextIndex=index,complete=false){\n   if(previewMode)return;
    const mm=modules[nextIndex];
    await fetch("/api/progress",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
      chapterId:chapter.id,moduleId:mm?.id||null,percent:complete?100:Math.round(((nextIndex+1)/Math.max(modules.length,1))*100),completed:complete
@@ -109,7 +109,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    const n=Math.max(0,Math.min(modules.length-1,i));
    setIndex(n);save(n,false);window.scrollTo({top:0,behavior:"smooth"});
  }
- async function complete(){
+ async function complete(){\n   if(previewMode)return;
    if(chapter.assessmentRequired&&!passed){setAssessmentMsg("Este capítulo requiere aprobar la evaluación antes de completarlo.");return}
    await save(index,true);setDone(true);
  }
