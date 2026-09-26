@@ -326,3 +326,82 @@
  .cushion-case{grid-template-columns:1fr}
  .value-chain-graphic,.journey-course,.evidence-course-ladder{gap:5px}
 }
+
+
+/* =========================================================
+   Chapter 2 — Chile market course visuals
+   ========================================================= */
+.chapter2cover{background:linear-gradient(135deg,#fff2f7 0%,#f2f0ff 56%,#eef9f5 100%)}
+.ch2-photo img{max-height:460px;object-fit:cover}
+.ch2-growth-bars{display:grid;gap:12px;margin:26px 0}
+.ch2-growth-bars>div{display:grid;grid-template-columns:110px minmax(0,1fr) 210px;gap:12px;align-items:center}
+.ch2-growth-bars span{font-size:12px;font-weight:900;color:#59658e}
+.ch2-growth-bars i{display:block;height:22px;width:var(--w);min-width:22px;border-radius:8px;background:linear-gradient(90deg,#ef98c0,#8a78dc)}
+.ch2-growth-bars b{font-size:13px;color:#111858}
+.buyer-personas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px 0}
+.buyer-personas-grid article{padding:17px;border:1px solid #e7eaf3;border-radius:15px;background:#fff}
+.buyer-personas-grid article>span{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#fff0f7;color:#c72f74;font-size:11px;font-weight:900}
+.buyer-personas-grid b{display:block;font-size:15px;margin:9px 0 5px;color:#111858}
+.buyer-personas-grid p{font-size:13px!important;line-height:1.5!important;color:#65719a!important;margin:0 0 8px!important}
+.buyer-personas-grid strong{display:block;font-size:12px;color:#ae2f6e}
+.case-stories{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:26px 0}
+.case-stories article{padding:19px;border:1px solid #e7eaf3;border-radius:16px;background:linear-gradient(145deg,#fff,#fcf9fd)}
+.case-stories article>span{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.08em;color:#c92f76;margin-bottom:5px}
+.case-stories h4{font-size:18px;margin:0 0 8px;color:#111858}
+.case-stories p{font-size:14px!important;line-height:1.62!important;color:#5d6993!important;margin:5px 0!important}
+.case-stories b{font-size:13px;color:#111858}
+.story-pattern{padding:18px 20px;border-radius:16px;background:linear-gradient(135deg,#eefaf6,#f5f0ff);margin:24px 0}
+.story-pattern b{font-size:15px;color:#176e55}
+.story-pattern p{font-size:14px!important;line-height:1.65!important;color:#59658e!important;margin:6px 0 0!important}
+.need-to-basket{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:24px 0}
+.need-to-basket article{padding:17px;border:1px solid #e7eaf3;border-radius:15px;background:#fff}
+.need-to-basket article>span{font-size:10px;font-weight:900;color:#c62f74;letter-spacing:.08em}
+.need-to-basket b{display:block;font-size:13px;margin:8px 0 2px;color:#111858}
+.need-to-basket p{font-size:13px!important;line-height:1.5!important;color:#67729b!important;margin:0!important}
+.assortment-pyramid{display:grid;gap:8px;margin:26px auto;max-width:760px}
+.assortment-pyramid .tier{padding:14px 18px;border-radius:13px;text-align:center;margin:auto}
+.assortment-pyramid .t1{width:55%;background:#fff0f7}
+.assortment-pyramid .t2{width:76%;background:#f4efff}
+.assortment-pyramid .t3{width:100%;background:#edf9f5}
+.assortment-pyramid b{display:block;font-size:14px;color:#111858}
+.assortment-pyramid span{font-size:12px;color:#67729b}
+.trust-stack{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:25px 0}
+.trust-stack>div{padding:15px;border:1px solid #e7eaf3;border-radius:14px;background:#fff}
+.trust-stack span{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#eef8f4;color:#177252;font-size:10px;font-weight:900}
+.trust-stack b{display:block;font-size:13px;margin:8px 0 4px;color:#111858}
+.trust-stack p{font-size:12px!important;line-height:1.45!important;color:#66719a!important;margin:0!important}
+.trust-script{padding:18px;border-radius:16px;background:#f4fbf8;border:1px solid #dcefe7;margin:22px 0}
+.trust-script small{font-size:10px;font-weight:900;color:#177252;letter-spacing:.08em}
+.trust-script p{font-size:15px!important;line-height:1.65!important;color:#445c72!important;margin:7px 0 0!important}
+.alert-course{padding:17px 19px;border-radius:15px;background:#fff6ed;border:1px solid #f0dfca;margin:20px 0}
+.alert-course b{font-size:14px;color:#9b651c}
+.alert-course p{font-size:13px!important;line-height:1.6!important;color:#6b617d!important;margin:5px 0 0!important}
+.margin-waterfall{display:flex;gap:8px;align-items:stretch;overflow-x:auto;margin:28px 0;padding-bottom:4px}
+.margin-waterfall>div{min-width:145px;flex:1;padding:15px;border:1px solid #e7eaf3;border-radius:14px;background:#fff}
+.margin-waterfall>div.result{background:linear-gradient(135deg,#edf9f5,#f5f0ff)}
+.margin-waterfall>i{align-self:center;font-style:normal;color:#c7789e;font-size:18px}
+.margin-waterfall b{display:block;font-size:14px;color:#111858;margin-bottom:5px}
+.margin-waterfall span{font-size:12px;line-height:1.45;color:#67729b}
+.stock-game{padding:20px;border-radius:18px;background:#f8f7fc;margin:26px 0}
+.stock-game h4{font-size:19px;margin:0 0 12px;color:#111858}
+.stock-scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stock-scenarios button{border:1px solid #e1e4ef;background:#fff;border-radius:12px;padding:13px;text-align:left;font-size:12px;font-weight:800;color:#56628d}
+.stock-scenarios button.selected{border-color:#dd7aaa;background:#fff3f8}
+.stock-feedback{min-height:45px;margin-top:12px;padding:11px 13px;border-radius:10px;background:#fff;font-size:13px;line-height:1.55;color:#59658e}
+.ninety-day-plan{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px 0}
+.ninety-day-plan article{padding:18px;border:1px solid #e7eaf3;border-radius:16px;background:#fff}
+.ninety-day-plan article>span{font-size:10px;font-weight:900;color:#c62f74;letter-spacing:.08em}
+.ninety-day-plan h4{font-size:18px;margin:6px 0 8px;color:#111858}
+.ninety-day-plan ul{margin:0;padding-left:18px}
+.ninety-day-plan li{font-size:13px;line-height:1.55;color:#65719a;margin:4px 0}
+@media(max-width:1000px){
+ .buyer-personas-grid{grid-template-columns:repeat(2,1fr)}
+ .trust-stack{grid-template-columns:repeat(3,1fr)}
+ .stock-scenarios{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+ .ch2-growth-bars>div{grid-template-columns:1fr;gap:5px}
+ .ch2-growth-bars i{width:100%!important}
+ .buyer-personas-grid,.case-stories,.need-to-basket,.trust-stack,.ninety-day-plan{grid-template-columns:1fr}
+ .assortment-pyramid .tier{width:100%}
+}
