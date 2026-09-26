@@ -44,13 +44,16 @@ async function crmDbHydrate(){
   }catch(e){console.error("CRM DB hydrate:",e);return false}
 }
 
-async function loadShopifyMetrics(){try{const r=await fetch("shopify-live-metrics.json?v=20260922-full1",{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);shopifyMetrics=await r.json();window.SHOPIFY_LIVE_METRICS=shopifyMetrics;await crmDbUpsert(shopifyMetrics,"shopify-metrics");const store=shopifyMetrics.scope==="b2b_only"?"b2bSalesDaily":"salesDaily",hist=await crmDbAll(store);if(hist.length){shopifyMetrics.sales7=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7);shopifyMetrics.today=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)}return true}catch(e){console.error("Shopify metrics:",e);const hist=(await crmDbAll("b2bSalesDaily").catch(()=>[]));if(hist.length){shopifyMetrics={generatedAt:new Date().toISOString(),source:"indexeddb-b2b-fallback",scope:"b2b_only",sales7:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7),today:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)};window.SHOPIFY_LIVE_METRICS=shopifyMetrics;return true}return false}}
+async function loadShopifyMetrics(){try{const r=await fetch("shopify-live-metrics.json?v=20260925-v10update1",{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);shopifyMetrics=await r.json();window.SHOPIFY_LIVE_METRICS=shopifyMetrics;await crmDbUpsert(shopifyMetrics,"shopify-metrics");const store=shopifyMetrics.scope==="b2b_only"?"b2bSalesDaily":"salesDaily",hist=await crmDbAll(store);if(hist.length){shopifyMetrics.sales7=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7);shopifyMetrics.today=hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)}return true}catch(e){console.error("Shopify metrics:",e);const hist=(await crmDbAll("b2bSalesDaily").catch(()=>[]));if(hist.length){shopifyMetrics={generatedAt:new Date().toISOString(),source:"indexeddb-b2b-fallback",scope:"b2b_only",sales7:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).slice(-7),today:hist.slice().sort((a,b)=>a.date.localeCompare(b.date)).at(-1)};window.SHOPIFY_LIVE_METRICS=shopifyMetrics;return true}return false}}
 function mergeLiveShopify(data){
   if(!data||typeof data!=="object"||typeof state==="undefined"||!Array.isArray(state.clients))return false;
   liveShopify=data;window.SHOPIFY_LIVE_DATA=data;
   const byEmail=new Map(state.clients.filter(c=>c.email).map(c=>[norm(c.email),c]));
+  const byShopifyId=new Map(state.clients.filter(c=>c.shopifyId||c.customerId).map(c=>[String(c.shopifyId||c.customerId),c]));
+  const byCrmId=new Map(state.clients.map(c=>[String(c.id),c]));
   (data.customers||[]).forEach((x,i)=>{
-    const email=norm(x.email),found=email?byEmail.get(email):null;
+    const email=norm(x.email),sid=String(x.shopifyId||x.customerId||x.id||""),crmId=x.crmId!=null?String(x.crmId):"";
+    const found=(sid&&byShopifyId.get(sid))||(crmId&&byCrmId.get(crmId))||(email?byEmail.get(email):null);
     const last=(x.lastOrderDate||x.lastOrder?.date||"").slice(0,10);
     const incomingHist=(x.ordersHistory||[]).map(o=>({id:o.id||"",date:String(o.date||o.createdAt||"").slice(0,10),amount:+(o.total||o.amount||0),total:+(o.total||o.amount||0),name:o.name||""})).filter(o=>o.date);
     const patch={
