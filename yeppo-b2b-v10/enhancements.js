@@ -11,7 +11,41 @@
 const norm=s=>String(s||"").trim().toLowerCase();const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
 function qaDate(offset){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+offset);return d.toISOString().slice(0,10)}
-let qaFixture=null,liveShopify=null,shopifyMetrics=null;const LIVE_SHOPIFY_KEY="yeppoCRMv10ShopifyLive";
+let qaFixture=null,liveShopify=null,shopifyMetrics=null;const LIVE_SHOPIFY_KEY="yeppoCRMv10ShopifyLive",WEEKLY_CACHE_KEY="yeppoCRMv10B2BWeeklyDetail";
+function crmWeeklyCacheLoad(){try{const x=JSON.parse(localStorage.getItem(WEEKLY_CACHE_KEY)||"null");return x&&Array.isArray(x.recentOrders)?x:null}catch(e){return null}}
+async function crmPersistWeeklyPayload(data,source="import"){
+  if(!data||typeof data!=="object")return false;
+  const recentOrders=Array.isArray(data.recentOrders)?data.recentOrders:[];
+  const sales7=Array.isArray(data.sales7)?data.sales7:[];
+  if(!recentOrders.length&&!sales7.length)return false;
+  const payload={generatedAt:data.generatedAt||new Date().toISOString(),source,scope:"b2b_only",sales7,recentOrders};
+  try{localStorage.setItem(WEEKLY_CACHE_KEY,JSON.stringify(payload))}catch(e){console.warn("CRM weekly cache:",e)}
+  window.CRM_WEEKLY_CACHE=payload;
+  try{await crmDbUpsert(payload,"weekly-"+source)}catch(e){console.warn("CRM weekly IndexedDB:",e)}
+  return true;
+}
+function crmInstallUniversalJsonCapture(){
+  if(document.documentElement.dataset.crmJsonCapture==="1")return;
+  document.documentElement.dataset.crmJsonCapture="1";
+  document.addEventListener("change",event=>{
+    const input=event.target;
+    if(!(input instanceof HTMLInputElement)||input.type!=="file")return;
+    const file=input.files?.[0];
+    if(!file||!/\.json$/i.test(file.name||""))return;
+    const reader=new FileReader();
+    reader.onload=async()=>{try{
+      const raw=JSON.parse(String(reader.result||"").replace(/^\uFEFF/,""));
+      const data=expandCompactShopifySync(raw?.payload||raw?.data||raw);
+      if(Array.isArray(data?.recentOrders)&&data.recentOrders.length){
+        await crmPersistWeeklyPayload(data,"captured-file");
+        const home=document.getElementById("masterHome");
+        if(home)crmRenderWeeklyCharts(home);
+      }
+    }catch(e){/* El importador principal mostrará su propio error si corresponde. */}
+    };
+    reader.readAsText(file);
+  },true);
+}
 const CRM_DB_NAME="yeppoB2BCRM",CRM_DB_VERSION=3;let crmDbPromise=null;
 function crmDbOpen(){if(crmDbPromise)return crmDbPromise;crmDbPromise=new Promise((resolve,reject)=>{if(!("indexedDB" in window)){crmDbPromise=null;reject(new Error("IndexedDB no disponible"));return}const r=indexedDB.open(CRM_DB_NAME,CRM_DB_VERSION);r.onupgradeneeded=()=>{const db=r.result;if(!db.objectStoreNames.contains("salesDaily"))db.createObjectStore("salesDaily",{keyPath:"date"});if(!db.objectStoreNames.contains("b2bSalesDaily"))db.createObjectStore("b2bSalesDaily",{keyPath:"date"});if(!db.objectStoreNames.contains("customers"))db.createObjectStore("customers",{keyPath:"id"});if(!db.objectStoreNames.contains("orders"))db.createObjectStore("orders",{keyPath:"id"});if(!db.objectStoreNames.contains("products"))db.createObjectStore("products",{keyPath:"sku"});if(!db.objectStoreNames.contains("productCosts"))db.createObjectStore("productCosts",{keyPath:"id"});if(!db.objectStoreNames.contains("syncs"))db.createObjectStore("syncs",{keyPath:"id",autoIncrement:true})};r.onsuccess=()=>{const db=r.result;db.onversionchange=()=>{db.close();crmDbPromise=null};resolve(db)};r.onerror=()=>{crmDbPromise=null;reject(r.error)};r.onblocked=()=>{crmDbPromise=null;reject(new Error("Base CRM bloqueada por otra pestaña"))}});return crmDbPromise}
 function crmDbAll(store){return crmDbOpen().then(db=>new Promise((resolve,reject)=>{const tx=db.transaction(store,"readonly"),rq=tx.objectStore(store).getAll();rq.onsuccess=()=>resolve(rq.result||[]);rq.onerror=()=>reject(rq.error)}))}
@@ -147,6 +181,7 @@ function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const
     if(!mergeNativeCrmBackup(data))throw new Error("No pude integrar el respaldo nativo del CRM");
     const nativeLive={generatedAt:data.generatedAt||new Date().toISOString(),source:data.source||"crm-native-backup",scope:"b2b_only",customers:data.clients.map(x=>({id:x.shopifyId||x.customerId||x.id,shopifyId:x.shopifyId||x.customerId||"",crmId:x.id,name:x.cliente||x.contacto||x.email||"Cliente",email:x.email||"",phone:x.telefono||x.phone||"",orders:+(x.b2bConfirmedOrders??x.pedidos??0)||0,spent:+(x.b2bObservedSales??x.gasto??0)||0,lastOrderDate:x.ultimaB2B||x.ultima||"",lastOrderTotal:+x.lastB2BAmount||0,reorderMedian:+x.reorderMedian||0,reorderDays:+x.reorderDays||0,tags:Array.isArray(x.originReasons)?x.originReasons:[],ordersHistory:Array.isArray(x.ordersHistory)?x.ordersHistory:[]})),sales7:Array.isArray(data.sales7)?data.sales7:[],products:Array.isArray(data.products)?data.products:[],recentOrders:Array.isArray(data.recentOrders)?data.recentOrders:[]};
     await crmDbUpsert(nativeLive,"crm-native-backup");
+    await crmPersistWeeklyPayload(nativeLive,"crm-native-backup");
     liveShopify=nativeLive;window.SHOPIFY_LIVE_DATA=nativeLive;
     try{localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(nativeLive))}catch(e){console.warn("Shopify live cache:",e)}
     resolve(data);return;
@@ -154,11 +189,11 @@ function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const
   if(!Array.isArray(data.customers))data.customers=[];if(!Array.isArray(data.sales7))data.sales7=[];if(!Array.isArray(data.products))data.products=[];if(!Array.isArray(data.recentOrders))data.recentOrders=[];
   const ordersOnly=data.scope==="b2b_only"&&data.recentOrders.length&&!data.customers.length&&!data.products.length;
   if(!ordersOnly&&!data.customers.length&&!data.sales7.length&&!data.products.length&&!data.recentOrders.length)throw new Error("Formato no reconocido. Usa un respaldo CRM con clients o un paquete Shopify con customers/sales7/products/recentOrders");
-  if(ordersOnly){await crmDbUpsert(data,"shopify-b2b-orders");resolve(data);return}
+  if(ordersOnly){await crmDbUpsert(data,"shopify-b2b-orders");await crmPersistWeeklyPayload(data,"shopify-b2b-orders");resolve(data);return}
   if(!mergeLiveShopify(data))throw new Error("No pude integrar los datos al CRM");
-  localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));await crmDbUpsert(data,"shopify-live");resolve(data)
+  localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));await crmDbUpsert(data,"shopify-live");await crmPersistWeeklyPayload(data,"shopify-live");resolve(data)
 }catch(e){reject(e)}};r.onerror=()=>reject(r.error||new Error("No pude leer el archivo"));r.readAsText(file)})}
-function shopifyLiveLabel(){if(!liveShopify)return "Shopify sin cargar";const c=liveShopify.customers?.length||0,p=liveShopify.products?.length||0,d=liveShopify.sales7?.length||0;return "Shopify real ✓ · "+c+" clientes · "+p+" productos · "+d+" días"}
+function shopifyLiveLabel(){const w=crmWeeklyCacheLoad(),wo=w?.recentOrders?.length||0;if(!liveShopify)return wo?"B2B ✓ · "+wo+" pedidos detallados":"Shopify sin cargar";const c=liveShopify.customers?.length||0,p=liveShopify.products?.length||0,d=liveShopify.sales7?.length||0;return "Shopify real ✓ · "+c+" clientes · "+p+" productos · "+d+" días · "+wo+" pedidos"}
 function addShopifyBridgeControl(){
   const host=document.querySelector(".crmTopRightV2");if(!host||document.getElementById("shopifyLiveBtn"))return;
   const wrap=document.createElement("div");wrap.className="shopifyBridge";
@@ -424,7 +459,7 @@ function crmWeeklyBreakdown(orders,clients,products,now=new Date()){
 }
 function crmWeeklyDonut(rows){const colors=["#ef3988","#735ed7","#50b7ad","#ffad72","#a5b7e8","#d6c6e8"],top=rows.slice(0,5),other=rows.slice(5).reduce((sum,row)=>sum+row.total,0),parts=other?[...top,{name:"Otras",total:other}]:top,total=parts.reduce((sum,row)=>sum+row.total,0);let angle=0;const stops=parts.map((row,i)=>{const start=angle;angle+=row.total/total*360;return `${colors[i]} ${start.toFixed(2)}deg ${angle.toFixed(2)}deg`}).join(",");return `<div class="crmWeeklyDonut" role="img" aria-label="Participación de ventas por categoría" style="background:conic-gradient(${stops})"><span><b>${parts.length}</b><small>categorías</small></span></div><div class="crmWeeklyLegend">${parts.map((row,i)=>`<div title="${esc(row.name)}: ${moneyCLP(row.total)}"><i style="background:${colors[i]}"></i><span>${esc(row.name)}</span><b>${Math.round(row.total/total*100)}%</b></div>`).join("")}</div>`}
 function crmWeeklyBars(rows,kind){const max=rows[0]?.[kind]||1;return rows.slice(0,5).map((row,i)=>`<div class="crmWeeklyBar"><div><span title="${esc(row.name)}">${i+1}. ${esc(row.name)}</span><b>${kind==="units"?`${row.units} u.`:moneyCLP(row.total)}</b></div><progress max="${max}" value="${row[kind]}"></progress><small>${kind==="units"?`${moneyCLP(row.total)} en ventas`:`${row.orders} pedido${row.orders===1?"":"s"}`}</small></div>`).join("")}
-async function crmRenderWeeklyCharts(sec){const host=sec.querySelector(".crmWeeklyGrid");if(!host)return;const [storedOrders,products]=await Promise.all([crmDbAll("orders").catch(()=>[]),crmDbAll("products").catch(()=>[])]);if(!host.isConnected)return;const liveOrders=Array.isArray(liveShopify?.recentOrders)?liveShopify.recentOrders:[],orders=[...storedOrders,...liveOrders];const data=crmWeeklyBreakdown(orders,state?.clients||[],products),range=`${data.start.slice(8)}/${data.start.slice(5,7)}–${data.end.slice(8)}/${data.end.slice(5,7)}`,empty="Sin desglose de pedidos por SKU en estos 7 días. Carga pedidos con productos desde Configuración.";host.innerHTML=`<article class="crmWeeklyCard"><header><b>Ventas por categoría</b><small>${range} · CLP</small></header>${data.categories.length?crmWeeklyDonut(data.categories):`<p class="crmWeeklyEmpty">${empty}</p>`}<footer>${data.detailOrders} de ${data.weeklyOrders} pedidos con detalle de productos</footer></article><article class="crmWeeklyCard"><header><b>SKU más vendidos</b><small>${range} · unidades</small></header>${data.skus.length?crmWeeklyBars(data.skus,"units"):`<p class="crmWeeklyEmpty">${empty}</p>`}<footer>Top 5 · ventas B2B con SKU identificado</footer></article><article class="crmWeeklyCard"><header><b>Clientes top de la semana</b><small>${range} · ventas</small></header>${data.clients.length?crmWeeklyBars(data.clients,"total"):'<p class="crmWeeklyEmpty">No hay pedidos B2B fechados en estos 7 días.</p>'}<footer>${data.weeklyOrders} pedidos identificados · ${moneyCLP(data.identifiedSales)}</footer></article>`}
+async function crmRenderWeeklyCharts(sec){const host=sec.querySelector(".crmWeeklyGrid");if(!host)return;const [storedOrders,products]=await Promise.all([crmDbAll("orders").catch(()=>[]),crmDbAll("products").catch(()=>[])]);if(!host.isConnected)return;const liveOrders=Array.isArray(liveShopify?.recentOrders)?liveShopify.recentOrders:[],weeklyCache=crmWeeklyCacheLoad(),cacheOrders=Array.isArray(weeklyCache?.recentOrders)?weeklyCache.recentOrders:[],orders=[...storedOrders,...liveOrders,...cacheOrders];const data=crmWeeklyBreakdown(orders,state?.clients||[],products),range=`${data.start.slice(8)}/${data.start.slice(5,7)}–${data.end.slice(8)}/${data.end.slice(5,7)}`,empty="Sin desglose de pedidos por SKU en estos 7 días. Carga pedidos con productos desde Configuración.";host.innerHTML=`<article class="crmWeeklyCard"><header><b>Ventas por categoría</b><small>${range} · CLP</small></header>${data.categories.length?crmWeeklyDonut(data.categories):`<p class="crmWeeklyEmpty">${empty}</p>`}<footer>${data.detailOrders} de ${data.weeklyOrders} pedidos con detalle de productos</footer></article><article class="crmWeeklyCard"><header><b>SKU más vendidos</b><small>${range} · unidades</small></header>${data.skus.length?crmWeeklyBars(data.skus,"units"):`<p class="crmWeeklyEmpty">${empty}</p>`}<footer>Top 5 · ventas B2B con SKU identificado</footer></article><article class="crmWeeklyCard"><header><b>Clientes top de la semana</b><small>${range} · ventas</small></header>${data.clients.length?crmWeeklyBars(data.clients,"total"):'<p class="crmWeeklyEmpty">No hay pedidos B2B fechados en estos 7 días.</p>'}<footer>${data.weeklyOrders} pedidos identificados · ${moneyCLP(data.identifiedSales)}</footer></article>`}
 function addMasterHomeV2(){const main=document.querySelector("main");if(!main||document.getElementById("masterHome"))return;crmEnsureAssets();const sales=masterSales(),today=buildToday(),due=dueActions(),active=(state?.clients||[]).filter(c=>{const d=ds(getLast(c));return d!=null&&d<=90}).length,inProgress=Object.values(pipeline||{}).filter(x=>["Oportunidad","Propuesta","Pedido"].includes(x.stage)).length,p1=today.filter(x=>x.pr.p==="P1").length,p2=today.filter(x=>x.pr.p==="P2").length,p3=Math.max(0,today.length-p1-p2),total=Math.max(1,p1+p2+p3),a1=Math.round(p1/total*360),a2=Math.round((p1+p2)/total*360),now=new Date();const dateTop=now.toLocaleDateString("es-CL",{weekday:"long"}),dateBottom=now.toLocaleDateString("es-CL",{day:"numeric",month:"long",year:"numeric"});const sec=document.createElement("section");sec.id="masterHome";sec.className="panel masterHome masterHomeV2";sec.innerHTML=`
 	<header class="crmTopV2"><label class="crmSearchV2">${crmIconV2("search")}<input class="crmSearchInputV2" placeholder="Buscar cliente, SKU, pedido..." aria-label="Buscar cliente, SKU o pedido"></label><div class="crmTopRightV2"><div class="crmDateV2"><i class="fa-regular fa-calendar" aria-hidden="true"></i><span><b>${dateTop}</b><small>${dateBottom}</small></span></div><button class="crmBellV2" aria-label="Notificaciones">${crmIconV2("bell")}<i class="crmNotifyDotV3"></i></button><div class="crmUserV2"><span>M</span><div><b>Matías</b><small>Comercial B2B</small></div><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></div></div></header>
 	<div class="crmHeroGridV3"><div class="crmPrimaryV3"><div class="crmWelcomeV2"><div><h1>¡Hola, Matías! <span>👋</span></h1><p>Aquí tienes un resumen de tu gestión comercial B2B.</p>${liveShopify?`<small class="shopifyLiveStamp">Shopify real · ${new Date(liveShopify.generatedAt||Date.now()).toLocaleString("es-CL")}</small>`:""}</div></div><div class="crmKpisV2"><article class="pink"><i>${crmIconV2("sales")}</i><div><span>Ventas B2B hoy</span><b>${sales.hasData?moneyCLP(sales.todayValue):"Sin dato"}</b><small>Operación B2B del día</small></div></article><article class="purple"><i>${crmIconV2("reports")}</i><div><span>Ventas B2B semana</span><b>${sales.hasData?moneyCLP(sales.week):"Sin dato"}</b><small>Últimos 7 días</small></div></article><article class="mint"><i>${crmIconV2("users")}</i><div><span>Clientes activos</span><b>${active}</b><small>Compra en últimos 90 días</small></div></article><article class="peach"><i class="fa-solid fa-cube" aria-hidden="true"></i><div><span>Pedidos en curso</span><b>${inProgress}</b><small>Pipeline comercial vigente</small></div></article></div></div><aside class="crmPromoV3 crmPromoTopV3"><strong>Más belleza,<br>más oportunidades</strong><small>YEPPO B2B <i class="fa-solid fa-chevron-right"></i></small></aside></div>
@@ -450,6 +485,8 @@ async function init(){
     if(!hasLive&&!liveShopify)await loadShopifyQaFixture();
     if(shared){pipeline=shared.pipeline||pipeline;nextActions=shared.nextActions||nextActions;savePipe();saveActions()}
     invalidateOpportunityCache();
+    crmInstallUniversalJsonCapture();
+    window.CRM_WEEKLY_CACHE=crmWeeklyCacheLoad();
     addSecuritySettings();addCostManager();addIncoming();addDormantHub();addMasterHomeV2();addInteractiveManual();addManualBeginnerGuide();addShopifyBridgeControl();addProfitabilityReport();addFriendlyAI();addAcademy();injectWaitingIntoClient();injectNextAction();injectHumanAiComposer();improveTaskCreationFlow();injectWhatsAppActions();injectPipeline360();add360Summary();addTodayMVP();addMvpDashboard();addDataQuality();addBackupControls();addTodayAlert();addPipelineViewport();window.CRMUsers?.mount?.({clients:state?.clients||[],openClient:id=>typeof openClient==="function"&&openClient(+id||id)})
   }finally{
     document.documentElement.dataset.crmInitMs=String(Math.round(performance.now()-started));
