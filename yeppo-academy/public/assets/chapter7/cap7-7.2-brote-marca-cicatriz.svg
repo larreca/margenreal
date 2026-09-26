@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="80" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Brote, marca o cicatriz: no son lo mismo</text>
+<text x="70" y="120" font-family="Arial" font-size="18" fill="#686b80">Diferenciar evita recomendar el producto equivocado</text>
+<g font-family="Arial">
+<rect x="80" y="190" width="320" height="470" rx="28" fill="#fff1f7"/>
+<text x="115" y="240" font-size="27" font-weight="700" fill="#101858">1 · LESIÓN ACTIVA</text>
+<circle cx="240" cy="360" r="75" fill="#f7d9df"/><circle cx="240" cy="350" r="32" fill="#e96f7f"/><circle cx="240" cy="345" r="12" fill="#fff"/>
+<text x="115" y="485" font-size="18" fill="#33364b">comedón · pápula · pústula</text><text x="115" y="522" font-size="18" fill="#33364b">inflamación en curso</text><text x="115" y="580" font-size="16" fill="#686b80">Objetivo: controlar el brote</text><text x="115" y="607" font-size="16" fill="#686b80">y prevenir nuevas lesiones.</text>
+<rect x="440" y="190" width="320" height="470" rx="28" fill="#fff7e9"/>
+<text x="475" y="240" font-size="27" font-weight="700" fill="#101858">2 · MARCA PLANA</text>
+<circle cx="600" cy="360" r="75" fill="#f2d5bd"/><circle cx="600" cy="360" r="34" fill="#8c5e48" opacity=".8"/>
+<text x="475" y="485" font-size="18" fill="#33364b">PIH / eritema postinflamatorio</text><text x="475" y="522" font-size="18" fill="#33364b">sin cambio de relieve</text><text x="475" y="580" font-size="16" fill="#686b80">No es necesariamente una cicatriz.</text><text x="475" y="607" font-size="16" fill="#686b80">Puede aclarar con el tiempo.</text>
+<rect x="800" y="190" width="320" height="470" rx="28" fill="#eef0fb"/>
+<text x="835" y="240" font-size="27" font-weight="700" fill="#101858">3 · CICATRIZ</text>
+<circle cx="960" cy="360" r="75" fill="#ead6c6"/><path d="M915 340 Q960 390 1005 340" fill="none" stroke="#7a6b61" stroke-width="8"/><path d="M925 390 Q960 340 995 390" fill="none" stroke="#b7a090" stroke-width="6"/>
+<text x="835" y="485" font-size="18" fill="#33364b">cambio de relieve o tejido</text><text x="835" y="522" font-size="18" fill="#33364b">atrófica o elevada</text><text x="835" y="580" font-size="16" fill="#686b80">Puede requerir procedimientos</text><text x="835" y="607" font-size="16" fill="#686b80">dermatológicos especializados.</text>
+<text x="80" y="735" font-size="18" font-weight="700" fill="#ed3489">Primero identifica qué estás viendo; después decide si corresponde cosmética, paciencia o derivación.</text>
+</g></svg>
