@@ -102,3 +102,40 @@ export async function getOrganizationProgress(organizationId){
     ORDER BY u.name
   `}catch{return[]}
 }
+
+export async function restoreVersion(chapterId,versionId,userId){
+  const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");
+  const rows=await sql`SELECT content FROM academy_chapter_versions WHERE id=${versionId}::uuid AND chapter_id=${chapterId} LIMIT 1`;
+  if(!rows[0])throw new Error("VERSION_NOT_FOUND");
+  await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,status,updated_by,updated_at)
+    VALUES(${chapterId},${rows[0].content.title||"Capítulo"},${rows[0].content.summary||""},${JSON.stringify(rows[0].content)}::jsonb,'draft',${userId}::uuid,NOW())
+    ON CONFLICT(chapter_id) DO UPDATE SET draft_content=EXCLUDED.draft_content,title=EXCLUDED.title,summary=EXCLUDED.summary,status='draft',updated_by=EXCLUDED.updated_by,updated_at=NOW()`;
+}
+
+export async function getOrganizationAssignments(organizationId){
+  const sql=getDb();if(!sql||!organizationId)return[];
+  try{return await sql`SELECT chapter_id,required,available FROM academy_assignments WHERE organization_id=${organizationId}::uuid`}catch{return[]}
+}
+
+export async function setOrganizationAssignment(organizationId,chapterId,available,required){
+  const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");
+  await sql`INSERT INTO academy_assignments(organization_id,chapter_id,available,required)
+    VALUES(${organizationId}::uuid,${chapterId},${Boolean(available)},${Boolean(required)})
+    ON CONFLICT(organization_id,chapter_id) DO UPDATE SET available=EXCLUDED.available,required=EXCLUDED.required`;
+}
+
+export async function getAcademyDataForUser(session){
+  const data=await getAcademyData();if(!session?.organizationId)return data;
+  const rows=await getOrganizationAssignments(session.organizationId);if(!rows.length)return data;
+  const map=new Map(rows.map(r=>[r.chapter_id,r]));
+  return{...data,schools:data.schools.map(s=>({...s,chapters:s.chapters.filter(c=>map.get(c.id)?.available!==false)}))};
+}
+
+export async function getChapterForUser(id,session){
+  if(session?.organizationId){
+    const rows=await getOrganizationAssignments(session.organizationId);
+    const row=rows.find(r=>r.chapter_id===id);
+    if(row&&row.available===false)return null;
+  }
+  return getChapter(id);
+}
