@@ -1,0 +1,35 @@
+name: Yeppo Academy MVP Verify
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "yeppo-academy/**"
+      - ".github/workflows/yeppo-academy-verify.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: yeppo-academy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: yeppo-academy/package.json
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Build
+        env:
+          AUTH_SECRET: build-only-secret-not-used-in-production
+          SETUP_TOKEN: build-only-setup-token
+        run: npm run build
