@@ -8,7 +8,7 @@ export default async function Admin(){
  const [stats,chapters,people]=await Promise.all([getAdminStats(),getAdminChapterRows(),getOrganizationsAndUsers()]);
  const canContent=["super_admin","editor","reviewer"].includes(s.role);
  return <><Header session={s}/><main className="ya-container">
-  <div className="ya-head"><div><small>ADMINISTRACIÓN</small><h1>Control de Yeppo Academy</h1><p>Contenido, publicación, empresas, usuarios y seguimiento desde un solo lugar.</p></div><div style={{display:"flex",gap:8}}><Link className="ya-btn ya-secondary" href="/academy">Ver academia</Link>{["super_admin","support"].includes(s.role)&&<Link className="ya-btn ya-primary" href="/admin/people">Empresas y usuarios</Link>}</div></div>
+  <div className="ya-head"><div><small>ADMINISTRACIÓN</small><h1>Control de Yeppo Academy</h1><p>Contenido, publicación, empresas, usuarios y seguimiento desde un solo lugar.</p></div><div style={{display:"flex",gap:8}}><Link className="ya-btn ya-secondary" href="/academy">Ver academia</Link>{["super_admin","support"].includes(s.role)&&<><Link className="ya-btn ya-secondary" href="/admin/system">Sistema</Link><Link className="ya-btn ya-primary" href="/admin/people">Empresas y usuarios</Link></>}</div></div>
   {!stats.database&&<div className="ya-alert">La interfaz está lista, pero falta conectar DATABASE_URL en el proyecto publicado para guardar usuarios, progreso y cambios.</div>}
   <section className="ya-admin-grid">
    <div className="ya-card ya-stat"><small>Usuarios activos</small><b>{stats.users}</b></div>
