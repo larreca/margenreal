@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<rect width="1200" height="800" fill="#fff"/>
+<text x="70" y="80" font-family="Arial" font-size="34" font-weight="700" fill="#101858">Las 3 capas de la piel</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Infografía Yeppo Academy · estructura simplificada para educación cosmética</text>
+<rect x="80" y="180" width="700" height="110" rx="24" fill="#f7d8e8"/><text x="110" y="230" font-family="Arial" font-size="28" font-weight="700" fill="#101858">EPIDERMIS</text><text x="110" y="265" font-family="Arial" font-size="19" fill="#33364b">Barrera exterior · queratinocitos · melanocitos · estrato córneo</text>
+<rect x="80" y="300" width="700" height="230" rx="24" fill="#ecdffd"/><text x="110" y="350" font-family="Arial" font-size="28" font-weight="700" fill="#101858">DERMIS</text><text x="110" y="385" font-family="Arial" font-size="19" fill="#33364b">Colágeno · elastina · vasos · nervios · folículos · glándulas</text>
+<path d="M280 405 C320 350 420 350 450 405 C480 455 430 500 365 500 C300 500 250 455 280 405" fill="none" stroke="#745fd8" stroke-width="6"/>
+<line x1="365" y1="180" x2="365" y2="430" stroke="#ed3489" stroke-width="8"/><circle cx="365" cy="200" r="18" fill="#ed3489"/>
+<path d="M550 360 q70 80 0 150 q-70-70 0-150" fill="none" stroke="#101858" stroke-width="5"/>
+<rect x="80" y="540" width="700" height="160" rx="24" fill="#fff0cf"/><text x="110" y="590" font-family="Arial" font-size="28" font-weight="700" fill="#101858">HIPODERMIS</text><text x="110" y="625" font-family="Arial" font-size="19" fill="#33364b">Tejido subcutáneo · grasa · aislamiento · amortiguación</text>
+<circle cx="200" cy="665" r="24" fill="#f2c96d"/><circle cx="255" cy="665" r="24" fill="#f2c96d"/><circle cx="310" cy="665" r="24" fill="#f2c96d"/><circle cx="365" cy="665" r="24" fill="#f2c96d"/>
+<rect x="825" y="180" width="300" height="520" rx="28" fill="#f7f7fb"/>
+<text x="865" y="235" font-family="Arial" font-size="24" font-weight="700" fill="#101858">Qué toca un cosmético</text>
+<text x="865" y="290" font-family="Arial" font-size="19" fill="#33364b">La mayoría de los cosméticos</text><text x="865" y="320" font-family="Arial" font-size="19" fill="#33364b">se diseña para actuar sobre</text><text x="865" y="350" font-family="Arial" font-size="19" fill="#33364b">la superficie y capas</text><text x="865" y="380" font-family="Arial" font-size="19" fill="#33364b">superficiales de la piel.</text>
+<line x1="860" y1="420" x2="1090" y2="420" stroke="#dedfeb" stroke-width="2"/>
+<text x="865" y="470" font-family="Arial" font-size="20" font-weight="700" fill="#ed3489">No confundir</text>
+<text x="865" y="510" font-family="Arial" font-size="18" fill="#33364b">• cosmético ≠ medicamento</text><text x="865" y="545" font-family="Arial" font-size="18" fill="#33364b">• apariencia ≠ diagnóstico</text><text x="865" y="580" font-family="Arial" font-size="18" fill="#33364b">• hidratación ≠ “relleno”</text>
+<text x="865" y="640" font-family="Arial" font-size="16" fill="#686b80">Basado en anatomía NCBI/StatPearls.</text>
+</svg>
