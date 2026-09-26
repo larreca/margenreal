@@ -108,7 +108,55 @@ async function consumeShopifySyncFragment(){
   try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
   return true
 }
-function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{try{let data=JSON.parse(String(r.result||"").replace(/^\\uFEFF/,""));data=expandCompactShopifySync(data?.payload||data?.data||data);if(!data||typeof data!=="object")throw new Error("JSON vacío o no reconocido");if(!Array.isArray(data.customers))data.customers=[];if(!Array.isArray(data.sales7))data.sales7=[];if(!Array.isArray(data.products))data.products=[];if(!Array.isArray(data.recentOrders))data.recentOrders=[];const ordersOnly=data.scope==="b2b_only"&&data.recentOrders.length&&!data.customers.length&&!data.products.length;if(!ordersOnly&&!data.customers.length&&!data.sales7.length&&!data.products.length&&!data.recentOrders.length)throw new Error("Formato Shopify Live no válido: faltan customers, sales7, products o recentOrders");if(ordersOnly){crmDbUpsert(data,"shopify-b2b-orders").then(()=>resolve(data)).catch(reject);return}if(!mergeLiveShopify(data))throw new Error("No pude integrar los datos al CRM");localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));crmDbUpsert(data,"shopify-live").then(()=>resolve(data)).catch(reject)}catch(e){reject(e)}};r.onerror=()=>reject(r.error||new Error("No pude leer el archivo"));r.readAsText(file)})}
+function mergeNativeCrmBackup(data){
+  if(!data||!Array.isArray(data.clients)||typeof state==="undefined"||!Array.isArray(state.clients))return false;
+  const clean=v=>String(v??"").trim().toLowerCase();
+  const byShopifyId=new Map(state.clients.filter(x=>x.shopifyId||x.customerId).map(x=>[String(x.shopifyId||x.customerId),x]));
+  const byId=new Map(state.clients.map(x=>[String(x.id),x]));
+  const byEmail=new Map(state.clients.filter(x=>x.email).map(x=>[clean(x.email),x]));
+  const manualFields=["notas","proxima","fechaAccion","kam","academia","estadoAcademia","academyProgress","marcas","tipoNegocio"];
+  data.clients.forEach((x,i)=>{
+    const sid=String(x.shopifyId||x.customerId||""),cid=String(x.id??""),email=clean(x.email);
+    const found=(sid&&byShopifyId.get(sid))||(cid&&byId.get(cid))||(email&&byEmail.get(email));
+    if(found){
+      const keep={};
+      manualFields.forEach(k=>{if((x[k]===undefined||x[k]===null||x[k]==="")&&found[k]!==undefined)keep[k]=found[k]});
+      Object.assign(found,x,keep);
+    }else{
+      state.clients.push({...x,id:x.id??(980000+i)});
+    }
+  });
+  const mergeRows=(current,incoming)=>{
+    if(!Array.isArray(incoming))return current;
+    const out=[],seen=new Map();
+    [...incoming,...(Array.isArray(current)?current:[])].forEach((row,i)=>{
+      const key=String(row?.id??"")||[row?.clientId,row?.date,row?.createdAt,row?.text,row?.note].map(v=>String(v??"")).join("|")||String(i);
+      if(!seen.has(key)){seen.set(key,row);out.push(row)}
+    });
+    return out;
+  };
+  if("tasks" in state&&Array.isArray(data.tasks))state.tasks=mergeRows(state.tasks,data.tasks);
+  if("interactions" in state&&Array.isArray(data.interactions))state.interactions=mergeRows(state.interactions,data.interactions);
+  if("gestiones" in state&&Array.isArray(data.gestiones))state.gestiones=mergeRows(state.gestiones,data.gestiones);
+  try{if(typeof save==="function")save()}catch(e){console.error("CRM backup save:",e)}
+  invalidateOpportunityCache();
+  return true;
+}
+function importShopifyLiveFile(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=async()=>{try{let data=JSON.parse(String(r.result||"").replace(/^\\uFEFF/,""));data=expandCompactShopifySync(data?.payload||data?.data||data);if(!data||typeof data!=="object")throw new Error("JSON vacío o no reconocido");
+  if(Array.isArray(data.clients)){
+    if(!mergeNativeCrmBackup(data))throw new Error("No pude integrar el respaldo nativo del CRM");
+    const nativeLive={customers:data.clients.map(x=>({id:x.shopifyId||x.customerId||x.id,shopifyId:x.shopifyId||x.customerId||"",crmId:x.id,name:x.cliente||x.contacto||x.email||"Cliente",email:x.email||"",phone:x.telefono||x.phone||"",orders:+(x.b2bConfirmedOrders??x.pedidos??0)||0,spent:+(x.b2bObservedSales??x.gasto??0)||0,lastOrderDate:x.ultimaB2B||x.ultima||"",lastOrderTotal:+x.lastB2BAmount||0,reorderMedian:+x.reorderMedian||0,reorderDays:+x.reorderDays||0,tags:Array.isArray(x.originReasons)?x.originReasons:[],ordersHistory:Array.isArray(x.ordersHistory)?x.ordersHistory:[]})),sales7:Array.isArray(data.sales7)?data.sales7:[],products:Array.isArray(data.products)?data.products:[],recentOrders:Array.isArray(data.recentOrders)?data.recentOrders:[]};
+    await crmDbUpsert(nativeLive,"crm-native-backup");
+    liveShopify=nativeLive;window.SHOPIFY_LIVE_DATA=nativeLive;
+    resolve(data);return;
+  }
+  if(!Array.isArray(data.customers))data.customers=[];if(!Array.isArray(data.sales7))data.sales7=[];if(!Array.isArray(data.products))data.products=[];if(!Array.isArray(data.recentOrders))data.recentOrders=[];
+  const ordersOnly=data.scope==="b2b_only"&&data.recentOrders.length&&!data.customers.length&&!data.products.length;
+  if(!ordersOnly&&!data.customers.length&&!data.sales7.length&&!data.products.length&&!data.recentOrders.length)throw new Error("Formato no reconocido. Usa un respaldo CRM con clients o un paquete Shopify con customers/sales7/products/recentOrders");
+  if(ordersOnly){await crmDbUpsert(data,"shopify-b2b-orders");resolve(data);return}
+  if(!mergeLiveShopify(data))throw new Error("No pude integrar los datos al CRM");
+  localStorage.setItem(LIVE_SHOPIFY_KEY,JSON.stringify(data));await crmDbUpsert(data,"shopify-live");resolve(data)
+}catch(e){reject(e)}};r.onerror=()=>reject(r.error||new Error("No pude leer el archivo"));r.readAsText(file)})}
 function shopifyLiveLabel(){if(!liveShopify)return "Shopify sin cargar";const c=liveShopify.customers?.length||0,p=liveShopify.products?.length||0,d=liveShopify.sales7?.length||0;return "Shopify real ✓ · "+c+" clientes · "+p+" productos · "+d+" días"}
 function addShopifyBridgeControl(){
   const host=document.querySelector(".crmTopRightV2");if(!host||document.getElementById("shopifyLiveBtn"))return;
