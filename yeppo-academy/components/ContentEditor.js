@@ -56,7 +56,7 @@ export default function ContentEditor({initial,role,versions=[]}){
    <div key={current?.id} ref={surface} className="ya-edit coursebook" contentEditable={canEdit} suppressContentEditableWarning dangerouslySetInnerHTML={{__html:current?.html||""}}/>
    <div className="ya-editor-actions">
     <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>{canEdit&&<><button className="ya-btn ya-primary" disabled={busy} onClick={()=>action("save")}>Guardar borrador</button><button className="ya-btn ya-secondary" disabled={busy} onClick={()=>action("review")}>Enviar a revisión</button></>}{canPublish&&<button className="ya-btn ya-pink" disabled={busy} onClick={()=>action("publish")}>Publicar versión</button>}</div>
-    <a className="ya-btn ya-secondary" href={"/academy/chapter/"+chapter.id} target="_blank">Vista alumno ↗</a>
+    <a className="ya-btn ya-secondary" href={"/admin/preview/"+chapter.id} target="_blank">Vista previa del borrador ↗</a>
    </div>
    {message&&<div className="ya-alert" style={{background:message.includes("No se")?"#fff0f1":"#eaf8f2",color:message.includes("No se")?"#982139":"#136c4a"}}>{message}</div>}
    <div className="ya-card" style={{padding:18,marginTop:18}}><b>Historial de versiones</b><div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:10}}>{versions.length?versions.map(v=><span className="ya-version" key={v.id} style={{display:"inline-flex",alignItems:"center",gap:6}}>v{v.version} · {new Date(v.published_at).toLocaleString("es-CL")}{canEdit&&<button className="ya-btn ya-secondary" style={{padding:"5px 8px"}} onClick={()=>action("restore",v.id)}>Restaurar a borrador</button>}</span>):<span className="ya-version">Aún no hay versiones anteriores publicadas.</span>}</div></div>
