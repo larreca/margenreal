@@ -149,3 +149,16 @@ export async function getQuizStatus(userId,chapterId){
   const sql=getDb();if(!sql)return{passed:false,best:0};
   try{const rows=await sql`SELECT COALESCE(MAX(score),0)::float best,COALESCE(BOOL_OR(passed),FALSE) passed FROM academy_quiz_attempts WHERE user_id=${userId}::uuid AND chapter_id=${chapterId}`;return{passed:Boolean(rows[0]?.passed),best:Number(rows[0]?.best||0)}}catch{return{passed:false,best:0}}
 }
+
+export async function seedAcademyContent(userId=null){
+  const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");
+  const chapters=baseChapters();
+  for(const base of chapters){
+    const normalized=editableChapter(base);
+    const payload=JSON.stringify(normalized);
+    await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,published_content,status,version,updated_by,published_by,updated_at,published_at)
+      VALUES(${base.id},${normalized.title},${normalized.summary||""},${payload}::jsonb,${payload}::jsonb,'published',1,${userId}::uuid,${userId}::uuid,NOW(),NOW())
+      ON CONFLICT(chapter_id) DO NOTHING`;
+  }
+  return{chapters:chapters.length};
+}
