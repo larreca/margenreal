@@ -175,7 +175,13 @@ document.addEventListener("click",e=>{
     const commission=price*(fee/100);
     const contribution=net-cost-commission-extra;
     const margin=net>0?contribution/net*100:0;
-    result.innerHTML='<b>Venta neta:</b> 
+    result.innerHTML="<b>Venta neta:</b> $"+Math.round(net).toLocaleString("es-CL")+
+      " · <b>Contribución estimada:</b> $"+Math.round(contribution).toLocaleString("es-CL")+
+      " · <b>Margen estimado:</b> "+margin.toFixed(1)+"%";
+    result.style.color=margin>=25?"#157b53":margin>=15?"#b06013":"#b42318";
+    return;
+  }
+  const stock=e.target.closest("[data-stock-answer]");
   if(stock){
     const wrap=stock.closest("[data-stock-game]");
     wrap.querySelectorAll("[data-stock-answer]").forEach(b=>b.classList.toggle("selected",b===stock));
