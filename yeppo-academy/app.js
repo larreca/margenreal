@@ -1,6 +1,6 @@
 (()=> {
 const BASE=window.YEPPO_ACADEMY_DATA;
-const KEY_DRAFT="yeppo_academy_v2_draft";
+const KEY_DRAFT="yeppo_academy_v3_draft";
 const KEY_PROGRESS="yeppo_academy_v2_progress";
 let data=loadDraft()||structuredClone(BASE);
 let progress=JSON.parse(localStorage.getItem(KEY_PROGRESS)||"{}");
@@ -61,20 +61,49 @@ function renderObjectives(c){
   $("#chapterObjectives").innerHTML="";
   $("#railObjectives").innerHTML='<span class="railHint">Selecciona una sección para saltar dentro del capítulo.</span>';
 }
+function showCourseModule(key,scroll=true){
+  const root=$("#chapterContent");
+  const book=root.querySelector("[data-coursebook]");
+  if(!book)return;
+  const panels=[...book.querySelectorAll("[data-course-module-panel]")];
+  const buttons=[...book.querySelectorAll("[data-course-module]")];
+  const panel=panels.find(p=>p.dataset.courseModulePanel===key)||panels[0];
+  const actual=panel?.dataset.courseModulePanel;
+  panels.forEach(p=>p.classList.toggle("active",p===panel));
+  buttons.forEach(b=>b.classList.toggle("active",b.dataset.courseModule===actual));
+  const index=Math.max(0,panels.indexOf(panel));
+  const current=book.querySelector("[data-module-current]");
+  const bar=book.querySelector("[data-module-bar]");
+  if(current)current.textContent=String(index+1);
+  if(bar)bar.style.width=((index+1)/Math.max(1,panels.length)*100)+"%";
+  $("#railObjectives").querySelectorAll(".railTocBtn").forEach(b=>b.classList.toggle("active",b.dataset.module===actual));
+  if(scroll)book.scrollIntoView({behavior:"smooth",block:"start"});
+}
 function renderToc(){
   const root=$("#chapterContent"),rail=$("#railObjectives");
+  const book=root.querySelector("[data-coursebook]");
+  if(book){
+    const panels=[...book.querySelectorAll("[data-course-module-panel]")];
+    rail.innerHTML="";
+    panels.forEach((panel,i)=>{
+      const key=panel.dataset.courseModulePanel;
+      const nav=book.querySelector('[data-course-module="'+key+'"]');
+      const b=document.createElement("button");
+      b.type="button";b.className="railTocBtn";b.dataset.module=key;
+      b.textContent=(nav?.querySelector("span")?.textContent||String(i+1))+" · "+(panel.dataset.moduleTitle||"Módulo");
+      b.addEventListener("click",()=>showCourseModule(key,true));
+      rail.appendChild(b);
+    });
+    showCourseModule(panels[0]?.dataset.courseModulePanel,false);
+    return;
+  }
   const sections=[...root.querySelectorAll("[data-toc]")];
   if(!sections.length){rail.innerHTML='<span class="railHint">Contenido continuo.</span>';return}
   rail.innerHTML="";
   sections.forEach((section,i)=>{
-    const id="cap-section-"+(i+1);
-    section.id=id;
-    const b=document.createElement("button");
-    b.type="button";
-    b.className="railTocBtn";
-    b.textContent=section.dataset.toc||("Sección "+(i+1));
-    b.addEventListener("click",()=>section.scrollIntoView({behavior:"smooth",block:"start"}));
-    rail.appendChild(b);
+    const id="cap-section-"+(i+1);section.id=id;
+    const b=document.createElement("button");b.type="button";b.className="railTocBtn";b.textContent=section.dataset.toc||("Sección "+(i+1));
+    b.addEventListener("click",()=>section.scrollIntoView({behavior:"smooth",block:"start"}));rail.appendChild(b);
   });
 }
 function renderMedia(c){
@@ -112,6 +141,28 @@ function restoreChapter(){
 }
 function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="yeppo-academy-content.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function importData(file){const fr=new FileReader();fr.onload=()=>{try{const x=JSON.parse(fr.result);if(!x||!Array.isArray(x.schools))throw 0;data=x;localStorage.setItem(KEY_DRAFT,JSON.stringify(data));toast("Contenido importado");route()}catch{toast("Formato inválido")}};fr.readAsText(file)}
+document.addEventListener("click",e=>{
+  const moduleBtn=e.target.closest("[data-course-module]");
+  if(moduleBtn){showCourseModule(moduleBtn.dataset.courseModule,true);return}
+  const next=e.target.closest("[data-course-next]");
+  if(next){showCourseModule(next.dataset.courseNext,true);return}
+  const prev=e.target.closest("[data-course-prev]");
+  if(prev){showCourseModule(prev.dataset.coursePrev,true);return}
+  const routine=e.target.closest("[data-routine]");
+  if(routine){
+    const wrap=routine.closest("[data-routine-builder]");
+    const result=wrap.querySelector("[data-routine-result]");
+    wrap.querySelectorAll("[data-routine]").forEach(b=>b.classList.toggle("active",b===routine));
+    const k=routine.dataset.routine;
+    const views={
+      simple:'<b>Rutina esencial</b><p><strong>AM:</strong> limpiador si se necesita → hidratante → protector solar.</p><p><strong>PM:</strong> limpieza → hidratante.</p><span>Objetivo: crear adherencia y una base antes de sumar tratamientos.</span>',
+      media:'<b>Rutina intermedia</b><p><strong>AM:</strong> limpieza → serum según necesidad → hidratante → protector solar.</p><p><strong>PM:</strong> limpieza → tratamiento → hidratante.</p><span>Objetivo: sumar un tratamiento claro sin convertir la rutina en una colección de productos.</span>',
+      completa:'<b>Rutina completa</b><p><strong>AM:</strong> limpieza → toner/essence si aporta valor → tratamiento → hidratante → protector solar.</p><p><strong>PM:</strong> primera limpieza cuando corresponda → segunda limpieza → capa hidratante → tratamiento → crema; extras según tolerancia.</p><span>Objetivo: personalizar capas. Completa no significa obligatoria ni mejor para todos.</span>'
+    };
+    result.innerHTML=views[k]||views.simple;
+    return;
+  }
+});
 document.addEventListener("click",e=>{
   const level=e.target.closest(".level-btn");
   if(level){
