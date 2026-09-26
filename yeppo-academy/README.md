@@ -1,29 +1,33 @@
-# Yeppo Academy · K-Beauty B2B
+# Yeppo B2B Academy
 
-Aplicación independiente del CRM de Yeppo. Comparte únicamente lineamientos visuales (rosa, lila, navy, tarjetas y navegación).
+Aplicación de formación K-Beauty para clientes B2B de Yeppo.
 
-## Archivos
-- index.html — interfaz
-- styles.css — sistema visual
-- app.js — navegación, progreso, editor, importación/exportación y trivias
-- content.js — mapa maestro inicial de 10 escuelas y 50 capítulos
+## Arquitectura
+- Next.js / React
+- Vercel
+- Neon Postgres
+- Autenticación propia con sesión HTTP-only
+- Contenido editable por bloques
+- Borradores, publicación e historial de versiones
+- Progreso individual por usuario
+- Empresas con múltiples usuarios
+- Roles: super_admin, editor, reviewer, support, company_admin, student
 
-## Edición
-La edición desde navegador se guarda en localStorage y no modifica el contenido publicado.
-Usa **Exportar** para generar `yeppo-academy-v1-content.json`.
-Ese archivo puede revisarse y luego consolidarse en Git.
+## Diseño
+El Capítulo 1 es la plantilla visual maestra. Todos los capítulos se renderizan mediante los mismos componentes y reglas de lectura; el contenido cambia, la interfaz no.
 
-## Multimedia
-Cada capítulo admite:
-- URL de video
-- URL de imagen
-- URL de diapositivas/recurso
-- trivia con pregunta, opciones y respuesta correcta
+## Variables de entorno
+```
+DATABASE_URL=
+AUTH_SECRET=
+SETUP_TOKEN=
+```
 
-## Evolución prevista
-V2: contenidos profundos por capítulo + recursos visuales.
-V3: login de clientes, progreso sincronizado, evaluaciones y certificados.
-V4: panel administrador, analítica y recomendaciones/surtido conectado al catálogo Yeppo.
+## Primera configuración
+1. Crear una base Neon y aplicar `db/schema.sql`.
+2. Configurar las variables de entorno.
+3. Abrir `/setup` y crear el primer Super Admin con SETUP_TOKEN.
+4. Ingresar en `/login`.
+5. Usar `/admin` para contenido, empresas, usuarios e invitaciones.
 
-## Seguridad
-El modo editor de V1 es local: un visitante puede alterar solo su propia copia del navegador, nunca el contenido publicado.
+El contenido histórico de la academia se conserva en `data/academy.seed.json` como semilla/fallback y puede publicarse gradualmente desde el editor.
