@@ -44,7 +44,7 @@ export default function ContentEditor({initial,role,versions=[]}){
    <div className="ya-card ya-editor-meta">
     <div className="ya-field"><label>Título del capítulo</label><input value={chapter.title} disabled={!canEdit} onChange={e=>setMeta("title",e.target.value)}/></div>
     <div className="ya-field"><label>Resumen / introducción</label><textarea rows={4} value={chapter.summary} disabled={!canEdit} onChange={e=>setMeta("summary",e.target.value)}/></div>
-    <div className="ya-field"><label>Título del módulo {current?.label}</label><input value={current?.title||""} disabled={!canEdit} onChange={e=>setModuleTitle(e.target.value)}/></div>
+    <div className="ya-field"><label>Título del módulo {current?.label}</label><input value={current?.title||""} disabled={!canEdit} onChange={e=>setModuleTitle(e.target.value)}/></div><label style={{display:"flex",gap:8,alignItems:"center",fontSize:13,fontWeight:800,color:"#555870"}}><input type="checkbox" checked={Boolean(chapter.assessmentRequired)} disabled={!canEdit} onChange={e=>setMeta("assessmentRequired",e.target.checked)}/> Exigir evaluación aprobada para completar este capítulo</label>
    </div>
    <div className="ya-editor-toolbar">
     <button disabled={!canEdit} onClick={()=>command("bold")}>Negrita</button><button disabled={!canEdit} onClick={()=>command("italic")}>Cursiva</button>
