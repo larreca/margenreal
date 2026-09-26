@@ -23,7 +23,7 @@ export async function getChapterForEditor(id){
 }
 export async function saveDraft(chapter,userId){
   const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");const base=baseById(chapter.id);if(!base)throw new Error("CHAPTER_NOT_FOUND");
-  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",modules:Array.isArray(chapter.modules)?chapter.modules:[]};
+  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules:Array.isArray(chapter.modules)?chapter.modules:[]};
   const payload=JSON.stringify(normalized);
   await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,status,updated_by,updated_at)
     VALUES(${chapter.id},${normalized.title},${normalized.summary},${payload}::jsonb,'draft',${userId}::uuid,NOW())
@@ -138,4 +138,14 @@ export async function getChapterForUser(id,session){
     if(row&&row.available===false)return null;
   }
   return getChapter(id);
+}
+
+export async function recordQuizAttempt(userId,chapterId,score,answers=null){
+  const sql=getDb();if(!sql)return{passed:false};const safe=Math.max(0,Math.min(100,Number(score||0))),passed=safe>=80;
+  await sql`INSERT INTO academy_quiz_attempts(user_id,chapter_id,score,answers,passed) VALUES(${userId}::uuid,${chapterId},${safe},${JSON.stringify(answers||{})}::jsonb,${passed})`;
+  return{passed,score:safe};
+}
+export async function getQuizStatus(userId,chapterId){
+  const sql=getDb();if(!sql)return{passed:false,best:0};
+  try{const rows=await sql`SELECT COALESCE(MAX(score),0)::float best,COALESCE(BOOL_OR(passed),FALSE) passed FROM academy_quiz_attempts WHERE user_id=${userId}::uuid AND chapter_id=${chapterId}`;return{passed:Boolean(rows[0]?.passed),best:Number(rows[0]?.best||0)}}catch{return{passed:false,best:0}}
 }
