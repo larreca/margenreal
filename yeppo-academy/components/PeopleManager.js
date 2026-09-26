@@ -1,0 +1,16 @@
+"use client";
+import {useState} from "react";import {useRouter} from "next/navigation";
+export default function PeopleManager({organizations,users,role,ownOrganizationId=null}){
+ const router=useRouter(),[message,setMessage]=useState(""),[link,setLink]=useState("");
+ async function call(body){setMessage("");setLink("");const r=await fetch("/api/admin/people",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const j=await r.json();if(!r.ok){setMessage(j.error||"Error");return null}if(j.inviteUrl)setLink(j.inviteUrl);setMessage("Operación completada.");router.refresh();return j}
+ return <div>
+  {["super_admin","support"].includes(role)&&<div className="ya-card" style={{padding:20,marginBottom:16}}><h3 style={{color:"#101858",marginTop:0}}>Crear empresa</h3><form onSubmit={e=>{e.preventDefault();const f=new FormData(e.currentTarget);call({action:"create_org",name:f.get("name")});e.currentTarget.reset()}} style={{display:"flex",gap:8}}><input name="name" required placeholder="Nombre de la empresa" style={{flex:1,padding:11,border:"1px solid #d9dbe7",borderRadius:10}}/><button className="ya-btn ya-primary">Crear</button></form></div>}
+  <div className="ya-card" style={{padding:20,marginBottom:16}}><h3 style={{color:"#101858",marginTop:0}}>Invitar usuario</h3><form onSubmit={e=>{e.preventDefault();const f=new FormData(e.currentTarget);call({action:"invite",organizationId:ownOrganizationId||f.get("organizationId"),email:f.get("email"),role:f.get("role")})}} style={{display:"grid",gridTemplateColumns:"1fr 1.4fr auto auto",gap:8,alignItems:"end"}}>
+   {!ownOrganizationId&&<div className="ya-field"><label>Empresa</label><select name="organizationId" required style={{padding:11,border:"1px solid #d9dbe7",borderRadius:10}}>{organizations.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></div>}
+   <div className="ya-field"><label>Email</label><input name="email" type="email" required/></div>
+   {role!=="company_admin"&&<div className="ya-field"><label>Rol</label><select name="role" style={{padding:11,border:"1px solid #d9dbe7",borderRadius:10}}><option value="student">Alumno</option><option value="company_admin">Admin empresa</option></select></div>}
+   <button className="ya-btn ya-primary">Crear invitación</button>
+  </form>{message&&<div style={{marginTop:12,fontSize:13}}>{message}</div>}{link&&<div className="ya-alert" style={{background:"#eef0fb",color:"#101858",wordBreak:"break-all"}}><b>Enlace de invitación:</b><br/>{link}</div>}</div>
+  {users&&<div className="ya-list">{users.map(u=><div className="ya-row" key={u.id}><strong>{u.active?"Activo":"Pausa"}</strong><div><strong>{u.name}</strong><br/><span>{u.email} · {u.organization_name||"Yeppo"} · {u.role}</span></div>{["super_admin","support"].includes(role)&&<button className="ya-btn ya-secondary" onClick={()=>call({action:"toggle_user",userId:u.id,active:!u.active})}>{u.active?"Desactivar":"Activar"}</button>}</div>)}</div>}
+ </div>
+}
