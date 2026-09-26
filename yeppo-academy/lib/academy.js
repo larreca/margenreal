@@ -1,0 +1,63 @@
+import seed from "@/data/academy.seed.json";
+import {getDb} from "@/lib/db";
+import {editableChapter,plainTextChapter} from "@/lib/content-utils";
+
+const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
+const baseById=id=>baseChapters().find(c=>c.id===id)||null;
+const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
+
+export async function getAcademyData(){
+  const sql=getDb();let rows=[];
+  if(sql){try{rows=await sql`SELECT chapter_id,published_content FROM academy_chapters WHERE published_content IS NOT NULL`}catch{}}
+  const by=new Map(rows.map(r=>[r.chapter_id,r.published_content]));
+  return{...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>overlay({...c,schoolId:s.id,schoolName:s.name},by.get(c.id)))}))};
+}
+export async function getChapter(id){
+  const data=await getAcademyData();
+  for(const s of data.schools){const c=s.chapters.find(x=>x.id===id);if(c)return editableChapter({...c,schoolId:s.id,schoolName:s.name})}
+  return null;
+}
+export async function getChapterForEditor(id){
+  const base=baseById(id);if(!base)return null;const sql=getDb();if(!sql)return editableChapter(base);
+  try{const rows=await sql`SELECT draft_content,published_content FROM academy_chapters WHERE chapter_id=${id} LIMIT 1`;return editableChapter(overlay(base,rows[0]?.draft_content||rows[0]?.published_content))}catch{return editableChapter(base)}
+}
+export async function saveDraft(chapter,userId){
+  const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");const base=baseById(chapter.id);if(!base)throw new Error("CHAPTER_NOT_FOUND");
+  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",modules:Array.isArray(chapter.modules)?chapter.modules:[]};
+  const payload=JSON.stringify(normalized);
+  await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,status,updated_by,updated_at)
+    VALUES(${chapter.id},${normalized.title},${normalized.summary},${payload}::jsonb,'draft',${userId}::uuid,NOW())
+    ON CONFLICT(chapter_id) DO UPDATE SET title=EXCLUDED.title,summary=EXCLUDED.summary,draft_content=EXCLUDED.draft_content,status='draft',updated_by=EXCLUDED.updated_by,updated_at=NOW()`;
+  return normalized;
+}
+export async function sendForReview(chapterId,userId){
+  const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");
+  await sql`UPDATE academy_chapters SET status='review',updated_by=${userId}::uuid,updated_at=NOW() WHERE chapter_id=${chapterId} AND draft_content IS NOT NULL`;
+}
+export async function publishChapter(chapterId,userId){
+  const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");
+  const rows=await sql`SELECT draft_content,published_content,version FROM academy_chapters WHERE chapter_id=${chapterId} LIMIT 1`;const r=rows[0];
+  if(!r?.draft_content)throw new Error("NO_DRAFT");
+  if(r.published_content)await sql`INSERT INTO academy_chapter_versions(chapter_id,version,content,published_by) VALUES(${chapterId},${r.version||0},${JSON.stringify(r.published_content)}::jsonb,${userId}::uuid)`;
+  await sql`UPDATE academy_chapters SET published_content=draft_content,status='published',version=COALESCE(version,0)+1,published_at=NOW(),published_by=${userId}::uuid,updated_at=NOW() WHERE chapter_id=${chapterId}`;
+}
+export async function getVersions(chapterId){const sql=getDb();if(!sql)return[];try{return await sql`SELECT id,version,published_at FROM academy_chapter_versions WHERE chapter_id=${chapterId} ORDER BY published_at DESC LIMIT 20`}catch{return[]}}
+export async function getUserProgress(userId){
+  const sql=getDb();if(!sql||!userId)return{};
+  try{const rows=await sql`SELECT chapter_id,progress_percent,completed_at FROM academy_progress WHERE user_id=${userId}::uuid`;return Object.fromEntries(rows.map(r=>[r.chapter_id,{percent:Number(r.progress_percent||0),completed:Boolean(r.completed_at)}]))}catch{return{}}
+}
+export async function recordProgress(userId,chapterId,moduleId,percent,completed=false){
+  const sql=getDb();if(!sql)return;const p=Math.max(0,Math.min(100,Number(percent||0)));
+  await sql`INSERT INTO academy_progress(user_id,chapter_id,current_module_id,progress_percent,completed_at,last_activity_at)
+    VALUES(${userId}::uuid,${chapterId},${moduleId||null},${p},${completed?new Date().toISOString():null}::timestamptz,NOW())
+    ON CONFLICT(user_id,chapter_id) DO UPDATE SET current_module_id=EXCLUDED.current_module_id,progress_percent=GREATEST(academy_progress.progress_percent,EXCLUDED.progress_percent),completed_at=COALESCE(academy_progress.completed_at,EXCLUDED.completed_at),last_activity_at=NOW()`;
+}
+export async function searchAcademy(query){
+  const q=String(query||"").trim().toLowerCase();if(!q)return[];const d=await getAcademyData(),out=[];
+  for(const s of d.schools)for(const c of s.chapters){const full={...c,schoolId:s.id,schoolName:s.name};if(plainTextChapter(full).toLowerCase().includes(q))out.push({id:c.id,n:c.n,title:c.title,summary:c.summary,school:s.name})}
+  return out.slice(0,20);
+}
+export async function getAdminStats(){
+  const sql=getDb();if(!sql)return{users:0,organizations:0,completions:0,versions:0,database:false};
+  try{const [u,o,c,v]=await Promise.all([sql`SELECT COUNT(*)::int count FROM academy_users WHERE active=TRUE`,sql`SELECT COUNT(*)::int count FROM academy_organizations WHERE active=TRUE`,sql`SELECT COUNT(*)::int count FROM academy_progress WHERE completed_at IS NOT NULL`,sql`SELECT COUNT(*)::int count FROM academy_chapter_versions`]);return{users:u[0].count,organizations:o[0].count,completions:c[0].count,versions:v[0].count,database:true}}catch{return{users:0,organizations:0,completions:0,versions:0,database:false}}
+}
