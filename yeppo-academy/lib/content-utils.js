@@ -18,5 +18,5 @@ export function extractModules(chapter){
   if(out.length)return out;
   return [{id:"m"+chapter.n+"1",label:chapter.n+".1",title:chapter.title,html:'<div class="reading-copy"><p>'+clean(chapter.body||chapter.summary||"Contenido en preparación.")+"</p></div>"}];
 }
-export function editableChapter(chapter){return{id:chapter.id,n:chapter.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",schoolId:chapter.schoolId||"",schoolName:chapter.schoolName||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules:extractModules(chapter)}}
+export function editableChapter(chapter){return{id:chapter.id,n:chapter.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",schoolId:chapter.schoolId||"",schoolName:chapter.schoolName||"",assessmentRequired:chapter.id==="c01"||Boolean(chapter.assessmentRequired),modules:extractModules(chapter)}}
 export function plainTextChapter(chapter){const c=editableChapter(chapter);return[c.title,c.summary,c.tip,...c.modules.map(m=>m.title+" "+clean(m.html))].join(" ").replace(/\s+/g," ").trim()}

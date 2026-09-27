@@ -1,0 +1,10 @@
+node_modules/
+.next/
+next-env.d.ts
+.vercel/
+.env.local
+.env.*.local
+.dev.vars
+/dist/
+.vinext/
+.wrangler/

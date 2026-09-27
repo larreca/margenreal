@@ -4,6 +4,8 @@ import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 
 const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
+const pilotChapter=id=>/^c0[1-7]$/.test(id);
+export const isPilotChapter=pilotChapter;
 const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
 
 export async function getAcademyData(){
@@ -52,8 +54,8 @@ export async function recordProgress(userId,chapterId,moduleId,percent,completed
     VALUES(${userId}::uuid,${chapterId},${moduleId||null},${p},${completed?new Date().toISOString():null}::timestamptz,NOW())
     ON CONFLICT(user_id,chapter_id) DO UPDATE SET current_module_id=EXCLUDED.current_module_id,progress_percent=GREATEST(academy_progress.progress_percent,EXCLUDED.progress_percent),completed_at=COALESCE(academy_progress.completed_at,EXCLUDED.completed_at),last_activity_at=NOW()`;
 }
-export async function searchAcademy(query){
-  const q=String(query||"").trim().toLowerCase();if(!q)return[];const d=await getAcademyData(),out=[];
+export async function searchAcademy(query,session){
+  const q=String(query||"").trim().toLowerCase();if(!q||!session)return[];const d=await getAcademyDataForUser(session),out=[];
   for(const s of d.schools)for(const c of s.chapters){const full={...c,schoolId:s.id,schoolName:s.name};if(plainTextChapter(full).toLowerCase().includes(q))out.push({id:c.id,n:c.n,title:c.title,summary:c.summary,school:s.name})}
   return out.slice(0,20);
 }
@@ -125,13 +127,16 @@ export async function setOrganizationAssignment(organizationId,chapterId,availab
 }
 
 export async function getAcademyDataForUser(session){
-  const data=await getAcademyData();if(!session?.organizationId)return data;
+  const all=await getAcademyData();
+  const data={...all,schools:all.schools.map(s=>({...s,chapters:s.chapters.filter(c=>pilotChapter(c.id))})).filter(s=>s.chapters.length)};
+  if(!session?.organizationId)return data;
   const rows=await getOrganizationAssignments(session.organizationId);if(!rows.length)return data;
   const map=new Map(rows.map(r=>[r.chapter_id,r]));
   return{...data,schools:data.schools.map(s=>({...s,chapters:s.chapters.filter(c=>map.get(c.id)?.available!==false)}))};
 }
 
 export async function getChapterForUser(id,session){
+  if(!pilotChapter(id))return null;
   if(session?.organizationId){
     const rows=await getOrganizationAssignments(session.organizationId);
     const row=rows.find(r=>r.chapter_id===id);
@@ -157,7 +162,7 @@ export async function seedAcademyContent(userId=null){
     const normalized=editableChapter(base);
     const payload=JSON.stringify(normalized);
     await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,published_content,status,version,updated_by,published_by,updated_at,published_at)
-      VALUES(${base.id},${normalized.title},${normalized.summary||""},${payload}::jsonb,${payload}::jsonb,'published',1,${userId}::uuid,${userId}::uuid,NOW(),NOW())
+      VALUES(${base.id},${normalized.title},${normalized.summary||""},${payload}::jsonb,${pilotChapter(base.id)?payload:null}::jsonb,${pilotChapter(base.id)?'published':'draft'},${pilotChapter(base.id)?1:0},${userId}::uuid,${pilotChapter(base.id)?userId:null}::uuid,NOW(),${pilotChapter(base.id)?new Date().toISOString():null}::timestamptz)
       ON CONFLICT(chapter_id) DO NOTHING`;
   }
   return{chapters:chapters.length};

@@ -1,2 +1,23 @@
 import Header from "@/components/Header";import CertificatePrint from "@/components/CertificatePrint";import {requireSession} from "@/lib/auth";import {getAcademyDataForUser,getUserProgress} from "@/lib/academy";
-export default async function Certificates(){const s=await requireSession();const data=await getAcademyDataForUser(s);const p=await getUserProgress(s.id);const schools=data.schools.map(sc=>{const total=sc.chapters.length,done=sc.chapters.filter(c=>p[c.id]?.completed).length;return{...sc,total,done,earned:total>0&&done===total}});const total=schools.reduce((a,x)=>a+x.total,0),done=schools.reduce((a,x)=>a+x.done,0),eligible=total>0&&done===total;return <><Header session={s}/><main className="ya-container"><div className="ya-head"><div><small>CERTIFICACIÓN</small><h1>Tu avance profesional</h1><p>Cada escuela completa entrega una insignia. La certificación final se habilita al completar toda la ruta disponible asignada a tu empresa.</p></div></div><div className="ya-grid">{schools.map((sc,i)=><div className="ya-card" style={{padding:20,opacity:sc.earned?1:.64}} key={sc.id}><span className="ya-school-num">{sc.earned?"✓":String(i+1).padStart(2,"0")}</span><h3 style={{color:"#101858"}}>{sc.name}</h3><p>{sc.done} de {sc.total} capítulos completados</p><div className="ya-meter"><i style={{width:(sc.total?sc.done/sc.total*100:0)+"%"}}/></div><b style={{display:"block",marginTop:12,color:sc.earned?"#157b53":"#686b80"}}>{sc.earned?"Insignia obtenida":"En progreso"}</b></div>)}</div><section style={{marginTop:34}}>{eligible?<CertificatePrint name={s.name} date={new Date().toLocaleDateString("es-CL",{year:"numeric",month:"long",day:"numeric"})}/>:<div className="ya-card" style={{padding:28}}><h2 style={{color:"#101858",marginTop:0}}>Certificación final bloqueada</h2><p style={{color:"#686b80"}}>Has completado {done} de {total} capítulos disponibles. Continúa la ruta para habilitar el certificado final.</p></div>}</section></main></>}
+export default async function Certificates(){
+ const s=await requireSession();
+ const data=await getAcademyDataForUser(s);
+ const progress=await getUserProgress(s.id);
+ const schools=data.schools.map(sc=>{
+  const total=sc.chapters.length;
+  const done=sc.chapters.filter(c=>progress[c.id]?.completed).length;
+  return {...sc,total,done,earned:total>0&&done===total};
+ });
+ const total=schools.reduce((sum,sc)=>sum+sc.total,0);
+ const done=schools.reduce((sum,sc)=>sum+sc.done,0);
+ const eligible=total>0&&done===total;
+ return <><Header session={s}/><main className="ya-container">
+  <div className="ya-head"><div><small>AVANCE DEL PILOTO</small><h1>Tu avance profesional</h1><p>Cada escuela completa entrega una insignia. Al terminar los capítulos disponibles para tu empresa podrás descargar una constancia de esta etapa inicial.</p></div></div>
+  <div className="ya-grid">{schools.map((sc,i)=><div className="ya-card" style={{padding:20,opacity:sc.earned?1:.64}} key={sc.id}>
+   <span className="ya-school-num">{sc.earned?"✓":String(i+1).padStart(2,"0")}</span><h3 style={{color:"#101858"}}>{sc.name}</h3>
+   <p>{sc.done} de {sc.total} capítulos completados</p><div className="ya-meter"><i style={{width:(sc.total?sc.done/sc.total*100:0)+"%"}}/></div>
+   <b style={{display:"block",marginTop:12,color:sc.earned?"#157b53":"#686b80"}}>{sc.earned?"Insignia obtenida":"En progreso"}</b>
+  </div>)}</div>
+  <section style={{marginTop:34}}>{eligible?<CertificatePrint name={s.name} chapterCount={total} date={new Date().toLocaleDateString("es-CL",{year:"numeric",month:"long",day:"numeric"})}/>:<div className="ya-card" style={{padding:28}}><h2 style={{color:"#101858",marginTop:0}}>Constancia de etapa inicial pendiente</h2><p style={{color:"#686b80"}}>Has completado {done} de {total} capítulos disponibles. Continúa la ruta para habilitarla.</p></div>}</section>
+ </main></>;
+}
