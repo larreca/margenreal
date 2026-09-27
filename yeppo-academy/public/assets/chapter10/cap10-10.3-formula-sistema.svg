@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Las piezas de una fórmula cosmética</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Un producto funciona como sistema, no como una lista de “activos estrella”</text>
+<g font-family="Arial">
+<rect x="70" y="180" width="330" height="170" rx="24" fill="#eef8ff"/><text x="105" y="225" font-size="24" font-weight="700" fill="#101858">VEHÍCULO / SOLVENTE</text><text x="105" y="267" font-size="18" fill="#33364b">agua · glicoles · alcoholes</text><text x="105" y="305" font-size="16" fill="#686b80">transportan y disuelven ingredientes</text>
+<rect x="435" y="180" width="330" height="170" rx="24" fill="#eef8f4"/><text x="470" y="225" font-size="24" font-weight="700" fill="#101858">HIDRATACIÓN</text><text x="470" y="267" font-size="18" fill="#33364b">humectantes · emolientes · oclusivos</text><text x="470" y="305" font-size="16" fill="#686b80">modifican agua, suavidad y película</text>
+<rect x="800" y="180" width="330" height="170" rx="24" fill="#fff1f7"/><text x="835" y="225" font-size="24" font-weight="700" fill="#101858">TRATAMIENTO</text><text x="835" y="267" font-size="18" fill="#33364b">niacinamida · retinoides · ácidos</text><text x="835" y="305" font-size="16" fill="#686b80">objetivo cosmético específico</text>
+
+<rect x="70" y="390" width="330" height="170" rx="24" fill="#f3efff"/><text x="105" y="435" font-size="24" font-weight="700" fill="#101858">ESTRUCTURA</text><text x="105" y="477" font-size="18" fill="#33364b">emulsionantes · espesantes</text><text x="105" y="515" font-size="16" fill="#686b80">mantienen textura y estabilidad</text>
+<rect x="435" y="390" width="330" height="170" rx="24" fill="#fff7e9"/><text x="470" y="435" font-size="24" font-weight="700" fill="#101858">CONSERVACIÓN</text><text x="470" y="477" font-size="18" fill="#33364b">preservantes · quelantes · antioxidantes</text><text x="470" y="515" font-size="16" fill="#686b80">ayudan a mantener seguridad/estabilidad</text>
+<rect x="800" y="390" width="330" height="170" rx="24" fill="#f7f8fc"/><text x="835" y="435" font-size="24" font-weight="700" fill="#101858">SENSORIAL</text><text x="835" y="477" font-size="18" fill="#33364b">fragancia · siliconas · polvos · color</text><text x="835" y="515" font-size="16" fill="#686b80">cambian olor, acabado y experiencia</text>
+</g>
+<text x="70" y="660" font-family="Arial" font-size="20" font-weight="700" fill="#ed3489">Una fórmula puede ser excelente sin “10 activos” y puede ser mala para una persona aunque tenga un ingrediente famoso.</text>
+</svg>
