@@ -130,7 +130,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    </div>
    <div className="course-cover-data">
     <div><small>ESTRUCTURA</small><b>{modules.length}</b><span>módulos</span></div>
-    <div><small>AVANCE</small><b>{done?100:shown}%</b><span>guardado</span></div>
+    <div><small>AVANCE</small><b>{done?100:shown}%</b><span>{previewMode?"recorrido":"guardado"}</span></div>
     <div><small>FORMATO</small><b>Curso</b><span>lectura + práctica</span></div>
     <div><small>PLANTILLA</small><b>Única</b><span>estándar Cap. 1</span></div>
    </div>
