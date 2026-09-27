@@ -2,6 +2,8 @@
 import {useEffect,useRef,useState} from "react";
 import {videoEmbedUrl} from "@/lib/video";
 import {editorialFor,editorialImage} from "@/lib/editorial";
+import ChapterMap from "@/components/ChapterMap";
+import MiniDecision from "@/components/MiniDecision";
 
 function attachInteractions(container,onAssessment){
  if(!container)return;
@@ -86,6 +88,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const modules=chapter.modules||[];
  const initialIndex=modules.length?Math.min(modules.length-1,Math.max(0,Math.floor((initialPercent/100)*modules.length))):0;
  const [index,setIndex]=useState(initialIndex);
+ const [navOpen,setNavOpen]=useState(false);
  const [done,setDone]=useState(initialPercent>=100);
  const [passed,setPassed]=useState(initialPassed);
  const [assessmentMsg,setAssessmentMsg]=useState("");
@@ -114,7 +117,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  }
  function move(i){
    const n=Math.max(0,Math.min(modules.length-1,i));
-   setIndex(n);save(n,false);window.scrollTo({top:0,behavior:"smooth"});
+   setIndex(n);setNavOpen(false);save(n,false);window.scrollTo({top:0,behavior:"smooth"});
  }
  async function complete(){
    if(previewMode)return;
@@ -133,25 +136,29 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    </div>
    <div className="course-cover-data">
     <div><small>ESTRUCTURA</small><b>{modules.length}</b><span>módulos</span></div>
-    <div><small>AVANCE</small><b>{done?100:shown}%</b><span>{previewMode?"recorrido":"guardado"}</span></div>
+    <div><small>{previewMode?"LECTURA":"AVANCE"}</small><b>{previewMode?`${index+1}/${modules.length}`:`${done?100:shown}%`}</b><span>{previewMode?"módulos":"guardado"}</span></div>
     <div><small>FORMATO</small><b>Curso</b><span>lectura + práctica</span></div>
     <div><small>ENFOQUE</small><b>Aplicado</b><span>consejos y práctica</span></div>
    </div>
   </div>
   <div className="ya-module-tabs">
-   <div className="course-module-nav">{modules.map((x,i)=><button type="button" className={i===index?"active":""} key={x.id} onClick={()=>move(i)}><span>{x.label}</span>{x.title}</button>)}</div>
+   <button type="button" className="ya-mobile-index" aria-expanded={navOpen} onClick={()=>setNavOpen(!navOpen)}>Índice de módulos · {index+1} de {modules.length} <span aria-hidden="true">{navOpen?"−":"+"}</span></button>
+   <div className={"course-module-nav"+(navOpen?" is-open":"")}>{modules.map((x,i)=><button type="button" className={i===index?"active":""} key={x.id} onClick={()=>move(i)}><span>{x.label}</span>{x.title}</button>)}</div>
    <div className="module-progress"><b>Módulo {index+1} de {modules.length}</b><div><i style={{width:(modules.length?((index+1)/modules.length*100):0)+"%"}}/></div></div>
   </div>
-  <section className="course-module ya-stage" ref={stageRef} key={m.id}>
+  <section className={"course-module ya-stage"+(index===modules.length-1?" is-last":"")} ref={stageRef} key={m.id}>
    {index===0&&<aside className="editorial-lesson-feature"><div className={"editorial-lesson-photo"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/></div><div><small>{feature.eyebrow}</small><h3>Una idea para recordar</h3><p>{feature.story}</p><div className="editorial-tip"><b>Consejo Yeppo</b><p>{feature.tip}</p></div>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">{feature.sourceLabel} ↗</a>}</div></aside>}
+   {index===0&&<ChapterMap id={chapter.id}/>}
    {index===0&&chapter.id==="c10"&&<div className="yeppo-ingredient-map"><div><small>YEPPO / INGREDIENTES CON HISTORIA</small><h3>Centella: de la tradición a la fórmula</h3><p>Una misma planta puede aparecer en relatos culturales, investigaciones y cosméticos. Cada contexto permite afirmar cosas diferentes.</p></div><ol><li><b>01</b><strong>Uso tradicional</strong><span>Gotu kola en distintas regiones de Asia: una historia de uso, no una prueba clínica para cualquier crema.</span></li><li><b>02</b><strong>Compuestos estudiados</strong><span>Asiaticósido y madecasósido figuran entre los componentes que motivaron investigación.</span></li><li><b>03</b><strong>Fórmula real</strong><span>Importan el INCI completo, la concentración, la tolerancia y cómo se usa el producto.</span></li><li><b>04</b><strong>Consejo en Yeppo</strong><span>Explica el beneficio cosmético con precisión y evita prometer curación.</span></li></ol><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3834700/" target="_blank" rel="noopener noreferrer">Fuente: revisión científica sobre Centella asiatica ↗</a></div>}
    <div dangerouslySetInnerHTML={{__html:m.html}}/>
+   {index===0&&<MiniDecision chapterId={chapter.id}/>}
    {videoSrc&&<div className="ya-video"><iframe src={videoSrc} title={"Video · "+m.title} loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>}
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
    <div className="ya-module-actions">
     <button className="ya-btn ya-secondary" disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button>
-    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:<button className="ya-btn ya-pink" disabled={chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
+    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:<button className="ya-btn ya-pink" disabled={!previewMode&&chapter.assessmentRequired&&!passed} onClick={previewMode?()=>window.location.assign("/revision"):complete}>{previewMode?"Volver a las rutas":done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
    </div>
   </section>
+  <nav className="ya-mobile-step" aria-label="Navegación del capítulo"><button disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button><span>{index+1} de {modules.length}</span><button disabled={index===modules.length-1} onClick={()=>move(index+1)}>Siguiente →</button></nav>
  </div></div>
 }

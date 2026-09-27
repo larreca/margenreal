@@ -1,10 +1,7 @@
-import {notFound} from "next/navigation";
-import {getChapter} from "@/lib/academy";
-import ReviewEditor from "@/components/ReviewEditor";
-
+import {redirect} from "next/navigation";
+import {requireRole} from "@/lib/auth";
 export default async function EditReview({params}){
+ await requireRole(["super_admin","editor","reviewer"]);
  const {id}=await params;
- const chapter=await getChapter(id);
- if(!chapter)notFound();
- return <ReviewEditor initial={chapter}/>;
+ redirect("/admin/content/"+id);
 }

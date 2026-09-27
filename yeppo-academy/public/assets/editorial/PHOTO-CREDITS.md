@@ -15,3 +15,6 @@ Las fotografías de Pexels y Unsplash son imágenes editoriales de contexto. Las
 - `chile-beauty.jpg`: [Oscar Bahamondes Carmona, retrato en Santiago, Chile](https://www.pexels.com/photo/portrait-of-a-woman-with-black-hair-and-pale-skin-15581217/), Pexels.
 - `chile-model.jpg`: [Oss Leos, retrato en Santiago, Chile](https://www.pexels.com/photo/portrait-of-woman-leaning-on-chair-22487868/), Pexels.
 - `chile-portrait.jpg`: [Oss Leos, retrato en Santiago, Chile](https://www.pexels.com/photo/portrait-of-a-woman-18095046/), Pexels.
+
+- `chile-makeup.jpg`: [Oss Leos, maquillaje y manicura en Santiago, Chile](https://www.pexels.com/photo/lipstick-on-woman-face-and-manicure-on-woman-fingers-22487865/), Pexels.
+- `yeppo-store.jpg`: [Fotografía de Yeppo Patronato](https://yeppo.cl/pages/acerca-de-yeppo), archivo publicado por Yeppo.

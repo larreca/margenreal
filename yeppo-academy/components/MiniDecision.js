@@ -1,0 +1,14 @@
+"use client";
+import {useState} from "react";
+const cases={
+ c01:{prompt:"Una clienta pide una rutina coreana de diez pasos para empezar. ¿Qué le propones?",choices:["Diez productos para vivir la experiencia completa.","Preguntar por su rutina actual y construir pocos pasos sostenibles.","Un activo fuerte sin preguntar qué usa."],correct:1,reason:"K-Beauty no exige un número de pasos. La rutina debe responder a una necesidad y a la tolerancia de la persona."},
+ c02:{prompt:"Un producto se vuelve viral. ¿Qué verifica Yeppo antes de recomendarlo?",choices:["Solo cuántas vistas tuvo.","Necesidad, disponibilidad, fórmula y encaje en una rutina.","Que la competencia ya lo vende."],correct:1,reason:"La demanda inicial puede ser una señal, pero una venta que se sostiene necesita selección, explicación y reposición."},
+ c03:{prompt:"Una clienta compara dos tiendas con el mismo producto. ¿Qué agrega valor?",choices:["Prometer que funcionará para todos.","Explicar textura, uso y elección según la necesidad.","Ocultar la comparación."],correct:1,reason:"La asesoría útil convierte un catálogo compartido en una decisión clara para esa persona."},
+ c09:{prompt:"Una persona presenta hinchazón facial y dificultad para respirar tras usar un cosmético. ¿Qué haces?",choices:["Ofrecer una crema calmante.","Detener la venta y recomendar atención médica urgente.","Pedir que espere a ver si mejora."],correct:1,reason:"La dificultad respiratoria exige atención urgente. Una señal roja sin compromiso general también detiene la recomendación y puede requerir derivación."},
+ c11:{prompt:"Una crema se siente muy pesada y la clienta dejó de usarla. ¿Cuál es la siguiente pregunta?",choices:["¿Qué textura sí te resulta cómoda?","¿Quieres la misma crema en tamaño grande?","¿Por qué no la aplicas más cantidad?"],correct:0,reason:"Humectantes, emolientes y oclusivos cumplen funciones distintas. La textura y la adherencia importan en la elección."},
+ c12:{prompt:"Una clienta lee 'centella' en un sérum. ¿Qué puedes afirmar?",choices:["Que cura la rosácea.","Que conviene revisar fórmula, uso y tolerancia antes de recomendarlo.","Que todos los extractos tienen la misma concentración."],correct:1,reason:"La historia tradicional y la investigación de compuestos no prueban el resultado de cualquier producto terminado."}
+};
+export default function MiniDecision({chapterId}){
+ const [choice,setChoice]=useState(null),item=cases[chapterId];if(!item)return null;
+ return <section className="yeppo-mini-decision" aria-label="Decisión práctica"><small>DECISIÓN EN TIENDA · YEPPO</small><h3>{item.prompt}</h3><div>{item.choices.map((c,i)=><button type="button" key={i} className={choice===i?"selected":""} onClick={()=>setChoice(i)} aria-pressed={choice===i}>{c}</button>)}</div>{choice!==null&&<p role="status"><strong>{choice===item.correct?"Buen criterio.":"Revisa esta decisión."}</strong> {item.reason}</p>}</section>;
+}
