@@ -134,21 +134,8 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  }
 
  return <div className="ya-reader editorial-reader"><div className="coursebook ya-course-shell">
-  <div className="course-cover">
-   <div className="course-cover-copy">
-    <span className="course-label">CAPÍTULO {chapter.n} · {chapter.schoolName}</span>
-    <h2>{chapter.title}</h2>
-    <p>{chapter.summary}</p>
-    {chapter.tip&&<p><strong>Idea guía:</strong> {chapter.tip}</p>}
-   </div>
-   <div className="course-cover-data">
-    <div><small>ESTRUCTURA</small><b>{modules.length}</b><span>módulos</span></div>
-    <div><small>{previewMode?"LECTURA":"AVANCE"}</small><b>{previewMode?`${index+1}/${modules.length}`:`${done?100:shown}%`}</b><span>{previewMode?"módulos":"guardado"}</span></div>
-    <div><small>FORMATO</small><b>Curso</b><span>lectura + práctica</span></div>
-    <div><small>ENFOQUE</small><b>Aplicado</b><span>consejos y práctica</span></div>
-   </div>
-  </div>
   <div className="ya-module-tabs">
+   <div className="editorial-index-head"><small>CAPÍTULO {chapter.n}</small><h2>{chapter.title}</h2><span>Módulo {index+1} de {modules.length}</span><div className="editorial-index-meter"><i style={{width:((index+1)/Math.max(modules.length,1)*100)+"%"}}/></div></div>
    <button type="button" className="ya-mobile-index" aria-expanded={navOpen} onClick={()=>setNavOpen(!navOpen)}>Índice de módulos · {index+1} de {modules.length} <span aria-hidden="true">{navOpen?"−":"+"}</span></button>
    <div className={"course-module-nav"+(navOpen?" is-open":"")}>{modules.map((x,i)=><button type="button" className={i===index?"active":""} key={x.id} onClick={()=>move(i)}><span>{x.label}</span>{x.title}</button>)}</div>
    <div className="module-progress"><b>Módulo {index+1} de {modules.length}</b><div><i style={{width:(modules.length?((index+1)/modules.length*100):0)+"%"}}/></div></div>
@@ -156,7 +143,9 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
   <section className={"course-module ya-stage"+(index===modules.length-1?" is-last":"")} ref={stageRef} key={m.id}>
    <div className="editorial-module-intro"><span>LECCIÓN {String(index+1).padStart(2,"0")} / {String(modules.length).padStart(2,"0")}</span><span>LECTURA + PRÁCTICA</span></div>
    {index===0&&<div className="editorial-first-lesson"><small>{m.label}</small><h2>{m.title}</h2><p>{chapter.summary}</p></div>}
-   {index===0&&<figure className={"editorial-lesson-image"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/><figcaption>{feature.eyebrow} · Yeppo Academy</figcaption></figure>}
+   {index===0&&<figure className={"editorial-lesson-image"+(feature.product?" editorial-product-photo":"")}>
+    {chapter.id==="c04"?<div className="editorial-skin-visual"><img src="/assets/editorial/chile-makeup.jpg" alt="Primer plano real de piel y maquillaje"/><img src="/assets/chapter4/cap4-4.1-capas-piel.svg" alt="Infografía de las capas de la piel"/></div>:<img src={editorialImage(chapter.id)} alt={feature.alt}/>}
+    <figcaption>{feature.eyebrow} · Yeppo Academy</figcaption></figure>}
    {index===0&&<ChapterMap id={chapter.id}/>}
    {index===0&&chapter.id==="c10"&&<div className="yeppo-ingredient-map"><div><small>YEPPO / INGREDIENTES CON HISTORIA</small><h3>Centella: de la tradición a la fórmula</h3><p>Una misma planta puede aparecer en relatos culturales, investigaciones y cosméticos. Cada contexto permite afirmar cosas diferentes.</p></div><ol><li><b>01</b><strong>Uso tradicional</strong><span>Gotu kola en distintas regiones de Asia: una historia de uso, no una prueba clínica para cualquier crema.</span></li><li><b>02</b><strong>Compuestos estudiados</strong><span>Asiaticósido y madecasósido figuran entre los componentes que motivaron investigación.</span></li><li><b>03</b><strong>Fórmula real</strong><span>Importan el INCI completo, la concentración, la tolerancia y cómo se usa el producto.</span></li><li><b>04</b><strong>Consejo en Yeppo</strong><span>Explica el beneficio cosmético con precisión y evita prometer curación.</span></li></ol><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3834700/" target="_blank" rel="noopener noreferrer">Fuente: revisión científica sobre Centella asiatica ↗</a></div>}
    <div dangerouslySetInnerHTML={{__html:m.html}}/>
@@ -169,8 +158,8 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    </div>
   </section>
   <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
-   <div className="editorial-context-card editorial-context-story"><small>DATO PARA RECORDAR</small><h3>{feature.eyebrow}</h3><p>{feature.story}</p>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente ↗</a>}</div>
-   <div className="editorial-context-card editorial-context-tip"><small>CONSEJO YEPPO</small><h3>Llévalo a la conversación</h3><p>{feature.tip}</p></div>
+   <div className="editorial-context-card editorial-context-story"><small>LO ESENCIAL</small><h3>{feature.eyebrow}</h3><p>{feature.story}</p>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente ↗</a>}</div>
+   <div className="editorial-context-card editorial-context-tip"><small>APLICARLO EN TIENDA</small><h3>Consejo Yeppo</h3><p>{feature.tip}</p></div>
    <div className="editorial-context-card editorial-context-photo"><img src={feature.product?editorialImage(chapter.id):"/assets/editorial/yeppo-store.jpg"} alt={feature.product?feature.alt:"Espacio y productos de Yeppo"}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"YEPPO · APLICACIÓN EN TIENDA"}</span></div>
   </aside>
   <nav className="ya-mobile-step" aria-label="Navegación del capítulo"><button disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button><span>{index+1} de {modules.length}</span><button disabled={index===modules.length-1} onClick={()=>move(index+1)}>Siguiente →</button></nav>
