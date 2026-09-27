@@ -32,7 +32,7 @@ Las portadas muestran modelos diferentes. Son fotografías editoriales de contex
 | 05 | [`chile-beauty.jpg`](https://www.pexels.com/photo/portrait-of-a-woman-with-black-hair-and-pale-skin-15581217/) | Diversidad de pieles |
 | 06 | [Rutina con crema](https://www.pexels.com/photo/a-woman-applying-a-cream-on-her-face-7608061/) | Estado y tolerancia |
 | 07 | [Retrato con pecas](https://www.pexels.com/photo/portrait-of-a-young-natural-woman-with-afro-and-freckles-5253959/) | Preocupaciones y piel real |
-| 08 | [`chile-portrait.jpg`](https://www.pexels.com/photo/portrait-of-a-woman-18095046/) | Conversación y criterio |
+| 08 | [Mujer frente a un espejo](https://www.pexels.com/photo/beautiful-woman-looking-at-herself-on-a-makeup-s-mirror-4910150/) | Observar sin diagnosticar |
 | 09 | [YekuStudio, Santiago](https://www.pexels.com/photo/portrait-of-brunette-woman-smiling-17568374/) | Atención centrada en la persona |
 | 10 | [Lectura de etiqueta](https://www.pexels.com/photo/crop-ethnic-shopper-reading-sticker-on-cosmetic-product-in-store-5709637/) | INCI y rotulación |
 | 11 | [Aplicación de hidratante](https://www.pexels.com/photo/a-woman-with-a-skin-care-product-on-her-face-6925480/) | Hidratación |
