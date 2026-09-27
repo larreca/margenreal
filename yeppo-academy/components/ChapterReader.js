@@ -127,7 +127,6 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
 
  return <div className="ya-reader editorial-reader"><div className="coursebook ya-course-shell">
   <div className="course-cover">
-   <div className={"editorial-cover-photo"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/></div>
    <div className="course-cover-copy">
     <span className="course-label">CAPÍTULO {chapter.n} · {chapter.schoolName}</span>
     <h2>{chapter.title}</h2>
@@ -164,7 +163,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
   <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
    <div className="editorial-context-card editorial-context-story"><small>DATO PARA RECORDAR</small><h3>{feature.eyebrow}</h3><p>{feature.story}</p>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente ↗</a>}</div>
    <div className="editorial-context-card editorial-context-tip"><small>CONSEJO YEPPO</small><h3>Llévalo a la conversación</h3><p>{feature.tip}</p></div>
-   <div className="editorial-context-card editorial-context-photo"><img src={editorialImage(chapter.id)} alt={feature.alt}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"IMAGEN EDITORIAL DEL CAPÍTULO"}</span></div>
+   <div className="editorial-context-card editorial-context-photo"><img src={feature.product?editorialImage(chapter.id):"/assets/editorial/yeppo-store.jpg"} alt={feature.product?feature.alt:"Espacio y productos de Yeppo"}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"YEPPO · APLICACIÓN EN TIENDA"}</span></div>
   </aside>
   <nav className="ya-mobile-step" aria-label="Navegación del capítulo"><button disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button><span>{index+1} de {modules.length}</span><button disabled={index===modules.length-1} onClick={()=>move(index+1)}>Siguiente →</button></nav>
  </div></div>
