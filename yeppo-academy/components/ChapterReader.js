@@ -1,6 +1,7 @@
 "use client";
 import {useEffect,useRef,useState} from "react";
 import {videoEmbedUrl} from "@/lib/video";
+import {editorialFor,editorialImage} from "@/lib/editorial";
 
 function attachInteractions(container,onAssessment){
  if(!container)return;
@@ -92,6 +93,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const m=modules[index]||{id:"empty",label:"",title:chapter.title,html:"<p>Contenido en preparación.</p>"};
  const videoSrc=videoEmbedUrl(m.videoUrl);
  const shown=Math.max(initialPercent,modules.length?Math.round(((index+1)/modules.length)*100):0);
+ const feature=editorialFor(chapter.id);
 
  useEffect(()=>{
    return attachInteractions(stageRef.current,async(answers)=>{
@@ -120,8 +122,9 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    await save(index,true);setDone(true);
  }
 
- return <div className="ya-reader"><div className="coursebook ya-course-shell">
+ return <div className="ya-reader editorial-reader"><div className="coursebook ya-course-shell">
   <div className="course-cover">
+   <div className={"editorial-cover-photo"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/></div>
    <div className="course-cover-copy">
     <span className="course-label">CAPÍTULO {chapter.n} · {chapter.schoolName}</span>
     <h2>{chapter.title}</h2>
@@ -132,7 +135,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
     <div><small>ESTRUCTURA</small><b>{modules.length}</b><span>módulos</span></div>
     <div><small>AVANCE</small><b>{done?100:shown}%</b><span>{previewMode?"recorrido":"guardado"}</span></div>
     <div><small>FORMATO</small><b>Curso</b><span>lectura + práctica</span></div>
-    <div><small>PLANTILLA</small><b>Única</b><span>estándar Cap. 1</span></div>
+    <div><small>ENFOQUE</small><b>Aplicado</b><span>consejos y práctica</span></div>
    </div>
   </div>
   <div className="ya-module-tabs">
@@ -140,6 +143,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    <div className="module-progress"><b>Módulo {index+1} de {modules.length}</b><div><i style={{width:(modules.length?((index+1)/modules.length*100):0)+"%"}}/></div></div>
   </div>
   <section className="course-module ya-stage" ref={stageRef} key={m.id}>
+   {index===0&&<aside className="editorial-lesson-feature"><div className={"editorial-lesson-photo"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/></div><div><small>{feature.eyebrow}</small><h3>Una idea para recordar</h3><p>{feature.story}</p><div className="editorial-tip"><b>Consejo Yeppo</b><p>{feature.tip}</p></div>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">{feature.sourceLabel} ↗</a>}</div></aside>}
    <div dangerouslySetInnerHTML={{__html:m.html}}/>
    {videoSrc&&<div className="ya-video"><iframe src={videoSrc} title={"Video · "+m.title} loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>}
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
