@@ -1,6 +1,6 @@
 # Fotografías de la academia
 
-Las fotografías de Unsplash se usan bajo la licencia de Unsplash. Los retratos son fotografías de contexto y no representan al equipo ni a clientes de Yeppo. Las imágenes de productos Yeppo proceden de su catálogo online; la disponibilidad debe verificarse antes de recomendar.
+Las fotografías de Pexels y Unsplash son imágenes editoriales de contexto. Las tres nuevas fotografías de modelos fueron tomadas en Santiago de Chile y se publican bajo la licencia gratuita de Pexels; la ubicación y las etiquetas de las fichas no prueban la nacionalidad de las personas retratadas. No representan al equipo ni a clientes de Yeppo. Las imágenes de productos Yeppo proceden de su catálogo online; la disponibilidad debe verificarse antes de recomendar.
 
 - `portrait.jpg`: https://images.unsplash.com/photo-1531123897727-8f129e1688ce
 - `hero-face.jpg`: https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e
@@ -11,3 +11,7 @@ Las fotografías de Unsplash se usan bajo la licencia de Unsplash. Los retratos 
 - `yeppo-cream.jpg`: [Centella Hydrating Serum · NIDA](https://yeppo.cl/products/nida-centella-hydrating-serum-50-ml), catálogo Yeppo.
 - `yeppo-aloe.jpg`: [Aloe Hydro Formula 96% · Holika Holika](https://yeppo.cl/products/aloe-hydro-formula-96-soothing-gel-250ml), catálogo Yeppo.
 - `yeppo-spf.jpg`: [Relief Sun Rice + Probiotics · Beauty of Joseon](https://yeppo.cl/products/beauty-of-joseon-relief-sun-rice-probiotics-spf50-pa), catálogo Yeppo.
+
+- `chile-beauty.jpg`: [Oscar Bahamondes Carmona, retrato en Santiago, Chile](https://www.pexels.com/photo/portrait-of-a-woman-with-black-hair-and-pale-skin-15581217/), Pexels.
+- `chile-model.jpg`: [Oss Leos, retrato en Santiago, Chile](https://www.pexels.com/photo/portrait-of-woman-leaning-on-chair-22487868/), Pexels.
+- `chile-portrait.jpg`: [Oss Leos, retrato en Santiago, Chile](https://www.pexels.com/photo/portrait-of-a-woman-18095046/), Pexels.
