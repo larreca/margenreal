@@ -4,7 +4,7 @@ Aplicación de formación K-Beauty para clientes B2B de Yeppo.
 
 ## Arquitectura
 - Next.js / React
-- Cloudflare Workers (vinext) o Vercel
+- Netlify Free para la publicación posterior a la revisión
 - Neon Postgres
 - Autenticación propia con sesión HTTP-only
 - Contenido editable por bloques
@@ -32,53 +32,39 @@ SETUP_TOKEN=
 
 El contenido histórico de la academia se conserva en `data/academy.seed.json` como semilla/fallback y puede publicarse gradualmente desde el editor.
 
-## Despliegue en Cloudflare Workers
+## Revisión editorial antes del lanzamiento
 
-El proyecto conserva el build de Next.js y agrega un build de vinext para Workers.
-La base Neon debe tener aplicado `db/schema.sql` antes del primer acceso. No poner
-la cadena de conexión ni las claves en el repositorio o en `wrangler.jsonc`.
+Los capítulos 1–11 tienen ocho módulos y evaluación; 8–11 son borradores para
+revisar. Los capítulos 12–50 continúan como esquemas editables. La ruta del
+alumno muestra inicialmente los capítulos 1–7; un capítulo nuevo se suma al
+mapa y al buscador solo después de publicarlo desde el panel editorial.
 
-```bash
-npm ci
-npm run build:vinext
-npm run deploy:vinext
-```
+En `/admin/content/{id}` se puede modificar título, resumen y texto de cada
+módulo, agregar módulos, y vincular un video opcional de YouTube o Vimeo por
+módulo. `Guardar borrador` conserva cambios sin exponerlos a los alumnos;
+`Vista previa como alumno` los muestra después de guardar. Revisar allí antes
+de `Enviar a revisión` y `Publicar versión`. Las fichas de productos en el
+capítulo 11 enlazan al catálogo vigente y evitan fijar un INCI permanente.
 
-En el panel del Worker, configurar como **secretos cifrados** `DATABASE_URL`,
-`AUTH_SECRET` y `SETUP_TOKEN`. El Worker usa `process.env` gracias a
-`nodejs_compat` y la fecha de compatibilidad de `wrangler.jsonc`. Crear las
-claves con valores largos y aleatorios; no reutilizar las claves locales.
-El archivo `.dev.vars` sirve únicamente para desarrollo y está ignorado por Git.
+La copia autónoma `yeppo_academy_revision.html` permite revisar y editar en el
+navegador sin servidor. Guarda los cambios en ese navegador y descarga un JSON
+de respaldo. Ese archivo no actualiza automáticamente la base de producción;
+en el editor de cada capítulo se puede usar `Cargar cambios desde la vista de
+revisión`, revisar el resultado y guardar el borrador antes de lanzar.
 
-Después del despliegue, verificar `/api/health` (`ok: true`) y completar
-`/setup` una sola vez para crear el Super Admin y cargar los capítulos. Validar
-login, progreso, evaluación y publicación antes de invitar clientes. La URL del
-Worker es pública, pero las páginas privadas requieren sesión.
+## Despliegue en Netlify Free
 
-El plan gratuito de Workers tiene límites diarios; vigilar el uso y las
-respuestas de error antes de ofrecer una disponibilidad garantizada a clientes.
+El archivo `netlify.toml` en la raíz del repositorio configura la carpeta
+`yeppo-academy` como proyecto Next.js. Conectar el repositorio desde Netlify,
+seleccionar la rama del MVP y mantener el comando `npm run build` y la carpeta
+publicada `.next`. Netlify instala automáticamente su adaptador de Next.js.
 
-### Despliegue manual desde GitHub Actions
+Configurar `DATABASE_URL`, `AUTH_SECRET` y `SETUP_TOKEN` como variables de
+entorno privadas de Netlify antes del despliegue. Usar la cadena de conexión
+del proyecto Neon existente y generar claves largas y aleatorias para los otros
+dos valores. No incluirlas en Git ni en el enlace de despliegue.
 
-El workflow `.github/workflows/deploy-yeppo-academy.yml` se ejecuta solo de forma
-manual. Antes de usarlo, agregar estos cinco **Actions secrets** al repositorio
-en GitHub (Settings → Secrets and variables → Actions):
-
-| Secret | Valor |
-| --- | --- |
-| `CLOUDFLARE_ACCOUNT_ID` | ID de la cuenta de Cloudflare |
-| `CLOUDFLARE_API_TOKEN` | Token limitado a editar Workers de esa cuenta |
-| `YEPPO_ACADEMY_DATABASE_URL` | Connection string del proyecto Neon de la academia |
-| `YEPPO_ACADEMY_AUTH_SECRET` | Cadena aleatoria larga para firmar sesiones |
-| `YEPPO_ACADEMY_SETUP_TOKEN` | Token aleatorio privado para la configuración inicial |
-
-Crear el token de Cloudflare en su panel, limitado a la cuenta y a permisos de
-edición de Workers. Nunca pegar su valor en un issue, PR, workflow o chat. El
-workflow genera un archivo temporal con los tres secretos de aplicación y usa
-`wrangler deploy --secrets-file`, de modo que el código y las claves se activan
-en una sola publicación. Requiere que el workflow esté en la rama por defecto
-para iniciarlo desde Actions → Deploy Yeppo B2B Academy → Run workflow.
-
-Tras la primera publicación, abrir la URL `workers.dev` que muestre el job,
-comprobar `/api/health` y usar el token configurado en `/setup`. No activar
-usuarios externos hasta validar el recorrido completo.
+Después de publicar, comprobar `/api/health`, crear el primer Super Admin en
+`/setup` y validar login, progreso, evaluaciones y constancia antes de invitar
+clientes. El plan Free detiene el sitio al llegar a su límite mensual de uso;
+no produce cargos automáticos.

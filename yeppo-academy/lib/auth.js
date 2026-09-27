@@ -21,8 +21,9 @@ export async function clearSession(){
   const jar=await cookies(); jar.set(SESSION_COOKIE,"",{httpOnly:true,path:"/",maxAge:0});
 }
 export async function readSession(){
+  const jar=await cookies();
   const key=secret(); if(!key) return null;
-  const jar=await cookies(); const token=jar.get(SESSION_COOKIE)?.value; if(!token) return null;
+  const token=jar.get(SESSION_COOKIE)?.value; if(!token) return null;
   try{
     const {payload}=await jwtVerify(token,key);
     return {id:payload.sub,email:payload.email,role:payload.role,organizationId:payload.organizationId||null,name:payload.name||payload.email};

@@ -1,5 +1,6 @@
 "use client";
 import {useEffect,useRef,useState} from "react";
+import {videoEmbedUrl} from "@/lib/video";
 
 function attachInteractions(container,onAssessment){
  if(!container)return;
@@ -89,6 +90,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const [assessmentMsg,setAssessmentMsg]=useState("");
  const stageRef=useRef(null);
  const m=modules[index]||{id:"empty",label:"",title:chapter.title,html:"<p>Contenido en preparación.</p>"};
+ const videoSrc=videoEmbedUrl(m.videoUrl);
  const shown=Math.max(initialPercent,modules.length?Math.round(((index+1)/modules.length)*100):0);
 
  useEffect(()=>{
@@ -139,6 +141,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
   </div>
   <section className="course-module ya-stage" ref={stageRef} key={m.id}>
    <div dangerouslySetInnerHTML={{__html:m.html}}/>
+   {videoSrc&&<div className="ya-video"><iframe src={videoSrc} title={"Video · "+m.title} loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>}
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
    <div className="ya-module-actions">
     <button className="ya-btn ya-secondary" disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button>

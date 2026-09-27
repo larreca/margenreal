@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Protocolo de 5 decisiones en tienda</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Yeppo Academy · orientar, detener o derivar</text>
+<g font-family="Arial">
+<rect x="90" y="175" width="1020" height="86" rx="21" fill="#eef0fb"/><text x="125" y="212" font-size="21" font-weight="700" fill="#101858">1 · ¿ES UNA PREOCUPACIÓN COSMÉTICA?</text><text x="125" y="242" font-size="18" fill="#33364b">brillo · sequedad · textura · rutina · manchas postinflamatorias conocidas · tolerancia</text>
+<rect x="90" y="280" width="1020" height="86" rx="21" fill="#eef8f4"/><text x="125" y="317" font-size="21" font-weight="700" fill="#101858">2 · ¿PUEDO HACER PREGUNTAS SIN DIAGNOSTICAR?</text><text x="125" y="347" font-size="18" fill="#33364b">qué siente · desde cuándo · qué usa · qué cambió · qué tolera</text>
+<rect x="90" y="385" width="1020" height="86" rx="21" fill="#fff7e9"/><text x="125" y="422" font-size="21" font-weight="700" fill="#101858">3 · ¿HAY UNA SEÑAL DE ALERTA?</text><text x="125" y="452" font-size="18" fill="#33364b">dolor intenso · sangrado · lesión cambiante · ampollas · hinchazón · no cicatriza</text>
+<rect x="90" y="490" width="1020" height="86" rx="21" fill="#fff1f7"/><text x="125" y="527" font-size="21" font-weight="700" fill="#101858">4 · SI HAY ALERTA → DETENER LA VENTA ESPECÍFICA</text><text x="125" y="557" font-size="18" fill="#33364b">no probar activos “para ver qué pasa” · recomendar evaluación profesional</text>
+<rect x="90" y="595" width="1020" height="86" rx="21" fill="#f3efff"/><text x="125" y="632" font-size="21" font-weight="700" fill="#101858">5 · SI NO HAY ALERTA → RUTINA COSMÉTICA SIMPLE + SEGUIMIENTO</text><text x="125" y="662" font-size="18" fill="#33364b">explicar objetivo · uso · expectativas · cuándo suspender · cuándo volver</text>
+<text x="90" y="745" font-size="18" font-weight="700" fill="#ed3489">La derivación correcta protege al cliente y también protege la confianza de la tienda.</text>
+</g></svg>

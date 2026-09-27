@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">ABCDE: señal de alerta, no diagnóstico</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Modelo educativo basado en American Academy of Dermatology</text>
+<g font-family="Arial">
+<circle cx="170" cy="270" r="70" fill="#f2d1c4"/><path d="M125 250 Q170 205 215 255 Q185 325 125 300Z" fill="#7b4639"/><text x="110" y="390" font-size="29" font-weight="700" fill="#101858">A</text><text x="150" y="390" font-size="20" fill="#33364b">Asimetría</text>
+<circle cx="390" cy="270" r="70" fill="#f2d1c4"/><path d="M345 235 L390 215 L440 245 L428 310 L365 322 L338 280Z" fill="#815142"/><text x="330" y="390" font-size="29" font-weight="700" fill="#101858">B</text><text x="370" y="390" font-size="20" fill="#33364b">Borde</text>
+<circle cx="610" cy="270" r="70" fill="#f2d1c4"/><circle cx="595" cy="255" r="37" fill="#4d2c25"/><circle cx="630" cy="285" r="28" fill="#9d5848"/><text x="550" y="390" font-size="29" font-weight="700" fill="#101858">C</text><text x="590" y="390" font-size="20" fill="#33364b">Color</text>
+<circle cx="830" cy="270" r="70" fill="#f2d1c4"/><circle cx="830" cy="270" r="38" fill="#75483b"/><line x1="770" y1="350" x2="890" y2="350" stroke="#101858" stroke-width="4"/><text x="770" y="390" font-size="29" font-weight="700" fill="#101858">D</text><text x="810" y="390" font-size="20" fill="#33364b">Diámetro*</text>
+<circle cx="1050" cy="270" r="70" fill="#f2d1c4"/><circle cx="1030" cy="260" r="25" fill="#6e3f34"/><circle cx="1062" cy="280" r="42" fill="#8e5141" opacity=".8"/><text x="990" y="390" font-size="29" font-weight="700" fill="#101858">E</text><text x="1030" y="390" font-size="20" fill="#33364b">Evolución</text>
+<rect x="125" y="470" width="950" height="150" rx="26" fill="#fff0f1"/>
+<text x="165" y="520" font-size="22" font-weight="700" fill="#b42318">PARA EL VENDEDOR:</text>
+<text x="165" y="560" font-size="20" fill="#33364b">No decir “esto es melanoma”.</text>
+<text x="165" y="595" font-size="20" fill="#33364b">Sí decir: “esa lesión está cambiando / sangrando / se ve diferente; conviene que la revise dermatología”.</text>
+<text x="125" y="700" font-size="16" fill="#686b80">* La AAD recuerda que un melanoma puede medir menos de 6 mm; la evolución y diferencia respecto a otras lesiones importa.</text>
+</g></svg>

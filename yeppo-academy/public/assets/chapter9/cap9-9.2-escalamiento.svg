@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Escalamiento de una reacción cosmética</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">No todas las reacciones tienen la misma gravedad</text>
+<g font-family="Arial">
+<rect x="80" y="180" width="1040" height="115" rx="24" fill="#eef8f4"/>
+<text x="115" y="222" font-size="23" font-weight="700" fill="#157b53">NIVEL 1 · MOLESTIA LEVE</text>
+<text x="115" y="260" font-size="19" fill="#33364b">tirantez · picor leve · enrojecimiento pequeño → suspender producto y observar</text>
+<rect x="80" y="320" width="1040" height="115" rx="24" fill="#fff7e9"/>
+<text x="115" y="362" font-size="23" font-weight="700" fill="#9b6b00">NIVEL 2 · REACCIÓN IMPORTANTE</text>
+<text x="115" y="400" font-size="19" fill="#33364b">hinchazón localizada · ampollas · dolor · extensión → evaluación profesional</text>
+<rect x="80" y="460" width="1040" height="140" rx="24" fill="#fff0f1"/>
+<text x="115" y="502" font-size="23" font-weight="700" fill="#b42318">NIVEL 3 · EMERGENCIA</text>
+<text x="115" y="540" font-size="19" fill="#33364b">labios/lengua/garganta hinchados · dificultad respiratoria · desmayo</text>
+<text x="115" y="570" font-size="19" font-weight="700" fill="#b42318">→ atención de urgencia inmediata</text>
+<rect x="175" y="650" width="850" height="85" rx="20" fill="#101858"/>
+<text x="215" y="688" font-size="20" font-weight="700" fill="#fff">SIEMPRE REGISTRAR</text>
+<text x="215" y="718" font-size="17" fill="#fff">producto · lote · fecha · zona · síntomas · tiempo hasta reacción · evolución</text>
+</g></svg>

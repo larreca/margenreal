@@ -1,18 +1,34 @@
 import seed from "@/data/academy.seed.json";
+import newChapters from "@/data/new-chapters.json";
+import chapter11 from "@/data/chapter11.json";
 import {getDb} from "@/lib/db";
 import {editableChapter,plainTextChapter} from "@/lib/content-utils";
+import {videoEmbedUrl} from "@/lib/video";
 
-const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
+const newById=new Map([...newChapters,chapter11].map(c=>[c.id,c]));
+const allSeed={...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>({...c,...newById.get(c.id)}))}))};
+const baseChapters=()=>allSeed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
 const pilotChapter=id=>/^c0[1-7]$/.test(id);
 export const isPilotChapter=pilotChapter;
+export async function isAvailableChapter(id){
+  if(pilotChapter(id))return true;
+  if(!baseById(id))return false;
+  const sql=getDb();if(!sql)return false;
+  try{const rows=await sql`SELECT 1 FROM academy_chapters WHERE chapter_id=${id} AND published_content IS NOT NULL LIMIT 1`;return rows.length>0}catch{return false}
+}
+async function availableChapterIds(){
+  const ids=new Set(baseChapters().filter(c=>pilotChapter(c.id)).map(c=>c.id));
+  const sql=getDb();if(sql){try{const rows=await sql`SELECT chapter_id FROM academy_chapters WHERE published_content IS NOT NULL`;for(const row of rows)ids.add(row.chapter_id)}catch{}}
+  return ids;
+}
 const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
 
 export async function getAcademyData(){
   const sql=getDb();let rows=[];
   if(sql){try{rows=await sql`SELECT chapter_id,published_content FROM academy_chapters WHERE published_content IS NOT NULL`}catch{}}
   const by=new Map(rows.map(r=>[r.chapter_id,r.published_content]));
-  return{...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>overlay({...c,schoolId:s.id,schoolName:s.name},by.get(c.id)))}))};
+  return{...allSeed,schools:allSeed.schools.map(s=>({...s,chapters:s.chapters.map(c=>overlay({...c,schoolId:s.id,schoolName:s.name},by.get(c.id)))}))};
 }
 export async function getChapter(id){
   const data=await getAcademyData();
@@ -25,7 +41,10 @@ export async function getChapterForEditor(id){
 }
 export async function saveDraft(chapter,userId){
   const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");const base=baseById(chapter.id);if(!base)throw new Error("CHAPTER_NOT_FOUND");
-  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules:Array.isArray(chapter.modules)?chapter.modules:[]};
+  const modules=Array.isArray(chapter.modules)?chapter.modules:[];
+  if(!modules.length||new Set(modules.map(m=>m.id)).size!==modules.length)throw new Error("MÓDULOS_INVÁLIDOS");
+  if(modules.some(m=>m.videoUrl&&!videoEmbedUrl(m.videoUrl)))throw new Error("VIDEO_INVÁLIDO: usa YouTube o Vimeo HTTPS");
+  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules};
   const payload=JSON.stringify(normalized);
   await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,status,updated_by,updated_at)
     VALUES(${chapter.id},${normalized.title},${normalized.summary},${payload}::jsonb,'draft',${userId}::uuid,NOW())
@@ -40,6 +59,12 @@ export async function publishChapter(chapterId,userId){
   const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");
   const rows=await sql`SELECT draft_content,published_content,version FROM academy_chapters WHERE chapter_id=${chapterId} LIMIT 1`;const r=rows[0];
   if(!r?.draft_content)throw new Error("NO_DRAFT");
+  const draft=r.draft_content,modules=draft.modules||[];
+  if(modules.length<8||modules.some(m=>plainTextChapter({title:m.title,modules:[m]}).length<120))throw new Error("Completa los ocho módulos antes de publicar.");
+  if(draft.assessmentRequired){
+    const questions=(modules.at(-1)?.html||"").match(/class=["'][^"']*challenge-q/g)||[];
+    if(questions.length<7)throw new Error("La evaluación final necesita siete preguntas.");
+  }
   if(r.published_content)await sql`INSERT INTO academy_chapter_versions(chapter_id,version,content,published_by) VALUES(${chapterId},${r.version||0},${JSON.stringify(r.published_content)}::jsonb,${userId}::uuid)`;
   await sql`UPDATE academy_chapters SET published_content=draft_content,status='published',version=COALESCE(version,0)+1,published_at=NOW(),published_by=${userId}::uuid,updated_at=NOW() WHERE chapter_id=${chapterId}`;
 }
@@ -127,8 +152,8 @@ export async function setOrganizationAssignment(organizationId,chapterId,availab
 }
 
 export async function getAcademyDataForUser(session){
-  const all=await getAcademyData();
-  const data={...all,schools:all.schools.map(s=>({...s,chapters:s.chapters.filter(c=>pilotChapter(c.id))})).filter(s=>s.chapters.length)};
+  const [all,available]=await Promise.all([getAcademyData(),availableChapterIds()]);
+  const data={...all,schools:all.schools.map(s=>({...s,chapters:s.chapters.filter(c=>available.has(c.id))})).filter(s=>s.chapters.length)};
   if(!session?.organizationId)return data;
   const rows=await getOrganizationAssignments(session.organizationId);if(!rows.length)return data;
   const map=new Map(rows.map(r=>[r.chapter_id,r]));
@@ -136,7 +161,7 @@ export async function getAcademyDataForUser(session){
 }
 
 export async function getChapterForUser(id,session){
-  if(!pilotChapter(id))return null;
+  if(!(await isAvailableChapter(id)))return null;
   if(session?.organizationId){
     const rows=await getOrganizationAssignments(session.organizationId);
     const row=rows.find(r=>r.chapter_id===id);
