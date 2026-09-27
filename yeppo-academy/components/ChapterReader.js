@@ -99,6 +99,11 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const feature=editorialFor(chapter.id);
 
  useEffect(()=>{
+  if(!previewMode)return;
+  try{const p=JSON.parse(localStorage.getItem("yeppo-academy-progress-v1")||"{}")[chapter.id];if(p){setIndex(Math.min(modules.length-1,Math.max(0,p.moduleIndex||0)));setDone(Boolean(p.completed))}}catch{}
+ },[chapter.id,modules.length,previewMode]);
+
+ useEffect(()=>{
    return attachInteractions(stageRef.current,async(answers)=>{
      if(previewMode)return;
      const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chapterId:chapter.id,answers})});
@@ -109,7 +114,10 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  },[index,m.html,chapter.id,previewMode]);
 
  async function save(nextIndex=index,complete=false){
-   if(previewMode)return;
+   if(previewMode){
+     try{const p=JSON.parse(localStorage.getItem("yeppo-academy-progress-v1")||"{}");p[chapter.id]={moduleIndex:nextIndex,completed:complete||Boolean(p[chapter.id]?.completed)};localStorage.setItem("yeppo-academy-progress-v1",JSON.stringify(p))}catch{}
+     return;
+   }
    const mm=modules[nextIndex];
    await fetch("/api/progress",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
      chapterId:chapter.id,moduleId:mm?.id||null,percent:complete?100:Math.round(((nextIndex+1)/Math.max(modules.length,1))*100),completed:complete
@@ -120,7 +128,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    setIndex(n);setNavOpen(false);save(n,false);window.scrollTo({top:0,behavior:"smooth"});
  }
  async function complete(){
-   if(previewMode)return;
+   if(previewMode){await save(index,true);setDone(true);return}
    if(chapter.assessmentRequired&&!passed){setAssessmentMsg("Este capítulo requiere aprobar la evaluación antes de completarlo.");return}
    await save(index,true);setDone(true);
  }
@@ -157,7 +165,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
    <div className="ya-module-actions">
     <button className="ya-btn ya-secondary" disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button>
-    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:<button className="ya-btn ya-pink" disabled={!previewMode&&chapter.assessmentRequired&&!passed} onClick={previewMode?()=>window.location.assign("/revision"):complete}>{previewMode?"Volver a las rutas":done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
+    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:<button className="ya-btn ya-pink" disabled={!previewMode&&chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!previewMode&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
    </div>
   </section>
   <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
