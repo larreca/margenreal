@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Cómo leer una lista INCI</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Yeppo Academy · el orden ayuda, pero no revela toda la fórmula</text>
+<rect x="75" y="175" width="1050" height="160" rx="28" fill="#f7f8fc" stroke="#e5e6ef"/>
+<text x="110" y="220" font-family="Arial" font-size="20" fill="#101858" font-weight="700">EJEMPLO SIMPLIFICADO</text>
+<text x="110" y="270" font-family="Arial" font-size="26" fill="#33364b">Water, Glycerin, Niacinamide, Butylene Glycol, Panthenol,</text>
+<text x="110" y="305" font-family="Arial" font-size="26" fill="#33364b">Carbomer, Tromethamine, Ceramide NP, Fragrance...</text>
+<g font-family="Arial">
+<rect x="80" y="390" width="310" height="220" rx="24" fill="#eef0fb"/>
+<text x="115" y="435" font-size="23" font-weight="700" fill="#101858">1 · ORDEN</text>
+<text x="115" y="475" font-size="18" fill="#33364b">Chile exige ingredientes</text><text x="115" y="505" font-size="18" fill="#33364b">en orden decreciente</text><text x="115" y="535" font-size="18" fill="#33364b">de concentración.</text>
+<text x="115" y="580" font-size="15" fill="#686b80">No permite inferir % exacto.</text>
+
+<rect x="445" y="390" width="310" height="220" rx="24" fill="#fff1f7"/>
+<text x="480" y="435" font-size="23" font-weight="700" fill="#101858">2 · FUNCIÓN</text>
+<text x="480" y="475" font-size="18" fill="#33364b">Un ingrediente puede ser</text><text x="480" y="505" font-size="18" fill="#33364b">humectante, solvente,</text><text x="480" y="535" font-size="18" fill="#33364b">emulsionante, conservante...</text>
+<text x="480" y="580" font-size="15" fill="#686b80">“Activo” no significa “único importante”.</text>
+
+<rect x="810" y="390" width="310" height="220" rx="24" fill="#eef8f4"/>
+<text x="845" y="435" font-size="23" font-weight="700" fill="#101858">3 · CONTEXTO</text>
+<text x="845" y="475" font-size="18" fill="#33364b">Fórmula, vehículo, pH,</text><text x="845" y="505" font-size="18" fill="#33364b">estabilidad y uso cambian</text><text x="845" y="535" font-size="18" fill="#33364b">el resultado final.</text>
+<text x="845" y="580" font-size="15" fill="#686b80">INCI ≠ eficacia garantizada.</text>
+</g>
+<rect x="170" y="660" width="860" height="78" rx="20" fill="#101858"/>
+<text x="215" y="708" font-family="Arial" font-size="19" font-weight="700" fill="#fff">Regla: leer la fórmula completa antes de juzgar por un ingrediente destacado en portada.</text>
+</svg>
