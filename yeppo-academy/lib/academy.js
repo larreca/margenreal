@@ -5,6 +5,7 @@ import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
 const pilotChapter=id=>/^c0[1-7]$/.test(id);
+export const isPilotChapter=pilotChapter;
 const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
 
 export async function getAcademyData(){
@@ -53,8 +54,8 @@ export async function recordProgress(userId,chapterId,moduleId,percent,completed
     VALUES(${userId}::uuid,${chapterId},${moduleId||null},${p},${completed?new Date().toISOString():null}::timestamptz,NOW())
     ON CONFLICT(user_id,chapter_id) DO UPDATE SET current_module_id=EXCLUDED.current_module_id,progress_percent=GREATEST(academy_progress.progress_percent,EXCLUDED.progress_percent),completed_at=COALESCE(academy_progress.completed_at,EXCLUDED.completed_at),last_activity_at=NOW()`;
 }
-export async function searchAcademy(query){
-  const q=String(query||"").trim().toLowerCase();if(!q)return[];const d=await getAcademyData(),out=[];
+export async function searchAcademy(query,session){
+  const q=String(query||"").trim().toLowerCase();if(!q||!session)return[];const d=await getAcademyDataForUser(session),out=[];
   for(const s of d.schools)for(const c of s.chapters){const full={...c,schoolId:s.id,schoolName:s.name};if(plainTextChapter(full).toLowerCase().includes(q))out.push({id:c.id,n:c.n,title:c.title,summary:c.summary,school:s.name})}
   return out.slice(0,20);
 }
