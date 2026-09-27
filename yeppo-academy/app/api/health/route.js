@@ -8,7 +8,7 @@ export async function GET(){
     try{const sql=getDb();await sql`SELECT 1 AS ok`;database=true}catch{}
   }
   return NextResponse.json({
-    ok:true,
+    ok:database&&authConfigured()&&Boolean(process.env.SETUP_TOKEN),
     app:"yeppo-b2b-academy",
     database,
     auth:authConfigured(),

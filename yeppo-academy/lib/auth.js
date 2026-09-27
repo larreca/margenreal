@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 export const SESSION_COOKIE="yeppo_academy_session";
 const secret=()=> {
-  const v=process.env.AUTH_SECRET||process.env.SETUP_TOKEN;
+  const v=process.env.AUTH_SECRET;
   return v?new TextEncoder().encode(v):null;
 };
 export function authConfigured(){return Boolean(secret());}

@@ -64,14 +64,15 @@ function attachInteractions(container,onAssessment){
    const fn=async()=>{
      const box=b.closest("[data-challenge]"),qs=[...(box?.querySelectorAll(".challenge-q")||[])],out=box?.querySelector(".challenge-result");
      if(!out)return;
-     let score=0,answered=0;
+     let score=0,answered=0;const answers=[];
      qs.forEach(q=>{
        const picked=q.querySelector('input[type="radio"]:checked');
+       answers.push(picked?.value??null);
        if(picked){answered++;if(String(picked.value)===String(q.dataset.answer))score++}
      });
      if(answered<qs.length){out.textContent="Responde todas las preguntas antes de corregir.";return}
      out.textContent=score+"/"+qs.length+" correctas.";
-     if(onAssessment)await onAssessment(score,qs.length);
+     if(onAssessment)await onAssessment(answers);
    };
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
@@ -91,9 +92,9 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const shown=Math.max(initialPercent,modules.length?Math.round(((index+1)/modules.length)*100):0);
 
  useEffect(()=>{
-   return attachInteractions(stageRef.current,async(correct,total)=>{
+   return attachInteractions(stageRef.current,async(answers)=>{
      if(previewMode)return;
-     const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chapterId:chapter.id,correct,total})});
+     const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chapterId:chapter.id,answers})});
      const j=await r.json();
      setPassed(Boolean(j.passed));
      setAssessmentMsg(j.passed?"Evaluación aprobada. Ya puedes completar el capítulo.":"Resultado guardado. Necesitas 80% para aprobar.");
