@@ -57,3 +57,28 @@ Worker es pública, pero las páginas privadas requieren sesión.
 
 El plan gratuito de Workers tiene límites diarios; vigilar el uso y las
 respuestas de error antes de ofrecer una disponibilidad garantizada a clientes.
+
+### Despliegue manual desde GitHub Actions
+
+El workflow `.github/workflows/deploy-yeppo-academy.yml` se ejecuta solo de forma
+manual. Antes de usarlo, agregar estos cinco **Actions secrets** al repositorio
+en GitHub (Settings → Secrets and variables → Actions):
+
+| Secret | Valor |
+| --- | --- |
+| `CLOUDFLARE_ACCOUNT_ID` | ID de la cuenta de Cloudflare |
+| `CLOUDFLARE_API_TOKEN` | Token limitado a editar Workers de esa cuenta |
+| `YEPPO_ACADEMY_DATABASE_URL` | Connection string del proyecto Neon de la academia |
+| `YEPPO_ACADEMY_AUTH_SECRET` | Cadena aleatoria larga para firmar sesiones |
+| `YEPPO_ACADEMY_SETUP_TOKEN` | Token aleatorio privado para la configuración inicial |
+
+Crear el token de Cloudflare en su panel, limitado a la cuenta y a permisos de
+edición de Workers. Nunca pegar su valor en un issue, PR, workflow o chat. El
+workflow genera un archivo temporal con los tres secretos de aplicación y usa
+`wrangler deploy --secrets-file`, de modo que el código y las claves se activan
+en una sola publicación. Requiere que el workflow esté en la rama por defecto
+para iniciarlo desde Actions → Deploy Yeppo B2B Academy → Run workflow.
+
+Tras la primera publicación, abrir la URL `workers.dev` que muestre el job,
+comprobar `/api/health` y usar el token configurado en `/setup`. No activar
+usuarios externos hasta validar el recorrido completo.

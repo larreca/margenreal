@@ -1,0 +1,56 @@
+name: Deploy Yeppo B2B Academy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yeppo-b2b-academy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: yeppo-academy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: yeppo-academy/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Worker
+        run: npm run build:vinext
+      - name: Deploy code and encrypted secrets together
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DATABASE_URL: ${{ secrets.YEPPO_ACADEMY_DATABASE_URL }}
+          AUTH_SECRET: ${{ secrets.YEPPO_ACADEMY_AUTH_SECRET }}
+          SETUP_TOKEN: ${{ secrets.YEPPO_ACADEMY_SETUP_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib
+          names = ('CLOUDFLARE_API_TOKEN', 'CLOUDFLARE_ACCOUNT_ID', 'DATABASE_URL', 'AUTH_SECRET', 'SETUP_TOKEN')
+          missing = [name for name in names if not os.environ.get(name)]
+          if missing:
+              raise SystemExit('Missing GitHub Actions secrets: ' + ', '.join(missing))
+          path = pathlib.Path(os.environ['RUNNER_TEMP']) / 'yeppo-academy-secrets.json'
+          path.write_text(json.dumps({name: os.environ[name] for name in ('DATABASE_URL', 'AUTH_SECRET', 'SETUP_TOKEN')}))
+          path.chmod(0o600)
+          PY
+          npx wrangler deploy --config dist/server/wrangler.json --secrets-file "$RUNNER_TEMP/yeppo-academy-secrets.json"
+      - name: Remove temporary secret file
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import os, pathlib
+          (pathlib.Path(os.environ['RUNNER_TEMP']) / 'yeppo-academy-secrets.json').unlink(missing_ok=True)
+          PY
