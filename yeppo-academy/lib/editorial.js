@@ -1,5 +1,21 @@
 // Fotografías documentales: créditos y enlaces en PHOTO-CREDITS.md.
 const base="/assets/editorial/";
+// Portadas con personas distintas. Las imágenes Pexels son fotografías editoriales;
+// su ubicación no acredita nacionalidad ni vínculo con Yeppo.
+const chapterCovers={
+ c01:{image:"chile-model.jpg",alt:"Retrato editorial de una modelo en Santiago de Chile"},
+ c02:{image:"https://images.pexels.com/photos/18460096/pexels-photo-18460096.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Modelo en un entorno urbano de Santiago de Chile"},
+ c03:{image:"https://images.pexels.com/photos/11157339/pexels-photo-11157339.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer con maquillaje contemporáneo"},
+ c04:{image:"https://images.pexels.com/photos/2709386/pexels-photo-2709386.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Primer plano de piel real con pecas"},
+ c05:{image:"chile-beauty.jpg",alt:"Retrato editorial de una mujer fotografiada en Santiago de Chile"},
+ c06:{image:"https://images.pexels.com/photos/7608061/pexels-photo-7608061.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer aplicando crema en su rutina de cuidado"},
+ c07:{image:"https://images.pexels.com/photos/5253959/pexels-photo-5253959.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato de una mujer con pecas y textura natural de la piel"},
+ c08:{image:"chile-portrait.jpg",alt:"Retrato editorial de una modelo en Santiago de Chile"},
+ c09:{image:"https://images.pexels.com/photos/17568374/pexels-photo-17568374.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer en Santiago de Chile"},
+ c10:{image:"https://images.pexels.com/photos/5709637/pexels-photo-5709637.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer leyendo la etiqueta de un cosmético en una tienda"},
+ c11:{image:"https://images.pexels.com/photos/6925480/pexels-photo-6925480.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer aplicando hidratante en el rostro"},
+ c12:{image:"https://images.pexels.com/photos/6543526/pexels-photo-6543526.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer aplicando crema con suavidad en el rostro"}
+};
 export const chapterEditorial={
  c01:{image:"chile-model.jpg",alt:"Modelo fotografiada en Santiago de Chile",eyebrow:"El punto de partida",story:"La belleza coreana se volvió visible en todo el mundo a través de rutinas, formatos y una cultura de innovación. Su idea más útil para vender no es sumar pasos: es escuchar la piel y construir hábitos sostenibles.",tip:"En la primera conversación, pregunta qué producto usa hoy y qué espera mejorar. Recomienda un cambio fácil de evaluar."},
  c02:{image:"yeppo-centella.jpg",product:true,alt:"Madagascar Centella Ampoule de SKIN1004, producto del catálogo Yeppo",eyebrow:"Del interés a la recompra",story:"Una tendencia atrae visitas; una recomendación clara y disponibilidad constante convierten el interés en recompra. En Chile, la confianza también depende de información legible y una experiencia posventa seria.",tip:"Vende una solución concreta y explica cuándo volver a evaluar la rutina; evita prometer resultados en un plazo fijo."},
@@ -16,3 +32,4 @@ export const chapterEditorial={
 };
 export function editorialFor(id){return chapterEditorial[id]||{image:"photo-0.jpg",alt:"Fotografía editorial de cosmética",eyebrow:"Aprender para asesorar",story:"Un capítulo para convertir conocimiento en una recomendación clara, responsable y útil para el cliente.",tip:"Parte de la necesidad del cliente antes de elegir el producto."}}
 export function editorialImage(id){return base+editorialFor(id).image}
+export function editorialCover(id){const cover=chapterCovers[id]||chapterCovers.c01;return {...cover,src:cover.image.startsWith("http")?cover.image:base+cover.image}}
