@@ -147,7 +147,9 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    <div className="module-progress"><b>Módulo {index+1} de {modules.length}</b><div><i style={{width:(modules.length?((index+1)/modules.length*100):0)+"%"}}/></div></div>
   </div>
   <section className={"course-module ya-stage"+(index===modules.length-1?" is-last":"")} ref={stageRef} key={m.id}>
-   {index===0&&<aside className="editorial-lesson-feature"><div className={"editorial-lesson-photo"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/></div><div><small>{feature.eyebrow}</small><h3>Una idea para recordar</h3><p>{feature.story}</p><div className="editorial-tip"><b>Consejo Yeppo</b><p>{feature.tip}</p></div>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">{feature.sourceLabel} ↗</a>}</div></aside>}
+   <div className="editorial-module-intro"><span>LECCIÓN {String(index+1).padStart(2,"0")} / {String(modules.length).padStart(2,"0")}</span><span>LECTURA + PRÁCTICA</span></div>
+   {index===0&&<div className="editorial-first-lesson"><small>{m.label}</small><h2>{m.title}</h2><p>{chapter.summary}</p></div>}
+   {index===0&&<figure className={"editorial-lesson-image"+(feature.product?" editorial-product-photo":"")}><img src={editorialImage(chapter.id)} alt={feature.alt}/><figcaption>{feature.eyebrow} · Yeppo Academy</figcaption></figure>}
    {index===0&&<ChapterMap id={chapter.id}/>}
    {index===0&&chapter.id==="c10"&&<div className="yeppo-ingredient-map"><div><small>YEPPO / INGREDIENTES CON HISTORIA</small><h3>Centella: de la tradición a la fórmula</h3><p>Una misma planta puede aparecer en relatos culturales, investigaciones y cosméticos. Cada contexto permite afirmar cosas diferentes.</p></div><ol><li><b>01</b><strong>Uso tradicional</strong><span>Gotu kola en distintas regiones de Asia: una historia de uso, no una prueba clínica para cualquier crema.</span></li><li><b>02</b><strong>Compuestos estudiados</strong><span>Asiaticósido y madecasósido figuran entre los componentes que motivaron investigación.</span></li><li><b>03</b><strong>Fórmula real</strong><span>Importan el INCI completo, la concentración, la tolerancia y cómo se usa el producto.</span></li><li><b>04</b><strong>Consejo en Yeppo</strong><span>Explica el beneficio cosmético con precisión y evita prometer curación.</span></li></ol><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3834700/" target="_blank" rel="noopener noreferrer">Fuente: revisión científica sobre Centella asiatica ↗</a></div>}
    <div dangerouslySetInnerHTML={{__html:m.html}}/>
@@ -159,6 +161,11 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
     {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:<button className="ya-btn ya-pink" disabled={!previewMode&&chapter.assessmentRequired&&!passed} onClick={previewMode?()=>window.location.assign("/revision"):complete}>{previewMode?"Volver a las rutas":done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
    </div>
   </section>
+  <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
+   <div className="editorial-context-card editorial-context-story"><small>DATO PARA RECORDAR</small><h3>{feature.eyebrow}</h3><p>{feature.story}</p>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente ↗</a>}</div>
+   <div className="editorial-context-card editorial-context-tip"><small>CONSEJO YEPPO</small><h3>Llévalo a la conversación</h3><p>{feature.tip}</p></div>
+   <div className="editorial-context-card editorial-context-photo"><img src={editorialImage(chapter.id)} alt={feature.alt}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"IMAGEN EDITORIAL DEL CAPÍTULO"}</span></div>
+  </aside>
   <nav className="ya-mobile-step" aria-label="Navegación del capítulo"><button disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button><span>{index+1} de {modules.length}</span><button disabled={index===modules.length-1} onClick={()=>move(index+1)}>Siguiente →</button></nav>
  </div></div>
 }
