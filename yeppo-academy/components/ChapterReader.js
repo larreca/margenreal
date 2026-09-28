@@ -76,6 +76,15 @@ function attachInteractions(container,onAssessment){
      });
      if(answered<qs.length){out.textContent="Responde todas las preguntas antes de corregir.";return}
      out.textContent=score+"/"+qs.length+" correctas.";
+     qs.forEach(q=>{
+       const picked=q.querySelector('input[type="radio"]:checked');
+       const correct=q.querySelector(`input[value="${q.dataset.answer}"]`);
+       const isCorrect=picked?.value===q.dataset.answer;
+       let feedback=q.querySelector(".challenge-feedback");
+       if(!feedback){feedback=document.createElement("p");q.appendChild(feedback)}
+       feedback.className="challenge-feedback "+(isCorrect?"good":"bad");
+       feedback.textContent=(isCorrect?"Correcto. ":"Revisa: "+(correct?.parentElement?.textContent?.trim()||"la respuesta indicada")+". ")+(q.dataset.explanation||"");
+     });
      if(onAssessment)await onAssessment(answers);
    };
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
@@ -147,7 +156,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
    <div className="ya-module-actions">
     <button className="ya-btn ya-secondary" disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button>
-    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:previewMode?<a className="ya-btn ya-pink" href={chapter.n<12?"/revision/c"+String(chapter.n+1).padStart(2,"0"):"/revision#rutas"}>{chapter.n<12?"Ir al siguiente capítulo →":"Volver a las rutas →"}</a>:<button className="ya-btn ya-pink" disabled={chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
+    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:previewMode?<a className="ya-btn ya-pink" href={chapter.n<13?"/revision/c"+String(chapter.n+1).padStart(2,"0"):"/revision#rutas"}>{chapter.n<13?"Ir al siguiente capítulo →":"Volver a las rutas →"}</a>:<button className="ya-btn ya-pink" disabled={chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
    </div>
   </section>
   <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">

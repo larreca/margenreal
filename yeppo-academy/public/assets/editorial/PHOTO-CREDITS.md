@@ -37,3 +37,6 @@ Las portadas muestran modelos diferentes. Son fotografías editoriales de contex
 | 10 | [Lectura de etiqueta](https://www.pexels.com/photo/crop-ethnic-shopper-reading-sticker-on-cosmetic-product-in-store-5709637/) | INCI y rotulación |
 | 11 | [Aplicación de hidratante](https://www.pexels.com/photo/a-woman-with-a-skin-care-product-on-her-face-6925480/) | Hidratación |
 | 12 | [Rutina suave](https://www.pexels.com/photo/a-woman-applying-a-cream-on-her-face-6543526/) | Ingredientes calmantes |
+| 13 | [Polina Tankilevitch, retrato de piel real](https://www.pexels.com/photo/portrait-of-a-woman-with-acne-5587981/) | Sebo, poros e imperfecciones |
+
+El producto mostrado en el panel contextual del capítulo 13 procede de la [ficha de Purito en Yeppo](https://yeppo.cl/collections/purito/products/purito-azelaic-acid-10-kojic-tea-tree-serum-30ml). La foto editorial no implica recomendación o aval de la modelo.
