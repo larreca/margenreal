@@ -125,13 +125,8 @@
     if (!authResponse.ok) return false;
     const user = await authResponse.json();
     const rows = await rest(`crm_profiles?id=eq.${encodeURIComponent(user.id)}&select=*`);
-    profile = rows?.[0] || {
-      id: user.id,
-      full_name: user.user_metadata?.full_name || user.email?.split("@")[0] || "Usuario",
-      email: user.email || "",
-      role: "kam",
-      active: true
-    };
+    if (!rows?.length) throw new Error("Esta cuenta aún no tiene un perfil CRM. Pide al administrador que complete la activación.");
+    profile = rows[0];
     if (!profile.active) throw new Error("Este usuario está desactivado.");
     profiles = await rest("crm_profiles?select=*&order=full_name.asc");
     return true;
@@ -773,7 +768,11 @@
 
   function renderUsersSettings(host) {
     const mode = host.querySelector(".crmUsersMode");
-    mode.innerHTML = connected() ? `<b>Conectado:</b> ${safe(profile.full_name)} · ${safe(ROLE_LABELS[profile.role])}` : `<b>Modo piloto local:</b> funciona en este navegador y sin costo.`;
+    const sharedData = window.CRM_SHARED_SHOPIFY;
+    const sharedError = window.CRM_SHARED_ERROR;
+    mode.innerHTML = connected()
+      ? `<b>Sesión conectada:</b> ${safe(profile.full_name)} · ${safe(ROLE_LABELS[profile.role])}. ${sharedError ? `<b>Datos Shopify sin verificar:</b> ${safe(sharedError)}. Lo que ves puede ser local.` : sharedData ? `<b>Base Shopify compartida:</b> ${sharedData.recentOrders?.length || 0} pedidos cargados.` : `<b>Base Shopify compartida vacía:</b> publica una carga desde un administrador o supervisor.`}`
+      : `<b>Modo piloto local:</b> funciona en este navegador y sin costo.`;
     const table = host.querySelector(".crmUsersTable");
     table.innerHTML = `<div class="crmUsersRow crmUsersHead"><span>Usuario</span><span>Rol</span><span>Estado</span></div>${profiles.map(user => `<div class="crmUsersRow" data-profile-id="${safe(user.id)}"><span><b>${safe(user.full_name)}</b><small>${safe(user.email || "Sin correo")}</small></span><select ${can("admin") && user.id !== profile.id ? "" : "disabled"}><option value="admin" ${user.role === "admin" ? "selected" : ""}>Administrador</option><option value="supervisor" ${user.role === "supervisor" ? "selected" : ""}>Supervisor</option><option value="kam" ${user.role === "kam" ? "selected" : ""}>KAM</option><option value="readonly" ${user.role === "readonly" ? "selected" : ""}>Solo lectura</option></select><button class="${user.active === false ? "inactive" : "active"}" ${can("admin") && user.id !== profile.id ? "" : "disabled"}>${user.active === false ? "Inactivo" : "Activo"}</button></div>`).join("")}`;
     table.querySelectorAll(".crmUsersRow[data-profile-id]").forEach(row => {

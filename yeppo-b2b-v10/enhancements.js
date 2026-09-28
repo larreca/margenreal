@@ -489,7 +489,7 @@ async function init(){
   const started=performance.now();
   try{
     await window.CRMUsers?.init?.();
-    const remoteShopify=await window.CRMShopifyCloud?.load?.().catch(error=>{console.error("Shared Shopify:",error);return null});
+    const remoteShopify=await window.CRMShopifyCloud?.load?.().catch(error=>{console.error("Shared Shopify:",error);window.CRM_SHARED_ERROR=error.message||String(error);return null});
     const hasLive=remoteShopify?false:loadLocalShopifyLive(),localSnapshot=hasLive&&liveShopify?liveShopify:null;
     if(remoteShopify){
       await crmDbUpsert(remoteShopify,"shared-cloud");
@@ -501,17 +501,23 @@ async function init(){
     const [shared]=await Promise.all([
       window.CRMUsers?.hydrate?.({pipeline,nextActions}),
       consumeShopifySyncFragment(),
-      crmDbHydrate(),
-      loadShopifyMetrics(),
+      remoteShopify?Promise.resolve(true):crmDbHydrate(),
+      remoteShopify?Promise.resolve(true):loadShopifyMetrics(),
       loadProductCosts(),
       localSnapshot?crmDbUpsert(localSnapshot,"local-cache").catch(()=>false):Promise.resolve(false)
     ]);
     if(!hasLive&&!liveShopify)await loadShopifyQaFixture();
     if(shared){pipeline=shared.pipeline||pipeline;nextActions=shared.nextActions||nextActions;savePipe();saveActions()}
+    if(remoteShopify){shopifyMetrics={...remoteShopify,today:remoteShopify.sales7?.at(-1)||null};window.SHOPIFY_LIVE_METRICS=shopifyMetrics}
     invalidateOpportunityCache();
     crmInstallUniversalJsonCapture();
     window.CRM_WEEKLY_CACHE=crmWeeklyCacheLoad();
     addSecuritySettings();addCostManager();addIncoming();addDormantHub();addMasterHomeV2();addInteractiveManual();addManualBeginnerGuide();addShopifyBridgeControl();addProfitabilityReport();addFriendlyAI();addAcademy();injectWaitingIntoClient();injectNextAction();injectHumanAiComposer();improveTaskCreationFlow();injectWhatsAppActions();injectPipeline360();add360Summary();addTodayMVP();addMvpDashboard();addDataQuality();addBackupControls();addTodayAlert();addPipelineViewport();window.CRMUsers?.mount?.({clients:state?.clients||[],openClient:id=>typeof openClient==="function"&&openClient(+id||id)})
+    if(window.CRMUsers?.connected?.()&&!remoteShopify){
+      const notice=document.createElement("div");notice.setAttribute("role","status");notice.style.cssText="position:fixed;bottom:16px;left:16px;z-index:2147483000;max-width:min(480px,calc(100vw - 32px));padding:14px 18px;border-radius:14px;background:#382f57;color:#fff;box-shadow:0 12px 40px #301c3538;font:600 14px/1.5 system-ui";
+      notice.textContent=window.CRM_SHARED_ERROR?"No se pudo verificar la base compartida. Los datos de este navegador podrían estar desactualizados: "+window.CRM_SHARED_ERROR:"La cuenta está conectada, pero aún no hay pedidos en la base compartida. La información visible puede ser local.";
+      document.body.appendChild(notice);
+    }
   }finally{
     document.documentElement.dataset.crmInitMs=String(Math.round(performance.now()-started));
     document.documentElement.classList.remove("crmBoot");document.documentElement.removeAttribute("aria-busy");document.getElementById("crmBootStyle")?.remove()
