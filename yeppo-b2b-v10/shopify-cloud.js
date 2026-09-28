@@ -3,13 +3,16 @@
 
   const CONFIG_KEY = "yeppoCRMv10SupabaseConfig";
   const SESSION_KEY = "yeppoCRMv10SupabaseSession";
+  const DEPLOYED_CONFIG = location.hostname === "larreca.github.io" && location.pathname.startsWith("/margenreal/yeppo-b2b-v10/")
+    ? { url: "https://aevcjsfpmzzvoyqtbqfc.supabase.co", anonKey: "sb_publishable_14FEBbreIl2mgXJOLpRmFw_uLYy0Wvp" }
+    : null;
   const CHUNK_SIZE = 100;
   const PAGE_SIZE = 1000;
 
   const read = key => {
     try { return JSON.parse(localStorage.getItem(key) || "null"); } catch (_) { return null; }
   };
-  const config = () => read(CONFIG_KEY);
+  const config = () => DEPLOYED_CONFIG || read(CONFIG_KEY);
   const isConfigured = () => Boolean(config()?.url && config()?.anonKey);
   const hasSession = () => Boolean(read(SESSION_KEY)?.access_token);
   const positive = value => Math.max(0, Number(value) || 0);
