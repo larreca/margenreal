@@ -3,6 +3,10 @@
 
   const CONFIG_KEY = "yeppoCRMv10SupabaseConfig";
   const SESSION_KEY = "yeppoCRMv10SupabaseSession";
+  // Public browser key; Supabase Auth and row level security control access.
+  const DEPLOYED_CONFIG = location.hostname === "larreca.github.io" && location.pathname.startsWith("/margenreal/yeppo-b2b-v10/")
+    ? { url: "https://aevcjsfpmzzvoyqtbqfc.supabase.co", anonKey: "sb_publishable_14FEBbreIl2mgXJOLpRmFw_uLYy0Wvp" }
+    : null;
   const LOCAL_USERS_KEY = "yeppoCRMv10PilotUsers";
   const LOCAL_USER_KEY = "yeppoCRMv10PilotCurrentUser";
   const LOCAL_ACTIVITY_KEY = "yeppoCRMv10PilotActivity";
@@ -10,7 +14,7 @@
   const EDIT_ROLES = new Set(["admin", "supervisor", "kam"]);
   const DEFAULT_USER = { id: "local-matias", full_name: "Matías", email: "", role: "admin", active: true, local: true };
 
-  let config = readJSON(CONFIG_KEY, null);
+  let config = DEPLOYED_CONFIG || readJSON(CONFIG_KEY, null);
   let session = readJSON(SESSION_KEY, null);
   let profile = DEFAULT_USER;
   let profiles = [];
@@ -154,7 +158,7 @@
             <label>Contraseña<input class="crmAuthPassword" type="password" autocomplete="current-password" required></label>
             <button class="primary crmAuthSubmit" type="submit">Ingresar</button>
             <button class="soft crmAuthSignup" type="button">Registrar cuenta inicial</button>
-            <button class="soft crmAuthLocal" type="button">Volver al modo piloto local</button>
+            ${DEPLOYED_CONFIG ? "" : '<button class="soft crmAuthLocal" type="button">Volver al modo piloto local</button>'}
             <small class="crmAuthStatus"></small>
           </form>`;
         document.body.appendChild(overlay);
@@ -205,7 +209,7 @@
           } else status.textContent = "Cuenta registrada. Confirma el correo y espera la activación del administrador.";
         } catch (error) { status.textContent = error.message; }
       };
-      overlay.querySelector(".crmAuthLocal").onclick = () => {
+      if (!DEPLOYED_CONFIG) overlay.querySelector(".crmAuthLocal").onclick = () => {
         if (!confirm("¿Desconectar Supabase en este navegador y continuar con los datos locales?")) return;
         localStorage.removeItem(CONFIG_KEY);
         localStorage.removeItem(SESSION_KEY);
@@ -759,7 +763,7 @@
       <div class="crmUsersCard">
         <small>BASE COMPARTIDA</small><h2>Conexión Supabase Free</h2>
         <p>Al conectar, usuarios, pedidos Shopify, clientes, SKU, ventas diarias, tareas y bitácora se comparten entre equipos autorizados.</p>
-        <form class="crmSupabaseConfig"><label>Project URL<input name="url" type="url" placeholder="https://xxxxx.supabase.co" value="${safe(config?.url || "")}"></label><label>Anon public key<input name="anonKey" type="password" placeholder="sb_publishable_... o anon key"></label><div><button class="primary" type="submit">Guardar y conectar</button>${config ? '<button class="soft crmDisconnect" type="button">Desconectar</button>' : ""}</div><span class="crmConfigStatus"></span></form>
+        <form class="crmSupabaseConfig" ${DEPLOYED_CONFIG ? "hidden" : ""}><label>Project URL<input name="url" type="url" placeholder="https://xxxxx.supabase.co" value="${safe(config?.url || "")}"></label><label>Anon public key<input name="anonKey" type="password" placeholder="sb_publishable_... o anon key"></label><div><button class="primary" type="submit">Guardar y conectar</button>${config && !DEPLOYED_CONFIG ? '<button class="soft crmDisconnect" type="button">Desconectar</button>' : ""}</div><span class="crmConfigStatus"></span></form>
         <div class="crmSupabaseSteps"><b>Para activar la base compartida:</b><ol><li>Crea un proyecto en Supabase.</li><li>Ejecuta <code>supabase-pilot-schema.sql</code> en SQL Editor.</li><li>Configura esta URL del CRM en Authentication.</li><li>Copia Project URL y la clave pública en este formulario.</li><li>Registra tu cuenta, confirma el correo y habilita al primer administrador desde SQL Editor según la guía.</li></ol></div>
       </div>`;
     section.appendChild(host);
@@ -772,7 +776,7 @@
     const sharedError = window.CRM_SHARED_ERROR;
     mode.innerHTML = connected()
       ? `<b>Sesión conectada:</b> ${safe(profile.full_name)} · ${safe(ROLE_LABELS[profile.role])}. ${sharedError ? `<b>Datos Shopify sin verificar:</b> ${safe(sharedError)}. Lo que ves puede ser local.` : sharedData ? `<b>Base Shopify compartida:</b> ${sharedData.recentOrders?.length || 0} pedidos cargados.` : `<b>Base Shopify compartida vacía:</b> publica una carga desde un administrador o supervisor.`}`
-      : `<b>Modo piloto local:</b> funciona en este navegador y sin costo.`;
+      : DEPLOYED_CONFIG ? `<b>Acceso compartido:</b> inicia sesión para consultar los datos del equipo.` : `<b>Modo piloto local:</b> funciona en este navegador y sin costo.`;
     const table = host.querySelector(".crmUsersTable");
     table.innerHTML = `<div class="crmUsersRow crmUsersHead"><span>Usuario</span><span>Rol</span><span>Estado</span></div>${profiles.map(user => `<div class="crmUsersRow" data-profile-id="${safe(user.id)}"><span><b>${safe(user.full_name)}</b><small>${safe(user.email || "Sin correo")}</small></span><select ${can("admin") && user.id !== profile.id ? "" : "disabled"}><option value="admin" ${user.role === "admin" ? "selected" : ""}>Administrador</option><option value="supervisor" ${user.role === "supervisor" ? "selected" : ""}>Supervisor</option><option value="kam" ${user.role === "kam" ? "selected" : ""}>KAM</option><option value="readonly" ${user.role === "readonly" ? "selected" : ""}>Solo lectura</option></select><button class="${user.active === false ? "inactive" : "active"}" ${can("admin") && user.id !== profile.id ? "" : "disabled"}>${user.active === false ? "Inactivo" : "Activo"}</button></div>`).join("")}`;
     table.querySelectorAll(".crmUsersRow[data-profile-id]").forEach(row => {
