@@ -16,7 +16,7 @@ const chapterCovers={
  c11:{image:"https://images.pexels.com/photos/6925480/pexels-photo-6925480.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer aplicando hidratante en el rostro"},
  c12:{image:"https://images.pexels.com/photos/6543526/pexels-photo-6543526.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer aplicando crema con una brocha en el rostro"},
  c13:{image:"https://images.pexels.com/photos/5587981/pexels-photo-5587981.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer con textura natural y brotes visibles"},
- c14:{image:"https://images.pexels.com/photos/6707336/pexels-photo-6707336.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer durante su rutina de belleza"}
+ c14:{image:"https://images.pexels.com/photos/7126382/pexels-photo-7126382.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer con cabello rizado y maquillaje natural"}
 };
 export const chapterEditorial={
  c01:{image:"chile-model.jpg",alt:"Modelo fotografiada en Santiago de Chile",eyebrow:"El punto de partida",story:"La belleza coreana se volvió visible en todo el mundo a través de rutinas, formatos y una cultura de innovación. Su idea más útil para vender no es sumar pasos: es escuchar la piel y construir hábitos sostenibles.",tip:"En la primera conversación, pregunta qué producto usa hoy y qué espera mejorar. Recomienda un cambio fácil de evaluar."},
