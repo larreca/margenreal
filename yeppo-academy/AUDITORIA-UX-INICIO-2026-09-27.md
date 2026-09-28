@@ -22,3 +22,5 @@ Fecha: 27 de septiembre de 2026 (Chile). Vista capturada: 1363 × 936 px en la v
 
 - `npm run build`: correcto tras los cambios.
 - Producción: se comprobaron el ancho de 230 px, alto de 218 px y los tres enlaces de tarjeta. Las imágenes de la primera pantalla cargaron y no hubo desbordamiento horizontal en 1363 px.
+- Se abrió la ruta “Entender la piel” desde su tarjeta: el ancla llevó a la sección correspondiente, ubicada a 75 px del borde superior, y la navegación permaneció fija arriba.
+- Tras el ajuste final, las dos miniaturas de modelos muestran el rostro en el recorte horizontal; se guardó una captura nueva de la portada publicada.
