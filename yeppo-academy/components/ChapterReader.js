@@ -105,7 +105,10 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const m=modules[index]||{id:"empty",label:"",title:chapter.title,html:"<p>Contenido en preparación.</p>"};
  const videoSrc=videoEmbedUrl(m.videoUrl);
  const shown=Math.max(initialPercent,modules.length?Math.round(((index+1)/modules.length)*100):0);
- const feature=editorialFor(chapter.id);
+ const feature={...editorialFor(chapter.id),...chapter.editorial};
+ const cover=editorialCover(chapter.id);
+ const coverSrc=chapter.coverImage||cover.src;
+ const coverAlt=chapter.coverAlt||cover.alt;
 
  useEffect(()=>{
    return attachInteractions(stageRef.current,async(answers)=>{
@@ -145,9 +148,9 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    <div className="editorial-module-intro"><span>LECCIÓN {String(index+1).padStart(2,"0")} / {String(modules.length).padStart(2,"0")}</span><span>LECTURA + PRÁCTICA</span></div>
    {index===0&&<div className="editorial-first-lesson"><small>{m.label}</small><h2>{m.title}</h2><p>{chapter.summary}</p></div>}
    {index===0&&<figure className="editorial-lesson-image">
-    {chapter.id==="c04"?<div className="editorial-skin-visual"><img src={editorialCover(chapter.id).src} alt={editorialCover(chapter.id).alt}/><img src="/assets/chapter4/cap4-4.1-capas-piel.svg" alt="Infografía de las capas de la piel"/></div>:<img src={editorialCover(chapter.id).src} alt={editorialCover(chapter.id).alt}/>}
+    {chapter.id==="c04"?<div className="editorial-skin-visual"><img src={coverSrc} alt={coverAlt}/><img src="/assets/chapter4/cap4-4.1-capas-piel.svg" alt="Infografía de las capas de la piel"/></div>:<img src={coverSrc} alt={coverAlt}/>}
     <figcaption>{feature.eyebrow} · Yeppo Academy</figcaption></figure>}
-   {index===0&&<ChapterMap id={chapter.id}/>}
+   {index===0&&<ChapterMap id={chapter.id} override={chapter.infographic}/>}
    {index===0&&(chapter.id==="c10"||chapter.id==="c12")&&<div className="yeppo-evidence-key" aria-label="Cómo leer la evidencia de ingredientes"><strong>Cómo leer la evidencia</strong><div><span>Uso tradicional</span><span>Laboratorio</span><span>Estudios en personas</span><span>Producto terminado</span></div><p>Son preguntas distintas. La historia y los ensayos de un ingrediente no demuestran el resultado de cualquier cosmético que lo incluya.</p></div>}
    {index===0&&chapter.id==="c10"&&<div className="yeppo-ingredient-map"><div><small>YEPPO / INGREDIENTES CON HISTORIA</small><h3>Centella: de la tradición a la fórmula</h3><p>Una misma planta puede aparecer en relatos culturales, investigaciones y cosméticos. Cada contexto permite afirmar cosas diferentes.</p></div><ol><li><b>01</b><strong>Uso tradicional</strong><span>Gotu kola en distintas regiones de Asia: una historia de uso, no una prueba clínica para cualquier crema.</span></li><li><b>02</b><strong>Compuestos estudiados</strong><span>Asiaticósido y madecasósido figuran entre los componentes que motivaron investigación.</span></li><li><b>03</b><strong>Fórmula real</strong><span>Importan el INCI completo, la concentración, la tolerancia y cómo se usa el producto.</span></li><li><b>04</b><strong>Consejo en Yeppo</strong><span>Explica el beneficio cosmético con precisión y evita prometer curación.</span></li></ol><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3834700/" target="_blank" rel="noopener noreferrer">Fuente: revisión científica sobre Centella asiatica ↗</a></div>}
    <div dangerouslySetInnerHTML={{__html:m.html}}/>
@@ -162,7 +165,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
   <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
    <div className="editorial-context-card editorial-context-story"><small>LO ESENCIAL</small><h3>{feature.eyebrow}</h3><p>{feature.story}</p>{chapter.id==="c02"&&<p className="editorial-data-note">Dato de mercado: indica el año y la fuente al citar cifras de importación. Revisado en septiembre de 2026; no son ventas de Yeppo. <a href="https://www.latercera.com/pulso/noticia/el-boom-de-la-cosmetica-coreana-quienes-estan-detras-de-su-explosion-de-ventas/" target="_blank" rel="noopener noreferrer">Fuente ↗</a></p>}{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente ↗</a>}</div>
    <div className="editorial-context-card editorial-context-tip"><small>APLICARLO EN TIENDA</small><h3>Consejo Yeppo</h3><p>{feature.tip}</p></div>
-   <div className="editorial-context-card editorial-context-photo"><img src={feature.product?editorialImage(chapter.id):"/assets/editorial/yeppo-store.jpg"} alt={feature.product?feature.alt:"Espacio y productos de Yeppo"}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"YEPPO · APLICACIÓN EN TIENDA"}</span></div>
+   <div className="editorial-context-card editorial-context-photo"><img src={feature.imageUrl||(feature.product?editorialImage(chapter.id):"/assets/editorial/yeppo-store.jpg")} alt={feature.alt||(feature.product?"Producto del catálogo Yeppo":"Espacio y productos de Yeppo")}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"YEPPO · APLICACIÓN EN TIENDA"}</span></div>
   </aside>
   <nav className="ya-mobile-step" aria-label="Navegación del capítulo"><button disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button><span>{index+1} de {modules.length}</span><button disabled={index===modules.length-1} onClick={()=>move(index+1)}>Siguiente →</button></nav>
  </div></div>

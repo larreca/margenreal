@@ -61,6 +61,15 @@ export async function ensureSchema(){
     published_by uuid REFERENCES academy_users(id) ON DELETE SET NULL,
     published_at timestamptz NOT NULL DEFAULT now()
   )`;
+  await sql`CREATE TABLE IF NOT EXISTS academy_media (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    chapter_id text NOT NULL,
+    content_type text NOT NULL,
+    data_base64 text NOT NULL,
+    size_bytes int NOT NULL,
+    uploaded_by uuid REFERENCES academy_users(id) ON DELETE SET NULL,
+    created_at timestamptz NOT NULL DEFAULT now()
+  )`;
   await sql`CREATE TABLE IF NOT EXISTS academy_progress (
     user_id uuid NOT NULL REFERENCES academy_users(id) ON DELETE CASCADE,
     chapter_id text NOT NULL,

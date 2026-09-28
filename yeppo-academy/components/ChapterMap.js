@@ -14,7 +14,8 @@ const maps={
  c13:{title:"Brillo, poros y brotes: tres decisiones diferentes",items:[["BRILLO","Confort y textura","Revisa limpieza suave e hidratación antes de sumar un activo."],["POROS","Apariencia visible","Evalúa congestión y tolerancia; no prometas cerrarlos."],["BROTES","Límite cosmético","Pregunta por duración y molestias; lesiones profundas o dolorosas requieren dermatología."]],note:"En Yeppo: distingue objetivo cosmético de tratamiento médico y explica el papel de cada producto en la rutina."},
  c14:{title:"Una ruta para el tono desigual",items:[["01","Escuchar","¿Marca tras un brote, tono apagado o lesión nueva que cambia?"],["02","Proteger","Revisa fotoprotección, productos irritantes y constancia."],["03","Elegir","Compara una fórmula por etiqueta, textura y uso; deriva cuando corresponda."]],note:"El objetivo es una recomendación cosmética clara. Melasma o manchas cambiantes requieren evaluación profesional."}
 };
-export default function ChapterMap({id}){
- const map=maps[id];if(!map)return null;
+export const chapterMapFor=id=>maps[id]||null;
+export default function ChapterMap({id,override}){
+ const map=override||maps[id];if(!map)return null;
  return <aside className="yeppo-chapter-map" aria-label={"Infografía Yeppo: "+map.title}><small>INFOGRAFÍA / YEPPO ACADEMY</small><h3>{map.title}</h3><div className="yeppo-chapter-map-grid">{map.items.map(([n,title,body])=><article key={n}><b>{n}</b><strong>{title}</strong><p>{body}</p></article>)}</div><p>{map.note}</p></aside>;
 }

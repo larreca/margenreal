@@ -2,6 +2,8 @@
 import {useRef,useState} from "react";
 import {useRouter} from "next/navigation";
 import {videoEmbedUrl} from "@/lib/video";
+import {editorialFor,editorialImage,editorialCover} from "@/lib/editorial";
+import {chapterMapFor} from "@/components/ChapterMap";
 
 const BLOCKS={
  text:'<div class="reading-copy"><h4>Nuevo subtítulo</h4><p>Escribe aquí el contenido del módulo.</p></div>',
@@ -25,6 +27,27 @@ export default function ContentEditor({initial,role,versions=[]}){
  }
  function setMeta(key,value){setDirty(true);setChapter(c=>({...c,[key]:value}))}
  function setModule(key,value){setDirty(true);setChapter(c=>({...c,modules:c.modules.map((m,i)=>i===index?{...m,[key]:value}:m)}))}
+ function setEditorial(key,value){setDirty(true);setChapter(c=>({...c,editorial:{...editorialFor(c.id),...c.editorial,[key]:value}}))}
+ function setMap(key,value){setDirty(true);setChapter(c=>({...c,infographic:{...chapterMapFor(c.id),...c.infographic,[key]:value}}))}
+ function setMapItem(i,j,value){setDirty(true);setChapter(c=>{const map={...chapterMapFor(c.id),...c.infographic},items=map.items.map(row=>[...row]);items[i][j]=value;return {...c,infographic:{...map,items}}})}
+ async function uploadImage(file,kind){
+   if(!file)return;
+   setBusy(true);setMessage("Subiendo imagen...");
+   try{
+     const form=new FormData();form.set("file",file);form.set("chapterId",chapter.id);
+     const res=await fetch("/api/admin/media",{method:"POST",body:form}),data=await res.json();
+     if(!res.ok)throw new Error(data.error||"No se pudo subir la imagen.");
+     if(kind==="cover")setMeta("coverImage",data.url);
+     else if(kind==="inline"){
+       const figure=document.createElement("figure"),img=document.createElement("img"),caption=document.createElement("figcaption");
+       img.src=data.url;img.alt=file.name.replace(/\.[^.]+$/,"");img.loading="lazy";
+       caption.textContent="Escribe una descripción de esta imagen";figure.append(img,caption);
+       surface.current?.append(figure);setDirty(true);
+     }else setEditorial("imageUrl",data.url);
+     setMessage("Imagen guardada. Guarda el borrador para asociarla al capítulo.");
+   }catch(error){setMessage(error.message||"No se pudo subir la imagen.")}
+   finally{setBusy(false)}
+ }
  function addModule(){
    if(!canEdit)return;
    const saved=commitSurface();const n=saved.modules.length+1;
@@ -45,7 +68,7 @@ export default function ContentEditor({initial,role,versions=[]}){
      const data=JSON.parse(await file.text());
      const incoming=data.schools?.flatMap(s=>s.chapters||[]).find(c=>c.id===chapter.id);
      if(!incoming||!Array.isArray(incoming.modules)||!incoming.modules.length)throw new Error("El archivo no contiene los módulos editados de este capítulo.");
-     setChapter(c=>({...c,title:incoming.title||c.title,summary:incoming.summary||"",modules:incoming.modules,assessmentRequired:incoming.assessmentRequired??c.assessmentRequired}));
+     setChapter(c=>({...c,title:incoming.title||c.title,summary:incoming.summary||"",modules:incoming.modules,assessmentRequired:incoming.assessmentRequired??c.assessmentRequired,coverImage:incoming.coverImage||c.coverImage,coverAlt:incoming.coverAlt||c.coverAlt,editorial:incoming.editorial||c.editorial,infographic:incoming.infographic||c.infographic}));
      setIndex(0);setDirty(true);setMessage("Cambios cargados en este capítulo. Revisa y guarda el borrador.");
    }catch(e){setMessage(e.message||"No se pudo leer el archivo de revisión.")}
  }
@@ -58,6 +81,8 @@ export default function ContentEditor({initial,role,versions=[]}){
    const j=await r.json();setBusy(false);setMessage(r.ok?(kind==="save"?"Borrador guardado.":kind==="review"?"Enviado a revisión.":"Versión publicada."):(j.error||"No se pudo completar la acción."));
    if(r.ok){if(kind==="save")setDirty(false);router.refresh()}
  }
+ const feature={...editorialFor(chapter.id),...chapter.editorial};
+ const map={...chapterMapFor(chapter.id),...chapter.infographic};
  return <div className="ya-editor">
   <aside className="ya-card ya-editor-side">
    <small style={{fontWeight:900,color:"#ed3489"}}>MÓDULOS</small>
@@ -73,12 +98,22 @@ export default function ContentEditor({initial,role,versions=[]}){
     {canEdit&&chapter.modules.length>1&&<button type="button" className="ya-btn ya-secondary" onClick={removeModule}>Quitar este módulo del borrador</button>}
     <label style={{display:"flex",gap:8,alignItems:"center",fontSize:13,fontWeight:800,color:"#555870"}}><input type="checkbox" checked={Boolean(chapter.assessmentRequired)} disabled={!canEdit} onChange={e=>setMeta("assessmentRequired",e.target.checked)}/> Exigir evaluación aprobada para completar este capítulo</label>
    </div>
+   <section className="ya-card ya-editor-meta" aria-label="Imágenes y contexto"><h2>Portada, imágenes y contexto</h2>
+    <div className="ya-field"><label>Portada con modelo</label><input value={chapter.coverImage||editorialCover(chapter.id).src} disabled={!canEdit} onChange={e=>setMeta("coverImage",e.target.value)}/>{canEdit&&<input type="file" accept="image/jpeg,image/png,image/webp" disabled={busy} onChange={e=>{uploadImage(e.target.files?.[0],"cover");e.target.value=""}}/>}</div>
+    <div className="ya-field"><label>Descripción de la portada</label><input value={chapter.coverAlt||editorialCover(chapter.id).alt} disabled={!canEdit} onChange={e=>setMeta("coverAlt",e.target.value)}/></div>
+    <div className="ya-field"><label>Imagen del producto o contexto</label><input value={feature.imageUrl||(feature.product?editorialImage(chapter.id):"/assets/editorial/yeppo-store.jpg")} disabled={!canEdit} onChange={e=>setEditorial("imageUrl",e.target.value)}/>{canEdit&&<input type="file" accept="image/jpeg,image/png,image/webp" disabled={busy} onChange={e=>{uploadImage(e.target.files?.[0],"product");e.target.value=""}}/>}<small>JPG, PNG o WebP · máximo 2 MB. Se guarda en el servidor al subir.</small></div>
+    <div className="ya-field"><label>Título de la historia</label><input value={feature.eyebrow||""} disabled={!canEdit} onChange={e=>setEditorial("eyebrow",e.target.value)}/></div>
+    <div className="ya-field"><label>Historia / contexto</label><textarea rows={4} value={feature.story||""} disabled={!canEdit} onChange={e=>setEditorial("story",e.target.value)}/></div>
+    <div className="ya-field"><label>Consejo Yeppo</label><textarea rows={3} value={feature.tip||""} disabled={!canEdit} onChange={e=>setEditorial("tip",e.target.value)}/></div>
+   </section>
+   {map.items&&<section className="ya-card ya-editor-meta" aria-label="Infografía"><h2>Infografía</h2><div className="ya-field"><label>Título</label><input value={map.title||""} disabled={!canEdit} onChange={e=>setMap("title",e.target.value)}/></div>{map.items.map((row,i)=><div className="ya-editor-infographic" key={i}><small>Bloque {i+1}</small>{row.map((value,j)=><div className="ya-field" key={j}><label>{["Número o palabra","Título","Explicación"][j]}</label><input value={value} disabled={!canEdit} onChange={e=>setMapItem(i,j,e.target.value)}/></div>)}</div>)}<div className="ya-field"><label>Nota final</label><textarea rows={2} value={map.note||""} disabled={!canEdit} onChange={e=>setMap("note",e.target.value)}/></div></section>}
    <div className="ya-editor-toolbar">
     <button disabled={!canEdit} onClick={()=>command("bold")}>Negrita</button><button disabled={!canEdit} onClick={()=>command("italic")}>Cursiva</button>
     <button disabled={!canEdit} onClick={()=>command("formatBlock","h4")}>Subtítulo</button><button disabled={!canEdit} onClick={()=>command("insertUnorderedList")}>Lista</button>
     <button disabled={!canEdit} onClick={()=>addBlock("text")}>+ Texto</button><button disabled={!canEdit} onClick={()=>addBlock("takeaway")}>+ Idea clave</button>
     <button disabled={!canEdit} onClick={()=>addBlock("case")}>+ Caso</button><button disabled={!canEdit} onClick={()=>addBlock("tip")}>+ Consejo comercial</button>
     <button disabled={!canEdit} onClick={()=>addBlock("error")}>+ Error frecuente</button><button disabled={!canEdit} onClick={()=>addBlock("source")}>+ Fuente</button>
+    {canEdit&&<label className="ya-btn ya-secondary" style={{cursor:"pointer",padding:"6px 10px"}}>+ Imagen en el módulo<input type="file" accept="image/jpeg,image/png,image/webp" hidden disabled={busy} onChange={e=>{uploadImage(e.target.files?.[0],"inline");e.target.value=""}}/></label>}
    </div>
    <div key={current?.id} ref={surface} className="ya-edit coursebook" contentEditable={canEdit} onInput={()=>setDirty(true)} suppressContentEditableWarning dangerouslySetInnerHTML={{__html:current?.html||""}}/>
    <div className="ya-editor-actions">

@@ -47,7 +47,9 @@ export async function saveDraft(chapter,userId){
   const modules=Array.isArray(chapter.modules)?chapter.modules:[];
   if(!modules.length||new Set(modules.map(m=>m.id)).size!==modules.length)throw new Error("MÓDULOS_INVÁLIDOS");
   if(modules.some(m=>m.videoUrl&&!videoEmbedUrl(m.videoUrl)))throw new Error("VIDEO_INVÁLIDO: usa YouTube o Vimeo HTTPS");
-  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules};
+  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules,
+    coverImage:chapter.coverImage||null,coverAlt:chapter.coverAlt||null,
+    editorial:chapter.editorial||null,infographic:chapter.infographic||null};
   const payload=JSON.stringify(normalized);
   await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,status,updated_by,updated_at)
     VALUES(${chapter.id},${normalized.title},${normalized.summary},${payload}::jsonb,'draft',${userId}::uuid,NOW())
