@@ -32,6 +32,21 @@ function attachInteractions(container,onAssessment){
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
 
+ container.querySelectorAll(".crosssell-calc-btn").forEach((b)=>{
+   const fn=()=>{
+     const w=b.closest("[data-crosssell-calculator]");
+     const g=k=>Number(w?.querySelector('[data-xcalc="'+k+'"]')?.value||0);
+     const tickets=g("tickets"),units=g("units"),revenue=g("revenue"),anchor=g("anchor"),withComplement=g("withComplement");
+     const r=w?.querySelector(".crosssell-calc-result");
+     if(!r)return;
+     if(tickets<=0){r.textContent="Ingresa una cantidad de tickets válida.";return}
+     const aov=revenue/tickets,upt=units/tickets,attach=anchor>0?(withComplement/anchor*100):0;
+     r.innerHTML="<b>AOV / ticket:</b> $"+Math.round(aov).toLocaleString("es-CL")+" · <b>UPT:</b> "+upt.toFixed(2)+" · <b>Attach rate:</b> "+attach.toFixed(1)+"%";
+     r.style.color="#111858";
+   };
+   b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
+ });
+
  container.querySelectorAll("[data-stock-answer]").forEach((b)=>{
    const fn=()=>{
      const w=b.closest("[data-stock-game]"),o=w?.querySelector(".stock-feedback");
