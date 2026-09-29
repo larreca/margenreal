@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">UX de cross-selling: tres señales de Baymard</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Datos de ecommerce general; no son benchmarks específicos de Chile ni de K-Beauty</text>
+<g font-family="Arial">
+<rect x="70" y="185" width="330" height="410" rx="28" fill="#fff1f7"/>
+<text x="105" y="260" font-size="58" font-weight="700" fill="#ed3489">52%</text>
+<text x="105" y="315" font-size="21" font-weight="700" fill="#101858">de sitios desktop</text>
+<text x="105" y="350" font-size="18" fill="#33364b">benchmarkeados en 2021</text>
+<text x="105" y="385" font-size="18" fill="#33364b">mostraban cross-sells</text>
+<text x="105" y="420" font-size="18" fill="#33364b">irrelevantes o basados</text>
+<text x="105" y="455" font-size="18" fill="#33364b">solo en “otros compraron”.</text>
+<text x="105" y="535" font-size="16" fill="#686b80">Lección: relevancia primero.</text>
+
+<rect x="435" y="185" width="330" height="410" rx="28" fill="#eef0fb"/>
+<text x="470" y="260" font-size="58" font-weight="700" fill="#745fd8">68%</text>
+<text x="470" y="315" font-size="21" font-weight="700" fill="#101858">de sitios desktop</text>
+<text x="470" y="350" font-size="18" fill="#33364b">del benchmark 2021</text>
+<text x="470" y="385" font-size="18" fill="#33364b">omitían al menos uno</text>
+<text x="470" y="420" font-size="18" fill="#33364b">de 4 atributos clave</text>
+<text x="470" y="455" font-size="18" fill="#33364b">en recomendaciones.</text>
+<text x="470" y="535" font-size="16" fill="#686b80">Imagen · título · precio · rating.</text>
+
+<rect x="800" y="185" width="330" height="410" rx="28" fill="#eef8f4"/>
+<text x="835" y="260" font-size="58" font-weight="700" fill="#27a679">62%</text>
+<text x="835" y="315" font-size="21" font-weight="700" fill="#101858">de Product Pages</text>
+<text x="835" y="350" font-size="18" fill="#33364b">en benchmark 2026</text>
+<text x="835" y="385" font-size="18" fill="#33364b">tenían UX “mediocre”</text>
+<text x="835" y="420" font-size="18" fill="#33364b">o peor, con fricciones</text>
+<text x="835" y="455" font-size="18" fill="#33364b">evitables de decisión.</text>
+<text x="835" y="535" font-size="16" fill="#686b80">Lección: informar para decidir.</text>
+
+<text x="70" y="660" font-size="21" font-weight="700" fill="#101858">Qué aplicar en belleza</text>
+<text x="70" y="705" font-size="18" fill="#33364b">1) sugerencias pocas y relevantes · 2) explicar “por qué combina” · 3) mostrar datos suficientes · 4) no bloquear el checkout</text>
+<text x="70" y="760" font-size="16" fill="#686b80">Fuentes: Baymard Institute, estudios de cart cross-sells/product recommendations 2021 y Product Page benchmark 2026.</text>
+</g></svg>
