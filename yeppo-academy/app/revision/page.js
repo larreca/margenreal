@@ -8,7 +8,7 @@ const routes=[
  {id:"kbeauty",title:"Entender K-Beauty",range:"Capítulos 1–3",goal:"Comprende el mercado y las razones por las que una tienda destaca.",first:"c01",numbers:[1,2,3],image:"/assets/editorial/chile-beauty.jpg"},
  {id:"piel",title:"Entender la piel",range:"Capítulos 4–9",goal:"Orienta una rutina y reconoce cuándo detener una recomendación.",first:"c04",numbers:[4,5,6,7,8,9],image:"/assets/editorial/chile-portrait.jpg"},
  {id:"productos",title:"Entender productos",range:"Capítulos 10–14",goal:"Lee fórmulas, compara ingredientes y construye rutinas.",first:"c10",numbers:[10,11,12,13,14],image:"/assets/editorial/yeppo-centella.jpg"},
- {id:"negocio",title:"Hacer crecer tu negocio",range:"Próximamente",goal:"Venta, surtido, margen, CRM y recompra B2B.",first:null,numbers:[],image:"/assets/editorial/yeppo-store.jpg"}
+ {id:"venta",title:"Venta K-Beauty",range:"Capítulo 25 disponible",goal:"Venta consultiva, construcción de canasta y crecimiento B2B.",first:"c25",numbers:[25],image:"/assets/editorial/yeppo-store.jpg"}
 ];
 const chapterGoals={
  c01:["Inicial","Explicar K-Beauty sin reducirlo a una rutina de diez pasos."],c02:["Inicial","Leer el mercado chileno y distinguir interés de recompra."],c03:["Intermedio","Construir una ventaja de tienda basada en asesoría y selección."],
