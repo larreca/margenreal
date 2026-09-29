@@ -12,7 +12,7 @@ const newById=new Map([...newChapters,chapter11,chapter12,chapter13,chapter14].m
 const allSeed={...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>({...c,...newById.get(c.id)}))}))};
 const baseChapters=()=>allSeed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
-const pilotChapter=id=>/^c0[1-7]$/.test(id);
+const pilotChapter=id=>/^c0[1-7]$/.test(id)||id==="c25";
 export const isPilotChapter=pilotChapter;
 export async function isAvailableChapter(id){
   if(pilotChapter(id))return true;
