@@ -15,3 +15,129 @@
 .academy-infographic img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:14px;background:#fff}
 .academy-infographic figcaption{padding:11px 8px 3px;color:#686b80;font-size:12px;line-height:1.5}
 @media(max-width:640px){.academy-infographic{margin:22px auto;padding:7px;border-radius:16px}.academy-infographic img{border-radius:11px}}
+
+/* UX READABILITY AUDIT · 2026-09-29
+   Minimum visual type size: 10px. Course reading text is intentionally larger. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+/* Core course reading */
+.editorial-reader .reading-copy p,
+.editorial-reader .reading-copy li{
+  font-size:15px!important;
+  line-height:1.72!important;
+}
+.editorial-reader .module-heading h3{
+  font-size:clamp(22px,2vw,30px)!important;
+  line-height:1.18!important;
+}
+.editorial-reader .module-heading small,
+.editorial-reader .editorial-module-intro,
+.editorial-reader .editorial-first-lesson small,
+.editorial-reader .course-label,
+.editorial-reader small{
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+.editorial-reader .course-module-nav button{
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+.editorial-reader .course-module-nav button span{
+  font-size:10px!important;
+}
+
+/* Supporting explanations, cases, tools and quizzes */
+.editorial-reader .course-case p,
+.editorial-reader .lesson-box p,
+.editorial-reader .module-takeaway p,
+.editorial-reader .trust-script p,
+.editorial-reader .market-cards p,
+.editorial-reader .concept-map span,
+.editorial-reader .starter-grid small,
+.editorial-reader .real-products p,
+.editorial-reader .sales-flow p,
+.editorial-reader .case-card p,
+.editorial-reader .case-card li,
+.editorial-reader .case-actions li,
+.editorial-reader .compare-table p,
+.editorial-reader .trend-check span,
+.editorial-reader .dont-grid span,
+.editorial-reader .b2b-value-grid p,
+.editorial-reader .glossary-grid p,
+.editorial-reader .timeline-grid p,
+.editorial-reader .routine-map span,
+.editorial-reader .routine-map em,
+.editorial-reader .self-check p,
+.editorial-reader .challenge-q label,
+.editorial-reader .challenge-feedback,
+.editorial-reader .b2b-benchmark p,
+.editorial-reader .b2b-benchmark span{
+  font-size:13px!important;
+  line-height:1.58!important;
+}
+
+/* Labels and secondary metadata */
+.editorial-reader .real-products span,
+.editorial-reader .sales-flow i,
+.editorial-reader .case-card small,
+.editorial-reader .compare-table b,
+.editorial-reader .compare-table span,
+.editorial-reader .trend-check i,
+.editorial-reader .trend-check b,
+.editorial-reader .glossary-grid summary,
+.editorial-reader .dont-grid b,
+.editorial-reader .challenge-q b,
+.editorial-reader .challenge-result,
+.editorial-reader .calc-head small,
+.editorial-reader .calc-head span{
+  font-size:11px!important;
+  line-height:1.4!important;
+}
+
+/* Sources and captions can be secondary, but must remain readable */
+.editorial-reader .source-course,
+.editorial-reader .source-course a,
+.editorial-reader figcaption,
+.editorial-reader .sources-box,
+.editorial-reader .sources-box a{
+  font-size:11px!important;
+  line-height:1.55!important;
+}
+
+/* Context rail */
+.editorial-reader .editorial-context-card p{
+  font-size:13px!important;
+  line-height:1.58!important;
+}
+.editorial-reader .editorial-context-card small,
+.editorial-reader .editorial-context-photo span{
+  font-size:10px!important;
+}
+
+/* Forms / calculators */
+.editorial-reader input,
+.editorial-reader textarea,
+.editorial-reader select,
+.editorial-reader button,
+.editorial-reader label{
+  font-size:max(12px,1em);
+}
+.editorial-reader .calc-inputs label{
+  font-size:12px!important;
+}
+.editorial-reader .calc-inputs input{
+  font-size:14px!important;
+}
+
+/* Mobile: prioritize legibility over density */
+@media(max-width:650px){
+  .editorial-reader .reading-copy p,
+  .editorial-reader .reading-copy li{font-size:16px!important;line-height:1.72!important}
+  .editorial-reader .course-case p,
+  .editorial-reader .lesson-box p,
+  .editorial-reader .module-takeaway p,
+  .editorial-reader .trust-script p,
+  .editorial-reader .market-cards p,
+  .editorial-reader .challenge-q label{font-size:14px!important}
+  .editorial-reader .course-module-nav button{font-size:13px!important}
+}
