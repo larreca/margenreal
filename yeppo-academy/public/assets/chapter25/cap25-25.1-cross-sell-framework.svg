@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Cross-selling: completar, no inflar</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Infografía Yeppo Academy · cada recomendación debe tener un rol visible</text>
+<g font-family="Arial">
+<rect x="75" y="185" width="245" height="360" rx="28" fill="#eef0fb"/>
+<text x="110" y="235" font-size="23" font-weight="700" fill="#101858">1 · ANCLA</text>
+<text x="110" y="275" font-size="18" fill="#33364b">Lo que el cliente</text><text x="110" y="304" font-size="18" fill="#33364b">ya decidió comprar.</text>
+<circle cx="198" cy="410" r="55" fill="#745fd8"/><text x="165" y="420" font-size="30" font-weight="700" fill="#fff">A</text>
+<text x="110" y="500" font-size="16" fill="#686b80">No cambies su decisión</text><text x="110" y="525" font-size="16" fill="#686b80">sin una buena razón.</text>
+
+<rect x="345" y="185" width="245" height="360" rx="28" fill="#fff1f7"/>
+<text x="380" y="235" font-size="23" font-weight="700" fill="#101858">2 · COMPLETA</text>
+<text x="380" y="275" font-size="18" fill="#33364b">Añade el paso</text><text x="380" y="304" font-size="18" fill="#33364b">que realmente falta.</text>
+<circle cx="468" cy="410" r="55" fill="#ed3489"/><text x="435" y="420" font-size="30" font-weight="700" fill="#fff">+</text>
+<text x="380" y="500" font-size="16" fill="#686b80">Máxima relevancia:</text><text x="380" y="525" font-size="16" fill="#686b80">protección, soporte o uso.</text>
+
+<rect x="615" y="185" width="245" height="360" rx="28" fill="#eef8f4"/>
+<text x="650" y="235" font-size="23" font-weight="700" fill="#101858">3 · PROTEGE</text>
+<text x="650" y="275" font-size="18" fill="#33364b">Evita que el nuevo</text><text x="650" y="304" font-size="18" fill="#33364b">producto quede aislado.</text>
+<circle cx="738" cy="410" r="55" fill="#27a679"/><text x="705" y="420" font-size="30" font-weight="700" fill="#fff">✓</text>
+<text x="650" y="500" font-size="16" fill="#686b80">Ej.: SPF con rutina</text><text x="650" y="525" font-size="16" fill="#686b80">de manchas o retinoides.</text>
+
+<rect x="885" y="185" width="245" height="360" rx="28" fill="#fff7e9"/>
+<text x="920" y="235" font-size="23" font-weight="700" fill="#101858">4 · OPCIONAL</text>
+<text x="920" y="275" font-size="18" fill="#33364b">Experiencia, trial</text><text x="920" y="304" font-size="18" fill="#33364b">o conveniencia.</text>
+<circle cx="1008" cy="410" r="55" fill="#d99b2b"/><text x="975" y="420" font-size="30" font-weight="700" fill="#fff">★</text>
+<text x="920" y="500" font-size="16" fill="#686b80">Solo si agrega valor</text><text x="920" y="525" font-size="16" fill="#686b80">y el presupuesto lo permite.</text>
+
+<path d="M320 365 H345 M590 365 H615 M860 365 H885" stroke="#c6cadb" stroke-width="6"/>
+<text x="75" y="645" font-size="23" font-weight="700" fill="#101858">FILTRO DE RELEVANCIA</text>
+<text x="75" y="687" font-size="19" fill="#33364b">¿Le falta este paso? · ¿es compatible? · ¿lo entenderá? · ¿lo usará? · ¿entra en presupuesto?</text>
+<text x="75" y="742" font-size="18" font-weight="700" fill="#ed3489">Si no puedes explicar en una frase por qué complementa la compra, no es un buen cross-sell.</text>
+</g></svg>
