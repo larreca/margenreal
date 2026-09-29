@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Upselling: bueno → mejor → premium</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">La opción superior necesita una razón concreta, no solo un precio mayor</text>
+<g font-family="Arial">
+<rect x="85" y="185" width="300" height="455" rx="30" fill="#eef0fb"/>
+<text x="120" y="235" font-size="22" font-weight="700" fill="#101858">BUENO</text>
+<text x="120" y="280" font-size="18" fill="#33364b">Resuelve el objetivo base</text>
+<text x="120" y="330" font-size="19" fill="#33364b">• menor desembolso</text>
+<text x="120" y="370" font-size="19" fill="#33364b">• menor riesgo de prueba</text>
+<text x="120" y="410" font-size="19" fill="#33364b">• rutina simple</text>
+<text x="120" y="500" font-size="17" fill="#686b80">Ej.: formato 30 ml</text>
+<text x="120" y="535" font-size="17" fill="#686b80">o fórmula esencial.</text>
+
+<rect x="450" y="160" width="300" height="480" rx="30" fill="#fff1f7" stroke="#ed3489" stroke-width="4"/>
+<text x="485" y="210" font-size="22" font-weight="700" fill="#101858">MEJOR</text>
+<text x="485" y="255" font-size="18" fill="#33364b">Mejora valor o experiencia</text>
+<text x="485" y="305" font-size="19" fill="#33364b">• mejor precio/ml</text>
+<text x="485" y="345" font-size="19" fill="#33364b">• mayor duración</text>
+<text x="485" y="385" font-size="19" fill="#33364b">• textura/uso preferido</text>
+<text x="485" y="425" font-size="19" fill="#33364b">• beneficio adicional útil</text>
+<text x="485" y="500" font-size="17" fill="#686b80">Debe ser la opción que</text>
+<text x="485" y="535" font-size="17" fill="#686b80">más fácilmente se justifica.</text>
+
+<rect x="815" y="185" width="300" height="455" rx="30" fill="#f3efff"/>
+<text x="850" y="235" font-size="22" font-weight="700" fill="#101858">PREMIUM</text>
+<text x="850" y="280" font-size="18" fill="#33364b">Valor superior verificable</text>
+<text x="850" y="330" font-size="19" fill="#33364b">• formulación diferente</text>
+<text x="850" y="370" font-size="19" fill="#33364b">• tecnología/formato</text>
+<text x="850" y="410" font-size="19" fill="#33364b">• experiencia o conveniencia</text>
+<text x="850" y="500" font-size="17" fill="#686b80">“Más caro” sin diferencia</text>
+<text x="850" y="535" font-size="17" fill="#686b80">clara no es premium.</text>
+
+<path d="M385 400 H445 M750 400 H810" stroke="#b7bdd5" stroke-width="7"/>
+<text x="70" y="705" font-size="21" font-weight="700" fill="#101858">FILTRO DE CONFIANZA</text>
+<text x="70" y="745" font-size="18" fill="#33364b">¿Qué mejora? · ¿para quién? · ¿cuánto cuesta extra? · ¿cuánto dura? · ¿la persona realmente lo necesita?</text>
+<text x="70" y="785" font-size="17" font-weight="700" fill="#ed3489">El cliente debe poder entender la diferencia antes de aceptar el upgrade.</text>
+</g></svg>
