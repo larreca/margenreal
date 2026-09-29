@@ -47,6 +47,24 @@ function attachInteractions(container,onAssessment){
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
 
+ container.querySelectorAll(".upsell-calc-btn").forEach((b)=>{
+   const fn=()=>{
+     const w=b.closest("[data-upsell-calculator]");
+     const g=k=>Number(w?.querySelector('[data-ucalc="'+k+'"]')?.value||0);
+     const basePrice=g("basePrice"),upPrice=g("upPrice"),baseSize=g("baseSize"),upSize=g("upSize"),offers=g("offers"),upgrades=g("upgrades");
+     const r=w?.querySelector(".upsell-calc-result");
+     if(!r)return;
+     if(basePrice<=0||upPrice<=0||baseSize<=0||upSize<=0){r.textContent="Completa precios y tamaños válidos.";return}
+     const baseUnit=basePrice/baseSize,upUnit=upPrice/upSize;
+     const unitSaving=(1-upUnit/baseUnit)*100;
+     const upgradeRate=offers>0?(upgrades/offers*100):0;
+     const incremental=Math.max(0,upPrice-basePrice)*Math.max(0,upgrades);
+     r.innerHTML="<b>Base:</b> $"+Math.round(baseUnit).toLocaleString("es-CL")+"/ml · <b>Upgrade:</b> $"+Math.round(upUnit).toLocaleString("es-CL")+"/ml · <b>Valor unitario:</b> "+(unitSaving>=0?unitSaving.toFixed(1)+"% menor":"sin ahorro por ml")+" · <b>Upgrade rate:</b> "+upgradeRate.toFixed(1)+"% · <b>Venta incremental:</b> $"+Math.round(incremental).toLocaleString("es-CL");
+     r.style.color="#111858";
+   };
+   b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
+ });
+
  container.querySelectorAll("[data-stock-answer]").forEach((b)=>{
    const fn=()=>{
      const w=b.closest("[data-stock-game]"),o=w?.querySelector(".stock-feedback");
