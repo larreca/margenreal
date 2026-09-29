@@ -15,7 +15,7 @@ const chapterGoals={
  c04:["Inicial","Relacionar funciones de la piel con beneficios cosméticos realistas."],c05:["Inicial","Distinguir tipo, estado y prioridad de la persona."],c06:["Intermedio","Ajustar una rutina cuando cambian tolerancia e hidratación."],
  c07:["Intermedio","Priorizar una preocupación sin saturar la rutina."],c08:["Intermedio","Reconocer el límite entre asesoría y diagnóstico."],c09:["Intermedio","Separar derivación profesional de una urgencia médica."],
  c10:["Intermedio","Leer INCI, etiqueta y reclamos de un cosmético."],c11:["Intermedio","Comparar humectantes, emolientes y oclusivos."],c12:["Intermedio","Distinguir tradición, evidencia y promesas sobre ingredientes."],
- c13:["Intermedio","Distinguir brillo, poros y brotes para orientar una rutina prudente."],c14:["Intermedio","Orientar el tono desigual con protección, tolerancia y expectativas claras."]
+ c13:["Intermedio","Distinguir brillo, poros y brotes para orientar una rutina prudente."],c14:["Intermedio","Orientar el tono desigual con protección, tolerancia y expectativas claras."],c25:["Intermedio","Construir canastas relevantes sin forzar la venta y medir su impacto."]
 };
 export default async function Revision(){
  const data=await getAcademyData();
