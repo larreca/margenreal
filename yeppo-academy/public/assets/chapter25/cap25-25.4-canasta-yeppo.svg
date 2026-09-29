@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="36" font-weight="700" fill="#101858">Ejemplo real Yeppo: construir una canasta por relevancia</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Snapshot de catálogo 29/09/2026 · ejemplo didáctico, no rutina universal</text>
+<g font-family="Arial">
+<text x="80" y="190" font-size="19" font-weight="700" fill="#101858">1 producto · tratamiento ancla</text>
+<rect x="80" y="210" width="210" height="56" rx="12" fill="#745fd8"/>
+<text x="310" y="246" font-size="22" font-weight="700" fill="#101858">$13.990</text>
+<text x="430" y="246" font-size="17" fill="#686b80">SKIN1004 Tone Brightening Ampoule 30 ml</text>
+
+<text x="80" y="315" font-size="19" font-weight="700" fill="#101858">2 productos · + fotoprotección</text>
+<rect x="80" y="335" width="540" height="56" rx="12" fill="#ed3489"/>
+<text x="640" y="371" font-size="22" font-weight="700" fill="#101858">$35.980</text>
+<text x="760" y="371" font-size="17" fill="#686b80">+ Beauty of Joseon Relief Sun</text>
+
+<text x="80" y="440" font-size="19" font-weight="700" fill="#101858">3 productos · + soporte de hidratación</text>
+<rect x="80" y="460" width="850" height="56" rx="12" fill="#27a679"/>
+<text x="950" y="496" font-size="22" font-weight="700" fill="#101858">$69.970</text>
+<text x="80" y="545" font-size="17" fill="#686b80">+ Dr. Althea 345 Relief Cream</text>
+
+<text x="80" y="615" font-size="19" font-weight="700" fill="#101858">4 productos · + add-on opcional</text>
+<rect x="80" y="635" width="880" height="56" rx="12" fill="#d99b2b"/>
+<text x="980" y="671" font-size="22" font-weight="700" fill="#101858">$71.960</text>
+<text x="80" y="720" font-size="17" fill="#686b80">+ Centellian24 Madeca Derma Mask Brightening $1.990</text>
+
+<text x="70" y="785" font-size="16" font-weight="700" fill="#ed3489">La lógica no es vender 4: es ofrecer primero el complemento de mayor relevancia y detenerse cuando la rutina ya queda suficiente.</text>
+</g></svg>
