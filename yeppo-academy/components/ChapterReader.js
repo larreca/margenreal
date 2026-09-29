@@ -65,6 +65,24 @@ function attachInteractions(container,onAssessment){
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
 
+ container.querySelectorAll(".objection-calc-btn").forEach((b)=>{
+   const fn=()=>{
+     const w=b.closest("[data-objection-calculator]");
+     const g=k=>Number(w?.querySelector('[data-ocalc="'+k+'"]')?.value||0);
+     const conversations=g("conversations"),objections=g("objections"),sales=g("sales"),discounted=g("discounted"),avgTicket=g("avgTicket"),avgDiscount=g("avgDiscount");
+     const r=w?.querySelector(".objection-calc-result");
+     if(!r)return;
+     if(conversations<=0||objections<0||sales<0){r.textContent="Completa valores válidos.";return}
+     const objectionRate=conversations>0?objections/conversations*100:0;
+     const resolution=objections>0?sales/objections*100:0;
+     const discountReliance=sales>0?discounted/sales*100:0;
+     const leakage=discounted*avgTicket*(avgDiscount/100);
+     r.innerHTML="<b>Tasa de objeción:</b> "+objectionRate.toFixed(1)+"% · <b>Conversión post-objeción:</b> "+resolution.toFixed(1)+"% · <b>Dependencia de descuento:</b> "+discountReliance.toFixed(1)+"% · <b>Descuento estimado cedido:</b> $"+Math.round(leakage).toLocaleString("es-CL");
+     r.style.color="#111858";
+   };
+   b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
+ });
+
  container.querySelectorAll("[data-stock-answer]").forEach((b)=>{
    const fn=()=>{
      const w=b.closest("[data-stock-game]"),o=w?.querySelector(".stock-feedback");
