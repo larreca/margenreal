@@ -449,3 +449,45 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .editorial-reader .challenge-q label{font-size:14px!important}
   .editorial-reader .course-module-nav button{font-size:13px!important}
 }
+
+/* UX READABILITY EXTENSION · chapters 15-25 · 2026-09-30 */
+.editorial-reader .myth-course p,
+.editorial-reader .myth-course summary,
+.editorial-reader .alert-course p,
+.editorial-reader .alert-course b,
+.editorial-reader .routine-map b,
+.editorial-reader .market-cards b,
+.editorial-reader .compare-table,
+.editorial-reader .compare-table span,
+.editorial-reader .real-products b,
+.editorial-reader .real-products a,
+.editorial-reader .course-case h4,
+.editorial-reader .trust-script b,
+.editorial-reader .challenge-q p,
+.editorial-reader .challenge-head p,
+.editorial-reader .challenge-head h4{
+  font-size:13px!important;
+  line-height:1.55!important;
+}
+.editorial-reader .module-takeaway b,
+.editorial-reader .source-course b,
+.editorial-reader .real-products span{
+  font-size:11px!important;
+  line-height:1.45!important;
+}
+@media(max-width:650px){
+  .editorial-reader .myth-course p,
+  .editorial-reader .myth-course summary,
+  .editorial-reader .alert-course p,
+  .editorial-reader .routine-map b,
+  .editorial-reader .market-cards b,
+  .editorial-reader .compare-table,
+  .editorial-reader .real-products b,
+  .editorial-reader .course-case h4,
+  .editorial-reader .challenge-q p,
+  .editorial-reader .challenge-head p{
+    font-size:14px!important;
+    line-height:1.58!important;
+  }
+}
+
