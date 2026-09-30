@@ -87,6 +87,18 @@ function attachInteractions(container,onAssessment){
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
 
+ container.querySelectorAll(".assortment-calc-btn").forEach((b)=>{
+  const fn=()=>{const w=b.closest("[data-assortment-calculator]"),g=k=>Number(w?.querySelector('[data-acalc="'+k+'"]')?.value||0),clamp=v=>Math.max(0,Math.min(100,v));const demand=clamp(g("demand")),margin=clamp(g("margin")),sell=clamp(g("sell")),role=Math.max(1,Math.min(5,g("role"))),risk=Math.max(0,Math.min(5,g("risk")));const score=clamp(demand*.30+margin*.25+sell*.25+(role*20)*.20-risk*4);const label=score>=75?"Prioridad alta para sostener/invertir":score>=55?"Mantener y optimizar":score>=35?"Revisar rol y profundidad":"Candidato a reducir, testear o salir";const r=w?.querySelector(".assortment-calc-result");if(r){r.innerHTML="<b>Score orientativo:</b> "+score.toFixed(1)+"/100 · <b>Lectura:</b> "+label;r.style.color="#111858"}};b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
+ });
+
+ container.querySelectorAll(".stock-calc-btn").forEach((b)=>{
+  const fn=()=>{const w=b.closest("[data-stock-calculator]"),g=k=>Number(w?.querySelector('[data-stcalc="'+k+'"]')?.value||0);const daily=g("daily"),lead=g("lead"),safety=g("safety"),current=g("current"),received=g("received"),sold=g("sold"),r=w?.querySelector(".stock-calc-result");if(!r)return;if(daily<=0||lead<0||current<0){r.textContent="Completa demanda diaria, lead time y stock válidos.";return}const rop=daily*lead+safety,coverage=current/daily,sell=received>0?sold/received*100:0,reorder=Math.max(0,rop-current);r.innerHTML="<b>Punto de reposición:</b> "+Math.ceil(rop)+" u · <b>Cobertura actual:</b> "+coverage.toFixed(1)+" días · <b>Sell-through:</b> "+sell.toFixed(1)+"% · <b>Faltante hasta ROP:</b> "+Math.ceil(reorder)+" u";r.style.color="#111858"};b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
+ });
+
+ container.querySelectorAll(".pricing-calc-btn").forEach((b)=>{
+  const fn=()=>{const w=b.closest("[data-pricing-calculator]"),g=k=>Number(w?.querySelector('[data-pcalc="'+k+'"]')?.value||0);const cost=g("cost"),gross=g("gross"),vat=g("vat")/100,commission=g("commission")/100,payment=g("payment")/100,shipping=g("shipping"),discount=g("discount")/100,target=g("target")/100,r=w?.querySelector(".pricing-calc-result");if(!r)return;if(cost<0||gross<=0){r.textContent="Completa costo y precio válidos.";return}const finalGross=gross*(1-discount),netSale=finalGross/(1+vat),grossProfit=netSale-cost,grossMargin=netSale>0?grossProfit/netSale*100:0,channelFees=finalGross*(commission+payment),contribution=netSale-cost-channelFees-shipping,contributionMargin=netSale>0?contribution/netSale*100:0,targetNet=target<1?(cost+shipping)/(1-target):0,targetGross=targetNet*(1+vat);r.innerHTML="<b>Precio final c/desc.:</b> $"+Math.round(finalGross).toLocaleString("es-CL")+" · <b>Venta neta s/IVA:</b> $"+Math.round(netSale).toLocaleString("es-CL")+" · <b>Margen bruto:</b> "+grossMargin.toFixed(1)+"% · <b>Contribución post-canal:</b> $"+Math.round(contribution).toLocaleString("es-CL")+" ("+contributionMargin.toFixed(1)+"%) · <b>Precio referencial para margen objetivo antes de fees:</b> $"+Math.round(targetGross).toLocaleString("es-CL");r.style.color="#111858"};b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
+ });
+
  container.querySelectorAll("[data-stock-answer]").forEach((b)=>{
    const fn=()=>{
      const w=b.closest("[data-stock-game]"),o=w?.querySelector(".stock-feedback");
