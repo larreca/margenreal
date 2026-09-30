@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="80" font-family="Arial" font-size="34" font-weight="700" fill="#101858">Fermentos y microbioma: cuatro términos que no son sinónimos</text>
+<g font-family="Arial">
+<rect x="70" y="170" width="500" height="180" rx="26" fill="#eef0fb"/><text x="105" y="220" font-size="23" font-weight="700" fill="#101858">FERMENT / FILTRATE</text><text x="105" y="265" font-size="18" fill="#34364a">Resultado o fracción de un proceso de fermentación.</text><text x="105" y="305" font-size="16" fill="#686b80">No implica microorganismos vivos.</text>
+<rect x="630" y="170" width="500" height="180" rx="26" fill="#f3efff"/><text x="665" y="220" font-size="23" font-weight="700" fill="#101858">LYSATE</text><text x="665" y="265" font-size="18" fill="#34364a">Componentes de células que fueron lisadas.</text><text x="665" y="305" font-size="16" fill="#686b80">Tampoco es un probiótico vivo.</text>
+<rect x="70" y="395" width="500" height="180" rx="26" fill="#eef8f4"/><text x="105" y="445" font-size="23" font-weight="700" fill="#101858">PROBIÓTICO</text><text x="105" y="490" font-size="18" fill="#34364a">Microorganismos vivos con beneficio demostrado.</text><text x="105" y="530" font-size="16" fill="#686b80">La viabilidad forma parte de la definición.</text>
+<rect x="630" y="395" width="500" height="180" rx="26" fill="#fff1f7"/><text x="665" y="445" font-size="23" font-weight="700" fill="#101858">POSTBIÓTICO</text><text x="665" y="490" font-size="18" fill="#34364a">Preparación de microorganismos inanimados/componentes</text><text x="665" y="525" font-size="18" fill="#34364a">con beneficio demostrado.</text>
+<rect x="145" y="640" width="910" height="90" rx="23" fill="#fff8e9"/><text x="185" y="695" font-size="20" font-weight="700" fill="#101858">“Microbiome-friendly” necesita metodología; no se deduce del nombre del ingrediente.</text>
+</g></svg>
