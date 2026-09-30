@@ -10,6 +10,6 @@ export async function generateMetadata({params}){
 export default async function RevisionChapter({params}){
  const {id}=await params;
  const chapter=await getChapter(id);
- if(!chapter||(chapter.n>14&&chapter.n!==25&&chapter.n!==26&&chapter.n!==27))notFound();
+ if(!chapter||(chapter.n>14&&![25,26,27,28,29,30].includes(chapter.n)))notFound();
  return <main><nav className="ya-reader ya-reader-top chapter-dashboard-nav" aria-label="Navegación de la lección"><Link href="/revision" className="chapter-dashboard-logo">YEPPO<small>ACADEMY</small></Link><div><Link href={"/revision/editar/"+chapter.id}>Editar borrador ↗</Link><Link href="/revision">← Rutas de aprendizaje</Link><span>Capítulo {chapter.n} · {chapter.schoolName}</span></div></nav><ChapterReader chapter={chapter} previewMode/></main>;
 }
