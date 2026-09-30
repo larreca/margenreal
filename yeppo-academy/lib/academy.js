@@ -4,12 +4,13 @@ import chapter11 from "@/data/chapter11.json";
 import chapter12 from "@/data/chapter12";
 import chapter13 from "@/data/chapter13";
 import chapter14 from "@/data/chapter14";
+import chapter15 from "@/data/chapter15";
 import chapterOverrides from "@/data/chapter-overrides-22-24";
 import {getDb} from "@/lib/db";
 import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 import {videoEmbedUrl} from "@/lib/video";
 
-const newById=new Map([...newChapters,chapter11,chapter12,chapter13,chapter14,...Object.values(chapterOverrides)].map(c=>[c.id,c]));
+const newById=new Map([...newChapters,chapter11,chapter12,chapter13,chapter14,chapter15,...Object.values(chapterOverrides)].map(c=>[c.id,c]));
 const allSeed={...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>({...c,...newById.get(c.id)}))}))};
 const baseChapters=()=>allSeed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
