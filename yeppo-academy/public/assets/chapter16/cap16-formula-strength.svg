@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="80" font-family="Arial" font-size="34" font-weight="700" fill="#101858">La intensidad real no es un porcentaje</text>
+<text x="70" y="120" font-family="Arial" font-size="18" fill="#686b80">Un exfoliante se interpreta como una ecuación de exposición</text>
+<g font-family="Arial">
+<rect x="80" y="190" width="230" height="150" rx="24" fill="#fff1f7"/><text x="115" y="235" font-size="22" font-weight="700" fill="#101858">CONCENTRACIÓN</text><text x="115" y="278" font-size="17" fill="#34364a">% o ppm</text><text x="115" y="310" font-size="16" fill="#686b80">No funciona aislada</text>
+<text x="330" y="275" font-size="36" fill="#9d8fd5">×</text>
+<rect x="380" y="190" width="190" height="150" rx="24" fill="#f3efff"/><text x="430" y="235" font-size="22" font-weight="700" fill="#101858">pH</text><text x="415" y="278" font-size="17" fill="#34364a">Cambia disponibilidad</text><text x="415" y="310" font-size="16" fill="#686b80">del ácido</text>
+<text x="590" y="275" font-size="36" fill="#9d8fd5">×</text>
+<rect x="640" y="190" width="210" height="150" rx="24" fill="#eef8f4"/><text x="690" y="235" font-size="22" font-weight="700" fill="#101858">VEHÍCULO</text><text x="675" y="278" font-size="17" fill="#34364a">Gel, toner, crema</text><text x="675" y="310" font-size="16" fill="#686b80">Entrega y contacto</text>
+<text x="870" y="275" font-size="36" fill="#9d8fd5">×</text>
+<rect x="920" y="190" width="200" height="150" rx="24" fill="#fff8e9"/><text x="955" y="235" font-size="22" font-weight="700" fill="#101858">FRECUENCIA</text><text x="955" y="278" font-size="17" fill="#34364a">Días/semana</text><text x="955" y="310" font-size="16" fill="#686b80">Carga acumulada</text>
+<rect x="135" y="430" width="930" height="180" rx="28" fill="#eef0fb"/>
+<text x="175" y="480" font-size="23" font-weight="700" fill="#101858">+ TIEMPO DE CONTACTO + SUPERFICIE + OTROS ACTIVOS + TOLERANCIA</text>
+<text x="175" y="530" font-size="18" fill="#34364a">Leave-on ≠ rinse-off. Pad = química + posible fricción.</text>
+<text x="175" y="570" font-size="18" fill="#34364a">La misma etiqueta de “5%” puede producir experiencias muy diferentes.</text>
+<text x="70" y="735" font-size="20" font-weight="700" fill="#ed3489">Regla Yeppo: compara la fórmula y la rutina, no sólo el número frontal.</text>
+<text x="70" y="775" font-size="16" fill="#686b80">Yeppo Academy · Capítulo 16</text>
+</g></svg>
