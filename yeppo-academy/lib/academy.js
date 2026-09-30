@@ -1,8 +1,10 @@
 import seed from "@/data/academy.seed.json";
+import chapterOverrides from "@/data/chapter-overrides-22-24";
 import {getDb} from "@/lib/db";
 import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 
-const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
+const applyChapterOverride=c=>chapterOverrides[c.id]?{...c,...chapterOverrides[c.id],id:c.id,n:c.n}:c;
+const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...applyChapterOverride(c),schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
 const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
 
@@ -10,7 +12,7 @@ export async function getAcademyData(){
   const sql=getDb();let rows=[];
   if(sql){try{rows=await sql`SELECT chapter_id,published_content FROM academy_chapters WHERE published_content IS NOT NULL`}catch{}}
   const by=new Map(rows.map(r=>[r.chapter_id,r.published_content]));
-  return{...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>overlay({...c,schoolId:s.id,schoolName:s.name},by.get(c.id)))}))};
+  return{...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>{const b=applyChapterOverride(c);return overlay({...b,schoolId:s.id,schoolName:s.name},by.get(c.id))})}))};
 }
 export async function getChapter(id){
   const data=await getAcademyData();
