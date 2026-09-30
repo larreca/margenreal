@@ -117,11 +117,11 @@ function attachInteractions(container,onAssessment){
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
 
- container.querySelectorAll("[data-decision-game] article button").forEach((b)=>{
+ container.querySelectorAll("[data-decision-game] article button,.decision-game article button").forEach((b)=>{
    const fn=()=>{
      const card=b.closest("article"),f=card?.querySelector(".decision-feedback"),ok=b.dataset.choice===card?.dataset.correct;
      if(!f)return;
-     f.textContent=ok?"Correcto. La decisión prioriza señal comercial, rotación y sostenibilidad.":"Revisa la señal comercial: viralidad y variedad no sustituyen rotación, margen y necesidad.";
+     f.textContent=ok?(card?.dataset.correctFeedback||"Correcto. La decisión prioriza el objetivo, la tolerancia y una recomendación sostenible."):(card?.dataset.wrongFeedback||"Revisa la decisión: sumar intensidad o complejidad no sustituye una rutina tolerable y coherente.");
      f.className="decision-feedback "+(ok?"good":"bad");
    };
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
@@ -222,7 +222,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
    <div className="ya-module-actions">
     <button className="ya-btn ya-secondary" disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button>
-    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:previewMode?<a className="ya-btn ya-pink" href={chapter.n<14?"/revision/c"+String(chapter.n+1).padStart(2,"0"):"/revision#rutas"}>{chapter.n<14?"Ir al siguiente capítulo →":"Volver a las rutas →"}</a>:<button className="ya-btn ya-pink" disabled={chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
+    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:previewMode?<a className="ya-btn ya-pink" href={chapter.n<50?"/revision/c"+String(chapter.n+1).padStart(2,"0"):"/revision#rutas"}>{chapter.n<50?"Ir al siguiente capítulo →":"Volver a las rutas →"}</a>:<button className="ya-btn ya-pink" disabled={chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
    </div>
   </section>
   <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
