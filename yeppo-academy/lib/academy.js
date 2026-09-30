@@ -6,7 +6,7 @@ import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 const applyChapterOverride=c=>chapterOverrides[c.id]?{...c,...chapterOverrides[c.id],id:c.id,n:c.n}:c;
 const baseChapters=()=>seed.schools.flatMap(s=>s.chapters.map(c=>({...applyChapterOverride(c),schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
-const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
+const overlay=(base,stored)=>{if(!stored)return base;const baseVersion=Number(base.contentVersion||0),storedVersion=Number(stored.contentVersion||0);if(baseVersion>storedVersion)return base;return{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}};
 
 export async function getAcademyData(){
   const sql=getDb();let rows=[];
@@ -25,7 +25,7 @@ export async function getChapterForEditor(id){
 }
 export async function saveDraft(chapter,userId){
   const sql=getDb();if(!sql)throw new Error("DATABASE_NOT_CONFIGURED");const base=baseById(chapter.id);if(!base)throw new Error("CHAPTER_NOT_FOUND");
-  const normalized={id:base.id,n:base.n,title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules:Array.isArray(chapter.modules)?chapter.modules:[]};
+  const normalized={id:base.id,n:base.n,contentVersion:Number(chapter.contentVersion??base.contentVersion??0),title:chapter.title,summary:chapter.summary||"",tip:chapter.tip||"",body:chapter.body||"",assessmentRequired:Boolean(chapter.assessmentRequired),modules:Array.isArray(chapter.modules)?chapter.modules:[]};
   const payload=JSON.stringify(normalized);
   await sql`INSERT INTO academy_chapters(chapter_id,title,summary,draft_content,status,updated_by,updated_at)
     VALUES(${chapter.id},${normalized.title},${normalized.summary},${payload}::jsonb,'draft',${userId}::uuid,NOW())
