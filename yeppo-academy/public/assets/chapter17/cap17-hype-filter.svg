@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="34" font-weight="700" fill="#101858">Filtro de tendencia: del mecanismo al producto</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Cada salto necesita evidencia propia</text>
+<g font-family="Arial">
+<rect x="90" y="180" width="1020" height="84" rx="20" fill="#eef0fb"/><text x="125" y="232" font-size="22" font-weight="700" fill="#101858">1 · MECANISMO / LABORATORIO</text><text x="475" y="232" font-size="18" fill="#34364a">¿Qué vía biológica es plausible?</text>
+<rect x="145" y="290" width="910" height="84" rx="20" fill="#f3efff"/><text x="180" y="342" font-size="22" font-weight="700" fill="#101858">2 · MODELO PRECLÍNICO</text><text x="500" y="342" font-size="18" fill="#34364a">¿Células, piel ex vivo o animal?</text>
+<rect x="200" y="400" width="800" height="84" rx="20" fill="#fff1f7"/><text x="235" y="452" font-size="22" font-weight="700" fill="#101858">3 · ESTUDIO HUMANO</text><text x="520" y="452" font-size="18" fill="#34364a">Muestra, comparador, duración, outcome</text>
+<rect x="255" y="510" width="690" height="84" rx="20" fill="#eef8f4"/><text x="290" y="562" font-size="22" font-weight="700" fill="#101858">4 · VÍA / FORMULACIÓN</text><text x="575" y="562" font-size="18" fill="#34364a">¿Tópico, microneedling, inyección?</text>
+<rect x="310" y="620" width="580" height="84" rx="20" fill="#fff8e9"/><text x="345" y="672" font-size="22" font-weight="700" fill="#101858">5 · PRODUCTO TERMINADO</text>
+<text x="70" y="765" font-size="19" font-weight="700" fill="#ed3489">Viralidad no reemplaza ninguno de estos cinco pasos.</text>
+</g></svg>
