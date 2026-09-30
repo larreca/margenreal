@@ -26,7 +26,7 @@ async function availableChapterIds(){
   const sql=getDb();if(sql){try{const rows=await sql`SELECT chapter_id FROM academy_chapters WHERE published_content IS NOT NULL`;for(const row of rows)ids.add(row.chapter_id)}catch{}}
   return ids;
 }
-const overlay=(base,stored)=>stored?{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}:base;
+const overlay=(base,stored)=>{if(!stored)return base;const baseVersion=Number(base.contentVersion||0),storedVersion=Number(stored.contentVersion||0);if(baseVersion>storedVersion)return base;return{...base,...stored,id:base.id,n:base.n,schoolId:base.schoolId,schoolName:base.schoolName}};
 
 export async function getAcademyData(){
   const sql=getDb();let rows=[];
