@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect width="1200" height="820" fill="#fff"/>
+<text x="70" y="78" font-family="Arial" font-size="34" font-weight="700" fill="#101858">Cómo envejece la piel</text>
+<text x="70" y="118" font-family="Arial" font-size="18" fill="#686b80">Dos procesos se superponen: cronología biológica + exposoma</text>
+<g font-family="Arial">
+<rect x="70" y="170" width="500" height="230" rx="28" fill="#f3efff"/><text x="105" y="220" font-size="23" font-weight="700" fill="#101858">INTRÍNSECO</text>
+<text x="105" y="260" font-size="18" fill="#34364a">• tiempo y genética</text><text x="105" y="296" font-size="18" fill="#34364a">• senescencia celular</text><text x="105" y="332" font-size="18" fill="#34364a">• cambios hormonales/metabólicos</text><text x="105" y="368" font-size="18" fill="#34364a">• renovación y matriz cambian gradualmente</text>
+<rect x="630" y="170" width="500" height="230" rx="28" fill="#fff1f7"/><text x="665" y="220" font-size="23" font-weight="700" fill="#101858">EXTRÍNSECO / FOTOENVEJECIMIENTO</text>
+<text x="665" y="260" font-size="18" fill="#34364a">• radiación UV</text><text x="665" y="296" font-size="18" fill="#34364a">• contaminación y tabaco</text><text x="665" y="332" font-size="18" fill="#34364a">• estrés oxidativo acumulado</text><text x="665" y="368" font-size="18" fill="#34364a">• fragmentación de colágeno y elastina alterada</text>
+<circle cx="600" cy="470" r="54" fill="#eef8f4"/><text x="565" y="478" font-size="18" font-weight="700" fill="#101858">PIEL</text>
+<line x1="320" y1="400" x2="560" y2="455" stroke="#9d8fd5" stroke-width="6"/><line x1="880" y1="400" x2="640" y2="455" stroke="#d990ae" stroke-width="6"/>
+<rect x="90" y="555" width="1020" height="150" rx="26" fill="#eef0fb"/>
+<text x="125" y="605" font-size="22" font-weight="700" fill="#101858">OBJETIVOS COSMÉTICOS REALISTAS</text>
+<text x="125" y="647" font-size="18" fill="#34364a">líneas • textura • hidratación • luminosidad • tono uniforme • firmeza visual</text>
+<text x="125" y="683" font-size="18" fill="#34364a">Base transversal: fotoprotección + hidratación + un objetivo prioritario</text>
+<text x="70" y="770" font-size="16" fill="#686b80">Yeppo Academy · Capítulo 15 · Anti-aging</text>
+</g></svg>
