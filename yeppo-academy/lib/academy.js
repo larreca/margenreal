@@ -27,12 +27,13 @@ import chapter34 from "@/data/chapter34";
 import chapter35 from "@/data/chapter35";
 import chapter36 from "@/data/chapter36";
 import chapter37 from "@/data/chapter37";
+import chapter38 from "@/data/chapter38";
 import chapterOverrides from "@/data/chapter-overrides-22-24";
 import {getDb} from "@/lib/db";
 import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 import {videoEmbedUrl} from "@/lib/video";
 
-const newById=new Map([...newChapters,chapter11,chapter12,chapter13,chapter14,chapter15,chapter16,chapter17,chapter18,chapter19,chapter20,chapter21,...Object.values(chapterOverrides),chapter22,chapter23,chapter24,chapter25,chapter26,chapter27,chapter28,chapter29,chapter30,chapter31,chapter32,chapter33,chapter34,chapter35,chapter36,chapter37].map(c=>[c.id,c]));
+const newById=new Map([...newChapters,chapter11,chapter12,chapter13,chapter14,chapter15,chapter16,chapter17,chapter18,chapter19,chapter20,chapter21,...Object.values(chapterOverrides),chapter22,chapter23,chapter24,chapter25,chapter26,chapter27,chapter28,chapter29,chapter30,chapter31,chapter32,chapter33,chapter34,chapter35,chapter36,chapter37,chapter38].map(c=>[c.id,c]));
 const allSeed={...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>({...c,...newById.get(c.id)}))}))};
 const baseChapters=()=>allSeed.schools.flatMap(s=>s.chapters.map(c=>({...c,schoolId:s.id,schoolName:s.name})));
 const baseById=id=>baseChapters().find(c=>c.id===id)||null;
