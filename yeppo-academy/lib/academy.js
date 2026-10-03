@@ -28,6 +28,7 @@ import chapter35 from "@/data/chapter35";
 import chapter36 from "@/data/chapter36";
 import chapter37 from "@/data/chapter37";
 import chapter38 from "@/data/chapter38";
+import chapter40 from "@/data/chapter40";
 import chapter39 from "@/data/chapter39";
 import chapterOverrides from "@/data/chapter-overrides-22-24";
 import {getDb} from "@/lib/db";
