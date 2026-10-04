@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+<rect width="1200" height="700" rx="34" fill="#fbf9fd"/><text x="60" y="70" font-family="Arial" font-size="24" font-weight="700" fill="#70509a">INFOGRAFÍA · K-BEAUTY COMO SISTEMA</text>
+<circle cx="600" cy="350" r="125" fill="#2d2447"/><text x="600" y="340" text-anchor="middle" font-family="Arial" font-size="34" font-weight="800" fill="white">K-BEAUTY</text><text x="600" y="380" text-anchor="middle" font-family="Arial" font-size="18" fill="#e9e2f6">no es una rutina fija</text>
+<g font-family="Arial" text-anchor="middle"><g transform="translate(170 160)"><circle r="92" fill="#f6dce9"/><text y="-10" font-size="22" font-weight="700" fill="#452b49">PRODUCTO</text><text y="20" font-size="16" fill="#55475b">fórmula · textura</text></g>
+<g transform="translate(600 125)"><circle r="92" fill="#ddd7f4"/><text y="-10" font-size="22" font-weight="700" fill="#30265f">I+D</text><text y="20" font-size="16" fill="#50476d">prueba · velocidad</text></g>
+<g transform="translate(1030 160)"><circle r="92" fill="#f2e7d9"/><text y="-10" font-size="22" font-weight="700" fill="#56402b">CULTURA</text><text y="20" font-size="16" fill="#66584a">Hallyu · hábitos</text></g>
+<g transform="translate(170 540)"><circle r="92" fill="#e4efe9"/><text y="-10" font-size="22" font-weight="700" fill="#315243">CANAL</text><text y="20" font-size="16" fill="#4d665a">retail · social</text></g>
+<g transform="translate(600 575)"><circle r="92" fill="#f6e8dc"/><text y="-10" font-size="22" font-weight="700" fill="#5b4030">CLIENTE</text><text y="20" font-size="16" fill="#6a5548">necesidad · uso</text></g>
+<g transform="translate(1030 540)"><circle r="92" fill="#e5eafb"/><text y="-10" font-size="22" font-weight="700" fill="#2f426e">NEGOCIO</text><text y="20" font-size="16" fill="#4d5a7b">margen · recompra</text></g></g>
+<g stroke="#a99abb" stroke-width="3" opacity=".7"><line x1="260" y1="200" x2="490" y2="300"/><line x1="600" y1="217" x2="600" y2="225"/><line x1="940" y1="200" x2="710" y2="300"/><line x1="260" y1="500" x2="490" y2="400"/><line x1="600" y1="483" x2="600" y2="475"/><line x1="940" y1="500" x2="710" y2="400"/></g>
+</svg>
