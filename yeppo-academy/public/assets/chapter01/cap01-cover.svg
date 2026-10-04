@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860">
+<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#f6e9f4"/><stop offset="1" stop-color="#e8e3fb"/></linearGradient><clipPath id="c"><rect x="0" y="0" width="700" height="860" rx="0"/></clipPath></defs>
+<rect width="1400" height="860" fill="url(#g)"/>
+<image href="/assets/editorial/chile-model.jpg" x="0" y="0" width="700" height="860" preserveAspectRatio="xMidYMid slice" clip-path="url(#c)"/>
+<rect x="650" y="0" width="750" height="860" fill="#fff" opacity=".88"/>
+<circle cx="1170" cy="180" r="110" fill="#f7ddea"/><circle cx="1260" cy="280" r="72" fill="#dcd5f7"/>
+<text x="760" y="170" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#6f4d98">YEPPO ACADEMY · CAPÍTULO 01</text>
+<text x="760" y="255" font-family="Arial,sans-serif" font-size="60" font-weight="800" fill="#21193a">Qué es realmente</text>
+<text x="760" y="325" font-family="Arial,sans-serif" font-size="60" font-weight="800" fill="#21193a">K-Beauty</text>
+<text x="760" y="385" font-family="Arial,sans-serif" font-size="27" fill="#4b425c">Sistema · producto · cultura · negocio</text>
+<rect x="760" y="445" width="510" height="2" fill="#6f4d98"/>
+<text x="760" y="505" font-family="Arial,sans-serif" font-size="24" fill="#3c3550">De una tendencia global a una</text>
+<text x="760" y="542" font-family="Arial,sans-serif" font-size="24" fill="#3c3550">recomendación responsable y rentable.</text>
+<g transform="translate(760 625)">
+<rect width="160" height="70" rx="35" fill="#f7ddea"/><text x="80" y="44" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#4a315d">Criterio</text>
+<rect x="178" width="160" height="70" rx="35" fill="#e6e0f9"/><text x="258" y="44" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#342b63">Evidencia</text>
+<rect x="356" width="160" height="70" rx="35" fill="#eeeaf5"/><text x="436" y="44" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#3b3350">Negocio</text>
+</g>
+<text x="760" y="780" font-family="Arial" font-size="18" fill="#6c6474">Yeppo · formación B2B en K-Beauty</text>
+</svg>
