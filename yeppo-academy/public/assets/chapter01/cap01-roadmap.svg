@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" rx="34" fill="#fff"/><text x="60" y="70" font-family="Arial" font-size="24" font-weight="700" fill="#70509a">MAPA DE APRENDIZAJE · DE PRODUCTO A NEGOCIO</text>
+<g font-family="Arial"><g transform="translate(80 130)"><rect width="300" height="130" rx="25" fill="#eee9f6"/><text x="30" y="48" font-size="20" font-weight="700">1 · CONTEXTO</text><text x="30" y="82" font-size="16">K-Beauty, mercado, competencia</text></g>
+<g transform="translate(450 130)"><rect width="300" height="130" rx="25" fill="#f7e4ed"/><text x="30" y="48" font-size="20" font-weight="700">2 · CRITERIO</text><text x="30" y="82" font-size="16">piel, ingredientes, rutinas</text></g>
+<g transform="translate(820 130)"><rect width="300" height="130" rx="25" fill="#e4efe9"/><text x="30" y="48" font-size="20" font-weight="700">3 · ASESORÍA</text><text x="30" y="82" font-size="16">preguntar, recomendar, vender</text></g>
+<g transform="translate(80 330)"><rect width="300" height="130" rx="25" fill="#f6eadc"/><text x="30" y="48" font-size="20" font-weight="700">4 · OPERACIÓN</text><text x="30" y="82" font-size="16">stock, precio, promociones</text></g>
+<g transform="translate(450 330)"><rect width="300" height="130" rx="25" fill="#e7ebfa"/><text x="30" y="48" font-size="20" font-weight="700">5 · CRECIMIENTO</text><text x="30" y="82" font-size="16">CRM, fidelización, B2B</text></g>
+<g transform="translate(820 330)"><rect width="300" height="130" rx="25" fill="#efe8f5"/><text x="30" y="48" font-size="20" font-weight="700">6 · CONTROL</text><text x="30" y="82" font-size="16">seguridad, regulación, KPIs</text></g></g>
+<rect x="220" y="535" width="760" height="100" rx="28" fill="#2f2548"/><text x="600" y="575" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#fff">Meta final</text><text x="600" y="608" text-anchor="middle" font-family="Arial" font-size="18" fill="#eee8f5">Tomar decisiones explicables, seguras y sostenibles para el cliente y el negocio.</text>
+</svg>
