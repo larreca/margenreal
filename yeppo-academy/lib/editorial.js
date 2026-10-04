@@ -3,7 +3,7 @@ const base="/assets/editorial/";
 // Portadas con personas distintas. Las imágenes Pexels son fotografías editoriales;
 // su ubicación no acredita nacionalidad ni vínculo con Yeppo.
 const chapterCovers={
- c01:{image:"chile-model.jpg",alt:"Retrato editorial de una modelo en Santiago de Chile"},
+ c01:{image:"../chapter01/cap01-cover.svg",alt:"Portada editorial de Yeppo Academy: modelo, K-Beauty, criterio, evidencia y negocio"},
  c02:{image:"https://images.pexels.com/photos/18460096/pexels-photo-18460096.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Modelo en un entorno urbano de Santiago de Chile"},
  c03:{image:"https://images.pexels.com/photos/11157339/pexels-photo-11157339.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer con maquillaje contemporáneo"},
  c04:{image:"https://images.pexels.com/photos/2709386/pexels-photo-2709386.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Primer plano de piel real con pecas"},
