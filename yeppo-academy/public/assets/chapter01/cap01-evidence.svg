@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+<rect width="1200" height="650" rx="34" fill="#fff"/><text x="60" y="70" font-family="Arial" font-size="24" font-weight="700" fill="#70509a">ESCALERA DE EVIDENCIA PARA UNA RECOMENDACIÓN</text>
+<g font-family="Arial"><rect x="150" y="475" width="900" height="80" rx="16" fill="#eee9f5"/><text x="600" y="522" text-anchor="middle" font-size="22" font-weight="700">1 · Claim / marketing</text>
+<rect x="230" y="375" width="740" height="80" rx="16" fill="#e5e0f2"/><text x="600" y="422" text-anchor="middle" font-size="22" font-weight="700">2 · Ingrediente con evidencia</text>
+<rect x="310" y="275" width="580" height="80" rx="16" fill="#d9d1ee"/><text x="600" y="322" text-anchor="middle" font-size="22" font-weight="700">3 · Fórmula + concentración/contexto</text>
+<rect x="390" y="175" width="420" height="80" rx="16" fill="#c8b9e4"/><text x="600" y="222" text-anchor="middle" font-size="22" font-weight="700">4 · Producto evaluado</text>
+<rect x="470" y="95" width="260" height="60" rx="16" fill="#6f4d98"/><text x="600" y="133" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">5 · Encaje con cliente</text></g>
+<text x="600" y="605" text-anchor="middle" font-family="Arial" font-size="17" fill="#5c5663">No saltes de “este ingrediente tiene estudios” a “este producto hará X en esta persona”.</text>
+</svg>
