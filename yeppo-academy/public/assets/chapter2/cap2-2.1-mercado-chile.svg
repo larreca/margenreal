@@ -1,21 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
-<title id="t">La oportunidad K-Beauty en Chile</title><desc id="d">Tres cifras de importación citadas por La Tercera, Pulso, 23 de marzo 2026; datos de mercado, no ventas Yeppo.</desc>
-<defs>
-<linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fffefe"/><stop offset=".60" stop-color="#fcf9fd"/><stop offset="1" stop-color="#faf0f6"/></linearGradient>
-<linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fad6c8"/><stop offset="1" stop-color="#edb0c0"/></linearGradient>
-<linearGradient id="foot" x1="0" x2="1"><stop stop-color="#f8e8f1"/><stop offset=".5" stop-color="#ede8f9"/><stop offset="1" stop-color="#fcecef"/></linearGradient>
-<filter id="shadow" x="-20%" y="-30%" width="150%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#695a78" flood-opacity=".13"/></filter>
-</defs>
-<rect x="12" y="12" width="1176" height="676" rx="35" fill="url(#bg)" stroke="#e4d6e8" stroke-width="2"/>
-<circle cx="1180" cy="55" r="137" fill="#fae6f0" opacity=".33"/><circle cx="22" cy="582" r="112" fill="#f8e4f3" opacity=".2"/>
-<text x="59" y="65" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#9567ac" text-anchor="start">YEPPO ACADEMY · 2.1 · MERCADO</text>
-<text x="59" y="118" font-family="Georgia,serif" font-size="36" font-weight="700" fill="#322440" text-anchor="start">La oportunidad K-Beauty en Chile</text>
-<path d="M61 140h88" stroke="#d7a1bb" stroke-width="3" stroke-linecap="round"/>
-<rect x="85" y="197" width="290" height="326" rx="32" fill="#f8e5f0" filter="url(#shadow)"/><g transform="translate(230 268) scale(0.95)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-35 30v-42h70v42ZM-39-12l9-23h60l9 23-10 8-10-8-10 8-9-8-10 8-10-8-10 8-9-8ZM-18 30V3h19v27M10 4h15v14H10Z"/></g>
-<text x="230" y="375" font-family="Georgia,serif" font-size="47" font-weight="700" fill="#413051" text-anchor="middle">US$25,6 M</text><text x="230" y="426" font-family="Arial,sans-serif" font-size="19" font-weight="400" fill="#655d72" text-anchor="middle">Cosméticos importados</text><text x="230" y="454" font-family="Arial,sans-serif" font-size="19" font-weight="400" fill="#655d72" text-anchor="middle">desde Corea · Chile 2025</text><rect x="455" y="197" width="290" height="326" rx="32" fill="#ebe7fb" filter="url(#shadow)"/><g transform="translate(600 268) scale(0.95)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-35 34V-6h19v40M-7 34v-25h19v25M21 34v-59h19v59M-42 35h88"/></g>
-<text x="600" y="375" font-family="Georgia,serif" font-size="47" font-weight="700" fill="#413051" text-anchor="middle">+753%</text><text x="600" y="426" font-family="Arial,sans-serif" font-size="19" font-weight="400" fill="#655d72" text-anchor="middle">Variación acumulada</text><text x="600" y="454" font-family="Arial,sans-serif" font-size="19" font-weight="400" fill="#655d72" text-anchor="middle">reportada desde 2019</text><rect x="825" y="197" width="290" height="326" rx="32" fill="#e5f1eb" filter="url(#shadow)"/><g transform="translate(970 268) scale(0.95)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M0 25C-50-8-27-34-10-28Q0-24 0-15q17-26 31-9Q49-5 0 25Z"/></g>
-<text x="970" y="375" font-family="Georgia,serif" font-size="47" font-weight="700" fill="#413051" text-anchor="middle">&gt;50%</text><text x="970" y="426" font-family="Arial,sans-serif" font-size="19" font-weight="400" fill="#655d72" text-anchor="middle">Participación skincare</text><text x="970" y="454" font-family="Arial,sans-serif" font-size="19" font-weight="400" fill="#655d72" text-anchor="middle">en lo importado en 2025</text><text x="600" y="568" font-family="Arial,sans-serif" font-size="18" font-weight="400" fill="#77667a" text-anchor="middle">Importación no es venta retail ni demuestra la demanda de una tienda.</text>
-<rect x="62" y="607" width="1076" height="63" rx="30" fill="url(#foot)" stroke="#fff" stroke-width="2"/>
-<g transform="translate(110 638) scale(0.36)" stroke="#a05a97" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-30-2l19 18L31-25"/></g>
-<text x="155" y="646" font-family="Arial,sans-serif" font-size="20" font-weight="400" fill="#4b3a57" text-anchor="start">Una tendencia abre oportunidades; los datos propios deciden el surtido.</text>
+<title id="t">Cómo interpretar el crecimiento del K-Beauty en Chile</title><desc id="d">De la señal de mercado a un test comercial y una decisión de surtido basada en datos propios.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#fffdfd"/><stop offset="1" stop-color="#f9f3fc"/></linearGradient><linearGradient id="f" x2="1"><stop stop-color="#f7e6ef"/><stop offset=".5" stop-color="#f1e9fa"/><stop offset="1" stop-color="#e5f1eb"/></linearGradient><filter id="s" x="-20%" y="-30%" width="150%" height="175%"><feDropShadow dx="0" dy="7" stdDeviation="12" flood-color="#67577b" flood-opacity=".12"/></filter></defs>
+<rect x="12" y="12" width="1176" height="676" rx="35" fill="url(#bg)" stroke="#e7dce9" stroke-width="2"/>
+<circle cx="1180" cy="40" r="120" fill="#f9e8f2" opacity=".35"/>
+<text x="58" y="65" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8962a7">YEPPO ACADEMY · 2.1 · MERCADO</text>
+<text x="58" y="117" font-family="Georgia,serif" font-size="35" font-weight="700" fill="#322440">Qué hacer cuando el mercado crece</text>
+<path d="M59 141h86" stroke="#d3a4be" stroke-width="3" stroke-linecap="round"/>
+<g filter="url(#s)"><rect x="66" y="209" width="337" height="300" rx="31" fill="#f8e4ee"/><rect x="432" y="209" width="337" height="300" rx="31" fill="#eee9fa"/><rect x="798" y="209" width="337" height="300" rx="31" fill="#e5f1ea"/></g>
+<g font-family="Arial,sans-serif" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke="#392e51" stroke-width="4">
+<g transform="translate(233 286)"><path d="M-41 31h82M-30 31V0h18v31M-4 31v-22h18v22M22 31v-56h18v56M-41-21l25-14 19 3 24-17M17-49h10v10"/></g>
+<g transform="translate(599 286)"><path d="M-42 28h84l-9-52h-66Z M-20-24v-14h39v14M-24 4h21M11 4h15M-21 16h44"/></g>
+<g transform="translate(966 286)"><circle r="33"/><path d="M-16 2l12 13 22-27M40-28l9-9M43 26l9 5"/></g></g>
+<g font-family="Georgia,serif" fill="#36294d" text-anchor="middle" font-size="29" font-weight="700">
+<text x="233" y="379">Detectar</text><text x="600" y="379">Probar</text><text x="966" y="379">Decidir</text></g>
+<g font-family="Arial,sans-serif" fill="#5a5167" text-anchor="middle" font-size="21">
+<text x="233" y="417">Interés y oferta</text><text x="233" y="448">están cambiando</text>
+<text x="600" y="417">Surtido acotado</text><text x="600" y="448">y metas claras</text>
+<text x="966" y="417">Rotación, margen</text><text x="966" y="448">y recompra propia</text></g>
+<g stroke="#ac8bbf" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M405 359h25m-9-8 9 8-9 8"/><path d="M770 359h26m-9-8 9 8-9 8"/></g>
+<rect x="72" y="587" width="1056" height="77" rx="30" fill="url(#f)" stroke="#fff" stroke-width="2"/>
+<text x="600" y="633" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#4c3d59">Las importaciones describen el mercado, pero no garantizan ventas en tu tienda.</text>
 </svg>

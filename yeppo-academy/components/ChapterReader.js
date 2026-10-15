@@ -212,7 +212,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    <div className="editorial-module-intro"><span>LECCIÓN {String(index+1).padStart(2,"0")} / {String(modules.length).padStart(2,"0")}</span><span>LECTURA + PRÁCTICA</span></div>
    {index===0&&<div className="editorial-first-lesson"><small>{m.label}</small><h2>{m.title}</h2><p>{chapter.summary}</p></div>}
    {index===0&&<figure className="editorial-lesson-image">
-    {chapter.id==="c04"?<div className="editorial-skin-visual"><img src={coverSrc} alt={coverAlt}/><img src="/assets/chapter4/cap4-4.1-capas-piel.svg" alt="Infografía de las capas de la piel"/></div>:<img src={coverSrc} alt={coverAlt}/>}
+    <img src={coverSrc} alt={coverAlt}/>
     <figcaption>{feature.eyebrow} · Yeppo Academy</figcaption></figure>}
    {index===0&&<ChapterMap id={chapter.id} override={chapter.infographic}/>}
    {index===0&&(chapter.id==="c10"||chapter.id==="c12")&&<div className="yeppo-evidence-key" aria-label="Cómo leer la evidencia de ingredientes"><strong>Cómo leer la evidencia</strong><div><span>Uso tradicional</span><span>Laboratorio</span><span>Estudios en personas</span><span>Producto terminado</span></div><p>Son preguntas distintas. La historia y los ensayos de un ingrediente no demuestran el resultado de cualquier cosmético que lo incluya.</p></div>}
