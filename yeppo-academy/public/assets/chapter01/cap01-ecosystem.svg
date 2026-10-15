@@ -1,11 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
-<rect width="1200" height="700" rx="34" fill="#fbf9fd"/><text x="60" y="70" font-family="Arial" font-size="24" font-weight="700" fill="#70509a">INFOGRAFÍA · K-BEAUTY COMO SISTEMA</text>
-<circle cx="600" cy="350" r="125" fill="#2d2447"/><text x="600" y="340" text-anchor="middle" font-family="Arial" font-size="34" font-weight="800" fill="white">K-BEAUTY</text><text x="600" y="380" text-anchor="middle" font-family="Arial" font-size="18" fill="#e9e2f6">no es una rutina fija</text>
-<g font-family="Arial" text-anchor="middle"><g transform="translate(170 160)"><circle r="92" fill="#f6dce9"/><text y="-10" font-size="22" font-weight="700" fill="#452b49">PRODUCTO</text><text y="20" font-size="16" fill="#55475b">fórmula · textura</text></g>
-<g transform="translate(600 125)"><circle r="92" fill="#ddd7f4"/><text y="-10" font-size="22" font-weight="700" fill="#30265f">I+D</text><text y="20" font-size="16" fill="#50476d">prueba · velocidad</text></g>
-<g transform="translate(1030 160)"><circle r="92" fill="#f2e7d9"/><text y="-10" font-size="22" font-weight="700" fill="#56402b">CULTURA</text><text y="20" font-size="16" fill="#66584a">Hallyu · hábitos</text></g>
-<g transform="translate(170 540)"><circle r="92" fill="#e4efe9"/><text y="-10" font-size="22" font-weight="700" fill="#315243">CANAL</text><text y="20" font-size="16" fill="#4d665a">retail · social</text></g>
-<g transform="translate(600 575)"><circle r="92" fill="#f6e8dc"/><text y="-10" font-size="22" font-weight="700" fill="#5b4030">CLIENTE</text><text y="20" font-size="16" fill="#6a5548">necesidad · uso</text></g>
-<g transform="translate(1030 540)"><circle r="92" fill="#e5eafb"/><text y="-10" font-size="22" font-weight="700" fill="#2f426e">NEGOCIO</text><text y="20" font-size="16" fill="#4d5a7b">margen · recompra</text></g></g>
-<g stroke="#a99abb" stroke-width="3" opacity=".7"><line x1="260" y1="200" x2="490" y2="300"/><line x1="600" y1="217" x2="600" y2="225"/><line x1="940" y1="200" x2="710" y2="300"/><line x1="260" y1="500" x2="490" y2="400"/><line x1="600" y1="483" x2="600" y2="475"/><line x1="940" y1="500" x2="710" y2="400"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="t d">
+<title id="t">K-Beauty como sistema</title><desc id="d">Diagrama radial con seis elementos conectados a K-Beauty: producto, investigación y desarrollo, cultura, canal, cliente y negocio.</desc>
+<defs>
+<radialGradient id="background" cx="45%" cy="46%" r="84%"><stop stop-color="#ffffff"/><stop offset=".75" stop-color="#faf7fc"/><stop offset="1" stop-color="#f8eaf2"/></radialGradient>
+<radialGradient id="centerFill" cx="30%" cy="20%" r="98%"><stop stop-color="#76528b"/><stop offset=".48" stop-color="#45305b"/><stop offset="1" stop-color="#251b3e"/></radialGradient>
+<linearGradient id="footer" x1="0" x2="1"><stop stop-color="#f8eaf2"/><stop offset=".5" stop-color="#f5eef9"/><stop offset="1" stop-color="#f6eafb"/></linearGradient>
+<radialGradient id="productoFill" cx="35%" cy="24%" r="85%"><stop stop-color="#fff4f8"/><stop offset="1" stop-color="#f5d3e3"/></radialGradient><radialGradient id="idFill" cx="35%" cy="24%" r="85%"><stop stop-color="#f6f1ff"/><stop offset="1" stop-color="#dcd2f6"/></radialGradient><radialGradient id="culturaFill" cx="35%" cy="24%" r="85%"><stop stop-color="#fff8f1"/><stop offset="1" stop-color="#efdfce"/></radialGradient><radialGradient id="canalFill" cx="35%" cy="24%" r="85%"><stop stop-color="#f4faf6"/><stop offset="1" stop-color="#dcebe3"/></radialGradient><radialGradient id="clienteFill" cx="35%" cy="24%" r="85%"><stop stop-color="#fff8f4"/><stop offset="1" stop-color="#f5dcd5"/></radialGradient><radialGradient id="negocioFill" cx="35%" cy="24%" r="85%"><stop stop-color="#f5f8ff"/><stop offset="1" stop-color="#dbe4fc"/></radialGradient>
+<filter id="bubbleShadow" x="-35%" y="-40%" width="170%" height="185%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#806a8c" flood-opacity=".13"/></filter>
+<filter id="mainShadow" x="-35%" y="-35%" width="170%" height="180%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#39274f" flood-opacity=".22"/></filter>
+</defs>
+<rect x="7" y="7" width="1266" height="706" rx="35" fill="url(#background)" stroke="#cbb9d8" stroke-width="2"/>
+<circle cx="45" cy="445" r="145" fill="#f9e7f2" opacity=".32"/><circle cx="80" cy="555" r="93" fill="#e6dbf7" opacity=".30"/>
+<circle cx="1275" cy="25" r="135" fill="#f5dfe9" opacity=".35"/><circle cx="1210" cy="685" r="145" fill="#f7eae4" opacity=".25"/>
+<path d="M15 281q165 170 0 358M1240 12q-70 105 33 170M1275 495q-152 110-20 208" fill="none" stroke="#ebd8e7" stroke-width="2"/>
+<text x="54" y="70" font-family="Arial,sans-serif" font-size="29" font-weight="700" letter-spacing=".1" fill="#39274e"><tspan fill="#a477aa">INFOGRAFÍA</tspan><tspan fill="#39274e"> · K-BEAUTY COMO SISTEMA</tspan></text>
+<path d="M56 90h74" stroke="#e2adca" stroke-width="3" stroke-linecap="round"/>
+<g fill="none" stroke-width="2.8" opacity=".9">
+<path d="M547 308L370 241" stroke="#d78fae"/><path d="M640 249V261" stroke="#a18ada"/><path d="M734 307L911 241" stroke="#c7a78f"/>
+<path d="M551 419L372 477" stroke="#89ac9b"/><path d="M640 467V458" stroke="#d3a294"/><path d="M729 419L907 475" stroke="#9cbbe6"/>
+</g>
+<g fill="#d78fae"><circle cx="547" cy="308" r="5"/><circle cx="370" cy="241" r="5"/></g>
+<g fill="#a18ada"><circle cx="640" cy="249" r="5"/></g><g fill="#c7a78f"><circle cx="734" cy="307" r="5"/><circle cx="911" cy="241" r="5"/></g>
+<g fill="#89ac9b"><circle cx="551" cy="419" r="5"/><circle cx="372" cy="477" r="5"/></g><g fill="#d3a294"><circle cx="640" cy="467" r="5"/></g><g fill="#9cbbe6"><circle cx="729" cy="419" r="5"/><circle cx="907" cy="475" r="5"/></g>
+<circle cx="640" cy="358" r="135" fill="none" stroke="#d7c8e9" stroke-width="1.7" opacity=".65"/>
+<circle cx="640" cy="358" r="125" fill="none" stroke="#e4d8ef" stroke-width="1.7" opacity=".75"/>
+<g filter="url(#mainShadow)"><circle cx="640" cy="358" r="114" fill="url(#centerFill)"/></g>
+<g text-anchor="middle"><g transform="translate(640 286)" fill="#ebbedf"><path d="M0-16 4-4 16 0 4 4 0 16-4 4-16 0-4-4Z"/><path d="M23-13 25-7 31-5 25-3 23 3 21-3 15-5 21-7Z"/></g><text x="640" y="362" font-family="Georgia,'Times New Roman',serif" font-size="43" fill="#ffffff">K-BEAUTY</text><path d="M599 385h82" stroke="#dda6c4" stroke-width="3"/><text x="640" y="417" font-family="Arial,sans-serif" font-size="19" fill="#eee8f3">no es una rutina fija</text></g>
+<g transform="translate(275 205)" filter="url(#bubbleShadow)">
+ <circle r="101" fill="url(#productoFill)" stroke="#ffffff" stroke-width="4"/>
+ <g transform="translate(0 -34) scale(1)" fill="none" stroke="#423155" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="-31" y="-18" width="34" height="50" rx="6"/><path d="M-24-18v-8h20v8M-20-26v-5h11v5"/><rect x="12" y="-2" width="33" height="34" rx="5"/><path d="M12 8h33M18 3h21"/><path d="M24-34l3-8 3 8 8 3-8 3-3 8-3-8-8-3Z"/></g>
+ <text y="29" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="25" fill="#312742">PRODUCTO</text>
+ <text y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#51465a">fórmula · textura</text>
+ </g>
+<g transform="translate(640 160)" filter="url(#bubbleShadow)">
+ <circle r="91" fill="url(#idFill)" stroke="#ffffff" stroke-width="4"/>
+ <g transform="translate(0 -32) scale(0.87)" fill="none" stroke="#423155" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M-13-39v28L-34 26q-5 8 5 8h57q11 0 6-8L13-11v-28"/><path d="M-20-39h40M-22 6q12 3 22 0t22 0M-18 22h36"/><circle cx="-7" cy="13" r="3"/><path d="M29-30l4-9 4 9 9 3-9 4-4 9-4-9-9-4Z"/></g>
+ <text y="23" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="24" fill="#312742">I+D</text>
+ <text y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#51465a">prueba · velocidad</text>
+ </g>
+<g transform="translate(1005 205)" filter="url(#bubbleShadow)">
+ <circle r="101" fill="url(#culturaFill)" stroke="#ffffff" stroke-width="4"/>
+ <g transform="translate(0 -34) scale(1)" fill="none" stroke="#423155" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M-45-8 0-42 45-8M-36-9h72M-33 9h66M-30 30h60M-24-9V29M-8-9V29M8-9V29M24-9V29"/><path d="M-48 34h96M0-42v-6"/><path d="M37-25l5-9 5 9 9 5-9 5-5 9-5-9-9-5Z"/></g>
+ <text y="29" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="25" fill="#312742">CULTURA</text>
+ <text y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#51465a">Hallyu · hábitos</text>
+ </g>
+<g transform="translate(275 515)" filter="url(#bubbleShadow)">
+ <circle r="99" fill="url(#canalFill)" stroke="#ffffff" stroke-width="4"/>
+ <g transform="translate(0 -34) scale(1)" fill="none" stroke="#423155" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M-42-11h52l5 47h-62Z"/><path d="M-29-10v-12q0-17 16-17t16 17v12"/><path d="M-25 6q6 13 13 0" /><rect x="25" y="-22" width="27" height="62" rx="5"/><path d="M31-14h15M37 32h4"/><path d="M-2 7q6-9 12-1t-10 18Q-17 12-11 5t9 2Z"/></g>
+ <text y="29" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="25" fill="#312742">CANAL</text>
+ <text y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#51465a">retail · social</text>
+ </g>
+<g transform="translate(640 545)" filter="url(#bubbleShadow)">
+ <circle r="91" fill="url(#clienteFill)" stroke="#ffffff" stroke-width="4"/>
+ <g transform="translate(0 -32) scale(0.87)" fill="none" stroke="#423155" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="-25" r="15"/><circle cx="-29" cy="-10" r="11"/><circle cx="29" cy="-10" r="11"/><path d="M-29 15q0-19 17-23M29 15q0-19-17-23M-23 39v-13q0-23 23-23t23 23v13M-47 38V23q0-16 18-16M47 38V23q0-16-18-16"/><path d="M-5-47q5-8 10 0t-10 10q-15-10-10-15t10 5Z"/></g>
+ <text y="23" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="24" fill="#312742">CLIENTE</text>
+ <text y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#51465a">necesidad · uso</text>
+ </g>
+<g transform="translate(1005 515)" filter="url(#bubbleShadow)">
+ <circle r="99" fill="url(#negocioFill)" stroke="#ffffff" stroke-width="4"/>
+ <g transform="translate(0 -34) scale(1)" fill="none" stroke="#423155" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M-43 35h88M-39 35V7h15v28M-16 35V-8h15v43M7 35V-22h15v57"/><path d="M-43-15-16-33 2-25 35-47M22-47h13v13"/><path d="M42-12l3-7 3 7 7 3-7 4-3 7-3-7-7-4Z"/></g>
+ <text y="29" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="25" fill="#312742">NEGOCIO</text>
+ <text y="59" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#51465a">margen · recompra</text>
+ </g>
+<g fill="#e0b7d2" opacity=".9"><path d="M450 318l4-9 4 9 9 4-9 4-4 9-4-9-9-4Z"/><path d="M872 391l4-9 4 9 9 4-9 4-4 9-4-9-9-4Z"/></g>
+<rect x="74" y="646" width="1132" height="54" rx="27" fill="url(#footer)"/><path d="M314 656v34" stroke="#c3aaca" stroke-width="2"/><path d="M270 663l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z" fill="#dba5bf"/>
+<text x="342" y="681" font-family="Georgia,'Times New Roman',serif" font-size="25" fill="#312747">K-Beauty se entiende mejor como sistema que como lista de pasos.</text>
 </svg>
