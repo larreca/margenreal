@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+<title id="t">Cada canal tiene un trabajo</title><desc id="d">Diferenciar no es sólo bajar precios: es resolver mejor.</desc>
+<defs>
+<linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fffefe"/><stop offset=".60" stop-color="#fcf9fd"/><stop offset="1" stop-color="#faf0f6"/></linearGradient>
+<linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fad6c8"/><stop offset="1" stop-color="#edb0c0"/></linearGradient>
+<linearGradient id="foot" x1="0" x2="1"><stop stop-color="#f8e8f1"/><stop offset=".5" stop-color="#ede8f9"/><stop offset="1" stop-color="#fcecef"/></linearGradient>
+<filter id="shadow" x="-20%" y="-30%" width="150%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#695a78" flood-opacity=".13"/></filter>
+</defs>
+<rect x="12" y="12" width="1176" height="676" rx="35" fill="url(#bg)" stroke="#e4d6e8" stroke-width="2"/>
+<circle cx="1180" cy="55" r="137" fill="#fae6f0" opacity=".33"/><circle cx="22" cy="582" r="112" fill="#f8e4f3" opacity=".2"/>
+<text x="59" y="65" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#9567ac" text-anchor="start">YEPPO ACADEMY · 2.5 · DIFERENCIACIÓN</text>
+<text x="59" y="118" font-family="Georgia,serif" font-size="36" font-weight="700" fill="#322440" text-anchor="start">Cada canal tiene un trabajo</text>
+<path d="M61 140h88" stroke="#d7a1bb" stroke-width="3" stroke-linecap="round"/>
+<g filter="url(#shadow)"><rect x="65" y="224" width="258" height="290" rx="22" fill="#f9e6f0"/></g><circle cx="118" cy="282" r="31" fill="#fff" opacity=".77"/><g transform="translate(118 282) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-35 30v-42h70v42ZM-39-12l9-23h60l9 23-10 8-10-8-10 8-9-8-10 8-10-8-10 8-9-8ZM-18 30V3h19v27M10 4h15v14H10Z"/></g>
+
+<text x="82" y="337" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Tienda</text>
+<text x="82" y="370" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Testeo</text><text x="82" y="394" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">y asesoría</text><g filter="url(#shadow)"><rect x="352" y="224" width="258" height="290" rx="22" fill="#ece7fa"/></g><circle cx="405" cy="282" r="31" fill="#fff" opacity=".77"/><g transform="translate(405 282) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-34-25h12l8 43h43l9-32h-56M-9 29h1M24 29h1"/><circle cx="-8" cy="30" r="4"/><circle cx="24" cy="30" r="4"/></g>
+
+<text x="369" y="337" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Ecommerce</text>
+<text x="369" y="370" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Contenido</text><text x="369" y="394" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">y conversión</text><g filter="url(#shadow)"><rect x="639" y="224" width="258" height="290" rx="22" fill="#e3f1eb"/></g><circle cx="692" cy="282" r="31" fill="#fff" opacity=".77"/><g transform="translate(692 282) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><circle cx="-8" cy="-6" r="20"/><path d="M7 9l21 21"/></g>
+
+<text x="656" y="337" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Marketplace</text>
+<text x="656" y="370" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Alcance</text><text x="656" y="394" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">y comparación</text><g filter="url(#shadow)"><rect x="926" y="224" width="258" height="290" rx="22" fill="#f8eadf"/></g><circle cx="979" cy="282" r="31" fill="#fff" opacity=".77"/><g transform="translate(979 282) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-36-18L0-36l36 18v39L0 39l-36-18ZM-36-18L0 0l36-18M0 0v39"/></g>
+
+<text x="943" y="337" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Mayorista</text>
+<text x="943" y="370" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Profundidad</text><text x="943" y="394" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">y reposición</text>
+<rect x="62" y="607" width="1076" height="63" rx="30" fill="url(#foot)" stroke="#fff" stroke-width="2"/>
+<g transform="translate(110 638) scale(0.36)" stroke="#a05a97" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-30-2l19 18L31-25"/></g>
+<text x="155" y="646" font-family="Arial,sans-serif" font-size="20" font-weight="400" fill="#4b3a57" text-anchor="start">Diferenciar no es sólo bajar precios: es resolver mejor.</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+<title id="t">Melanina y exposición UV</title><desc id="d">La fotoprotección diaria ayuda a prevenir daño solar.</desc>
+<defs>
+<linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fffefe"/><stop offset=".60" stop-color="#fcf9fd"/><stop offset="1" stop-color="#faf0f6"/></linearGradient>
+<linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fad6c8"/><stop offset="1" stop-color="#edb0c0"/></linearGradient>
+<linearGradient id="foot" x1="0" x2="1"><stop stop-color="#f8e8f1"/><stop offset=".5" stop-color="#ede8f9"/><stop offset="1" stop-color="#fcecef"/></linearGradient>
+<filter id="shadow" x="-20%" y="-30%" width="150%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#695a78" flood-opacity=".13"/></filter>
+</defs>
+<rect x="12" y="12" width="1176" height="676" rx="35" fill="url(#bg)" stroke="#e4d6e8" stroke-width="2"/>
+<circle cx="1180" cy="55" r="137" fill="#fae6f0" opacity=".33"/><circle cx="22" cy="582" r="112" fill="#f8e4f3" opacity=".2"/>
+<text x="59" y="65" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#9567ac" text-anchor="start">YEPPO ACADEMY · 4.6 · FOTOPROTECCIÓN</text>
+<text x="59" y="118" font-family="Georgia,serif" font-size="36" font-weight="700" fill="#322440" text-anchor="start">Melanina y exposición UV</text>
+<path d="M61 140h88" stroke="#d7a1bb" stroke-width="3" stroke-linecap="round"/>
+<g filter="url(#shadow)"><rect x="95" y="224" width="657" height="307" rx="28" fill="#f9e6f1"/></g>
+<rect x="127" y="381" width="595" height="83" rx="19" fill="#f5c8be"/><rect x="127" y="474" width="595" height="35" rx="12" fill="#ebb4b9"/>
+<g transform="translate(257 290) scale(1.1)" stroke="#cd9b55" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><circle cx="0" cy="0" r="15"/><path d="M0-38v10M0 28v10M-38 0h10M28 0h10M-27-27l7 7M20 20l7 7M27-27l-7 7M-20 20l-7 7"/></g><path d="M260 334l68 58M309 321l82 76M362 312l80 75" stroke="#d69b5c" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="145" cy="419" r="8" fill="#8e5a61" opacity=".75"/><circle cx="192" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="239" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="286" cy="419" r="8" fill="#8e5a61" opacity=".75"/><circle cx="333" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="380" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="427" cy="419" r="8" fill="#8e5a61" opacity=".75"/><circle cx="474" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="521" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="568" cy="419" r="8" fill="#8e5a61" opacity=".75"/><circle cx="615" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="662" cy="419" r="5" fill="#8e5a61" opacity=".75"/><circle cx="145" cy="448" r="8" fill="#8e5a61" opacity=".75"/><circle cx="192" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="239" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="286" cy="448" r="8" fill="#8e5a61" opacity=".75"/><circle cx="333" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="380" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="427" cy="448" r="8" fill="#8e5a61" opacity=".75"/><circle cx="474" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="521" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="568" cy="448" r="8" fill="#8e5a61" opacity=".75"/><circle cx="615" cy="448" r="5" fill="#8e5a61" opacity=".75"/><circle cx="662" cy="448" r="5" fill="#8e5a61" opacity=".75"/>
+<rect x="804" y="242" width="323" height="260" rx="26" fill="#e9e7fa"/>
+<text x="831" y="302" font-family="Georgia,serif" font-size="27" font-weight="700" fill="#322440" text-anchor="start">MELANINA</text>
+<text x="831" y="351" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#655d72" text-anchor="start">Pigmento natural</text><text x="831" y="390" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#655d72" text-anchor="start">que participa en</text><text x="831" y="429" font-family="Arial,sans-serif" font-size="21" font-weight="400" fill="#655d72" text-anchor="start">la coloración de piel.</text>
+<g transform="translate(1087 461) scale(0.58)" stroke="#654b8d" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M0-35l31 12v21q0 26-31 40-31-14-31-40v-21Z M-18-3l13 13 24-24"/></g>
+<rect x="62" y="607" width="1076" height="63" rx="30" fill="url(#foot)" stroke="#fff" stroke-width="2"/>
+<g transform="translate(110 638) scale(0.36)" stroke="#a05a97" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-30-2l19 18L31-25"/></g>
+<text x="155" y="646" font-family="Arial,sans-serif" font-size="20" font-weight="400" fill="#4b3a57" text-anchor="start">La fotoprotección diaria ayuda a prevenir daño solar.</text>
+</svg>

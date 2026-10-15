@@ -497,3 +497,16 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .chapter-one-infographic .infographic-fullsize{display:inline-flex;margin-left:4px;color:#7650a3;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .chapter-one-infographic .infographic-fullsize:focus-visible{outline:3px solid #9477ca;outline-offset:3px;border-radius:4px}
 @media(max-width:700px){.chapter-one-infographic{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#b9a2d0 #f9f4fc}.chapter-one-infographic img{width:760px;min-width:760px;max-width:none}.chapter-one-infographic figcaption{font-size:13px;min-width:fit-content}}
+
+
+/* Yeppo Academy: infografías enfocadas, legibles y ampliables en capítulos 2 y 4. */
+.academy-focused-visual{max-width:100%;background:#fcf9fc;border-radius:22px;padding:10px;overflow:hidden}
+.academy-focused-visual img{display:block;width:100%;height:auto;object-fit:contain}
+.academy-focused-visual figcaption{font-size:13px;line-height:1.55;color:#5d526c;padding:9px 12px}
+.academy-focused-visual figcaption a{color:#7554a0;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.academy-focused-visual figcaption a:focus-visible{outline:3px solid #8a6fc1;outline-offset:2px}
+@media(max-width:720px){
+ .academy-focused-visual{overflow-x:auto;scrollbar-color:#bba4d2 #f7f1fa;overscroll-behavior-x:contain}
+ .academy-focused-visual img{width:720px;max-width:none}
+ .academy-focused-visual figcaption{min-width:680px}
+}

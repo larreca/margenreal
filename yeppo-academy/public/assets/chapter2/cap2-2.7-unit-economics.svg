@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+<title id="t">Rentabilidad más allá de la venta</title><desc id="d">Un producto vendido no siempre es un producto rentable.</desc>
+<defs>
+<linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fffefe"/><stop offset=".60" stop-color="#fcf9fd"/><stop offset="1" stop-color="#faf0f6"/></linearGradient>
+<linearGradient id="skin" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#fad6c8"/><stop offset="1" stop-color="#edb0c0"/></linearGradient>
+<linearGradient id="foot" x1="0" x2="1"><stop stop-color="#f8e8f1"/><stop offset=".5" stop-color="#ede8f9"/><stop offset="1" stop-color="#fcecef"/></linearGradient>
+<filter id="shadow" x="-20%" y="-30%" width="150%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#695a78" flood-opacity=".13"/></filter>
+</defs>
+<rect x="12" y="12" width="1176" height="676" rx="35" fill="url(#bg)" stroke="#e4d6e8" stroke-width="2"/>
+<circle cx="1180" cy="55" r="137" fill="#fae6f0" opacity=".33"/><circle cx="22" cy="582" r="112" fill="#f8e4f3" opacity=".2"/>
+<text x="59" y="65" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#9567ac" text-anchor="start">YEPPO ACADEMY · 2.7 · MARGEN Y STOCK</text>
+<text x="59" y="118" font-family="Georgia,serif" font-size="36" font-weight="700" fill="#322440" text-anchor="start">Rentabilidad más allá de la venta</text>
+<path d="M61 140h88" stroke="#d7a1bb" stroke-width="3" stroke-linecap="round"/>
+<g filter="url(#shadow)"><rect x="88" y="204" width="1024" height="133" rx="26" fill="#f7e9f2"/></g>
+<text x="600" y="258" font-family="Georgia,serif" font-size="33" font-weight="700" fill="#3a294b" text-anchor="middle">Venta neta  −  costo  −  comisiones  −  logística</text>
+<text x="600" y="302" font-family="Georgia,serif" font-size="27" font-weight="700" fill="#7d5e94" text-anchor="middle">= contribución del pedido</text>
+<g filter="url(#shadow)"><rect x="96" y="379" width="314" height="171" rx="22" fill="#f9e6f0"/></g><circle cx="149" cy="437" r="31" fill="#fff" opacity=".77"/><g transform="translate(149 437) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-35 34V-6h19v40M-7 34v-25h19v25M21 34v-59h19v59M-42 35h88"/></g>
+
+<text x="113" y="492" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Margen</text>
+<text x="113" y="525" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Rentabilidad real</text>
+<g filter="url(#shadow)"><rect x="443" y="379" width="314" height="171" rx="22" fill="#ece7fa"/></g><circle cx="496" cy="437" r="31" fill="#fff" opacity=".77"/><g transform="translate(496 437) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><circle cx="0" cy="0" r="34"/><path d="M0-21v23l18 11"/></g>
+
+<text x="460" y="492" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Cobertura</text>
+<text x="460" y="525" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Días de stock</text>
+<g filter="url(#shadow)"><rect x="790" y="379" width="314" height="171" rx="22" fill="#e3f1eb"/></g><circle cx="843" cy="437" r="31" fill="#fff" opacity=".77"/><g transform="translate(843 437) scale(0.57)" stroke="#322440" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-36-18L0-36l36 18v39L0 39l-36-18ZM-36-18L0 0l36-18M0 0v39"/></g>
+
+<text x="807" y="492" font-family="Georgia,serif" font-size="23" font-weight="700" fill="#322440" text-anchor="start">Rotación</text>
+<text x="807" y="525" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#655d72" text-anchor="start">Velocidad de salida</text>
+<rect x="62" y="607" width="1076" height="63" rx="30" fill="url(#foot)" stroke="#fff" stroke-width="2"/>
+<g transform="translate(110 638) scale(0.36)" stroke="#a05a97" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" fill="none"><path d="M-30-2l19 18L31-25"/></g>
+<text x="155" y="646" font-family="Arial,sans-serif" font-size="20" font-weight="400" fill="#4b3a57" text-anchor="start">Un producto vendido no siempre es un producto rentable.</text>
+</svg>
