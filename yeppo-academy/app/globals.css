@@ -491,3 +491,9 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   }
 }
 
+
+
+/* Capítulo 1: infografías nítidas y consultables también en móvil. */
+.chapter-one-infographic .infographic-fullsize{display:inline-flex;margin-left:4px;color:#7650a3;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.chapter-one-infographic .infographic-fullsize:focus-visible{outline:3px solid #9477ca;outline-offset:3px;border-radius:4px}
+@media(max-width:700px){.chapter-one-infographic{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#b9a2d0 #f9f4fc}.chapter-one-infographic img{width:760px;min-width:760px;max-width:none}.chapter-one-infographic figcaption{font-size:13px;min-width:fit-content}}
