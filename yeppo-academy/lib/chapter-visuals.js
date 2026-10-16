@@ -22,14 +22,14 @@ const visuals={
   ["cap3-3.8-plan90.svg","Plan de noventa días para diagnóstico, experimentos y crecimiento"]
  ],
  c04:[
-  ["cap4-4.1-capas-piel.svg","Esquema simplificado de epidermis, dermis e hipodermis"],
-  ["cap4-4.2-epidermis.svg","Esquema de renovación natural de células de la epidermis"],
-  ["cap4-4.3-barrera-cutanea.svg","Modelo de corneocitos, lípidos y factor natural de hidratación"],
-  ["cap4-4.4-dermis.svg","Ilustración conceptual de soporte dérmico"],
-  ["cap4-4.5-foliculos.svg","Esquema del folículo piloso y sebo"],
-  ["cap4-4.6-melanina.svg","Exposición UV y pigmentación en la epidermis"],
-  ["cap4-4.7-microbioma.svg","Ilustración conceptual del microbioma cutáneo"],
-  ["cap4-4.8-limites-vendedor.svg","Orientación cosmética y límites de derivación sanitaria"]
+  ["cap4-4.1-capas-piel.png","Esquema simplificado de epidermis, dermis e hipodermis"],
+  ["cap4-4.2-epidermis.png","Esquema de renovación natural de células de la epidermis"],
+  ["cap4-4.3-barrera-cutanea.png","Modelo de corneocitos, lípidos y factor natural de hidratación"],
+  ["cap4-4.4-dermis.png","Ilustración conceptual de soporte dérmico"],
+  ["cap4-4.5-foliculos.png","Esquema del folículo piloso y sebo"],
+  ["cap4-4.6-melanina.png","Exposición UV y pigmentación en la epidermis"],
+  ["cap4-4.7-microbioma.png","Ilustración conceptual del microbioma cutáneo"],
+  ["cap4-4.8-limites-vendedor.png","Orientación cosmética y límites de derivación sanitaria"]
  ]
 };
 export function enhanceChapterVisuals(chapterId,module){
@@ -37,7 +37,7 @@ export function enhanceChapterVisuals(chapterId,module){
  const section=Number(String(module?.label||"").split(".")[1]);
  const visual=set[section-1]; if(!visual)return module?.html||"";
  const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":"chapter4";
- const src="/assets/"+dir+"/"+visual[0]+"?v=20261015c";
+ const src="/assets/"+dir+"/"+visual[0]+"?v=ch4-png-20261016";
  const figure='<figure class="course-image academy-infographic academy-focused-visual"><img src="'+src+'" alt="'+visual[1]+'" loading="lazy"/><figcaption>'+visual[1]+' · <a href="'+src+'" target="_blank" rel="noopener noreferrer">Ampliar imagen ↗</a></figcaption></figure>';
  let html=module?.html||"";
  // Sustituir diagramas anteriores del módulo, conservando fotos documentales y ejemplos.
