@@ -16,20 +16,37 @@ jobs:
         with:
           persist-credentials: true
           ref: codex/academy-production-pilot
-      - name: Descargar PNG originales preservando datos
+      - name: Descargar contenedor PNG de originales completos
         shell: bash
         run: |
           set -euo pipefail
-          D=yeppo-academy/public/assets/chapter4
-          mkdir -p "$D"
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.1-capas-piel.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.1-capas-piel.png?v=1792151012'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.2-epidermis.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.2-epidermis.png?v=1792151028'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.3-barrera-cutanea.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.3-barrera-cutanea.png?v=1792151036'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.4-dermis.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.4-dermis.png?v=1792151046'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.5-foliculos.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.5-foliculos.png?v=1792151057'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.6-melanina.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.6-melanina.png?v=1792151065'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.7-microbioma.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.7-microbioma.png?v=1792151073'
-          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.8-limites-vendedor.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.8-limites-vendedor.png?v=1792151082'
+          curl --fail --location --retry 4 --silent --show-error -H 'Accept: image/png' --output /tmp/yeppo-ch4-original.png 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-ch4-original-png-bytes.png?v=1792151350'
+      - name: Restaurar ZIP y ocho PNG byte por byte
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet pillow
+          python3 - <<'PY'
+          import pathlib,struct,zipfile,io,hashlib
+          from PIL import Image
+          carrier=Image.open('/tmp/yeppo-ch4-original.png').convert('RGB').tobytes()
+          n=struct.unpack('>Q',carrier[:8])[0]
+          payload=carrier[8:8+n]
+          actual=hashlib.sha256(payload).hexdigest()
+          expected='4dbf3fbe108153e56c7cff6e20a18a2da68cbb34156b494f7e6196bbea8808c9'
+          if actual!=expected:raise SystemExit("ZIP original no coincide con SHA-256; no se publicará")
+          nfiles=0
+          with zipfile.ZipFile(io.BytesIO(payload)) as z:
+              for name in z.namelist():
+                  if not name.startswith('yeppo-academy/public/assets/chapter4/') or not name.endswith('.png'):continue
+                  p=pathlib.Path(name)
+                  if '..' in p.parts:raise SystemExit("Ruta no válida")
+                  p.parent.mkdir(parents=True,exist_ok=True)
+                  p.write_bytes(z.read(name))
+                  nfiles+=1
+          if nfiles!=8:raise SystemExit(f"Se esperaban 8 PNG, llegaron {nfiles}")
+          print(f"Restaurados {nfiles} PNG originales sin modificaciones")
+          PY
       - name: Verificar SHA-256 (originales aprobados)
         shell: bash
         run: |
