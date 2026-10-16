@@ -516,3 +516,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .editorial-reader .academy-focused-visual{margin-top:28px;margin-bottom:30px}
 .editorial-reader .academy-focused-visual img{border-radius:14px}
 .editorial-reader .academy-focused-visual figcaption{background:#fff8fc}
+
+
+/* Más área de lectura horizontal para gráficos comerciales de capítulo 3 en móvil. */
+@media(max-width:720px){
+ .editorial-reader .academy-focused-visual img[src*="/assets/chapter3/"]{width:920px;max-width:none}
+ .editorial-reader .academy-focused-visual:has(img[src*="/assets/chapter3/"]) figcaption{min-width:880px}
+}
