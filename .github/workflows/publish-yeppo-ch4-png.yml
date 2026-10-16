@@ -1,0 +1,81 @@
+name: Publicar 8 PNG aprobados del capítulo 4
+on:
+  push:
+    branches: [codex/academy-production-pilot]
+    paths:
+      - ".github/workflows/publish-yeppo-ch4-png.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout rama de producción
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          ref: codex/academy-production-pilot
+      - name: Descargar PNG originales preservando datos
+        shell: bash
+        run: |
+          set -euo pipefail
+          D=yeppo-academy/public/assets/chapter4
+          mkdir -p "$D"
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.1-capas-piel.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.1-capas-piel.png?v=1792151012'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.2-epidermis.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.2-epidermis.png?v=1792151028'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.3-barrera-cutanea.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.3-barrera-cutanea.png?v=1792151036'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.4-dermis.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.4-dermis.png?v=1792151046'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.5-foliculos.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.5-foliculos.png?v=1792151057'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.6-melanina.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.6-melanina.png?v=1792151065'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.7-microbioma.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.7-microbioma.png?v=1792151073'
+          curl --fail --location --retry 4 --silent --show-error --output "$D/cap4-4.8-limites-vendedor.png" 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-cap4-4.8-limites-vendedor.png?v=1792151082'
+      - name: Verificar SHA-256 (originales aprobados)
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+          echo 'add2cf85d000a6c1db2baba628e163d5d44f418f6ec4420f5533eb12d6b10404  yeppo-academy/public/assets/chapter4/cap4-4.1-capas-piel.png'
+          echo '91b284d46a8161f07ce539b320576a2e56514af35aa229eae51406e6886ee1b5  yeppo-academy/public/assets/chapter4/cap4-4.2-epidermis.png'
+          echo '4b39c1247377102866a95f68d9ac5afdf30c0a163e056a8b383b7c50b7da7dc0  yeppo-academy/public/assets/chapter4/cap4-4.3-barrera-cutanea.png'
+          echo '7f2f136d58c92a3b143d4833c2c3390f18f2bdb41b4981d5d232626752b0a425  yeppo-academy/public/assets/chapter4/cap4-4.4-dermis.png'
+          echo 'c1bb18728bb8f765a50c460b8f8289cf76cef863fecd749f452f7fff41fd34d8  yeppo-academy/public/assets/chapter4/cap4-4.5-foliculos.png'
+          echo 'aa4c7d4b77ca17e449c10af2bf91e3b9bf863d3fe8a63c35b18e5c813070d20d  yeppo-academy/public/assets/chapter4/cap4-4.6-melanina.png'
+          echo 'af4e5f42ae63a7120b5829093f191a8781dfac5dcf72c7c23798a16099588cee  yeppo-academy/public/assets/chapter4/cap4-4.7-microbioma.png'
+          echo '8e1efbfe63e7568f62125cf418a33c79abdb2e8390e6f5095703231b72d2448e  yeppo-academy/public/assets/chapter4/cap4-4.8-limites-vendedor.png'
+          } | sha256sum --check --status
+      - name: Vincular módulos y validar tamaño y resolución
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import pathlib,struct
+          base=pathlib.Path("yeppo-academy")
+          f=base/"lib/chapter-visuals.js"
+          s=f.read_text(encoding="utf-8")
+          names=["cap4-4.1-capas-piel","cap4-4.2-epidermis","cap4-4.3-barrera-cutanea","cap4-4.4-dermis","cap4-4.5-foliculos","cap4-4.6-melanina","cap4-4.7-microbioma","cap4-4.8-limites-vendedor"]
+          for name in names:
+              binary=(base/"public/assets/chapter4"/(name+".png")).read_bytes()
+              if not binary.startswith(b"\\x89PNG\\r\\n\\x1a\\n") or struct.unpack(">II",binary[16:24])!=(1672,941):
+                  raise SystemExit("PNG inválido: "+name)
+              before='"'+name+'.svg"'
+              after='"'+name+'.png"'
+              if s.count(before)!=1:
+                  raise SystemExit("No se encontró referencia única: "+before)
+              s=s.replace(before,after)
+          s=s.replace("?v=20261015c","?v=ch4-png-20261016")
+          f.write_text(s,encoding="utf-8")
+          print("8 ilustraciones PNG originales vinculadas")
+          PY
+      - name: Confirmar cambios en la rama de producción
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add yeppo-academy/lib/chapter-visuals.js yeppo-academy/public/assets/chapter4/*.png
+          if git diff --cached --quiet; then
+            echo "Sin cambios adicionales"
+          else
+            git commit -m "Publish eight approved original PNG infographics for Chapter 4"
+            git push origin HEAD:refs/heads/codex/academy-production-pilot
+          fi
