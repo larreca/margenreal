@@ -1,4 +1,4 @@
-name: Publicar Capítulo 5 - 8 imágenes de tipos de piel
+name: Publicar Capítulo 5 - 8 imágenes premium aprobadas
 on:
   push:
     branches: [codex/academy-production-pilot]
@@ -11,67 +11,55 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout de producción
+      - name: Checkout del sitio de producción
         uses: actions/checkout@v4
         with:
           ref: codex/academy-production-pilot
           persist-credentials: true
-      - name: Descargar PNG contenedor de transferencia
+      - name: Descargar originales de forma reversible
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --location --retry 4 --silent --show-error -H 'Accept: image/png' --output /tmp/ch5-carrier.png 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-ch5-original-png-bytes.png?v=1792153763'
-      - name: Restaurar y verificar ocho archivos exactos y actualizar capítulo
+          curl --fail --location --retry 4 --silent --show-error -H 'Accept: image/png' --output /tmp/ch5-premium-carrier.png 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-ch5-premium-lossless.png?v=1792154566'
+      - name: Validar ocho imágenes exactas y reemplazar capítulo 5
         shell: bash
         run: |
           set -euo pipefail
           python3 -m pip install --quiet pillow
           python3 - <<'PY'
-          import pathlib,io,zipfile,hashlib,struct,json
           from PIL import Image
-          zimg=Image.open('/tmp/ch5-carrier.png').convert('RGB').tobytes()
-          length=struct.unpack('>Q',zimg[:8])[0]
-          raw=zimg[8:8+length]
-          ziphash=hashlib.sha256(raw).hexdigest()
-          if ziphash!='0622824b056e9e18408227830a8c87a49086ed2c439205f81307a6e60d884969':
-              raise SystemExit('Original ZIP SHA-256 mismatch; do not publish')
-          with zipfile.ZipFile(io.BytesIO(raw)) as package:
-              manifest=json.loads(package.read('manifest_ch5.json').decode('utf-8'))
-              entries=manifest['files']
-              if len(entries)!=8:
-                  raise SystemExit('Exactly eight images required')
-              for entry in entries:
-                  path=pathlib.Path('yeppo-academy/public/assets/chapter5') / entry['name']
-                  if path.name!=entry['name'] or not path.name.endswith('.png'):
-                      raise SystemExit('Invalid image filename')
-                  data=package.read(str(path))
-                  if hashlib.sha256(data).hexdigest()!=entry['sha256']:
-                      raise SystemExit('Image checksum differs from manifest: '+entry['name'])
-                  if data[:8]!=bytes([137,80,78,71,13,10,26,10]) or struct.unpack('>II',data[16:24])!=(1672,941):
-                      raise SystemExit('Invalid PNG dimensions: '+entry['name'])
-                  path.parent.mkdir(parents=True,exist_ok=True)
-                  path.write_bytes(data)
-              print('Validated eight original chapter 5 PNGs')
-          p=pathlib.Path('yeppo-academy/lib/chapter-visuals.js')
-          s=p.read_text(encoding='utf-8')
-          needle='\n};\nexport function enhanceChapterVisuals'
-          if s.count(needle)!=1 or ' c05:[' in s:
-              raise SystemExit('Unexpected chapter visuals structure')
-          new_c05=" c05:[\n  [\"cap5-5.1-tipos-piel.png\",\"Cuatro perfiles cosméticos orientativos: piel normal, seca, grasa y mixta\"],\n  [\"cap5-5.2-tipo-estado-objetivo.png\",\"Tipo, estado y objetivo cosmético: tres preguntas distintas\"],\n  [\"cap5-5.3-piel-seca.png\",\"Piel seca: tendencia a menos lípidos y cuidados de barrera\"],\n  [\"cap5-5.4-piel-grasa.png\",\"Piel grasa: sebo normal, limpieza respetuosa e hidratación\"],\n  [\"cap5-5.5-piel-mixta.png\",\"Piel mixta: necesidades diferenciadas de zona T y mejillas\"],\n  [\"cap5-5.6-piel-normal.png\",\"Piel normal: equilibrio cutáneo, limpieza y fotoprotección\"],\n  [\"cap5-5.7-reactividad.png\",\"Reactividad: entrevista, simplificación y derivación cuando corresponda\"],\n  [\"cap5-5.8-asesoria.png\",\"Venta consultiva: escuchar, priorizar y acompañar sin diagnosticar\"]\n ]"
-          s=s.replace(needle,',\n'+new_c05+needle,1) if False else s
-          # Last c04 array closes with ' ]' without comma: append a comma before c05.
-          s=s.replace(needle,',\n'+new_c05+needle,1)
-          old_dir='const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":"chapter4";'
-          new_dir='const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":chapterId==="c04"?"chapter4":"chapter5";'
-          old_src='const src="/assets/"+dir+"/"+visual[0]+"?v=ch4-png-20261016";'
-          new_src='const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c05"?"?v=ch5-png-20261016":"?v=ch4-png-20261016");'
-          if s.count(old_dir)!=1 or s.count(old_src)!=1:
-              raise SystemExit('Unexpected image resolver syntax')
-          s=s.replace(old_dir,new_dir).replace(old_src,new_src)
-          p.write_text(s,encoding='utf-8')
-          print('Chapter 5 modules 5.1–5.8 now use PNG infographics')
+          from pathlib import Path
+          from hashlib import sha256
+          from zipfile import ZipFile
+          import io,struct,json
+          root=Path('yeppo-academy/public/assets/chapter5')
+          carrier=Image.open('/tmp/ch5-premium-carrier.png').convert('RGB').tobytes()
+          n=struct.unpack('>Q', carrier[:8])[0]
+          data=carrier[8:8+n]
+          assert sha256(data).hexdigest()=='f01c8db44a2d041df705830e588d0d83d945033bb21a172a3c06290ba654c528', 'El ZIP recibido no coincide; se cancela'
+          expected=json.loads("{\"cap5-5.1-tipos-piel.png\":\"98cee70747ab95c4014ffcb71303b8645a95e8feb00bead1e968e67bfacce421\",\"cap5-5.2-tipo-estado-objetivo.png\":\"b2cb6aa1bbdb02f82775423e464321a0c76646694a75deae8feb3294e6e7e6cc\",\"cap5-5.3-piel-seca.png\":\"a48455c7ed0e52628ddaf52547cf3d4b533ef9cf0e14acbcc977d3867c673dde\",\"cap5-5.4-piel-grasa.png\":\"55c0285709ed89ae792478aff675e82d5d0d6f8f35c8d0b1839c0eb7ae197f95\",\"cap5-5.5-piel-mixta.png\":\"32aa442d46ab2acc32cec8e3bc7c3a436b0c3d1af90df44647074329b2771646\",\"cap5-5.6-piel-normal.png\":\"c4da2245286573f228b9327fba22c11ee2a2cee1f0c64a967787b58e9ed5110a\",\"cap5-5.7-reactividad.png\":\"22ff613efdc12705ea7a5a851db198b87d6f3fe51141911db584c0eaa5b685cb\",\"cap5-5.8-asesoria.png\":\"b46be992cd16226c38e0c4d5f5a130d17f18f11189ba59fbf4af982a072f493e\"}")
+          assert len(expected)==8
+          with ZipFile(io.BytesIO(data)) as z:
+              manifest=json.loads(z.read('manifest_ch5_premium.json'))
+              assert len(manifest['files'])==8
+              for entry in manifest['files']:
+                  name=entry['name']
+                  assert name in expected, 'PNG inesperado'
+                  assert entry['sha256']==expected[name], 'Manifiesto no coincide'
+                  file=z.read('yeppo-academy/public/assets/chapter5/'+name)
+                  assert sha256(file).hexdigest()==expected[name], 'Imagen distinta del original'
+                  assert file[:8]==bytes([137,80,78,71,13,10,26,10]), 'Archivo no PNG'
+                  assert struct.unpack('>II',file[16:24])==(1672,941), 'Resolución incorrecta'
+                  (root/name).write_bytes(file)
+          visual=Path('yeppo-academy/lib/chapter-visuals.js')
+          s=visual.read_text(encoding='utf-8')
+          old='?v=ch5-png-20261016'
+          new='?v=ch5-premium-20261016'
+          assert s.count(old)==1, 'No se encontró la referencia de caché'
+          visual.write_text(s.replace(old,new),encoding='utf-8')
+          print('Ocho PNG originales reemplazados y verificados; referencias actualizadas')
           PY
-      - name: Confirmar archivos y cambios de referencias
+      - name: Confirmar actualización en GitHub para Vercel
         shell: bash
         run: |
           set -euo pipefail
@@ -80,8 +68,8 @@ jobs:
           git add yeppo-academy/lib/chapter-visuals.js yeppo-academy/public/assets/chapter5/*.png
           git diff --cached --stat
           if git diff --cached --quiet; then
-            echo "Sin cambios adicionales"
+            echo "Sin cambios pendientes"
           else
-            git commit -m "Publish Chapter 5 eight educational PNG infographics and module references"
+            git commit -m "Upgrade all Chapter 5 skin type infographics to approved premium visuals"
             git push origin HEAD:refs/heads/codex/academy-production-pilot
           fi
