@@ -1,0 +1,87 @@
+name: Publicar Capítulo 5 - 8 imágenes de tipos de piel
+on:
+  push:
+    branches: [codex/academy-production-pilot]
+    paths:
+      - ".github/workflows/publish-yeppo-ch5-png.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout de producción
+        uses: actions/checkout@v4
+        with:
+          ref: codex/academy-production-pilot
+          persist-credentials: true
+      - name: Descargar PNG contenedor de transferencia
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --silent --show-error -H 'Accept: image/png' --output /tmp/ch5-carrier.png 'https://cdn.shopify.com/s/files/1/0638/7348/2901/files/yeppo-academy-ch5-original-png-bytes.png?v=1792153763'
+      - name: Restaurar y verificar ocho archivos exactos y actualizar capítulo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet pillow
+          python3 - <<'PY'
+          import pathlib,io,zipfile,hashlib,struct,json
+          from PIL import Image
+          zimg=Image.open('/tmp/ch5-carrier.png').convert('RGB').tobytes()
+          length=struct.unpack('>Q',zimg[:8])[0]
+          raw=zimg[8:8+length]
+          ziphash=hashlib.sha256(raw).hexdigest()
+          if ziphash!='0622824b056e9e18408227830a8c87a49086ed2c439205f81307a6e60d884969':
+              raise SystemExit('Original ZIP SHA-256 mismatch; do not publish')
+          with zipfile.ZipFile(io.BytesIO(raw)) as package:
+              manifest=json.loads(package.read('manifest_ch5.json').decode('utf-8'))
+              entries=manifest['files']
+              if len(entries)!=8:
+                  raise SystemExit('Exactly eight images required')
+              for entry in entries:
+                  path=pathlib.Path('yeppo-academy/public/assets/chapter5') / entry['name']
+                  if path.name!=entry['name'] or not path.name.endswith('.png'):
+                      raise SystemExit('Invalid image filename')
+                  data=package.read(str(path))
+                  if hashlib.sha256(data).hexdigest()!=entry['sha256']:
+                      raise SystemExit('Image checksum differs from manifest: '+entry['name'])
+                  if data[:8]!=bytes([137,80,78,71,13,10,26,10]) or struct.unpack('>II',data[16:24])!=(1672,941):
+                      raise SystemExit('Invalid PNG dimensions: '+entry['name'])
+                  path.parent.mkdir(parents=True,exist_ok=True)
+                  path.write_bytes(data)
+              print('Validated eight original chapter 5 PNGs')
+          p=pathlib.Path('yeppo-academy/lib/chapter-visuals.js')
+          s=p.read_text(encoding='utf-8')
+          needle='\n};\nexport function enhanceChapterVisuals'
+          if s.count(needle)!=1 or ' c05:[' in s:
+              raise SystemExit('Unexpected chapter visuals structure')
+          new_c05=" c05:[\n  [\"cap5-5.1-tipos-piel.png\",\"Cuatro perfiles cosméticos orientativos: piel normal, seca, grasa y mixta\"],\n  [\"cap5-5.2-tipo-estado-objetivo.png\",\"Tipo, estado y objetivo cosmético: tres preguntas distintas\"],\n  [\"cap5-5.3-piel-seca.png\",\"Piel seca: tendencia a menos lípidos y cuidados de barrera\"],\n  [\"cap5-5.4-piel-grasa.png\",\"Piel grasa: sebo normal, limpieza respetuosa e hidratación\"],\n  [\"cap5-5.5-piel-mixta.png\",\"Piel mixta: necesidades diferenciadas de zona T y mejillas\"],\n  [\"cap5-5.6-piel-normal.png\",\"Piel normal: equilibrio cutáneo, limpieza y fotoprotección\"],\n  [\"cap5-5.7-reactividad.png\",\"Reactividad: entrevista, simplificación y derivación cuando corresponda\"],\n  [\"cap5-5.8-asesoria.png\",\"Venta consultiva: escuchar, priorizar y acompañar sin diagnosticar\"]\n ]"
+          s=s.replace(needle,',\n'+new_c05+needle,1) if False else s
+          # Last c04 array closes with ' ]' without comma: append a comma before c05.
+          s=s.replace(needle,',\n'+new_c05+needle,1)
+          old_dir='const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":"chapter4";'
+          new_dir='const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":chapterId==="c04"?"chapter4":"chapter5";'
+          old_src='const src="/assets/"+dir+"/"+visual[0]+"?v=ch4-png-20261016";'
+          new_src='const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c05"?"?v=ch5-png-20261016":"?v=ch4-png-20261016");'
+          if s.count(old_dir)!=1 or s.count(old_src)!=1:
+              raise SystemExit('Unexpected image resolver syntax')
+          s=s.replace(old_dir,new_dir).replace(old_src,new_src)
+          p.write_text(s,encoding='utf-8')
+          print('Chapter 5 modules 5.1–5.8 now use PNG infographics')
+          PY
+      - name: Confirmar archivos y cambios de referencias
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add yeppo-academy/lib/chapter-visuals.js yeppo-academy/public/assets/chapter5/*.png
+          git diff --cached --stat
+          if git diff --cached --quiet; then
+            echo "Sin cambios adicionales"
+          else
+            git commit -m "Publish Chapter 5 eight educational PNG infographics and module references"
+            git push origin HEAD:refs/heads/codex/academy-production-pilot
+          fi
