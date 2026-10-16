@@ -55,7 +55,7 @@ jobs:
           names=["cap4-4.1-capas-piel","cap4-4.2-epidermis","cap4-4.3-barrera-cutanea","cap4-4.4-dermis","cap4-4.5-foliculos","cap4-4.6-melanina","cap4-4.7-microbioma","cap4-4.8-limites-vendedor"]
           for name in names:
               binary=(base/"public/assets/chapter4"/(name+".png")).read_bytes()
-              if not binary.startswith(b"\\x89PNG\\r\\n\\x1a\\n") or struct.unpack(">II",binary[16:24])!=(1672,941):
+              if not binary.startswith(bytes([137,80,78,71,13,10,26,10])) or struct.unpack(">II",binary[16:24])!=(1672,941):
                   raise SystemExit("PNG inválido: "+name)
               before='"'+name+'.svg"'
               after='"'+name+'.png"'
