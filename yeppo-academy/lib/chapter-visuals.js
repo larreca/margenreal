@@ -56,7 +56,7 @@ export function enhanceChapterVisuals(chapterId,module){
   ];
   const place=storePhotos[(section-1)%storePhotos.length];
   const store='<figure class="course-image wide-image ch2-photo"><img src="'+place.url+'" loading="lazy" alt="Fotografía real de la tienda '+place.label+'" /><figcaption>Fotografía real de '+place.label+' · Yeppo. Ejemplo de una experiencia presencial de K-Beauty.</figcaption></figure>';
-  html=html.replace(/<figure class="course-image wide-image ch2-photo">[\\s\\S]*?<\\/figure>/g,store);
+  html=html.replace(/<figure class="course-image wide-image ch2-photo">[\s\S]*?<\/figure>/g,store);
  }
  const reading=/<div class="reading-copy">[\s\S]*?<\/div>/;
  if(reading.test(html))return html.replace(reading,s=>s+figure);
