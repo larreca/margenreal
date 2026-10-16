@@ -30,14 +30,24 @@ const visuals={
   ["cap4-4.6-melanina.png","Exposición UV y pigmentación en la epidermis"],
   ["cap4-4.7-microbioma.png","Ilustración conceptual del microbioma cutáneo"],
   ["cap4-4.8-limites-vendedor.png","Orientación cosmética y límites de derivación sanitaria"]
+ ],
+ c05:[
+  ["cap5-5.1-tipos-piel.png","Cuatro perfiles cosméticos orientativos: piel normal, seca, grasa y mixta"],
+  ["cap5-5.2-tipo-estado-objetivo.png","Tipo, estado y objetivo cosmético: tres preguntas distintas"],
+  ["cap5-5.3-piel-seca.png","Piel seca: tendencia a menos lípidos y cuidados de barrera"],
+  ["cap5-5.4-piel-grasa.png","Piel grasa: sebo normal, limpieza respetuosa e hidratación"],
+  ["cap5-5.5-piel-mixta.png","Piel mixta: necesidades diferenciadas de zona T y mejillas"],
+  ["cap5-5.6-piel-normal.png","Piel normal: equilibrio cutáneo, limpieza y fotoprotección"],
+  ["cap5-5.7-reactividad.png","Reactividad: entrevista, simplificación y derivación cuando corresponda"],
+  ["cap5-5.8-asesoria.png","Venta consultiva: escuchar, priorizar y acompañar sin diagnosticar"]
  ]
 };
 export function enhanceChapterVisuals(chapterId,module){
  const set=visuals[chapterId]; if(!set)return module?.html||"";
  const section=Number(String(module?.label||"").split(".")[1]);
  const visual=set[section-1]; if(!visual)return module?.html||"";
- const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":"chapter4";
- const src="/assets/"+dir+"/"+visual[0]+"?v=ch4-png-20261016";
+ const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":chapterId==="c04"?"chapter4":"chapter5";
+ const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c05"?"?v=ch5-png-20261016":"?v=ch4-png-20261016");
  const figure='<figure class="course-image academy-infographic academy-focused-visual"><img src="'+src+'" alt="'+visual[1]+'" loading="lazy"/><figcaption>'+visual[1]+' · <a href="'+src+'" target="_blank" rel="noopener noreferrer">Ampliar imagen ↗</a></figcaption></figure>';
  let html=module?.html||"";
  // Sustituir diagramas anteriores del módulo, conservando fotos documentales y ejemplos.
