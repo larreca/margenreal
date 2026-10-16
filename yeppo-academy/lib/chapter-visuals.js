@@ -47,7 +47,7 @@ export function enhanceChapterVisuals(chapterId,module){
  const section=Number(String(module?.label||"").split(".")[1]);
  const visual=set[section-1]; if(!visual)return module?.html||"";
  const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":chapterId==="c04"?"chapter4":"chapter5";
- const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c05"?"?v=ch5-png-20261016":"?v=ch4-png-20261016");
+ const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c05"?"?v=ch5-premium-20261016":"?v=ch4-png-20261016");
  const figure='<figure class="course-image academy-infographic academy-focused-visual"><img src="'+src+'" alt="'+visual[1]+'" loading="lazy"/><figcaption>'+visual[1]+' · <a href="'+src+'" target="_blank" rel="noopener noreferrer">Ampliar imagen ↗</a></figcaption></figure>';
  let html=module?.html||"";
  // Sustituir diagramas anteriores del módulo, conservando fotos documentales y ejemplos.
