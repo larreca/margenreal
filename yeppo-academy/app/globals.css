@@ -510,3 +510,9 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
  .academy-focused-visual img{width:720px;max-width:none}
  .academy-focused-visual figcaption{min-width:680px}
 }
+
+
+/* Capítulo 3: diferenciación visual en módulos comerciales */
+.editorial-reader .academy-focused-visual{margin-top:28px;margin-bottom:30px}
+.editorial-reader .academy-focused-visual img{border-radius:14px}
+.editorial-reader .academy-focused-visual figcaption{background:#fff8fc}

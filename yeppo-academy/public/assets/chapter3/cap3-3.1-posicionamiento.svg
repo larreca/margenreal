@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="ti de">
+<title id="ti">¿Por qué elegirían esta tienda?</title><desc id="de">Cuatro componentes visuales de una propuesta de valor diferenciada</desc>
+<defs>
+<radialGradient id="bg" cx="42%" cy="40%" r="90%"><stop stop-color="#fff"/><stop offset=".69" stop-color="#fdfaff"/><stop offset="1" stop-color="#f8edf5"/></radialGradient>
+<linearGradient id="footer" x2="1"><stop stop-color="#f7e6ef"/><stop offset=".5" stop-color="#efe8f9"/><stop offset="1" stop-color="#e8f1ed"/></linearGradient>
+<linearGradient id="store" x2=".8" y2="1"><stop stop-color="#f8dce8"/><stop offset="1" stop-color="#e5d6f2"/></linearGradient>
+<filter id="shade" x="-35%" y="-45%" width="170%" height="195%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#6a5477" flood-opacity=".14"/></filter>
+</defs>
+<rect x="9" y="9" width="1262" height="702" rx="35" fill="url(#bg)" stroke="#dccbe2" stroke-width="2"/>
+<circle cx="14" cy="592" r="126" fill="#f9e0ee" opacity=".29"/><circle cx="1260" cy="26" r="119" fill="#eedff8" opacity=".24"/>
+<text x="59" y="64" font-family="Georgia,'Times New Roman',serif" font-size="17" font-weight="700" text-anchor="start" fill="#9c679b">YEPPO ACADEMY / CAPÍTULO 3 / 3.1</text>
+<text x="59" y="121" font-family="Georgia,'Times New Roman',serif" font-size="39" font-weight="700" text-anchor="start" fill="#32283e">¿Por qué elegirían esta tienda?</text>
+<path d="M60 145h94" stroke="#d9a1c1" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1168" cy="131" r="3.9000000000000004" fill="#eac3d6"/><path d="M1168 119.3v6.5M1168 136.2v6.5M1156.3 131h6.5M1173.2 131h6.5" stroke="#e7bdd3" stroke-width="2"/><circle cx="82" cy="530" r="2.4000000000000004" fill="#eac3d6"/><path d="M82 522.8v4M82 533.2v4M74.8 530h4M85.2 530h4" stroke="#e7bdd3" stroke-width="2"/>
+<circle cx="643" cy="361" r="129" fill="#faf2f8" stroke="#ddbdd1" stroke-width="2" filter="url(#shade)"/>
+<rect x="568" y="286" width="152" height="134" rx="21" fill="url(#store)" /><text x="644" y="320" font-family="Georgia,'Times New Roman',serif" font-size="28" font-weight="700" text-anchor="middle" fill="#493453">YEPPO</text>
+<path d="M583 336h123M589 342v59h108v-59M609 401v-43h27v43M653 357h24v23h-24" stroke="#493453" stroke-width="3" fill="none"/>
+<text x="643" y="448" font-family="Georgia,'Times New Roman',serif" font-size="18" font-weight="700" text-anchor="middle" fill="#c66091">Propuesta clara</text><path d="M397 280 Q440 280 532 325" stroke="#ce82a8" stroke-width="3" fill="none"/><g filter="url(#shade)"><rect x="158" y="192" width="272" height="153" rx="23" fill="#f9e3ef" /></g>
+<circle cx="219" cy="257" r="36" fill="white"/><g transform="translate(219 257) scale(0.52)" stroke="#32283e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-36-25 0-41 36-25 0-9ZM-36-8 0 8 36-8M-36 8 0 25 36 8"/></g>
+<text x="265" y="253" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" text-anchor="start" fill="#32283e">Curaduría</text><text x="265" y="288" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#5b5063">Elegir con criterio</text><path d="M885 280 Q845 280 754 325" stroke="#b59ad8" stroke-width="3" fill="none"/><g filter="url(#shade)"><rect x="852" y="192" width="272" height="153" rx="23" fill="#ede5f7" /></g>
+<circle cx="913" cy="257" r="36" fill="white"/><g transform="translate(913 257) scale(0.52)" stroke="#32283e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="-37" y="-30" width="74" height="56" rx="13"/><path d="M-18 26l-13 10V22 M-24-11h46M-24 3h33"/></g>
+<text x="959" y="253" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" text-anchor="start" fill="#32283e">Asesoría</text><text x="959" y="288" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#5b5063">Reducir dudas</text><path d="M397 488 Q440 488 532 415" stroke="#89bba9" stroke-width="3" fill="none"/><g filter="url(#shade)"><rect x="158" y="400" width="272" height="153" rx="23" fill="#e3f2eb" /></g>
+<circle cx="219" cy="465" r="36" fill="white"/><g transform="translate(219 465) scale(0.52)" stroke="#32283e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-34-7v41h68V-7 M-41-7l9-29h64l9 29-13 8-13-8-15 8-14-8-14 8-13-8 M-17 34V9h21v25 M12 10h17v14H12"/></g>
+<text x="265" y="461" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" text-anchor="start" fill="#32283e">Experiencia</text><text x="265" y="496" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#5b5063">Descubrir y probar</text><path d="M885 488 Q845 488 754 415" stroke="#e2b38b" stroke-width="3" fill="none"/><g filter="url(#shade)"><rect x="852" y="400" width="272" height="153" rx="23" fill="#f9eadf" /></g>
+<circle cx="913" cy="465" r="36" fill="white"/><g transform="translate(913 465) scale(0.52)" stroke="#32283e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0-37l33 12V0Q32 26 0 39-33 26-33 0v-25Z M-19-1l13 13 26-27"/></g>
+<text x="959" y="461" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" text-anchor="start" fill="#32283e">Confianza</text><text x="959" y="496" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#5b5063">Origen y servicio</text>
+<rect x="65" y="627" width="1150" height="67" rx="30" fill="url(#footer)" stroke="#fff" stroke-width="2"/>
+<g transform="translate(104 659) scale(0.34)" stroke="#a4689e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0-35 9-9 35 0 9 9 0 35-9 9-35 0-9-9Z"/></g>
+<text x="148" y="667" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#493453">Una promesa comercial vale cuando la experiencia la demuestra.</text>
+</svg>

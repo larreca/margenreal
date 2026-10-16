@@ -11,6 +11,16 @@ const visuals={
   ["cap2-2.7-unit-economics.svg","Cálculo conceptual de la contribución comercial y variables de inventario"],
   ["cap2-2.8-plan90.svg","Plan de crecimiento de 90 días en tres fases"]
  ],
+ c03:[
+  ["cap3-3.1-posicionamiento.svg","Mapa visual de posicionamiento comercial, curaduría, asesoría, experiencia y confianza"],
+  ["cap3-3.2-mapa-competencia.svg","Mapa visual de formatos competitivos de K-Beauty, sin clasificar marcas reales"],
+  ["cap3-3.3-surtido.svg","Estantería ilustrada: básicos, novedades y complementos con métricas de stock"],
+  ["cap3-3.4-tienda.svg","Plano visual de descubrimiento, pruebas y asesoría en una tienda K-Beauty"],
+  ["cap3-3.5-omnicanal.svg","Diagrama de experiencia integrada de tienda, ecommerce, marketplace y posventa"],
+  ["cap3-3.6-contenido.svg","Fichas, educación y comunidad como recursos de confianza"],
+  ["cap3-3.7-precios.svg","Infografía de contribución comercial, descuentos y fidelización"],
+  ["cap3-3.8-plan90.svg","Plan de noventa días para diagnóstico, experimentos y crecimiento"]
+ ],
  c04:[
   ["cap4-4.1-capas-piel.svg","Esquema simplificado de epidermis, dermis e hipodermis"],
   ["cap4-4.2-epidermis.svg","Esquema de renovación natural de células de la epidermis"],
@@ -26,8 +36,8 @@ export function enhanceChapterVisuals(chapterId,module){
  const set=visuals[chapterId]; if(!set)return module?.html||"";
  const section=Number(String(module?.label||"").split(".")[1]);
  const visual=set[section-1]; if(!visual)return module?.html||"";
- const dir=chapterId==="c02"?"chapter2":"chapter4";
- const src="/assets/"+dir+"/"+visual[0]+"?v=20261015b";
+ const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":"chapter4";
+ const src="/assets/"+dir+"/"+visual[0]+"?v=20261015c";
  const figure='<figure class="course-image academy-infographic academy-focused-visual"><img src="'+src+'" alt="'+visual[1]+'" loading="lazy"/><figcaption>'+visual[1]+' · <a href="'+src+'" target="_blank" rel="noopener noreferrer">Ampliar imagen ↗</a></figcaption></figure>';
  let html=module?.html||"";
  // Sustituir diagramas anteriores del módulo, conservando fotos documentales y ejemplos.
@@ -35,6 +45,19 @@ export function enhanceChapterVisuals(chapterId,module){
  // El antiguo capítulo 2 contenía la foto de una tienda competidora; usar una imagen real de Yeppo.
  if(chapterId==="c02")html=html.replace(/<figure class="course-image wide-image ch2-photo">[\s\S]*?<\/figure>/g,
  '<figure class="course-image wide-image ch2-photo"><img src="/assets/editorial/yeppo-store.jpg" alt="Interior real de una tienda Yeppo con exhibición de cosméticos"/><figcaption>Tienda Yeppo: experiencia física, selección de productos y asesoría como factores de diferenciación.</figcaption></figure>');
+ // El capítulo 3 ilustra tiendas únicamente con imágenes reales y oficiales de Yeppo.
+ if(chapterId==="c03"){
+  const storePhotos=[
+   {url:"https://yeppo.cl/cdn/shop/files/yeppo-patronato-tienda1.jpg?v=1749442209&width=1200",label:"Yeppo Patronato"},
+   {url:"https://yeppo.cl/cdn/shop/files/Frame_1000004954.jpg?v=1792005955&width=1200",label:"Yeppo Viña del Mar"},
+   {url:"https://yeppo.cl/cdn/shop/files/1000011692_1_8fba4af1-edae-4b91-8486-8cd2e235ddf5.jpg?v=1791770816&width=1200",label:"Yeppo Providencia"},
+   {url:"https://yeppo.cl/cdn/shop/files/1000007721.jpg?v=1791771155&width=1200",label:"Yeppo Estación Seúl"},
+   {url:"https://yeppo.cl/cdn/shop/files/tienda_4.jpg?v=1777987547&width=1200",label:"Yeppo Alcántara"}
+  ];
+  const place=storePhotos[(section-1)%storePhotos.length];
+  const store='<figure class="course-image wide-image ch2-photo"><img src="'+place.url+'" loading="lazy" alt="Fotografía real de la tienda '+place.label+'" /><figcaption>Fotografía real de '+place.label+' · Yeppo. Ejemplo de una experiencia presencial de K-Beauty.</figcaption></figure>';
+  html=html.replace(/<figure class="course-image wide-image ch2-photo">[\\s\\S]*?<\\/figure>/g,store);
+ }
  const reading=/<div class="reading-copy">[\s\S]*?<\/div>/;
  if(reading.test(html))return html.replace(reading,s=>s+figure);
  return figure+html;

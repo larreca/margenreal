@@ -5,7 +5,7 @@ const base="/assets/editorial/";
 const chapterCovers={
  c01:{image:"../chapter01/cap01-cover.svg",alt:"Portada editorial de Yeppo Academy: modelo, K-Beauty, criterio, evidencia y negocio"},
  c02:{image:"https://images.pexels.com/photos/18460096/pexels-photo-18460096.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Modelo en un entorno urbano de Santiago de Chile"},
- c03:{image:"https://images.pexels.com/photos/11157339/pexels-photo-11157339.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Retrato editorial de una mujer con maquillaje contemporáneo"},
+ c03:{image:"https://yeppo.cl/cdn/shop/files/yeppo-patronato-tienda1.jpg?v=1749442209&width=1200",alt:"Fotografía oficial de una tienda Yeppo en Patronato, Chile"},
  c04:{image:"https://images.pexels.com/photos/2709386/pexels-photo-2709386.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Primer plano de piel real con pecas"},
  c05:{image:"chile-beauty.jpg",alt:"Retrato editorial de una mujer fotografiada en Santiago de Chile"},
  c06:{image:"https://images.pexels.com/photos/7608061/pexels-photo-7608061.jpeg?auto=compress&cs=tinysrgb&w=1100",alt:"Mujer aplicando crema en su rutina de cuidado"},
