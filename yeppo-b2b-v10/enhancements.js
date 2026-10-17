@@ -511,9 +511,11 @@ async function init(){
     if(bundleIsLatest){
       const appliedKey="yeppoCRMv10BundledShopifyApplied";
       if(localStorage.getItem(appliedKey)!==bundled.generatedAt){
-        await crmDbUpsert(bundled,"encrypted-bundle");
-        localStorage.setItem(WEEKLY_CACHE_KEY,JSON.stringify({generatedAt:bundled.generatedAt,source:bundled.source,scope:"b2b_only",sales7:bundled.sales7,recentOrders:bundled.recentOrders}));
-        localStorage.setItem(appliedKey,bundled.generatedAt);
+        try{
+          await crmDbUpsert(bundled,"encrypted-bundle");
+          localStorage.setItem(WEEKLY_CACHE_KEY,JSON.stringify({generatedAt:bundled.generatedAt,source:bundled.source,scope:"b2b_only",sales7:bundled.sales7,recentOrders:bundled.recentOrders}));
+          localStorage.setItem(appliedKey,bundled.generatedAt);
+        }catch(error){console.warn("Shopify bundled snapshot:",error)}
       }
       mergeLiveShopify(bundled);
       if(typeof BC_STOCK_BY_SKU!=="undefined"&&window.CRM_BUNDLED_STOCK){
