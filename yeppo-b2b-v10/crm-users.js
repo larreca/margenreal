@@ -3,10 +3,9 @@
 
   const CONFIG_KEY = "yeppoCRMv10SupabaseConfig";
   const SESSION_KEY = "yeppoCRMv10SupabaseSession";
-  // Public browser key; Supabase Auth and row level security control access.
-  const DEPLOYED_CONFIG = location.hostname === "larreca.github.io" && location.pathname.startsWith("/margenreal/yeppo-b2b-v10/")
-    ? { url: "https://aevcjsfpmzzvoyqtbqfc.supabase.co", anonKey: "sb_publishable_14FEBbreIl2mgXJOLpRmFw_uLYy0Wvp" }
-    : null;
+  // The published CRM runs with browser-local data. The encrypted V10 access
+  // code in index.html remains the boundary for the bundled customer base.
+  const DEPLOYED_CONFIG = null;
   const LOCAL_USERS_KEY = "yeppoCRMv10PilotUsers";
   const LOCAL_USER_KEY = "yeppoCRMv10PilotCurrentUser";
   const LOCAL_ACTIVITY_KEY = "yeppoCRMv10PilotActivity";
@@ -14,8 +13,8 @@
   const EDIT_ROLES = new Set(["admin", "supervisor", "kam"]);
   const DEFAULT_USER = { id: "local-matias", full_name: "Matías", email: "", role: "admin", active: true, local: true };
 
-  let config = DEPLOYED_CONFIG || readJSON(CONFIG_KEY, null);
-  let session = readJSON(SESSION_KEY, null);
+  let config = null;
+  let session = null;
   let profile = DEFAULT_USER;
   let profiles = [];
   let activities = readJSON(LOCAL_ACTIVITY_KEY, []);
@@ -52,11 +51,6 @@
     if (!users.some(user => user.id === DEFAULT_USER.id)) users.unshift(DEFAULT_USER);
     writeJSON(LOCAL_USERS_KEY, users);
     return users;
-  }
-
-  async function pinHash(pin) {
-    const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(String(pin || "")));
-    return [...new Uint8Array(bytes)].map(byte => byte.toString(16).padStart(2, "0")).join("");
   }
 
   async function authRequest(path, body, accessToken = "") {
@@ -230,17 +224,13 @@
 
   async function init() {
     if (initialized) return profile;
+    // Ignore any Supabase configuration saved by earlier CRM versions.
+    localStorage.removeItem(CONFIG_KEY);
+    localStorage.removeItem(SESSION_KEY);
     localUsers();
-    if (config?.url && config?.anonKey) {
-      let valid = false;
-      try { valid = await ensureSession() && await loadRemoteIdentity(); } catch (error) { console.error("CRM users:", error); }
-      if (!valid) await loginOverlay();
-    }
-    if (!connected()) {
-      profiles = localUsers();
-      const selected = localStorage.getItem(LOCAL_USER_KEY);
-      profile = profiles.find(user => user.id === selected && user.active !== false) || DEFAULT_USER;
-    }
+    profiles = localUsers();
+    const selected = localStorage.getItem(LOCAL_USER_KEY);
+    profile = profiles.find(user => user.id === selected && user.active !== false) || DEFAULT_USER;
     patchBaseActions();
     initialized = true;
     return profile;
@@ -531,9 +521,8 @@
         <button data-user-action="tasks"><i class="fa-solid fa-list-check"></i> Mis tareas</button>
         <button data-user-action="activity"><i class="fa-solid fa-clock-rotate-left"></i> Mi actividad</button>
         <button data-user-action="team-activity"><i class="fa-solid fa-chart-column"></i> Actividad del equipo</button>
-        <button data-user-action="settings"><i class="fa-solid fa-user-gear"></i> Usuarios y KAM</button>
-        <button data-user-action="switch"><i class="fa-solid fa-users"></i> Cambiar usuario</button>
-        <button data-user-action="logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>`;
+        <button data-user-action="settings"><i class="fa-solid fa-user-gear"></i> Responsables y KAM</button>
+        <button data-user-action="switch"><i class="fa-solid fa-users"></i> Cambiar responsable</button>`;
       document.body.appendChild(menu);
       menu.onclick = event => event.stopPropagation();
       menu.querySelector('[data-user-action="portfolio"]').onclick = () => openPortfolio(context);
@@ -554,7 +543,6 @@
         else [...document.querySelectorAll(".tabs .tab")].find(item => item.dataset.tab === "v10security")?.click();
       };
       menu.querySelector('[data-user-action="switch"]').onclick = () => connected() ? alert("Para cambiar de usuario, cierra la sesión actual.") : openLocalSwitcher();
-      menu.querySelector('[data-user-action="logout"]').onclick = logout;
       document.addEventListener("click", () => menu.classList.remove("open"));
     }
     const user = document.querySelector(".crmUserV2");
@@ -565,7 +553,7 @@
         menu.style.top = `${rect.bottom + 8}px`;
         menu.style.right = `${Math.max(10, innerWidth - rect.right)}px`;
         menu.querySelector(".crmProfileHead b").textContent = profile.full_name;
-        menu.querySelector(".crmProfileHead small").textContent = `${ROLE_LABELS[profile.role] || profile.role}${connected() ? " · conectado" : " · piloto local"}`;
+        menu.querySelector(".crmProfileHead small").textContent = `${ROLE_LABELS[profile.role] || profile.role} · modo local`;
         menu.querySelector('[data-user-action="switch"]').hidden = connected();
         menu.querySelector('[data-user-action="team-activity"]').hidden = !can("supervise");
         menu.classList.toggle("open");
@@ -732,15 +720,10 @@
   function openLocalSwitcher() {
     document.getElementById("crmProfileMenu")?.classList.remove("open");
     const users = localUsers().filter(user => user.active !== false);
-    const body = modalShell("Cambiar usuario", "Modo piloto local: los perfiles comparten este navegador");
+    const body = modalShell("Cambiar responsable", "Los responsables comparten este navegador; este cambio no verifica identidad.");
     body.innerHTML = `<div class="crmUserSwitchList">${users.map(user => `<button data-user-id="${safe(user.id)}"><i>${safe(user.full_name.slice(0, 1).toUpperCase())}</i><span><b>${safe(user.full_name)}</b><small>${safe(ROLE_LABELS[user.role])}</small></span></button>`).join("")}</div>`;
     body.querySelectorAll("[data-user-id]").forEach(button => button.onclick = async () => {
       const user = users.find(item => item.id === button.dataset.userId);
-      if (user.pin_hash) {
-        const pin = prompt(`PIN de ${user.full_name}`);
-        if (pin == null) return;
-        if (await pinHash(pin) !== user.pin_hash) return alert("PIN incorrecto.");
-      }
       localStorage.setItem(LOCAL_USER_KEY, user.id);
       location.reload();
     });
@@ -761,16 +744,12 @@
     host.className = "crmUsersSettings";
     host.innerHTML = `
       <div class="crmUsersCard">
-        <small>USUARIOS Y KAM</small><h2>Equipo y trazabilidad</h2>
+        <small>RESPONSABLES Y KAM</small><h2>Equipo y actividad local</h2>
         <p class="crmUsersMode"></p><div class="crmUsersTable"></div>
-        <form class="crmAddUser"><h3>Agregar usuario piloto</h3><div class="crmUsersFormGrid"><input name="name" placeholder="Nombre" required><input name="email" type="email" placeholder="Correo"><select name="role"><option value="kam">KAM</option><option value="supervisor">Supervisor B2B</option><option value="readonly">Solo lectura</option><option value="admin">Administrador</option></select><input name="pin" inputmode="numeric" minlength="4" placeholder="PIN (mínimo 4 dígitos)" required></div><button class="primary" type="submit">Crear usuario</button><span class="crmAddUserStatus"></span></form>
+        <p>Los responsables son etiquetas de trabajo en este navegador. La actividad no verifica quién estuvo frente al equipo.</p>
+        <form class="crmAddUser"><h3>Agregar responsable local</h3><div class="crmUsersFormGrid"><input name="name" placeholder="Nombre" required><input name="email" type="email" placeholder="Correo (opcional)"><select name="role"><option value="kam">KAM</option><option value="supervisor">Supervisor B2B</option><option value="readonly">Solo lectura</option><option value="admin">Administrador</option></select></div><button class="primary" type="submit">Agregar responsable</button><span class="crmAddUserStatus"></span></form>
       </div>
-      <div class="crmUsersCard">
-        <small>BASE COMPARTIDA</small><h2>Conexión Supabase Free</h2>
-        <p>Al conectar, usuarios, pedidos Shopify, clientes, SKU, ventas diarias, tareas y bitácora se comparten entre equipos autorizados.</p>
-        <form class="crmSupabaseConfig" ${DEPLOYED_CONFIG ? "hidden" : ""}><label>Project URL<input name="url" type="url" placeholder="https://xxxxx.supabase.co" value="${safe(config?.url || "")}"></label><label>Anon public key<input name="anonKey" type="password" placeholder="sb_publishable_... o anon key"></label><div><button class="primary" type="submit">Guardar y conectar</button>${config && !DEPLOYED_CONFIG ? '<button class="soft crmDisconnect" type="button">Desconectar</button>' : ""}</div><span class="crmConfigStatus"></span></form>
-        <div class="crmSupabaseSteps"><b>Para activar la base compartida:</b><ol><li>Crea un proyecto en Supabase.</li><li>Ejecuta <code>supabase-pilot-schema.sql</code> en SQL Editor.</li><li>Configura esta URL del CRM en Authentication.</li><li>Copia Project URL y la clave pública en este formulario.</li><li>Registra tu cuenta, confirma el correo y habilita al primer administrador desde SQL Editor según la guía.</li></ol></div>
-      </div>`;
+      <div class="crmUsersCard"><small>DATOS LOCALES</small><h2>Modo local</h2><p>Las gestiones y cargas nuevas se guardan en este navegador. Para moverlas a otro equipo, usa el respaldo en Configuración.</p></div>`;
     section.appendChild(host);
     renderUsersSettings(host);
   }
@@ -779,9 +758,7 @@
     const mode = host.querySelector(".crmUsersMode");
     const sharedData = window.CRM_SHARED_SHOPIFY;
     const sharedError = window.CRM_SHARED_ERROR;
-    mode.innerHTML = connected()
-      ? `<b>Sesión conectada:</b> ${safe(profile.full_name)} · ${safe(ROLE_LABELS[profile.role])}. ${sharedError ? `<b>Datos Shopify sin verificar:</b> ${safe(sharedError)}. Lo que ves puede ser local.` : sharedData ? `<b>Base Shopify compartida:</b> ${sharedData.recentOrders?.length || 0} pedidos cargados.` : `<b>Base Shopify compartida vacía:</b> publica una carga desde un administrador o supervisor.`}`
-      : DEPLOYED_CONFIG ? `<b>Acceso compartido:</b> inicia sesión para consultar los datos del equipo.` : `<b>Modo piloto local:</b> funciona en este navegador y sin costo.`;
+    mode.innerHTML = `<b>Modo local:</b> ${safe(profile.full_name)} · ${safe(ROLE_LABELS[profile.role])}. Los cambios quedan en este navegador.`;
     const table = host.querySelector(".crmUsersTable");
     table.innerHTML = `<div class="crmUsersRow crmUsersHead"><span>Usuario</span><span>Rol</span><span>Estado</span></div>${profiles.map(user => `<div class="crmUsersRow" data-profile-id="${safe(user.id)}"><span><b>${safe(user.full_name)}</b><small>${safe(user.email || "Sin correo")}</small></span><select ${can("admin") && user.id !== profile.id ? "" : "disabled"}><option value="admin" ${user.role === "admin" ? "selected" : ""}>Administrador</option><option value="supervisor" ${user.role === "supervisor" ? "selected" : ""}>Supervisor</option><option value="kam" ${user.role === "kam" ? "selected" : ""}>KAM</option><option value="readonly" ${user.role === "readonly" ? "selected" : ""}>Solo lectura</option></select><button class="${user.active === false ? "inactive" : "active"}" ${can("admin") && user.id !== profile.id ? "" : "disabled"}>${user.active === false ? "Inactivo" : "Activo"}</button></div>`).join("")}`;
     table.querySelectorAll(".crmUsersRow[data-profile-id]").forEach(row => {
@@ -803,8 +780,7 @@
       };
     });
     const addForm = host.querySelector(".crmAddUser");
-    addForm.querySelector("h3").textContent = connected() ? "Registrar usuario del equipo" : "Agregar usuario piloto";
-    addForm.querySelector('[name="pin"]').placeholder = connected() ? "Contraseña temporal (mín. 6)" : "PIN (mínimo 4 dígitos)";
+    addForm.querySelector("h3").textContent = "Agregar responsable local";
     addForm.hidden = !can("admin");
     addForm.onsubmit = async event => {
       event.preventDefault();
@@ -823,35 +799,15 @@
           status.textContent = "Usuario registrado. Si Supabase exige confirmación, recibirá un correo.";
           setTimeout(async () => { profiles = await rest("crm_profiles?select=*&order=full_name.asc"); renderUsersSettings(host); }, 1200);
         } else {
-          if (data.pin.length < 4) throw new Error("El PIN debe tener al menos 4 dígitos.");
-          profiles.push({ id: `local-${uid()}`, full_name: data.name.trim(), email: data.email.trim(), role: data.role, active: true, local: true, pin_hash: await pinHash(data.pin) });
+          profiles.push({ id: `local-${uid()}`, full_name: data.name.trim(), email: data.email.trim(), role: data.role, active: true, local: true });
           writeJSON(LOCAL_USERS_KEY, profiles);
           await audit("user_created", "user", profiles.at(-1).id, `Creó el usuario ${data.name}`, { email: data.email, role: data.role });
-          status.textContent = "Usuario piloto creado.";
+          status.textContent = "Responsable agregado en este navegador.";
           addForm.reset();
           renderUsersSettings(host);
         }
       } catch (error) { status.textContent = error.message; }
     };
-    const configForm = host.querySelector(".crmSupabaseConfig");
-    configForm.onsubmit = event => {
-      event.preventDefault();
-      const data = Object.fromEntries(new FormData(configForm));
-      const url = normalizeUrl(data.url);
-      if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url) || !data.anonKey.trim()) {
-        configForm.querySelector(".crmConfigStatus").textContent = "Revisa la URL y la clave pública.";
-        return;
-      }
-      writeJSON(CONFIG_KEY, { url, anonKey: data.anonKey.trim() });
-      localStorage.removeItem(SESSION_KEY);
-      location.reload();
-    };
-    host.querySelector(".crmDisconnect")?.addEventListener("click", () => {
-      if (!confirm("¿Desconectar la base compartida en este navegador? Los datos de Supabase no se eliminan.")) return;
-      localStorage.removeItem(CONFIG_KEY);
-      localStorage.removeItem(SESSION_KEY);
-      location.reload();
-    });
   }
 
   window.CRMUsers = {
