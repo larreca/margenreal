@@ -60,15 +60,20 @@
   }
 
   async function authRequest(path, body, accessToken = "") {
-    const response = await fetch(`${normalizeUrl(config.url)}/auth/v1/${path}`, {
-      method: "POST",
-      headers: {
-        apikey: config.anonKey,
-        Authorization: `Bearer ${accessToken || config.anonKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body || {})
-    });
+    let response;
+    try {
+      response = await fetch(`${normalizeUrl(config.url)}/auth/v1/${path}`, {
+        method: "POST",
+        headers: {
+          apikey: config.anonKey,
+          Authorization: `Bearer ${accessToken || config.anonKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body || {})
+      });
+    } catch (_) {
+      throw new Error("La base compartida de Yeppo no responde. Un administrador debe revisar el proyecto en Supabase; podría estar pausado.");
+    }
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.msg || data.message || data.error_description || `Error ${response.status}`);
     return data;
@@ -126,7 +131,7 @@
     const authResponse = await fetch(`${normalizeUrl(config.url)}/auth/v1/user`, {
       headers: { apikey: config.anonKey, Authorization: `Bearer ${session.access_token}` }
     });
-    if (!authResponse.ok) return false;
+    if (!authResponse.ok) throw new Error("No se pudo validar la sesión con la base compartida. Intenta ingresar otra vez.");
     const user = await authResponse.json();
     const rows = await rest(`crm_profiles?id=eq.${encodeURIComponent(user.id)}&select=*`);
     if (!rows?.length) throw new Error("Esta cuenta aún no tiene un perfil CRM. Pide al administrador que complete la activación.");
