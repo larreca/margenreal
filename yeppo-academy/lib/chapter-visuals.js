@@ -40,14 +40,48 @@ const visuals={
   ["cap5-5.6-piel-normal.png","Piel normal: equilibrio cutáneo, limpieza y fotoprotección"],
   ["cap5-5.7-reactividad.png","Reactividad: entrevista, simplificación y derivación cuando corresponda"],
   ["cap5-5.8-asesoria.png","Venta consultiva: escuchar, priorizar y acompañar sin diagnosticar"]
- ]
+ ],
+ c06:[
+  [
+    "cap6-6.1-tipo-vs-estado.png",
+    "Tipo habitual y estado actual: preguntas distintas para orientar la rutina"
+  ],
+  [
+    "cap6-6.2-sebo-y-agua.png",
+    "Sebo y agua: brillo, hidratación y funciones cosméticas complementarias"
+  ],
+  [
+    "cap6-6.3-tolerancia.png",
+    "Cambios de tolerancia: sensaciones y preguntas antes de recomendar"
+  ],
+  [
+    "cap6-6.4-carga-rutina.png",
+    "Carga acumulada de limpieza, activos, temperatura y fricción"
+  ],
+  [
+    "cap6-6.5-observar-sin-diagnosticar.png",
+    "Observar señales y reconocer cuándo orientar a evaluación profesional"
+  ],
+  [
+    "cap6-6.6-piel-y-ambiente.png",
+    "Influencia del ambiente y ajustes de textura y frecuencia"
+  ],
+  [
+    "cap6-6.7-simplificar.png",
+    "Rutina cosmética simple según tolerancia y señales de derivación"
+  ],
+  [
+    "cap6-6.8-entrevista.png",
+    "Seis preguntas para una asesoría cosmética centrada en el estado actual"
+  ]
+]
 };
 export function enhanceChapterVisuals(chapterId,module){
  const set=visuals[chapterId]; if(!set)return module?.html||"";
  const section=Number(String(module?.label||"").split(".")[1]);
  const visual=set[section-1]; if(!visual)return module?.html||"";
- const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":chapterId==="c04"?"chapter4":"chapter5";
- const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c05"?"?v=ch5-approved-originals-20261016-v2":"?v=ch4-png-20261016");
+ const dir=chapterId==="c02"?"chapter2":chapterId==="c03"?"chapter3":chapterId==="c04"?"chapter4":chapterId==="c05"?"chapter5":"chapter6";
+ const src="/assets/"+dir+"/"+visual[0]+(chapterId==="c06"?"?v=ch6-editorial-20261016":chapterId==="c05"?"?v=ch5-approved-originals-20261016-v2":"?v=ch4-png-20261016");
  const figure='<figure class="course-image academy-infographic academy-focused-visual"><img src="'+src+'" alt="'+visual[1]+'" loading="lazy"/><figcaption>'+visual[1]+' · <a href="'+src+'" target="_blank" rel="noopener noreferrer">Ampliar imagen ↗</a></figcaption></figure>';
  let html=module?.html||"";
  // Sustituir diagramas anteriores del módulo, conservando fotos documentales y ejemplos.
