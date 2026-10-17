@@ -95,22 +95,22 @@ function mergeLiveShopify(data){
     const found=(sid&&byShopifyId.get(sid))||(crmId&&byCrmId.get(crmId))||(email?byEmail.get(email):null);
     const last=(x.lastOrderDate||x.lastOrder?.date||"").slice(0,10);
     const incomingHist=(x.ordersHistory||[]).map(o=>({id:o.id||"",date:String(o.date||o.createdAt||"").slice(0,10),amount:+(o.total||o.amount||0),total:+(o.total||o.amount||0),name:o.name||""})).filter(o=>o.date);
+    const displayName=x.name||x.customer||x.email||"Cliente";
     const patch={
-      cliente:x.name||x.customer||x.email||"Cliente",
-      contacto:x.name||x.customer||x.email||"Cliente",
-      email:x.email||"",
-      telefono:x.phone||"",
-      b2bConfirmedOrders:+(x.orders||x.ordersCount||0),
-      pedidos:+(x.orders||x.ordersCount||0),
-      totalSpent:+(x.spent||x.totalSpent||0),
-      reorderMedian:+(x.reorderMedian||x.reorderDays||0)||undefined,
-      reorderDays:+(x.reorderDays||x.reorderMedian||0)||undefined,
-      shopifyId:x.shopifyId||x.id||"",
-      shopifyTags:Array.isArray(x.tags)?x.tags:[],
+      cliente:found?.cliente||displayName,
+      contacto:found?.contacto||displayName,
+      email:x.email||found?.email||"",
+      telefono:x.phone||found?.telefono||"",
+      shopifyId:x.shopifyId||x.id||found?.shopifyId||"",
+      shopifyTags:Array.isArray(x.tags)?x.tags:(found?.shopifyTags||[]),
       ordersHistory:incomingHist,
       shopifyLive:true
     };
-    if(last){patch.ultimaB2B=last;patch.ultima=last}
+    if(x.orders!=null||x.ordersCount!=null){patch.b2bConfirmedOrders=+(x.orders??x.ordersCount)||0;patch.pedidos=patch.b2bConfirmedOrders}
+    if(x.spent!=null||x.totalSpent!=null)patch.totalSpent=+(x.spent??x.totalSpent)||0;
+    if(x.b2bObservedSales!=null){patch.b2bObservedSales=+x.b2bObservedSales||0;patch.gasto=patch.b2bObservedSales}
+    if(x.reorderMedian!=null||x.reorderDays!=null){patch.reorderMedian=+(x.reorderMedian??x.reorderDays)||0;patch.reorderDays=+(x.reorderDays??x.reorderMedian)||0}
+    if(last&&(!found?.ultimaB2B||last>String(found.ultimaB2B).slice(0,10))){patch.ultimaB2B=last;patch.ultima=last}
     if(found){const prev=Array.isArray(found.ordersHistory)?found.ordersHistory:[],m=new Map();[...prev,...incomingHist].forEach(o=>{const k=String(o.id||o.name||"")+"|"+String(o.date||"");m.set(k,{...m.get(k),...o})});patch.ordersHistory=[...m.values()].sort((a,b)=>String(b.date).localeCompare(String(a.date)));Object.assign(found,patch)}
     else state.clients.push({id:970000+i,...patch,createdAt:x.createdAt||""});
     if(typeof SKU_HISTORY_90D!=="undefined"&&x.email&&Array.isArray(x.skuHistory)){
@@ -506,6 +506,31 @@ async function init(){
       loadProductCosts(),
       localSnapshot?crmDbUpsert(localSnapshot,"local-cache").catch(()=>false):Promise.resolve(false)
     ]);
+    const bundled=window.CRM_BUNDLED_WEEKLY,weeklyBeforeBundle=crmWeeklyCacheLoad();
+    const bundleIsLatest=bundled?.scope==="b2b_only"&&Array.isArray(bundled.recentOrders)&&(!weeklyBeforeBundle?.generatedAt||Date.parse(bundled.generatedAt)>=Date.parse(weeklyBeforeBundle.generatedAt));
+    if(bundleIsLatest){
+      const appliedKey="yeppoCRMv10BundledShopifyApplied";
+      if(localStorage.getItem(appliedKey)!==bundled.generatedAt){
+        await crmDbUpsert(bundled,"encrypted-bundle");
+        localStorage.setItem(WEEKLY_CACHE_KEY,JSON.stringify({generatedAt:bundled.generatedAt,source:bundled.source,scope:"b2b_only",sales7:bundled.sales7,recentOrders:bundled.recentOrders}));
+        localStorage.setItem(appliedKey,bundled.generatedAt);
+      }
+      mergeLiveShopify(bundled);
+      if(typeof BC_STOCK_BY_SKU!=="undefined"&&window.CRM_BUNDLED_STOCK){
+        window.SHOPIFY_LIVE_PRODUCTS_BY_SKU=window.SHOPIFY_LIVE_PRODUCTS_BY_SKU||{};
+        for(const [sku,previous] of Object.entries(BC_STOCK_BY_SKU)){
+          if(Object.hasOwn(window.CRM_BUNDLED_STOCK,sku))continue;
+          BC_STOCK_BY_SKU[sku]={...previous,stock:0,stockVerified:false};
+        }
+        for(const [sku,stock] of Object.entries(window.CRM_BUNDLED_STOCK)){
+          const previous=BC_STOCK_BY_SKU[sku]||{product:sku};
+          BC_STOCK_BY_SKU[sku]={...previous,stock,stockVerified:true};
+          const key=norm(sku),known=window.SHOPIFY_LIVE_PRODUCTS_BY_SKU[key]||{};
+          window.SHOPIFY_LIVE_PRODUCTS_BY_SKU[key]={...known,sku,product:previous.product||sku,stock};
+        }
+      }
+      shopifyMetrics={...bundled,today:bundled.sales7?.at(-1)||null};window.SHOPIFY_LIVE_METRICS=shopifyMetrics;
+    }
     if(!hasLive&&!liveShopify)await loadShopifyQaFixture();
     if(shared){pipeline=shared.pipeline||pipeline;nextActions=shared.nextActions||nextActions;savePipe();saveActions()}
     if(remoteShopify){shopifyMetrics={...remoteShopify,today:remoteShopify.sales7?.at(-1)||null};window.SHOPIFY_LIVE_METRICS=shopifyMetrics}
