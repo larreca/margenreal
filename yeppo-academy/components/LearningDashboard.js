@@ -4,7 +4,7 @@ import {useEffect,useState} from 'react';
 import useLearning from './useLearning';
 import {chapterProgress,weeklyCount,normalizeSearch} from '@/lib/learning-model';
 export function Meter({value,label}){return <div className="learn-meter" role="progressbar" aria-label={label} aria-valuenow={Math.round(value*10)/10} aria-valuemin={0} aria-valuemax={100}><span style={{width:Math.max(0,Math.min(100,value))+'%'}}/></div>;}
-export default function LearningDashboard({schools,initialStates={},preview=false,name='',view='home'}){
+export default function LearningDashboard({schools,initialStates={},preview=false,name='',view='home',accountsAvailable=false}){
  const {states,ready,error}=useLearning(initialStates,preview);const [query,setQuery]=useState('');const [route,setRoute]=useState('all');const [tab,setTab]=useState('favoritos');
  useEffect(()=>{const params=new URLSearchParams(window.location.search);if(params.get('route'))setRoute(params.get('route'));if(['favoritos','notas','recursos'].includes(params.get('tab')))setTab(params.get('tab'));},[]);
  const root=preview?'/revision':'/academy';const chapters=schools.flatMap(s=>s.chapters);const status=c=>chapterProgress(c,states[c.id]);const completed=chapters.filter(c=>status(c).finished).length;const percent=chapters.length?Math.round(chapters.reduce((sum,c)=>sum+status(c).percent,0)/chapters.length*10)/10:0;
@@ -28,7 +28,7 @@ export default function LearningDashboard({schools,initialStates={},preview=fals
  {tab==='favoritos'&&(favorite.length?favorite.map(row):<p className="learn-empty">Todavía no tienes favoritos. Guarda un capítulo desde su portada o una lección.</p>)}
  {tab==='notas'&&(notes.length?notes.map(({c,id,text})=><article className="learn-note-row" key={c.id+id}><Link href={href(c)+'?lesson='+encodeURIComponent(id)}>{c.title} · {c.modules.find(m=>m.id===id)?.title||'Lección'}</Link><p>{text}</p></article>):<p className="learn-empty">Tus notas aparecerán aquí. Puedes escribirlas mientras estudias.</p>)}
  {tab==='recursos'&&<><p>Abre un capítulo y selecciona «Descargar guía». Incluye sus lecciones y fuentes; puedes imprimirla o guardarla como PDF desde tu navegador.</p><Link href={root+'/explorar'} className="learn-button secondary">Elegir un capítulo</Link></>}
- </section><section className="learn-certificate"><h2>Certificado Yeppo Academy</h2><p>{completed===chapters.length&&completed>0?'Has completado tu recorrido.':'Completa las lecciones y aprueba las evaluaciones para habilitar tu certificado.'}</p>{preview?<Link href="/login">Inicia sesión para certificar tu avance</Link>:<Link href="/certificates">{completed===chapters.length?'Ver certificado':'Consultar requisitos'}</Link>}</section></>}
+ </section><section className="learn-certificate"><h2>Certificado Yeppo Academy</h2><p>{completed===chapters.length&&completed>0?'Has completado tu recorrido.':'Completa las lecciones y aprueba las evaluaciones para habilitar tu certificado.'}</p>{preview?(accountsAvailable?<Link href="/login">Inicia sesión para certificar tu avance</Link>:<p>La certificación por cuenta de alumno estará disponible próximamente.</p>):<Link href="/certificates">{completed===chapters.length?'Ver certificado':'Consultar requisitos'}</Link>}</section></>}
  <footer className="learn-footer"><span>YEPPO ACADEMY</span><span>Aprender para recomendar con criterio.</span>{preview&&<Link href="/revision/editar">Editar academia</Link>}</footer>
  </main>;
 }
