@@ -1,5 +1,10 @@
 "use client";
 import {useEffect,useRef,useState} from "react";
+import Link from 'next/link';
+import useLearning from './useLearning';
+import {chapterProgress,readMinutes} from '@/lib/learning-model';
+import {Meter} from './LearningDashboard';
+import {downloadGuide} from './ChapterOverview';
 import {videoEmbedUrl} from "@/lib/video";
 import {editorialFor,editorialImage,editorialCover} from "@/lib/editorial";
 import ChapterMap from "@/components/ChapterMap";
@@ -149,7 +154,7 @@ function attachInteractions(container,onAssessment){
        feedback.className="challenge-feedback "+(isCorrect?"good":"bad");
        feedback.textContent=(isCorrect?"Correcto. ":"Revisa: "+(correct?.parentElement?.textContent?.trim()||"la respuesta indicada")+". ")+(q.dataset.explanation||"");
      });
-     if(onAssessment)await onAssessment(answers);
+     if(onAssessment)await onAssessment(answers,qs.length?score/qs.length*100:0);
    };
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
@@ -157,80 +162,51 @@ function attachInteractions(container,onAssessment){
  return()=>cleanups.forEach(fn=>fn());
 }
 
-export default function ChapterReader({chapter,initialPercent=0,initialPassed=false,previewMode=false}){
+export default function ChapterReader({chapter,initialPercent=0,initialPassed=false,previewMode=false,initialStates={},initialModuleId}){
  const modules=chapter.modules||[];
- const initialIndex=modules.length?Math.min(modules.length-1,Math.max(0,Math.floor((initialPercent/100)*modules.length))):0;
- const [index,setIndex]=useState(initialIndex);
- const [navOpen,setNavOpen]=useState(false);
- const [done,setDone]=useState(initialPercent>=100);
- const [passed,setPassed]=useState(initialPassed);
- const [assessmentMsg,setAssessmentMsg]=useState("");
- const stageRef=useRef(null);
- const m=modules[index]||{id:"empty",label:"",title:chapter.title,html:"<p>Contenido en preparación.</p>"};
- const videoSrc=videoEmbedUrl(m.videoUrl);
- const shown=Math.max(initialPercent,modules.length?Math.round(((index+1)/modules.length)*100):0);
- const feature={...editorialFor(chapter.id),...chapter.editorial};
- const cover=editorialCover(chapter.id);
- const coverSrc=chapter.coverImage||cover.src;
- const coverAlt=chapter.coverAlt||cover.alt;
-
+ const [index,setIndex]=useState(Math.max(0,modules.findIndex(m=>m.id===initialModuleId)));
+ const [navOpen,setNavOpen]=useState(false);const [notesOpen,setNotesOpen]=useState(false);const [note,setNote]=useState('');const [noteDirty,setNoteDirty]=useState(false);const [savedMsg,setSavedMsg]=useState('');const [busy,setBusy]=useState(false);
+ const {states,ready,error,update}=useLearning(initialStates,previewMode);const state=states[chapter.id]||{};
+ const [passed,setPassed]=useState(initialPassed);const [assessmentMsg,setAssessmentMsg]=useState('');const stageRef=useRef(null);const dialogRef=useRef(null);const [zoom,setZoom]=useState(null);const [zoomDetail,setZoomDetail]=useState(false);const lastImageTrigger=useRef(null);const resumed=useRef(null);
+ const m=modules[index]||{id:'empty',title:chapter.title,html:'<p>Contenido en preparación.</p>'};const videoSrc=videoEmbedUrl(m.videoUrl);
+ const p=chapterProgress(chapter,{...state,passed:state.passed||passed});
+ const feature={...editorialFor(chapter.id),...chapter.editorial};const cover=editorialCover(chapter.id);const coverSrc=chapter.coverImage||cover.src;const coverAlt=chapter.coverAlt||cover.alt;
+ const root=previewMode?'/revision':'/academy';const chapterPath=root+(previewMode?'/':'/chapter/')+chapter.id;
+ useEffect(()=>{if(ready&&!noteDirty)setNote(state.notes?.[m.id]||'');},[ready,m.id,state.notes,noteDirty]);
+ useEffect(()=>{if(ready&&resumed.current!==m.id){resumed.current=m.id;update(chapter.id,{action:'resume',moduleId:m.id});}},[ready,m.id]);
+ useEffect(()=>{if(ready&&state.passed)setPassed(true);},[ready,state.passed]);
  useEffect(()=>{
-   return attachInteractions(stageRef.current,async(answers)=>{
-     if(previewMode)return;
-     const r=await fetch("/api/quiz",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chapterId:chapter.id,answers})});
-     const j=await r.json();
-     setPassed(Boolean(j.passed));
-     setAssessmentMsg(j.passed?"Evaluación aprobada. Ya puedes completar el capítulo.":"Resultado guardado. Necesitas 80% para aprobar.");
-   });
+ const container=stageRef.current;if(!container)return;
+ const clean=attachInteractions(container,async(answers,score)=>{
+ if(previewMode){const ok=await update(chapter.id,{action:'quiz',value:!!state.passed||score>=80});if(ok){setPassed(v=>v||score>=80);setAssessmentMsg(score>=80?'Evaluación aprobada. Confirma la lectura para finalizar.':'Necesitas un 80 % para aprobar. Puedes volver a intentarlo.');}return;}
+ try{const r=await fetch('/api/quiz',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chapterId:chapter.id,answers})});const j=await r.json();if(!r.ok)throw new Error(j.error);setPassed(v=>v||Boolean(j.passed));setAssessmentMsg(j.passed?'Evaluación aprobada. Confirma la lectura para finalizar.':'Resultado guardado. Necesitas un 80 % para aprobar.');}catch(e){setAssessmentMsg(e.message||'No se pudo guardar la evaluación. Reintenta.');}
+ });
+ const triggers=[];
+ container.querySelectorAll('img').forEach(img=>{if(img.closest('button,a'))return;const button=document.createElement('button');button.className='learn-expand-image';button.type='button';button.textContent='Ampliar imagen';button.setAttribute('aria-label','Ampliar imagen: '+(img.alt||m.title));img.after(button);const click=()=>{lastImageTrigger.current=button;setZoom({src:img.currentSrc||img.src,alt:img.alt||m.title,width:img.naturalWidth});setZoomDetail(false);};button.addEventListener('click',click);triggers.push(()=>button.remove());});
+ return()=>{clean();triggers.forEach(fn=>fn());};
  },[index,m.html,chapter.id,previewMode]);
-
- async function save(nextIndex=index,complete=false){
-   if(previewMode)return;
-   const mm=modules[nextIndex];
-   await fetch("/api/progress",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-     chapterId:chapter.id,moduleId:mm?.id||null,percent:complete?100:Math.round(((nextIndex+1)/Math.max(modules.length,1))*100),completed:complete
-   })});
- }
- function move(i){
-   const n=Math.max(0,Math.min(modules.length-1,i));
-   setIndex(n);setNavOpen(false);save(n,false);window.scrollTo({top:0,behavior:"smooth"});
- }
- async function complete(){
-   if(previewMode)return;
-   if(chapter.assessmentRequired&&!passed){setAssessmentMsg("Este capítulo requiere aprobar la evaluación antes de completarlo.");return}
-   await save(index,true);setDone(true);
- }
-
- return <div className="ya-reader editorial-reader"><div className="coursebook ya-course-shell">
-  <div className="ya-module-tabs">
-   <div className="editorial-index-head"><small>CAPÍTULO {chapter.n}</small><h2>{chapter.title}</h2><span>Módulo {index+1} de {modules.length}</span><div className="editorial-index-meter"><i style={{width:((index+1)/Math.max(modules.length,1)*100)+"%"}}/></div></div>
-   <button type="button" className="ya-mobile-index" aria-expanded={navOpen} onClick={()=>setNavOpen(!navOpen)}>Índice de módulos · {index+1} de {modules.length} <span aria-hidden="true">{navOpen?"−":"+"}</span></button>
-   <div className={"course-module-nav"+(navOpen?" is-open":"")}>{modules.map((x,i)=><button type="button" className={i===index?"active":""} key={x.id} onClick={()=>move(i)}><span>{x.label}</span>{x.title}</button>)}</div>
-   <div className="module-progress"><b>Módulo {index+1} de {modules.length}</b><div><i style={{width:(modules.length?((index+1)/modules.length*100):0)+"%"}}/></div></div>
-  </div>
-  <section className={"course-module ya-stage"+(index===modules.length-1?" is-last":"")} ref={stageRef} key={m.id}>
-   <div className="editorial-module-intro"><span>LECCIÓN {String(index+1).padStart(2,"0")} / {String(modules.length).padStart(2,"0")}</span><span>LECTURA + PRÁCTICA</span></div>
-   {index===0&&<div className="editorial-first-lesson"><small>{m.label}</small><h2>{m.title}</h2><p>{chapter.summary}</p></div>}
-   {index===0&&<figure className="editorial-lesson-image">
-    <img src={coverSrc} alt={coverAlt}/>
-    <figcaption>{feature.eyebrow} · Yeppo Academy</figcaption></figure>}
-   {index===0&&<ChapterMap id={chapter.id} override={chapter.infographic}/>}
+ useEffect(()=>{if(zoom)dialogRef.current?.showModal();},[zoom]);
+ async function saveNote(){setBusy(true);const result=await update(chapter.id,{action:'note',moduleId:m.id,text:note});setBusy(false);if(result){setNoteDirty(false);setSavedMsg('Nota guardada.');}return Boolean(result);}
+ async function move(i){if(busy)return;if(noteDirty&&!(await saveNote()))return;const n=Math.max(0,Math.min(modules.length-1,i));setIndex(n);setNavOpen(false);setSavedMsg('');window.history.replaceState(null,'',chapterPath+'?lesson='+encodeURIComponent(modules[n].id));window.scrollTo({top:0,behavior:'smooth'});}
+ async function confirm(){setBusy(true);const result=await update(chapter.id,{action:'read',moduleId:m.id});setBusy(false);if(!result)return;setSavedMsg('Lectura confirmada y guardada.');if(index<modules.length-1)await move(index+1);else if(chapter.assessmentRequired&&!passed)setAssessmentMsg('Lectura guardada. Aprueba la evaluación para completar el capítulo.');}
+ function closeZoom(){dialogRef.current?.close();setZoom(null);lastImageTrigger.current?.focus();}
+ return <div className="learn-reader"><aside className="learn-reader-index"><Link href={chapterPath} className="learn-back">Volver al capítulo</Link><small>CAPÍTULO {String(chapter.n).padStart(2,'0')}</small><h2>{chapter.title}</h2><p>{p.read} de {p.total} lecciones confirmadas</p><Meter value={p.percent} label="Avance del capítulo"/><button className="learn-index-toggle" aria-expanded={navOpen} onClick={()=>setNavOpen(!navOpen)}>Índice de lecciones</button><nav className={navOpen?'is-open':''} aria-label="Lecciones del capítulo">{modules.map((x,i)=><button key={x.id} onClick={()=>move(i)} disabled={busy} aria-current={index===i?'step':undefined} className={index===i?'active':''}><span>{String(i+1).padStart(2,'0')}</span><span>{x.title}<small>{state.completed?.[x.id]?'Lectura confirmada':'Por leer'}</small></span></button>)}</nav><p className="learn-reading-time">{p.minutes} min de lectura pendientes</p></aside>
+ <div className="learn-reader-content"><div className="learn-reader-toolbar"><span>Lección {index+1} de {modules.length} · {readMinutes(m.html)} min estimados</span><div><button aria-pressed={notesOpen} onClick={()=>setNotesOpen(!notesOpen)}>Tomar notas</button><button aria-pressed={!!state.favorite} onClick={()=>update(chapter.id,{action:'favorite',value:!state.favorite})}>{state.favorite?'Guardado':'Guardar capítulo'}</button><button onClick={()=>downloadGuide(chapter)}>Descargar guía</button></div></div><h1>{m.title}</h1>
+ {notesOpen&&<section className="learn-note-editor"><label htmlFor="lesson-note">Mis notas de esta lección</label><textarea id="lesson-note" maxLength={10000} rows={5} value={note} onChange={e=>{setNote(e.target.value);setNoteDirty(true);setSavedMsg('');}} placeholder="Una idea para recordar o aplicar en tu negocio…"/><button className="learn-button" disabled={busy||!noteDirty} onClick={saveNote}>Guardar nota</button><small>{noteDirty?'Tienes cambios sin guardar.':'Tus notas son personales.'}</small></section>}
+ <section className={'editorial-reader learn-lesson-body course-module ya-stage'+(index===modules.length-1?' is-last':'')} ref={stageRef} key={m.id}>
    {index===0&&(chapter.id==="c10"||chapter.id==="c12")&&<div className="yeppo-evidence-key" aria-label="Cómo leer la evidencia de ingredientes"><strong>Cómo leer la evidencia</strong><div><span>Uso tradicional</span><span>Laboratorio</span><span>Estudios en personas</span><span>Producto terminado</span></div><p>Son preguntas distintas. La historia y los ensayos de un ingrediente no demuestran el resultado de cualquier cosmético que lo incluya.</p></div>}
    {index===0&&chapter.id==="c10"&&<div className="yeppo-ingredient-map"><div><small>YEPPO / INGREDIENTES CON HISTORIA</small><h3>Centella: de la tradición a la fórmula</h3><p>Una misma planta puede aparecer en relatos culturales, investigaciones y cosméticos. Cada contexto permite afirmar cosas diferentes.</p></div><ol><li><b>01</b><strong>Uso tradicional</strong><span>Gotu kola en distintas regiones de Asia: una historia de uso, no una prueba clínica para cualquier crema.</span></li><li><b>02</b><strong>Compuestos estudiados</strong><span>Asiaticósido y madecasósido figuran entre los componentes que motivaron investigación.</span></li><li><b>03</b><strong>Fórmula real</strong><span>Importan el INCI completo, la concentración, la tolerancia y cómo se usa el producto.</span></li><li><b>04</b><strong>Consejo en Yeppo</strong><span>Explica el beneficio cosmético con precisión y evita prometer curación.</span></li></ol><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3834700/" target="_blank" rel="noopener noreferrer">Fuente: revisión científica sobre Centella asiatica ↗</a></div>}
-   <div dangerouslySetInnerHTML={{__html:enhanceChapterVisuals(chapter.id,m)}}/>
+   <div dangerouslySetInnerHTML={{__html:enhanceChapterVisuals(chapter.id,m).replace(/(<div class="reading-copy">[\s\S]*?<\/div>)\s*(<figure class="course-image academy-infographic academy-focused-visual">[\s\S]*?<\/figure>)/,'<div class="learn-reading-visual">$1$2</div>')}}/>
+   {index===0&&<ChapterMap id={chapter.id} override={chapter.infographic}/>}
    {index===0&&<MiniDecision chapterId={chapter.id}/>}
    {videoSrc&&<div className="ya-video"><iframe src={videoSrc} title={"Video · "+m.title} loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>}
    {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
-   <div className="ya-module-actions">
-    <button className="ya-btn ya-secondary" disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button>
-    {index<modules.length-1?<button className="ya-btn ya-primary" onClick={()=>move(index+1)}>Siguiente →</button>:previewMode?<a className="ya-btn ya-pink" href={chapter.n<50?"/revision/c"+String(chapter.n+1).padStart(2,"0"):"/revision#rutas"}>{chapter.n<50?"Ir al siguiente capítulo →":"Volver a las rutas →"}</a>:<button className="ya-btn ya-pink" disabled={chapter.assessmentRequired&&!passed} onClick={complete}>{done?"✓ Capítulo completado":chapter.assessmentRequired&&!passed?"Aprueba la evaluación":"Completar capítulo"}</button>}
-   </div>
-  </section>
-  <aside className="editorial-context" aria-label="Contexto y consejos del capítulo">
-   <div className="editorial-context-card editorial-context-story"><small>LO ESENCIAL</small><h3>{feature.eyebrow}</h3><p>{feature.story}</p>{chapter.id==="c02"&&<p className="editorial-data-note">Dato de mercado: indica el año y la fuente al citar cifras de importación. Revisado en septiembre de 2026; no son ventas de Yeppo. <a href="https://www.latercera.com/pulso/noticia/el-boom-de-la-cosmetica-coreana-quienes-estan-detras-de-su-explosion-de-ventas/" target="_blank" rel="noopener noreferrer">Fuente ↗</a></p>}{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente ↗</a>}</div>
-   <div className="editorial-context-card editorial-context-tip"><small>APLICARLO EN TIENDA</small><h3>Consejo Yeppo</h3><p>{feature.tip}</p></div>
-   <div className="editorial-context-card editorial-context-photo"><img src={feature.imageUrl||(feature.product?editorialImage(chapter.id):"/assets/editorial/yeppo-store.jpg")} alt={feature.alt||(feature.product?"Producto del catálogo Yeppo":"Espacio y productos de Yeppo")}/><span>{feature.product?"PRODUCTO DEL CATÁLOGO YEPPO":"YEPPO · APLICACIÓN EN TIENDA"}</span></div>
-  </aside>
-  <nav className="ya-mobile-step" aria-label="Navegación del capítulo"><button disabled={index===0} onClick={()=>move(index-1)}>← Anterior</button><span>{index+1} de {modules.length}</span><button disabled={index===modules.length-1} onClick={()=>move(index+1)}>Siguiente →</button></nav>
- </div></div>
+
+ </section>
+ <div className="learn-save-status" aria-live="polite">{error?<p className="learn-error" role="alert">{error}</p>:<p>{savedMsg}</p>}</div>
+ <div className="learn-reader-actions"><button className="learn-button secondary" disabled={index===0||busy} onClick={()=>move(index-1)}>Anterior</button><div>{index<modules.length-1&&<button className="learn-text-button" disabled={busy} onClick={()=>move(index+1)}>Solo consultar siguiente</button>}<button className="learn-button" disabled={busy||!ready} onClick={confirm}>{busy?'Guardando…':index<modules.length-1?'Completar y continuar':p.finished?'Lectura completada':'Confirmar lectura'}</button></div></div>
+ {p.finished&&<div className="learn-completion" role="status"><h2>Capítulo completado</h2><p>Tu lectura y evaluación están registradas. Puedes volver a consultar este contenido cuando quieras.</p><Link className="learn-button" href={root+'/explorar'}>Seguir explorando</Link></div>}
+ <details className="learn-context"><summary>Consejo práctico y contexto</summary><h3>{feature.eyebrow}</h3><p>{feature.story}</p><h3>Consejo práctico</h3><p>{feature.tip}</p>{feature.source&&<a href={feature.source} target="_blank" rel="noopener noreferrer">Consultar fuente</a>}</details></div>
+ <dialog className="learn-image-dialog" ref={dialogRef} onCancel={()=>{setZoom(null);lastImageTrigger.current?.focus();}} onClick={e=>{if(e.target===e.currentTarget)closeZoom();}}><button className="learn-button" onClick={closeZoom} autoFocus>Cerrar imagen</button><button className="learn-button secondary" onClick={()=>setZoomDetail(!zoomDetail)}>{zoomDetail?"Ajustar a la pantalla":"Ver a tamaño original"}</button>{zoomDetail&&<p>Desliza la imagen para ver los detalles.</p>}{zoom&&<figure className={zoomDetail?"is-detail":""}><img src={zoom.src} alt={zoom.alt} style={zoomDetail?{width:zoom.width||1200,maxWidth:"none"}:undefined}/><figcaption>{zoom.alt}</figcaption></figure>}</dialog>
+ </div>;
 }

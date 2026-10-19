@@ -8,6 +8,7 @@ const securityHeaders=[
 
 const nextConfig={
   poweredByHeader:false,
+  allowedDevOrigins:["terminal.local"],
   reactStrictMode:true,
   async headers(){
     return [{source:"/(.*)",headers:securityHeaders}];

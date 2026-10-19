@@ -1,4 +1,5 @@
 import {NextResponse} from "next/server";
+import {updateLearning} from '@/lib/learning';
 import {readSession} from "@/lib/auth";
 import {getChapterForUser,recordQuizAttempt} from "@/lib/academy";
 
@@ -16,7 +17,9 @@ export async function POST(req){
     if(!keys.length||answers.length!==keys.length||answers.some(a=>typeof a!=="string"||a.length>20))
       return NextResponse.json({error:"Responde todas las preguntas"},{status:400});
     const correct=keys.reduce((count,key,index)=>count+(answers[index]===key?1:0),0);
-    return NextResponse.json(await recordQuizAttempt(session.id,chapterId,correct/keys.length*100,answers));
+    const result=await recordQuizAttempt(session.id,chapterId,correct/keys.length*100,answers);
+    if(result.passed)await updateLearning(session.id,chapter,{action:"sync"});
+    return NextResponse.json(result);
   }catch{
     return NextResponse.json({error:"No se pudo evaluar"},{status:500});
   }

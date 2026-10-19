@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {chapterProgress,weeklyCount,normalizeSearch} from '../lib/learning-model.js';
+const chapter={modules:[{id:'a',html:'Una lección'},{id:'b',html:'Otra lección'}],assessmentRequired:true};
+test('consultar una lección no confirma su lectura',()=>assert.equal(chapterProgress(chapter,{moduleId:'b'}).percent,0));
+test('las lecturas se cuentan por identidad, no por posición ni claves ajenas',()=>assert.equal(chapterProgress(chapter,{completed:{b:true,invalid:true}}).read,1));
+test('el capítulo permanece pendiente sin aprobar su evaluación',()=>{const p=chapterProgress(chapter,{completed:{a:true,b:true}});assert.equal(p.finished,false);assert.equal(p.percent,99);});
+test('la evaluación sola no reemplaza las lecturas',()=>assert.equal(chapterProgress(chapter,{passed:true}).finished,false));
+test('lecturas más evaluación habilitan completar el capítulo',()=>assert.equal(chapterProgress(chapter,{completed:{a:true,b:true},passed:true}).percent,100));
+test('la semana usa lunes y horario de Chile, excluye el domingo y fechas futuras',()=>assert.equal(weeklyCount({c:{completed:{a:'2026-10-19T13:00:00Z',b:'2026-10-19T01:00:00Z',c:'2026-10-20T13:00:00Z'}}},new Date('2026-10-19T14:00:00Z')),1));
+test('avance heredado no crea actividad semanal ficticia',()=>assert.equal(weeklyCount({c:{completed:{a:true}}},new Date('2026-10-19T14:00:00Z')),0));
+test('el buscador ignora tildes y mayúsculas',()=>assert.equal(normalizeSearch('HIDRATACIÓN'),'hidratacion'));

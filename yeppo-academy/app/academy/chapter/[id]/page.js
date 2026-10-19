@@ -1,2 +1,3 @@
-import Link from "next/link";import Header from "@/components/Header";import ChapterReader from "@/components/ChapterReader";import {requireSession} from "@/lib/auth";import {getChapterForUser,getUserProgress,getQuizStatus} from "@/lib/academy";import {notFound} from "next/navigation";
-export default async function ChapterPage({params}){const s=await requireSession();const {id}=await params;const c=await getChapterForUser(id,s);if(!c)notFound();const [p,quiz]=await Promise.all([getUserProgress(s.id),getQuizStatus(s.id,id)]);return <><Header session={s}/><main><div className="ya-reader ya-reader-top"><Link href="/academy">← Volver al mapa</Link><span>{c.schoolName}</span></div><ChapterReader chapter={c} initialPercent={p[c.id]?.percent||0} initialPassed={quiz.passed}/></main></>}
+import LearningChapterPage from '@/lib/learning-chapter-page';
+export const dynamic='force-dynamic';
+export default function Page(props){return <LearningChapterPage {...props}/>;}

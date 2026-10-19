@@ -42,3 +42,5 @@ Las portadas muestran modelos diferentes. Son fotografías editoriales de contex
 
 El producto mostrado en el panel contextual del capítulo 13 procede de la [ficha de Purito en Yeppo](https://yeppo.cl/collections/purito/products/purito-azelaic-acid-10-kojic-tea-tree-serum-30ml). La foto editorial no implica recomendación o aval de la modelo.
 El producto mostrado en el panel contextual del capítulo 14 procede de la [ficha de Celimax en Yeppo](https://yeppo.cl/products/celimax-pore-dark-spot-brightening-serum-30-ml). La foto editorial no implica recomendación o aval de la modelo. Las fotografías de Pexels no acreditan la nacionalidad de las modelos.
+
+- learning-hero.jpg: fotografía de Pexels, https://www.pexels.com/photo/6925480/ (copia local del recurso utilizado en el capítulo 11).

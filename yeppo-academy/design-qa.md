@@ -1,28 +1,42 @@
-# Revisión visual · 27 septiembre 2026
+# Yeppo Academy learning UX — 19 October 2026
 
-Referencia: `upload/image(3).png` (Bloomé Beauty Studio). Implementación: `/revision` y `/revision/c12`, inspeccionadas en navegador local; comparación: `/workspace/scratch/yeppo-design-comparison.jpg`.
+## Visual scope
+Five approved surfaces: student home, catalog, chapter overview, lesson reader, learning profile.
+Source visual truth: `docs/ux/approved-concept.png` (1448 × 1086 concept board).
+Implementation: browser-rendered local Next.js application, desktop viewport 1363 × 926 CSS pixels, and same-origin isolated 390 × 844 mobile viewport (375 px content width after scrollbar).
+Implementation screenshots: captured in the browser tool transcript during this session; these captures were not exported to local image files. They include home, catalog, chapter, profile, mobile home, mobile lesson and both image-viewer modes.
 
-## Resultado
+## Comparison
+Typography: Georgia editorial headings, Arial UI/body; 16 px teaching text, 13–14 px supporting labels. Plum text/actions, warm white surfaces, blush highlights. No generated decorative icons or fabricated product packaging.
+Layout: split editorial home hero; primary resume action; slim progress indicators; numbered chapters grouped by existing thematic routes; chapter lesson list and resource column; persistent desktop outline and collapsible mobile outline. Five-screen board is a visual direction, not a claim of pixel-identical mock content: the implementation uses all ten existing routes and real chapter titles/content.
+Images: existing approved Chapter 4–6 originals preserved, no raster editing. Real photo used for home, locally cached from the same licensed source already used for Chapter 11. Educational figures use contain sizing; photo covers use intentional cover cropping. Image dialog supports native-size detail, scrolling and focus return.
 
-**final result: passed** para el rediseño editorial de escritorio y el flujo principal de lectura. La referencia es inspiración visual, no una pantalla de la academia para clonar literalmente. Conservamos su fotografía protagonista, rosa suave, blanco, navegación ligera y tarjetas fotográficas; adaptamos texto, identidad y categorías a Yeppo.
+## Comparison history / fixes
+- P2: the first mobile reader placed back navigation and chapter number on the same line. Changed the back link and chapter label to block layout; rechecked mobile reader.
+- P2: fitting an infographic into a mobile dialog did not provide additional detail. Added original-size viewing and horizontal scroll, then opened, enlarged and closed the Chapter 6.1 original in the mobile browser. Focus returned to the trigger.
+- P2: mobile home placed progress too low. Reduced photo/copy height and placed the progress summary first in the mobile progress section.
+- P2: initial unrelated fashion portrait did not match the approved skincare context. Replaced it with a real skincare photograph used by Chapter 11.
 
-## Superficies revisadas
+## Interaction evidence
+- Catalog: case/accent-insensitive text search filters the fifty chapters; `hidratantes` returns Chapter 11.
+- Open chapter → first lesson; confirm reading → next lesson. The sidebar changes from 0/8 to 1/8 (13%).
+- Selecting lesson three without confirming does not increase 1/8 progress.
+- Favorites and a lesson note persisted through reload and appeared under profile. Note text: “Recordar: preguntar por textura y tolerancia antes de recomendar.”
+- Home resumes the last opened lesson and displays fractional overall progress; weekly goal counts confirmed lessons, not navigation.
+- Mobile outline expands/collapses. Original Chapter 6 PNG opens in a dialog, toggles to original size and closes with focus restored. Document content width equals viewport content width (375 px), no horizontal page overflow.
+- Download control initiates an HTML study guide assembled from the full current chapter, enhanced visuals and sources. Automated browser download-event verification timed out; actual downloaded-file inspection remains unverified.
+- Eight Node tests cover browsing vs confirmation, valid lesson identity, evaluation gating, complete chapters, Chilean weekly boundary, inherited progress and accent-insensitive searching.
+- Production build passed. API changes validate session, chapter access, module identity, note size and favorite type. Signed write serialization avoids overlapping mutations within a reader.
 
-- **Tipografía:** titulares de lectura con serif editorial; texto de navegación y lecciones sin serif. Tamaños y contraste legibles en la captura. Diferencia intencional frente al titular sans de la referencia.
-- **Ritmo y disposición:** navegación, hero de dos columnas, franja de valor, historia destacada y cuadrícula de capítulos. La primera versión del hero era demasiado alta; se corrigió a 570 px y se volvió a capturar.
-- **Color:** rosa medio de Yeppo con blanco, fondos crema y acentos ciruela. Sin fondos azul oscuro dominantes en la revisión.
-- **Imágenes:** fotografía de retrato y planta real; fotos de catálogo Yeppo para productos. Se retiraron las imágenes de productos ajenos del rediseño. Créditos en `public/assets/editorial/PHOTO-CREDITS.md`.
-- **Contenido:** historia de centella con fuente, consejo aplicable por capítulo y nueva lección completa de ingredientes calmantes. El mapa distingue capítulos desarrollados de los pendientes.
+## Console review
+Observed an initial development hot-reload/router initialization error before switching the preview to Webpack. Later hydration warning identifies browser-extension-injected `data-oai-browser-agent-*` attributes on `<html>`, not app content. Added Next's documented smooth-scroll root marker. No observed runtime exception blocked the tested core interactions.
 
-## Interacciones verificadas
+## Separate infrastructure blocker
+The published application's `/api/health` reports database=false, auth=false, setupToken=false. Existing Neon project `yeppo-b2b-academy` has the expected schema but zero users, saved progress or published chapters. Vercel environment inspection is denied with 403 (`projectEnvVars`). No credentials, accounts or environment settings were created or changed. Cross-device/account persistence and final certificate issuance therefore are not activated or integration-verified. The open course explicitly identifies browser-only persistence; its local quiz state cannot issue a server certificate.
 
-- Inicio → capítulo 1; lector con ocho módulos, navegación por módulos, contenido e imagen.
-- Capítulo 12 con ocho módulos, fuentes y enlaces; portada, consejo y fotografía de centella.
-- `/login` carga la nueva pantalla e indica con claridad que las cuentas necesitan base de datos.
-- La edición de borradores sigue accesible desde la revisión.
+## Result
+Visual and core open-course interaction review: passed, with the captured evidence and export limitation above.
+Account persistence / deployment configuration: blocked by missing Vercel environment permission.
+Residual P3: further editorial refinements in older per-chapter content, beyond the shared interface, can be iterated separately.
 
-## Límites funcionales visibles
-
-- El acceso con cuentas requiere configurar base de datos y credenciales de despliegue. El login visual está listo y el formulario existente se activa cuando hay configuración; no se presenta como funcional ahora.
-- Los capítulos 13–50 están en el temario y todavía no tienen lecciones completas.
-- No se realizó captura móvil con el navegador disponible en esta sesión; los estilos responsivos están definidos en CSS y requieren revisión visual posterior.
+final result: passed
