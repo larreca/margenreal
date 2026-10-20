@@ -1,30 +1,13 @@
+import lesson011 from "./lesson011.js";
 const chapter01={
-  id:"c01",n:1,contentVersion:5,
+  id:"c01",n:1,contentVersion:6,
   title:"Qué es realmente K-Beauty",
   summary:"Capítulo de apertura: entiende K-Beauty como sistema de producto, industria, cultura y negocio; aprende a separar tendencia de evidencia y a convertir interés en una recomendación responsable y una compra B2B mejor.",
   tip:"El origen atrae; el valor se construye con criterio, evidencia, experiencia, rotación y recompra.",
   body:"Este capítulo establece el lenguaje y el método de toda Yeppo Academy: observar, preguntar, verificar, recomendar, medir y aprender.",
   assessmentRequired:true,
   modules:[
-  {id:"m1",label:"1.1",title:"Qué es K-Beauty (y qué no es)",html:`
-  <section class="course-module" data-course-module-panel="m1">
-    <div class="module-heading"><span>1.1</span><div><small>PUNTO DE PARTIDA</small><h3>K-Beauty es un ecosistema, no una rutina de diez pasos</h3></div></div>
-    <div class="reading-copy">
-      <p><strong>K-Beauty</strong> es el nombre internacional con el que se agrupa una parte del ecosistema de belleza desarrollado en Corea del Sur. Incluye marcas, fabricantes, laboratorios, retailers, formatos, hábitos de uso, contenido y canales de venta. No existe una única fórmula “coreana” ni una rutina oficial que todas las personas deban seguir.</p>
-      <p>Su ventaja histórica ha sido combinar <strong>velocidad de innovación, especialización industrial, diseño de experiencia y educación del consumidor</strong>. Esa combinación explica por qué conceptos como ampoule, essence, cushion, sheet mask o acne patch viajaron con rapidez entre mercados.</p>
-      <p>Para Yeppo Academy la idea importante es comercial: <strong>el origen puede generar curiosidad, pero la recomendación se gana con encaje</strong>. El producto debe tener una función clara, una experiencia compatible con la persona y una razón económica para existir en el surtido.</p>
-    </div>
-    <figure class="course-image academy-infographic chapter-one-infographic"><img src="/assets/chapter01/cap01-ecosystem.svg?v=visual2" alt="Mapa de K-Beauty como ecosistema de producto, I+D, cultura, canal, cliente y negocio"><figcaption>K-Beauty se entiende mejor como sistema que como lista de pasos. · <a class="infographic-fullsize" href="/assets/chapter01/cap01-ecosystem.svg?v=visual2" target="_blank" rel="noopener noreferrer">Ver a tamaño completo ↗</a></figcaption></figure>
-    <div class="lesson-box"><h4>Al terminar este capítulo deberías poder</h4><p>Explicar qué es K-Beauty sin mitos; reconocer cómo funciona su industria; leer señales de mercado sin confundirlas con demanda propia; construir una rutina por función; evaluar un claim con más criterio; y traducir todo eso a una primera decisión B2B.</p></div>
-    <div class="myth-course"><h4>Cinco mitos que hay que eliminar desde el inicio</h4>
-      <details><summary>“K-Beauty son diez pasos.”</summary><p>No. El layering popularizó rutinas extensas, pero la cantidad de pasos depende de necesidad, tolerancia, tiempo y presupuesto. Más productos también pueden significar más fricción o irritación.</p></details>
-      <details><summary>“Si es coreano, es mejor.”</summary><p>El origen describe procedencia, no calidad automática. Se evalúan fórmula, evidencia, seguridad, experiencia, precio, trazabilidad y encaje con el cliente.</p></details>
-      <details><summary>“Lo viral es lo que más conviene comprar.”</summary><p>La viralidad puede generar descubrimiento. Para comprar stock importan además margen, velocidad, cobertura, vida del hype y capacidad de reposición.</p></details>
-      <details><summary>“Más activos significa mejor fórmula.”</summary><p>No. La fórmula completa, la dosis útil, el vehículo, la estabilidad, la frecuencia y la tolerancia cambian el resultado.</p></details>
-      <details><summary>“K-Beauty es sólo skincare.”</summary><p>No. El ecosistema también incluye maquillaje, haircare, body care, dispositivos y otras categorías de belleza.</p></details>
-    </div>
-    <div class="module-takeaway"><b>Regla del capítulo</b><p>Primero entiende el trabajo que debe hacer el producto; después evalúa si el producto coreano concreto lo hace bien.</p></div>
-  </section>`},
+  lesson011,
   {id:"m2",label:"1.2",title:"Historia e innovación",html:`
   <section class="course-module" data-course-module-panel="m2">
     <div class="module-heading"><span>1.2</span><div><small>EVOLUCIÓN</small><h3>La innovación coreana se convirtió en una capacidad industrial</h3></div></div>

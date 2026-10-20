@@ -1,4 +1,38 @@
 /* Yeppo Academy — approved editorial learning direction. Scoped to student surfaces. */
+.learning-app .lesson-foundation h4{font:400 26px/1.25 Georgia,serif;color:#45243d;margin:28px 0 16px}
+.learning-app .lesson-foundation .reading-copy{display:block;max-width:74ch}
+.learning-app .learn-yeppo-advice{margin:36px 0;padding:28px 32px;background:#f5e9ec;border-left:4px solid #875a73}
+.learning-app .learn-yeppo-advice h4{margin-top:10px}
+.learning-app .learn-selection-visual{margin:36px 0;padding:28px;background:#faf5ee;border:1px solid #e6daca;border-radius:8px}
+.learning-app .learn-selection-visual h4{margin-top:8px}
+.learning-app .learn-selection-visual ol{list-style:none;margin:24px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:0}
+.learning-app .learn-selection-visual li{border-top:2px solid #c0a4b1;padding-top:16px;min-width:0}
+.learning-app .learn-selection-visual li>span{font:36px/1 Georgia,serif;color:#94637b}
+.learning-app .learn-selection-visual h5{font:600 17px/1.4 Arial,sans-serif;color:#45243d;margin:16px 0 10px}
+.learning-app .learn-selection-visual li p{font-size:16px;line-height:1.6;margin:0}
+.learning-app .learn-selection-visual figcaption{font:14px/1.6 Arial,sans-serif;color:#65565e;border-top:1px solid #e6daca;padding-top:16px}
+.learning-app .learn-evidence-table{margin:28px 0;overflow-x:auto}
+.learning-app .learn-evidence-table table{width:100%;border-collapse:collapse;font:16px/1.6 Arial,sans-serif;table-layout:fixed}
+.learning-app .learn-evidence-table caption{text-align:left;font:400 25px/1.3 Georgia,serif;color:#45243d;margin-bottom:18px}
+.learning-app .learn-evidence-table th,.learning-app .learn-evidence-table td{padding:16px;text-align:left;vertical-align:top;border-bottom:1px solid #e9dfe4;overflow-wrap:anywhere}
+.learning-app .learn-evidence-table thead{background:#f5e9ec}
+.learning-app .learn-worked-case{padding:28px 0;margin:20px 0;border-top:1px solid #d8c3cc;border-bottom:1px solid #d8c3cc}
+.learning-app .learn-worked-case summary{cursor:pointer;font-weight:600;color:#45243d;padding:12px 0}
+.learning-app .learn-lesson-glossary{display:grid;grid-template-columns:minmax(100px,.3fr) 1fr;gap:12px 22px;font-size:16px;line-height:1.6}
+.learning-app .learn-lesson-glossary dt{font-weight:600}.learning-app .learn-lesson-glossary dd{margin:0}
+.learning-app .learn-lesson-assessment{border-top:2px solid #875a73;padding-top:32px;margin-top:40px}
+.learning-app .learn-lesson-assessment h3{font-size:32px;margin-top:12px}
+.learning-app .learn-lesson-assessment fieldset{border:0;padding:0;margin:30px 0;min-width:0}
+.learning-app .learn-lesson-assessment legend{font-weight:600;font-size:17px;line-height:1.5;padding:0;margin-bottom:14px;max-width:100%}
+.learning-app .learn-lesson-assessment label{display:flex;align-items:flex-start;gap:12px;padding:15px 16px;border:1px solid #e2d6dc;border-radius:5px;margin:10px 0;background:#fff;cursor:pointer;font-size:16px;line-height:1.5}
+.learning-app .learn-lesson-assessment label.is-selected{border-color:#875a73;background:#faf1f5}
+.learning-app .learn-lesson-assessment input[type=radio]{appearance:auto;flex:0 0 auto;width:18px;height:18px;margin:3px 0 0;accent-color:#713956}
+.learning-app .learn-lesson-assessment .learn-question-feedback{font-size:16px;line-height:1.6;border-left:3px solid #8a6a35;background:#fbf4e8;padding:14px 18px;margin:14px 0}
+.learning-app .learn-lesson-assessment .is-correct,.learning-app .learn-assessment-success{background:#edf5ef;border-color:#3f7450;color:#284d35}
+.learning-app .learn-assessment-success{padding:16px 20px;border-left:3px solid #3f7450}
+.learning-app .learn-assessment-result{background:#f5e9ec;padding:24px;margin:24px 0}
+.learning-app .learn-assessment-result h4{font:400 28px/1.3 Georgia,serif;margin:0 0 12px;color:#45243d}
+@media(max-width:680px){.learning-app .learn-selection-visual,.learning-app .learn-yeppo-advice{padding:22px}.learning-app .learn-selection-visual ol{grid-template-columns:1fr;gap:22px}.learning-app .learn-selection-visual li{display:grid;grid-template-columns:44px 1fr;gap:8px 14px}.learning-app .learn-selection-visual li>span{grid-row:span 2}.learning-app .learn-selection-visual h5{margin:0}.learning-app .learn-selection-visual li p{grid-column:2}.learning-app .learn-evidence-table table{min-width:570px}.learning-app .learn-lesson-glossary{grid-template-columns:1fr;gap:5px}.learning-app .learn-lesson-glossary dd{margin-bottom:12px}.learning-app .learn-lesson-assessment legend{font-size:16px}}
 .learning-app{--learn-ink:#45243d;--learn-text:#3e3540;--learn-muted:#716571;--learn-line:#e9dfe4;--learn-blush:#f5e9ec;--learn-paper:#fffdfa;min-height:100vh;background:var(--learn-paper);color:var(--learn-text);font:16px/1.6 Arial,Helvetica,sans-serif}
 .learning-app *, .learning-app *::before,.learning-app *::after{box-sizing:border-box}
 .learning-app h1,.learning-app h2,.learning-app h3{color:var(--learn-ink);font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spacing:-.025em;line-height:1.18}

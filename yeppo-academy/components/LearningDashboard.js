@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import {useEffect,useState} from 'react';
 import useLearning from './useLearning';
+import {isModuleComplete} from '@/lib/lesson-assessment';
 import {chapterProgress,weeklyCount,normalizeSearch} from '@/lib/learning-model';
 export function Meter({value,label}){return <div className="learn-meter" role="progressbar" aria-label={label} aria-valuenow={Math.round(value*10)/10} aria-valuemin={0} aria-valuemax={100}><span style={{width:Math.max(0,Math.min(100,value))+'%'}}/></div>;}
 export default function LearningDashboard({schools,initialStates={},preview=false,name='',view='home',accountsAvailable=false}){
@@ -9,7 +10,7 @@ export default function LearningDashboard({schools,initialStates={},preview=fals
  useEffect(()=>{const params=new URLSearchParams(window.location.search);if(params.get('route'))setRoute(params.get('route'));if(['favoritos','notas','recursos'].includes(params.get('tab')))setTab(params.get('tab'));},[]);
  const root=preview?'/revision':'/academy';const chapters=schools.flatMap(s=>s.chapters);const status=c=>chapterProgress(c,states[c.id]);const completed=chapters.filter(c=>status(c).finished).length;const percent=chapters.length?Math.round(chapters.reduce((sum,c)=>sum+status(c).percent,0)/chapters.length*10)/10:0;
  const recent=chapters.filter(c=>states[c.id]?.moduleId&&!status(c).finished).sort((a,b)=>new Date(states[b.id].updatedAt||0)-new Date(states[a.id].updatedAt||0))[0];
- const next=recent||chapters.find(c=>!status(c).finished)||chapters[0];const nextState=states[next?.id]||{};const nextLesson=next?.modules.find(m=>m.id===nextState.moduleId)||next?.modules.find(m=>!nextState.completed?.[m.id])||next?.modules[0];
+ const next=recent||chapters.find(c=>!status(c).finished)||chapters[0];const nextState=states[next?.id]||{};const nextLesson=next?.modules.find(m=>m.id===nextState.moduleId)||next?.modules.find(m=>!isModuleComplete(m,nextState))||next?.modules[0];
  const href=c=>root+(preview?'/':'/chapter/')+c.id;
  const resume=next?href(next)+'?lesson='+encodeURIComponent(nextLesson?.id||''):root+'/explorar';
  const week=weeklyCount(states);const favorite=chapters.filter(c=>states[c.id]?.favorite);const notes=chapters.flatMap(c=>Object.entries(states[c.id]?.notes||{}).filter(([,text])=>text.trim()).map(([id,text])=>({c,id,text})));
