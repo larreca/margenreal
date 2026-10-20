@@ -38,9 +38,20 @@ test('una evaluación modificada requiere nueva aprobación',()=>{
  const old=recordLessonAttempt(module,correct,null);
  assert.equal(isModuleComplete({...module,assessment:{...module.assessment,version:2}},{completed:{m1:old}}),false);
 });
-test('los otros módulos conservan la confirmación de lectura existente',()=>{
- const state={completed:{m2:'2026-10-19T14:00:00Z'}};
- assert.equal(isModuleComplete(chapter.modules[1],state),true);assert.doesNotThrow(()=>assertCanConfirm(chapter.modules[1],state));
+test('los módulos sin actividad conservan la confirmación de lectura existente',()=>{
+ const state={completed:{m3:'2026-10-19T14:00:00Z'}};
+ assert.equal(isModuleComplete(chapter.modules[2],state),true);assert.doesNotThrow(()=>assertCanConfirm(chapter.modules[2],state));
+});
+test('aprobar 1.1 no aprueba 1.2 y sus actividades acumulan progreso independiente',()=>{
+ const nextModule=chapter.modules[1];
+ const first=recordLessonAttempt(module,correct,null,'2026-10-19T14:00:00Z');
+ const completed={m1:first,m2:'2026-10-19T14:00:00Z'};
+ assert.equal(isModuleComplete(nextModule,{completed}),false);
+ assert.throws(()=>assertCanConfirm(nextModule,{completed}));
+ completed.m2=recordLessonAttempt(nextModule,nextModule.assessment.questions.map(q=>q.correct),completed.m2,'2026-10-20T14:00:00Z');
+ assert.equal(isModuleComplete(nextModule,{completed}),true);
+ assert.equal(chapterProgress(chapter,{completed}).read,2);
+ assert.equal(completed.m1,first);
 });
 test('el catálogo mantiene el requisito de la actividad sin enviar el cuestionario',()=>{
  const summary=lessonSummary(module);
@@ -52,7 +63,8 @@ test('el catálogo mantiene el requisito de la actividad sin enviar el cuestiona
 test('el progreso heredado conserva intentos actuales y no aprueba actividades nuevas',()=>{
  const empty=withLegacyCompletion(chapter,{legacyCompleted:true});
  assert.equal(isModuleComplete(module,empty),false);
- assert.equal(isModuleComplete(chapter.modules[1],empty),true);
+ assert.equal(isModuleComplete(chapter.modules[1],empty),false);
+ assert.equal(isModuleComplete(chapter.modules[2],empty),true);
  const entry=recordLessonAttempt(module,correct,null);
  const merged=withLegacyCompletion(chapter,{legacyCompleted:true,completed:{m1:entry}});
  assert.equal(isModuleComplete(module,merged),true);

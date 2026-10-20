@@ -1,6 +1,15 @@
 /* Yeppo Academy — approved editorial learning direction. Scoped to student surfaces. */
 /* The reader mounts one lesson; embedded panels must not inherit old tab hiding. */
 .learning-app .learn-lesson-body [data-course-module-panel]{display:block}
+.learning-app .learn-history-visual{margin:36px 0;padding:28px;background:#faf5ee;border:1px solid #e6daca;border-radius:8px}
+.learning-app .learn-history-visual h4{margin-top:8px}
+.learning-app .learn-history-visual ol{list-style:none;padding:0;margin:24px 0}
+.learning-app .learn-history-visual li{display:grid;grid-template-columns:92px 1fr;gap:24px;border-top:1px solid #dccbd3;padding:22px 0;margin:0}
+.learning-app .learn-history-visual li>span{font:32px/1.2 Georgia,serif;color:#875a73}
+.learning-app .learn-history-visual h5{font:600 18px/1.4 Arial,sans-serif;color:#45243d;margin:0 0 8px}
+.learning-app .learn-history-visual p{font:16px/1.6 Arial,sans-serif;margin:0}
+.learning-app .learn-history-visual figcaption{font:14px/1.6 Arial,sans-serif;color:#65565e;border-top:1px solid #e6daca;padding-top:16px}
+@media(max-width:680px){.learning-app .learn-history-visual{padding:22px}.learning-app .learn-history-visual li{grid-template-columns:1fr;gap:8px}}
 .learning-app .lesson-foundation h4{font:400 26px/1.25 Georgia,serif;color:#45243d;margin:28px 0 16px}
 .learning-app .lesson-foundation .reading-copy{display:block;max-width:74ch}
 .learning-app .learn-yeppo-advice{margin:36px 0;padding:28px 32px;background:#f5e9ec;border-left:4px solid #875a73}

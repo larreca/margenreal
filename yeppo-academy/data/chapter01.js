@@ -1,6 +1,7 @@
+import lesson012 from "./lesson012.js";
 import lesson011 from "./lesson011.js";
 const chapter01={
-  id:"c01",n:1,contentVersion:6,
+  id:"c01",n:1,contentVersion:7,
   title:"Qué es realmente K-Beauty",
   summary:"Capítulo de apertura: entiende K-Beauty como sistema de producto, industria, cultura y negocio; aprende a separar tendencia de evidencia y a convertir interés en una recomendación responsable y una compra B2B mejor.",
   tip:"El origen atrae; el valor se construye con criterio, evidencia, experiencia, rotación y recompra.",
@@ -8,18 +9,7 @@ const chapter01={
   assessmentRequired:true,
   modules:[
   lesson011,
-  {id:"m2",label:"1.2",title:"Historia e innovación",html:`
-  <section class="course-module" data-course-module-panel="m2">
-    <div class="module-heading"><span>1.2</span><div><small>EVOLUCIÓN</small><h3>La innovación coreana se convirtió en una capacidad industrial</h3></div></div>
-    <div class="reading-copy">
-      <p>La historia moderna de la cosmética coreana no se explica por un único producto. Se construyó con décadas de industrialización, competencia local, inversión en I+D, fabricación especializada y consumidores acostumbrados a comparar textura, acabado, ingredientes y experiencia.</p>
-      <p>En los 2000 y 2010, formatos como BB cream y cushion ayudaron a internacionalizar ideas de uso. Después, ecommerce, marketplaces y Hallyu —la expansión global de contenido cultural coreano— aceleraron el descubrimiento. En los años 2020, social commerce redujo todavía más la distancia entre una tendencia nacida en Seúl y una compra realizada en Santiago.</p>
-    </div>
-    <figure class="course-image academy-infographic chapter-one-infographic"><img src="/assets/chapter01/cap01-timeline.svg?v=visual2" alt="Línea de tiempo de la expansión de K-Beauty"><figcaption>La innovación comercial se acumula: industria, formatos, cultura y canales. · <a class="infographic-fullsize" href="/assets/chapter01/cap01-timeline.svg?v=visual2" target="_blank" rel="noopener noreferrer">Ver a tamaño completo ↗</a></figcaption></figure>
-    <div class="lesson-box"><h4>Innovación no significa novedad automática</h4><p>Una innovación útil resuelve mejor un trabajo: aplicar protector solar con mayor adherencia, mejorar sensorialidad, simplificar una rutina o entregar una textura distinta. Una novedad puede ser interesante y aun así no tener un rol claro en tu surtido.</p></div>
-    <div class="case-card wide course-case"><div><small>CASO</small><h5>Dos lanzamientos llegan al mismo tiempo</h5><p>Producto A tiene millones de visualizaciones y función similar a tres SKUs que ya vendes. Producto B tiene menos ruido, pero cubre una necesidad que hoy no puedes resolver.</p></div><div class="case-actions"><b>Decisión</b><p>El viral puede merecer un test pequeño. El segundo puede tener más valor estratégico si amplía la solución ofrecida al cliente. Innovación se evalúa por trabajo, no sólo por ruido.</p></div></div>
-    <div class="module-takeaway"><b>Pregunta útil</b><p>¿Qué mejora concreta introduce esta novedad y qué producto actual desplazaría o complementaría?</p></div>
-  </section>`},
+  lesson012,
   {id:"m3",label:"1.3",title:"Cómo funciona la industria",html:`
   <section class="course-module" data-course-module-panel="m3">
     <div class="module-heading"><span>1.3</span><div><small>CADENA DE VALOR</small><h3>Marca, ODM/OEM, control, retail y cliente cumplen trabajos distintos</h3></div></div>
