@@ -1,8 +1,9 @@
+import lesson014 from "./lesson014.js";
 import lesson013 from "./lesson013.js";
 import lesson012 from "./lesson012.js";
 import lesson011 from "./lesson011.js";
 const chapter01={
-  id:"c01",n:1,contentVersion:8,
+  id:"c01",n:1,contentVersion:9,
   title:"Qué es realmente K-Beauty",
   summary:"Capítulo de apertura: entiende K-Beauty como sistema de producto, industria, cultura y negocio; aprende a separar tendencia de evidencia y a convertir interés en una recomendación responsable y una compra B2B mejor.",
   tip:"El origen atrae; el valor se construye con criterio, evidencia, experiencia, rotación y recompra.",
@@ -12,19 +13,7 @@ const chapter01={
   lesson011,
   lesson012,
   lesson013,
-  {id:"m4",label:"1.4",title:"Mercado global y Chile",html:`
-  <section class="course-module" data-course-module-panel="m4">
-    <div class="module-heading"><span>1.4</span><div><small>MERCADO 2026</small><h3>K-Beauty ya no se comporta como una microtendencia</h3></div></div>
-    <div class="reading-copy">
-      <p>El Ministerio de Seguridad de Alimentos y Medicamentos de Corea (MFDS) informó que las exportaciones de cosméticos coreanos alcanzaron <strong>US$11,1 mil millones acumulados al tercer trimestre de 2026</strong>, un máximo histórico para ese período. En 2025 habían alcanzado aproximadamente US$11,4 mil millones.</p>
-      <p>NIQ informó en julio de 2026 que el valor de ventas de K-Beauty creció <strong>53% interanual y 131% en dos años</strong> en los mercados medidos por su reporte. La misma fuente destaca que social commerce y ecommerce son parte importante de la expansión.</p>
-      <p>En Chile, medios económicos han documentado crecimiento de retailers especializados y la entrada de K-Beauty a cadenas más amplias. Esto <strong>no equivale a una cifra oficial del mercado total chileno</strong>; sirve como señal de masificación y de competencia creciente.</p>
-    </div>
-    <figure class="course-image academy-infographic chapter-one-infographic"><img src="/assets/chapter01/cap01-market.svg?v=visual2" alt="Indicadores de crecimiento K-Beauty 2026 y nota metodológica"><figcaption>Las cifras de tendencia orientan; tus ventas validan la decisión. · <a class="infographic-fullsize" href="/assets/chapter01/cap01-market.svg?v=visual2" target="_blank" rel="noopener noreferrer">Ver a tamaño completo ↗</a></figcaption></figure>
-    <div class="lesson-box"><h4>Cómo leer una cifra sin usarla mal</h4><p><strong>Exportación</strong> mide salida desde Corea; <strong>venta retail</strong> mide compra del consumidor; <strong>crecimiento de un retailer</strong> describe a esa empresa. Nunca uses las tres como si fueran la misma métrica.</p></div>
-    <div class="metric-course"><div><b>Señal macro</b><code>mercado / exportación</code><p>¿La categoría gana escala?</p></div><div><b>Señal de canal</b><code>búsqueda / tráfico</code><p>¿El interés llega a tu público?</p></div><div><b>Señal propia</b><code>venta / margen / recompra</code><p>¿Funciona en tu negocio?</p></div></div>
-    <div class="module-takeaway"><b>Decisión</b><p>Usa el mercado para detectar dónde mirar; usa tus datos para decidir cuánto comprar.</p></div>
-  </section>`},
+  lesson014,
   {id:"m5",label:"1.5",title:"Rutinas y categorías",html:`
   <section class="course-module" data-course-module-panel="m5">
     <div class="module-heading"><span>1.5</span><div><small>LÓGICA DE RUTINA</small><h3>Vender función, no cantidad de pasos</h3></div></div>

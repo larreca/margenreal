@@ -1,6 +1,19 @@
 /* Yeppo Academy — approved editorial learning direction. Scoped to student surfaces. */
 /* The reader mounts one lesson; embedded panels must not inherit old tab hiding. */
 .learning-app .learn-lesson-body [data-course-module-panel]{display:block}
+.learning-app .learn-demand-chart{margin:36px 0;padding:28px;background:#faf5ee;border:1px solid #e6daca;border-radius:8px}
+.learning-app .learn-demand-legend{display:flex;flex-wrap:wrap;gap:10px 24px;font-size:14px!important}
+.learning-app .learn-demand-legend span:first-child{color:#713956}.learning-app .learn-demand-legend span:last-child{color:#356e6b}
+.learning-app .learn-demand-axis{display:grid;grid-template-columns:repeat(3,1fr);margin:20px 38px 0 132px;font:12px/1.5 Arial,sans-serif;color:#65565e}
+.learning-app .learn-demand-axis span:nth-child(2){text-align:center}.learning-app .learn-demand-axis span:last-child{text-align:right;white-space:nowrap}
+.learning-app .learn-demand-week{display:grid;grid-template-columns:90px minmax(0,1fr);gap:14px;align-items:center;border-top:1px solid #e6daca;padding:18px 0}
+.learning-app .learn-demand-week>strong{font:600 14px/1.5 Arial,sans-serif}
+.learning-app .learn-demand-bar{display:grid;grid-template-columns:20px minmax(0,1fr) 30px;gap:8px;align-items:center;font:15px/1.5 Arial,sans-serif}
+.learning-app .learn-demand-bar+.learn-demand-bar{margin-top:9px}
+.learning-app .learn-demand-bar>div{height:18px;background:#e9e0e1;border-left:1px solid #aa8f9f}
+.learning-app .learn-demand-bar i{display:block;height:100%;background:#875a73}.learning-app .learn-demand-bar.is-b i{background:#487d79}
+.learning-app .learn-demand-chart figcaption{font:14px/1.6 Arial,sans-serif;color:#65565e}
+@media(max-width:680px){.learning-app .learn-demand-chart{padding:20px}.learning-app .learn-demand-week{grid-template-columns:65px minmax(0,1fr);gap:9px}.learning-app .learn-demand-axis{margin-left:102px}.learning-app .learn-demand-week>strong{font-size:12px}}
 .learning-app .learn-buying-matrix{margin:36px 0;padding:28px;background:#faf5ee;border:1px solid #e6daca;border-radius:8px}
 .learning-app .learn-buying-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0}
 .learning-app .learn-buying-grid section{padding:24px;background:#fffdfa;border:1px solid #ded0d6;border-radius:6px}
