@@ -1,7 +1,8 @@
+import lesson013 from "./lesson013.js";
 import lesson012 from "./lesson012.js";
 import lesson011 from "./lesson011.js";
 const chapter01={
-  id:"c01",n:1,contentVersion:7,
+  id:"c01",n:1,contentVersion:8,
   title:"Qué es realmente K-Beauty",
   summary:"Capítulo de apertura: entiende K-Beauty como sistema de producto, industria, cultura y negocio; aprende a separar tendencia de evidencia y a convertir interés en una recomendación responsable y una compra B2B mejor.",
   tip:"El origen atrae; el valor se construye con criterio, evidencia, experiencia, rotación y recompra.",
@@ -10,23 +11,7 @@ const chapter01={
   modules:[
   lesson011,
   lesson012,
-  {id:"m3",label:"1.3",title:"Cómo funciona la industria",html:`
-  <section class="course-module" data-course-module-panel="m3">
-    <div class="module-heading"><span>1.3</span><div><small>CADENA DE VALOR</small><h3>Marca, ODM/OEM, control, retail y cliente cumplen trabajos distintos</h3></div></div>
-    <div class="reading-copy">
-      <p>Muchas marcas no fabrican todo dentro de su propia empresa. Corea cuenta con una red madura de fabricantes especializados. En términos simples, un <strong>OEM</strong> fabrica siguiendo especificaciones; un <strong>ODM</strong> puede participar también en diseño y desarrollo. El modelo concreto cambia según contrato y empresa.</p>
-      <p>Esto permite que una marca se concentre en consumidor, posicionamiento, selección de fórmula y comercialización, mientras especialistas aportan desarrollo y escala. Pero compartir fabricante <strong>no significa que dos productos sean equivalentes</strong>: fórmula, materias primas, proceso, especificaciones, pruebas y control pueden ser diferentes.</p>
-    </div>
-    <figure class="course-image academy-infographic chapter-one-infographic"><img src="/assets/chapter01/cap01-valuechain.svg?v=visual2" alt="Cadena de valor desde marca y fabricante hasta retail y cliente"><figcaption>El retailer decide qué parte de esa cadena convierte en una propuesta confiable. · <a class="infographic-fullsize" href="/assets/chapter01/cap01-valuechain.svg?v=visual2" target="_blank" rel="noopener noreferrer">Ver a tamaño completo ↗</a></figcaption></figure>
-    <div class="channel-matrix"><div class="matrix-head"><b>Actor</b><b>Qué aporta</b><b>Qué debes verificar</b><b>Riesgo si falla</b></div>
-      <div><span>Marca</span><p>Brief, posicionamiento, claims.</p><p>Coherencia y documentación.</p><p>Promesa inflada.</p></div>
-      <div><span>Fabricante</span><p>Desarrollo y producción.</p><p>Calidad, consistencia, trazabilidad.</p><p>Producto no conforme.</p></div>
-      <div><span>Proveedor</span><p>Acceso y reposición.</p><p>Origen, lote, factura, condiciones.</p><p>Mercado gris / quiebre.</p></div>
-      <div><span>Retailer</span><p>Surtido, explicación, servicio.</p><p>Precio, stock, capacitación.</p><p>Venta sin criterio.</p></div>
-    </div>
-    <div class="lesson-box"><h4>Checklist B2B mínimo</h4><p>Antes de incorporar una marca: proveedor identificable, documentación disponible, productos autorizados cuando corresponda, lotes trazables, condiciones de compra claras, margen suficiente, reposición posible y un trabajo concreto dentro del surtido.</p></div>
-    <div class="module-takeaway"><b>Regla práctica</b><p>Una marca bonita no reemplaza una cadena de suministro verificable.</p></div>
-  </section>`},
+  lesson013,
   {id:"m4",label:"1.4",title:"Mercado global y Chile",html:`
   <section class="course-module" data-course-module-panel="m4">
     <div class="module-heading"><span>1.4</span><div><small>MERCADO 2026</small><h3>K-Beauty ya no se comporta como una microtendencia</h3></div></div>

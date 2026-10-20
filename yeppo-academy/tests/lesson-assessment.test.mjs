@@ -39,8 +39,9 @@ test('una evaluación modificada requiere nueva aprobación',()=>{
  assert.equal(isModuleComplete({...module,assessment:{...module.assessment,version:2}},{completed:{m1:old}}),false);
 });
 test('los módulos sin actividad conservan la confirmación de lectura existente',()=>{
- const state={completed:{m3:'2026-10-19T14:00:00Z'}};
- assert.equal(isModuleComplete(chapter.modules[2],state),true);assert.doesNotThrow(()=>assertCanConfirm(chapter.modules[2],state));
+ const unassessed=chapter.modules.find(m=>!m.assessment);
+ const state={completed:{[unassessed.id]:'2026-10-19T14:00:00Z'}};
+ assert.equal(isModuleComplete(unassessed,state),true);assert.doesNotThrow(()=>assertCanConfirm(unassessed,state));
 });
 test('aprobar 1.1 no aprueba 1.2 y sus actividades acumulan progreso independiente',()=>{
  const nextModule=chapter.modules[1];
@@ -63,8 +64,7 @@ test('el catálogo mantiene el requisito de la actividad sin enviar el cuestiona
 test('el progreso heredado conserva intentos actuales y no aprueba actividades nuevas',()=>{
  const empty=withLegacyCompletion(chapter,{legacyCompleted:true});
  assert.equal(isModuleComplete(module,empty),false);
- assert.equal(isModuleComplete(chapter.modules[1],empty),false);
- assert.equal(isModuleComplete(chapter.modules[2],empty),true);
+ for(const lesson of chapter.modules)assert.equal(isModuleComplete(lesson,empty),!lesson.assessment);
  const entry=recordLessonAttempt(module,correct,null);
  const merged=withLegacyCompletion(chapter,{legacyCompleted:true,completed:{m1:entry}});
  assert.equal(isModuleComplete(module,merged),true);
