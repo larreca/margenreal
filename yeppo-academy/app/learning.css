@@ -1,4 +1,6 @@
 /* Yeppo Academy — approved editorial learning direction. Scoped to student surfaces. */
+/* The reader mounts one lesson; embedded panels must not inherit old tab hiding. */
+.learning-app .learn-lesson-body [data-course-module-panel]{display:block}
 .learning-app .lesson-foundation h4{font:400 26px/1.25 Georgia,serif;color:#45243d;margin:28px 0 16px}
 .learning-app .lesson-foundation .reading-copy{display:block;max-width:74ch}
 .learning-app .learn-yeppo-advice{margin:36px 0;padding:28px 32px;background:#f5e9ec;border-left:4px solid #875a73}
