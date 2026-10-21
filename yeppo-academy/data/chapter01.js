@@ -6,7 +6,7 @@ import lesson013 from "./lesson013.js";
 import lesson012 from "./lesson012.js";
 import lesson011 from "./lesson011.js";
 const chapter01={
-  id:"c01",n:1,contentVersion:12,
+  id:"c01",n:1,contentVersion:13,
   title:"Qué es realmente K-Beauty",
   summary:"Capítulo de apertura: entiende K-Beauty como sistema de producto, industria, cultura y negocio; aprende a separar tendencia de evidencia y a convertir interés en una recomendación responsable y una compra B2B mejor.",
   tip:"El origen atrae; el valor se construye con criterio, evidencia, experiencia, rotación y recompra.",
