@@ -3,6 +3,7 @@
 import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
+import {repairLegacyImagePaths} from '../lib/content-utils.js';
 const app=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const dataDir=join(app,'data'),publicDir=join(app,'public');
 const readJSON=name=>JSON.parse(readFileSync(join(dataDir,name),'utf8'));
@@ -28,10 +29,10 @@ for(const chapter of chapters){
   const missingAlt=imgs.filter(tag=>!(/\balt\s*=\s*["'][^"']+["']/i.test(tag))).length;
   for(const tag of imgs){
    const src=tag.match(/\bsrc\s*=\s*["']([^"']+)["']/i)?.[1];
-   if(!src)continue;assetCount.add(src);
-   if(src.startsWith('/assets/')){
-    const local=join(publicDir,src.split('?')[0].slice(1));
-    if(!existsSync(local))missingImages.add(src);
+   if(!src)continue;const effectiveSrc=repairLegacyImagePaths(src);assetCount.add(effectiveSrc);
+   if(effectiveSrc.startsWith('/assets/')){
+    const local=join(publicDir,effectiveSrc.split('?')[0].slice(1));
+    if(!existsSync(local))missingImages.add(effectiveSrc);
    }
   }
   const questions=module.assessment?.questions;
