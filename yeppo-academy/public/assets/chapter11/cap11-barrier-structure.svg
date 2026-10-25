@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="t d">
+<title id="t">Estrato córneo y lípidos de barrera</title>
+<desc id="d">Diagrama conceptual de corneocitos como bloques y matriz de lípidos intercelulares como espacios entre ellos. Ceramidas, colesterol y ácidos grasos participan en la matriz; su presencia en INCI no permite inferir una eficacia clínica universal.</desc>
+<rect width="1280" height="820" fill="#FBFAF7"/>
+<g font-family="Arial,sans-serif">
+<text x="65" y="81" fill="#182442" font-size="41" font-weight="700">Barrera cutánea: estructura ≠ promesa</text>
+<text x="65" y="125" fill="#4D576A" font-size="21">Estrato córneo, explicado como bloques rodeados por una matriz de lípidos.</text>
+<rect x="66" y="175" width="735" height="442" rx="24" fill="#E9C7B5"/>
+<g fill="#F7E9D9" stroke="#BD977C" stroke-width="2">
+<rect x="91" y="200" width="210" height="114" rx="12"/>
+<rect x="326" y="200" width="210" height="114" rx="12"/>
+<rect x="561" y="200" width="210" height="114" rx="12"/>
+<rect x="91" y="340" width="210" height="114" rx="12"/>
+<rect x="326" y="340" width="210" height="114" rx="12"/>
+<rect x="561" y="340" width="210" height="114" rx="12"/>
+<rect x="91" y="480" width="210" height="111" rx="12"/>
+<rect x="326" y="480" width="210" height="111" rx="12"/>
+<rect x="561" y="480" width="210" height="111" rx="12"/>
+</g>
+<g fill="#7A4A46" font-size="18" font-weight="700">
+<text x="128" y="261">Corneocito</text><text x="365" y="401">Corneocito</text><text x="599" y="541">Corneocito</text>
+</g>
+<path d="M795 381 H834" stroke="#8B5E66" stroke-width="7" stroke-linecap="round"/>
+<rect x="844" y="175" width="367" height="442" rx="22" fill="#EDEDFC"/>
+<text x="869" y="229" fill="#192443" font-size="27" font-weight="700">Matriz intercelular</text>
+<text x="869" y="272" fill="#364159" font-size="21">Lípidos organizados entre</text>
+<text x="869" y="303" fill="#364159" font-size="21">los corneocitos:</text>
+<g fill="#2C3858" font-size="23">
+<text x="870" y="370">• Ceramidas</text>
+<text x="870" y="423">• Colesterol</text>
+<text x="870" y="476">• Ácidos grasos</text></g>
+<text x="869" y="549" fill="#74415E" font-size="18">Dibujo conceptual, no</text>
+<text x="869" y="575" fill="#74415E" font-size="18">microfotografía ni escala.</text>
+<rect x="66" y="652" width="1145" height="96" rx="17" fill="#1F2D4E"/>
+<text x="91" y="693" fill="#FFFFFF" font-size="22" font-weight="700">Lectura comercial</text>
+<text x="91" y="726" fill="#FFFFFF" font-size="19">Ver ceramidas en el INCI no demuestra cuánto «repara» una fórmula: verificar evidencia y límites.</text>
+<text x="66" y="786" fill="#5C6575" font-size="17">Fuentes: DermNet · función barrera; AAD · cuidado de piel seca. Educación cosmética, no diagnóstico.</text>
+</g>
+</svg>
