@@ -9,7 +9,8 @@ export function gradeLesson(module, answers) {
   }
   const correct = questions.filter((q,i) => q.correct === answers[i]).length;
   const score = correct / questions.length * 100;
-  return {correct, total:questions.length, score, passed:score >= (assessment.passPercent ?? 80), assessmentVersion:assessment.version};
+  const criticalMistakes = questions.filter((question,index) => question.critical === true && question.correct !== answers[index]).length;
+  return {correct, total:questions.length, score, criticalMistakes, passed:score >= (assessment.passPercent ?? 80) && criticalMistakes === 0, assessmentVersion:assessment.version};
 }
 
 export function isModuleComplete(module, state={}) {
@@ -27,5 +28,5 @@ export function recordLessonAttempt(module, answers, previous, now=new Date().to
 }
 
 export function assertCanConfirm(module, state) {
-  if (module?.assessment && !isModuleComplete(module, state)) throw new LessonInputError('Aprueba la actividad de esta lección con al menos 80 % para completarla.');
+  if (module?.assessment && !isModuleComplete(module, state)) throw new LessonInputError('Debes aprobar la actividad de esta lección, incluida toda respuesta de seguridad crítica, antes de completarla.');
 }
