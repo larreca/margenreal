@@ -1,4 +1,5 @@
-export default {
+import {withIndependentAssessments} from './module-assessment-bank.js';
+const chapter30 = {
   "id": "c30",
   "n": 30,
   "title": "Precio y margen",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default withIndependentAssessments(chapter30);
