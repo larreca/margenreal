@@ -12,6 +12,7 @@ import {editorialFor,editorialImage,editorialCover} from "@/lib/editorial";
 import ChapterMap from "@/components/ChapterMap";
 import MiniDecision from "@/components/MiniDecision";
 import {enhanceChapterVisuals} from "@/lib/chapter-visuals";
+import {gradeChapterQuiz,hasSafetyGate,QUIZ_RULE_VERSION} from '@/lib/chapter-assessment';
 
 function attachInteractions(container,onAssessment){
  if(!container)return;
@@ -156,7 +157,7 @@ function attachInteractions(container,onAssessment){
        feedback.className="challenge-feedback "+(isCorrect?"good":"bad");
        feedback.textContent=(isCorrect?"Correcto. ":"Revisa: "+(correct?.parentElement?.textContent?.trim()||"la respuesta indicada")+". ")+(q.dataset.explanation||"");
      });
-     if(onAssessment)await onAssessment(answers,qs.length?score/qs.length*100:0);
+     if(onAssessment)await onAssessment(answers,gradeChapterQuiz(box.innerHTML,answers));
    };
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
@@ -171,17 +172,19 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
  const {states,ready,error,update}=useLearning(initialStates,previewMode);const state=states[chapter.id]||{};
  const [passed,setPassed]=useState(initialPassed);const [assessmentMsg,setAssessmentMsg]=useState('');const stageRef=useRef(null);const dialogRef=useRef(null);const [zoom,setZoom]=useState(null);const [zoomDetail,setZoomDetail]=useState(false);const lastImageTrigger=useRef(null);const resumed=useRef(null);
  const m=modules[index]||{id:'empty',title:chapter.title,html:'<p>Contenido en preparación.</p>'};const videoSrc=videoEmbedUrl(m.videoUrl);
- const p=chapterProgress(chapter,{...state,passed:state.passed||passed});
+ const validatedPass=Boolean(passed)||(Boolean(state.passed)&&(!hasSafetyGate(chapter.id)||state.quizVersion===QUIZ_RULE_VERSION));
+ const p=chapterProgress(chapter,{...state,passed:validatedPass,quizVersion:validatedPass?QUIZ_RULE_VERSION:state.quizVersion});
  const feature={...editorialFor(chapter.id),...chapter.editorial};const cover=editorialCover(chapter.id);const coverSrc=chapter.coverImage||cover.src;const coverAlt=chapter.coverAlt||cover.alt;
  const root=previewMode?'/revision':'/academy';const chapterPath=root+(previewMode?'/':'/chapter/')+chapter.id;
  useEffect(()=>{if(ready&&!noteDirty)setNote(state.notes?.[m.id]||'');},[ready,m.id,state.notes,noteDirty]);
  useEffect(()=>{if(ready&&resumed.current!==m.id){resumed.current=m.id;update(chapter.id,{action:'resume',moduleId:m.id});}},[ready,m.id]);
- useEffect(()=>{if(ready&&state.passed)setPassed(true);},[ready,state.passed]);
+ useEffect(()=>{if(ready&&state.passed&&(!hasSafetyGate(chapter.id)||state.quizVersion===QUIZ_RULE_VERSION))setPassed(true);},[ready,state.passed,state.quizVersion,chapter.id]);
  useEffect(()=>{
  const container=stageRef.current;if(!container)return;
- const clean=attachInteractions(container,async(answers,score)=>{
- if(previewMode){const ok=await update(chapter.id,{action:'quiz',value:!!state.passed||score>=80});if(ok){setPassed(v=>v||score>=80);setAssessmentMsg(score>=80?'Evaluación aprobada. Confirma la lectura para finalizar.':'Necesitas un 80 % para aprobar. Puedes volver a intentarlo.');}return;}
- try{const r=await fetch('/api/quiz',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chapterId:chapter.id,answers})});const j=await r.json();if(!r.ok)throw new Error(j.error);setPassed(v=>v||Boolean(j.passed));setAssessmentMsg(j.passed?'Evaluación aprobada. Confirma la lectura para finalizar.':'Resultado guardado. Necesitas un 80 % para aprobar.');}catch(e){setAssessmentMsg(e.message||'No se pudo guardar la evaluación. Reintenta.');}
+ const clean=attachInteractions(container,async(answers,grade)=>{
+ const feedback=grade.passed?'Evaluación aprobada. Confirma la lectura para finalizar.':grade.criticalMistakes?'La respuesta de seguridad es obligatoria. Revisa la explicación y vuelve a intentar.':'Necesitas al menos 80 % para aprobar. Puedes volver a intentar.';
+ if(previewMode){const ok=await update(chapter.id,{action:'quiz',value:grade.passed});if(ok){setPassed(v=>v||grade.passed);setAssessmentMsg(feedback);}return;}
+ try{const r=await fetch('/api/quiz',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chapterId:chapter.id,answers})});const j=await r.json();if(!r.ok)throw new Error(j.error);setPassed(v=>v||Boolean(j.passed));setAssessmentMsg(j.passed?'Evaluación aprobada. Confirma la lectura para finalizar.':j.criticalMistakes?'La respuesta de seguridad es obligatoria. Revisa la explicación y vuelve a intentar.':'Resultado guardado. Necesitas al menos 80 % para aprobar.');}catch(e){setAssessmentMsg(e.message||'No se pudo guardar la evaluación. Reintenta.');}
  });
  const triggers=[];
  container.querySelectorAll('img').forEach(img=>{if(img.closest('button,a'))return;const button=document.createElement('button');button.className='learn-expand-image';button.type='button';button.textContent='Ampliar imagen';button.setAttribute('aria-label','Ampliar imagen: '+(img.alt||m.title));img.after(button);const click=()=>{lastImageTrigger.current=button;setZoom({src:img.currentSrc||img.src,alt:img.alt||m.title,width:img.naturalWidth});setZoomDetail(false);};button.addEventListener('click',click);triggers.push(()=>button.remove());});
@@ -204,7 +207,7 @@ export default function ChapterReader({chapter,initialPercent=0,initialPassed=fa
    {index===0&&!m.assessment&&<MiniDecision chapterId={chapter.id}/>}
    {m.assessment&&<LessonAssessment key={m.id} module={m} state={state} onSubmit={submitLesson} busy={busy} ready={ready}/>}
    {videoSrc&&<div className="ya-video"><iframe src={videoSrc} title={"Video · "+m.title} loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>}
-   {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:passed?"#eaf8f2":"#fff4e5",color:passed?"#136c4a":"#874900"}}><b>{passed?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80% antes de marcarlo como finalizado."}</div>}
+   {chapter.assessmentRequired&&index===modules.length-1&&<div className="ya-alert" style={{background:validatedPass?"#eaf8f2":"#fff4e5",color:validatedPass?"#136c4a":"#874900"}}><b>{validatedPass?"Evaluación aprobada":"Evaluación obligatoria"}</b><br/>{assessmentMsg||"Completa la evaluación del capítulo con al menos 80 % antes de marcarlo como finalizado. Las preguntas críticas de seguridad son obligatorias."}</div>}
 
  </section>
  <div className="learn-save-status" aria-live="polite">{error?<p className="learn-error" role="alert">{error}</p>:<p>{savedMsg}</p>}</div>

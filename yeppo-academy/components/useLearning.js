@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {LEARNING_STORAGE_KEY,emptyLearning} from '@/lib/learning-model';
 import {assertCanConfirm,recordLessonAttempt} from '@/lib/lesson-assessment';
+import {QUIZ_RULE_VERSION} from '@/lib/chapter-assessment';
 export default function useLearning(initial={},preview=false){
  const queue=useRef(Promise.resolve());
  const [states,setStates]=useState(initial);const [ready,setReady]=useState(!preview);const [error,setError]=useState('');
@@ -17,7 +18,10 @@ export default function useLearning(initial={},preview=false){
  if(input.action==='resume'||input.action==='read')state.moduleId=input.moduleId;
  if(input.action==='note')state.notes={...state.notes,[input.moduleId]:input.text};
  if(input.action==='favorite')state.favorite=input.value;
- if(input.action==='quiz')state.passed=Boolean(input.value);
+ if(input.action==='quiz'){
+   state.passed=Boolean(input.value)||(Boolean(state.passed)&&state.quizVersion===QUIZ_RULE_VERSION);
+   state.quizVersion=state.passed?QUIZ_RULE_VERSION:null;
+ }
  saved[chapterId]=state;localStorage.setItem(LEARNING_STORAGE_KEY,JSON.stringify(saved));setStates(saved);return state;
  }
  const r=await fetch('/api/learning',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chapterId,...input})});const j=await r.json();if(!r.ok)throw new Error(j.error);

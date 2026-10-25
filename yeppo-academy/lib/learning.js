@@ -1,6 +1,7 @@
 import {getDb} from '@/lib/db';
 import {getUserProgress,recordProgress,getQuizStatus} from '@/lib/academy';
 import {assertCanConfirm,isModuleComplete,recordLessonAttempt} from '@/lib/lesson-assessment';
+import {hasSafetyGate,QUIZ_RULE_VERSION} from '@/lib/chapter-assessment';
 let schema;
 export async function learningDb(){
  const sql=getDb();if(!sql)throw new Error('El guardado en tu cuenta no está disponible en este momento.');
@@ -16,7 +17,11 @@ export async function getLearningState(userId){
  const [rows,old,quizzes]=await Promise.all([sql`SELECT * FROM academy_learning_state WHERE user_id=${userId}::uuid`,getUserProgress(userId),sql`SELECT chapter_id,BOOL_OR(passed) passed FROM academy_quiz_attempts WHERE user_id=${userId}::uuid GROUP BY chapter_id`]);
  const states=Object.fromEntries(rows.map(r=>[r.chapter_id,{completed:r.completed_modules||{},notes:r.notes||{},favorite:r.favorite,moduleId:r.current_module_id,updatedAt:r.updated_at,passed:false}]));
  for(const [id,p] of Object.entries(old))if(p.completed)states[id]={...states[id],legacyCompleted:true};
- for(const q of quizzes)states[q.chapter_id]={...states[q.chapter_id],passed:q.passed};return states;
+ for(const q of quizzes){
+   const passed=hasSafetyGate(q.chapter_id)?(await getQuizStatus(userId,q.chapter_id)).passed:Boolean(q.passed);
+   states[q.chapter_id]={...states[q.chapter_id],passed,quizVersion:passed&&hasSafetyGate(q.chapter_id)?QUIZ_RULE_VERSION:undefined};
+ }
+ return states;
 }
 export async function updateLearning(userId,chapter,{action,moduleId,text,value,answers}){
  const sql=await learningDb();

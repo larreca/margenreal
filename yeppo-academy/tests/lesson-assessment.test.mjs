@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import chapter from '../data/chapter01.js';
+import chapter14 from '../data/chapter14.js';
 import {gradeLesson,recordLessonAttempt,isModuleComplete,assertCanConfirm} from '../lib/lesson-assessment.js';
 import {chapterProgress,weeklyCount,lessonSummary,withLegacyCompletion} from '../lib/learning-model.js';
 const module=chapter.modules[0];
@@ -39,7 +40,7 @@ test('una evaluación modificada requiere nueva aprobación',()=>{
  assert.equal(isModuleComplete({...module,assessment:{...module.assessment,version:2}},{completed:{m1:old}}),false);
 });
 test('los módulos sin actividad conservan la confirmación de lectura existente',()=>{
- const unassessed=chapter.modules.find(m=>!m.assessment);
+ const unassessed=chapter14.modules.find(m=>!m.assessment);
  const state={completed:{[unassessed.id]:'2026-10-19T14:00:00Z'}};
  assert.equal(isModuleComplete(unassessed,state),true);assert.doesNotThrow(()=>assertCanConfirm(unassessed,state));
 });

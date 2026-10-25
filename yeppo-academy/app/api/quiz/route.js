@@ -2,6 +2,7 @@ import {NextResponse} from "next/server";
 import {updateLearning} from '@/lib/learning';
 import {readSession} from "@/lib/auth";
 import {getChapterForUser,recordQuizAttempt} from "@/lib/academy";
+import {gradeChapterQuiz} from "@/lib/chapter-assessment";
 
 export async function POST(req){
   const session=await readSession();
@@ -11,14 +12,10 @@ export async function POST(req){
     const chapter=await getChapterForUser(chapterId,session);
     if(!chapter?.assessmentRequired||!Array.isArray(answers))return NextResponse.json({error:"Evaluación inválida"},{status:400});
     const html=chapter.modules.at(-1)?.html||"";
-    const keys=[...html.matchAll(/<[^>]*class=["'][^"']*challenge-q[^"']*["'][^>]*>/gi)]
-      .map(([tag])=>tag.match(/\bdata-answer=["']([^"']+)["']/i)?.[1])
-      .filter(Boolean);
-    if(!keys.length||answers.length!==keys.length||answers.some(a=>typeof a!=="string"||a.length>20))
-      return NextResponse.json({error:"Responde todas las preguntas"},{status:400});
-    const correct=keys.reduce((count,key,index)=>count+(answers[index]===key?1:0),0);
-    const result=await recordQuizAttempt(session.id,chapterId,correct/keys.length*100,answers);
-    if(result.passed)await updateLearning(session.id,chapter,{action:"sync"});
+    let grade;
+    try{grade=gradeChapterQuiz(html,answers)}catch(e){return NextResponse.json({error:e.message},{status:400})}
+    const result=await recordQuizAttempt(session.id,chapterId,grade,answers);
+    await updateLearning(session.id,chapter,{action:"sync"});
     return NextResponse.json(result);
   }catch{
     return NextResponse.json({error:"No se pudo evaluar"},{status:500});

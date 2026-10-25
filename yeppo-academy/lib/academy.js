@@ -45,6 +45,7 @@ import chapterOverrides from "@/data/chapter-overrides-22-24";
 import {getDb} from "@/lib/db";
 import {editableChapter,plainTextChapter} from "@/lib/content-utils";
 import {videoEmbedUrl} from "@/lib/video";
+import {gradeChapterQuiz,hasSafetyGate} from "@/lib/chapter-assessment";
 
 const newById=new Map([chapter01,...newChapters,chapter11,chapter12,chapter13,chapter14,chapter15,chapter16,chapter17,chapter18,chapter19,chapter20,chapter21,...Object.values(chapterOverrides),chapter22,chapter23,chapter24,chapter25,chapter26,chapter27,chapter28,chapter29,chapter30,chapter31,chapter32,chapter33,chapter34,chapter35,chapter36,chapter37,chapter38,chapter39,chapter40,chapter41,chapter42,chapter43,chapter44,chapter45,chapter46,chapter47,chapter48,chapter49,chapter50].map(c=>[c.id,c]));
 const allSeed={...seed,schools:seed.schools.map(s=>({...s,chapters:s.chapters.map(c=>({...c,...newById.get(c.id)}))}))};
@@ -120,7 +121,7 @@ export async function recordProgress(userId,chapterId,moduleId,percent,completed
   const sql=getDb();if(!sql)return;const p=Math.max(0,Math.min(100,Number(percent||0)));
   await sql`INSERT INTO academy_progress(user_id,chapter_id,current_module_id,progress_percent,completed_at,last_activity_at)
     VALUES(${userId}::uuid,${chapterId},${moduleId||null},${p},${completed?new Date().toISOString():null}::timestamptz,NOW())
-    ON CONFLICT(user_id,chapter_id) DO UPDATE SET current_module_id=EXCLUDED.current_module_id,progress_percent=GREATEST(academy_progress.progress_percent,EXCLUDED.progress_percent),completed_at=COALESCE(academy_progress.completed_at,EXCLUDED.completed_at),last_activity_at=NOW()`;
+    ON CONFLICT(user_id,chapter_id) DO UPDATE SET current_module_id=EXCLUDED.current_module_id,progress_percent=CASE WHEN ${hasSafetyGate(chapterId)} THEN EXCLUDED.progress_percent ELSE GREATEST(academy_progress.progress_percent,EXCLUDED.progress_percent) END,completed_at=CASE WHEN ${hasSafetyGate(chapterId)} THEN EXCLUDED.completed_at ELSE COALESCE(academy_progress.completed_at,EXCLUDED.completed_at) END,last_activity_at=NOW()`;
 }
 export async function searchAcademy(query,session){
   const q=String(query||"").trim().toLowerCase();if(!q||!session)return[];const d=await getAcademyDataForUser(session),out=[];
@@ -213,14 +214,23 @@ export async function getChapterForUser(id,session){
   return getChapter(id);
 }
 
-export async function recordQuizAttempt(userId,chapterId,score,answers=null){
-  const sql=getDb();if(!sql)return{passed:false};const safe=Math.max(0,Math.min(100,Number(score||0))),passed=safe>=80;
+export async function recordQuizAttempt(userId,chapterId,grade,answers=null){
+  const sql=getDb();if(!sql)return{passed:false};const safe=Math.max(0,Math.min(100,Number(grade.score||0))),passed=Boolean(grade.passed);
   await sql`INSERT INTO academy_quiz_attempts(user_id,chapter_id,score,answers,passed) VALUES(${userId}::uuid,${chapterId},${safe},${JSON.stringify(answers||{})}::jsonb,${passed})`;
-  return{passed,score:safe};
+  return{passed,score:safe,criticalMistakes:grade.criticalMistakes};
 }
 export async function getQuizStatus(userId,chapterId){
   const sql=getDb();if(!sql)return{passed:false,best:0};
-  try{const rows=await sql`SELECT COALESCE(MAX(score),0)::float best,COALESCE(BOOL_OR(passed),FALSE) passed FROM academy_quiz_attempts WHERE user_id=${userId}::uuid AND chapter_id=${chapterId}`;return{passed:Boolean(rows[0]?.passed),best:Number(rows[0]?.best||0)}}catch{return{passed:false,best:0}}
+  try{
+    if(hasSafetyGate(chapterId)){
+      const html=(await getChapter(chapterId))?.modules.at(-1)?.html||'';
+      const rows=await sql`SELECT answers FROM academy_quiz_attempts WHERE user_id=${userId}::uuid AND chapter_id=${chapterId}`;
+      const grades=rows.flatMap(row=>{try{return [gradeChapterQuiz(html,row.answers)]}catch{return []}});
+      return {passed:grades.some(grade=>grade.passed),best:Math.max(0,...grades.map(grade=>grade.score))};
+    }
+    const rows=await sql`SELECT COALESCE(MAX(score),0)::float best,COALESCE(BOOL_OR(passed),FALSE) passed FROM academy_quiz_attempts WHERE user_id=${userId}::uuid AND chapter_id=${chapterId}`;
+    return{passed:Boolean(rows[0]?.passed),best:Number(rows[0]?.best||0)};
+  }catch{return{passed:false,best:0}}
 }
 
 export async function seedAcademyContent(userId=null){
