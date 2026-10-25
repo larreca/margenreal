@@ -26,11 +26,11 @@ test('11.1–11.8: lecciones originales conservadas con ocho prácticas verifica
    assert.ok(q.prompt.length>25);
    assert.ok(q.explanation.length>55);
   }
-  const a=b.assessment.questions.map(q=>q.correct);
-  assert.equal(gradeLesson(b,a).passed,true);
-  const fail=[...a];fail[0]=(fail[0]+1)%3;
+  const correctAnswers=b.assessment.questions.map(q=>q.correct);
+  assert.equal(gradeLesson(b,correctAnswers).passed,true);
+  const fail=[...correctAnswers];fail[0]=(fail[0]+1)%3;
   assert.equal(gradeLesson(b,fail).passed,false);
-  const record=recordLessonAttempt(b,a,null);
+  const record=recordLessonAttempt(b,correctAnswers,null);
   assert.equal(isModuleComplete(b,{completed:{[b.id]:record}}),true);
  }
 });
