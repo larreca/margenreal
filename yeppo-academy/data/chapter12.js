@@ -1,3 +1,4 @@
+import {withIndependentAssessments} from './module-assessment-bank.js';
 const source=(url,label)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
 const box=(heading,copy)=>`<div class="module-takeaway"><b>${heading}</b><p>${copy}</p></div>`;
 const lesson=(number,tag,title,paragraphs,tip,links=[])=>`<div class="module-heading"><span>${number}</span><div><small>${tag}</small><h3>${title}</h3></div></div><div class="reading-copy">${paragraphs.map(p=>`<p>${p}</p>`).join("")}</div>${box("Consejo para una recomendación responsable",tip)}<div class="sources-box"><h4>Para profundizar</h4><ul>${links.map(([url,label])=>`<li>${source(url,label)}</li>`).join("")}</ul></div>`;
@@ -7,7 +8,7 @@ const panthenol="https://pubmed.ncbi.nlm.nih.gov/27425824/";
 const heartleaf="https://pmc.ncbi.nlm.nih.gov/articles/PMC12552693/";
 const glucan="https://pubmed.ncbi.nlm.nih.gov/34237364/";
 
-export default {
+const chapter12 = {
  id:"c12",n:12,title:"Ingredientes calmantes",summary:"Centella, pantenol, heartleaf, mugwort, aloe, beta-glucano y alantoína: historia, evidencia, formulación y recomendación prudente.",tip:"‘Calmante’ describe un objetivo cosmético; la tolerancia depende de la fórmula completa y de cada persona.",assessmentRequired:true,
  modules:[
  {id:"c12m1",label:"12.1",title:"Qué significa calmar la piel",html:lesson("12.1","CRITERIO","Calmar no es diagnosticar",[
@@ -52,3 +53,5 @@ export default {
  ].map(([q,a,b,c],i)=>`<div class="challenge-q" data-answer="${['b','a','b','c','a','b','c'][i]}"><p>${i+1}. ${q}</p>${[a,b,c].map((v,j)=>`<label><input type="radio" name="q12${i}" value="${'abc'[j]}"> ${v}</label>`).join("")}</div>`).join("")}<button class="primary challenge-submit" type="button">Corregir evaluación</button><div class="challenge-result">Responde las siete preguntas.</div></div>`}
  ]
 };
+
+export default withIndependentAssessments(chapter12);
