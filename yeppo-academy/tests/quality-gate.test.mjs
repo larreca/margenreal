@@ -25,7 +25,7 @@ test('8,0 exacto con toda evidencia completa es elegible',()=>{
 });
 test('7,999 no aprueba y no se redondea',()=>{
  const m=sample();m.scores.sources=7.99;
- const r=evaluateQuality(m);assert.equal(r.weighted,7.999);assert.equal(r.approved,false);
+ const r=evaluateQuality(m);assert.ok(r.weighted<8 && Math.abs(r.weighted-7.999)<1e-9);assert.equal(r.approved,false);
 });
 test('nota general alta no compensa visuales 7,9 o profundidad 7,9',()=>{
  for(const k of ['depth','visuals']){
