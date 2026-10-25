@@ -7,7 +7,7 @@ on:
       - "yeppo-academy/**"
       - ".github/workflows/yeppo-academy-verify.yml"
   pull_request:
-    branches: [main]
+    branches: [main, codex/preventa-evaluaciones-visuales]
     paths:
       - "yeppo-academy/**"
       - ".github/workflows/yeppo-academy-verify.yml"
