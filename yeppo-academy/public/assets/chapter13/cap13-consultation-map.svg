@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" role="img" aria-labelledby="t d">
+<title id="t">Entrevista cosmética: brillo, poros visibles y brotes</title>
+<desc id="d">Tres necesidades diferenciadas: para brillo preguntar por limpieza y sensaciones; para poros hablar de apariencia y expectativas; ante brotes dolorosos o lesiones persistentes detener recomendaciones comerciales y orientar consulta profesional.</desc>
+<rect width="1280" height="840" fill="#FAF9F6"/>
+<g font-family="Arial,sans-serif">
+<text x="62" y="80" font-size="41" font-weight="700" fill="#1C2849">No todo brillo es la misma consulta</text>
+<text x="62" y="123" font-size="21" fill="#546073">Escucha la prioridad. No conviertas una observación en diagnóstico.</text>
+<rect x="340" y="166" width="600" height="98" rx="21" fill="#1E2C4E"/>
+<text x="379" y="207" font-size="25" font-weight="700" fill="#fff">¿Qué te preocupa principalmente?</text>
+<text x="379" y="242" font-size="20" fill="#fff">Brillo · apariencia de poros · brotes</text>
+<path d="M640 264 V310 M244 310 H1036 M244 310 V343 M640 310 V343 M1036 310 V343" stroke="#A4879B" stroke-width="5" fill="none"/>
+<rect x="60" y="343" width="372" height="215" rx="20" fill="#E9EFFB"/>
+<rect x="454" y="343" width="372" height="215" rx="20" fill="#EEF6F0"/>
+<rect x="848" y="343" width="372" height="215" rx="20" fill="#FDEDF2"/>
+<g font-size="26" fill="#182849" font-weight="700">
+<text x="91" y="395">01 · Brillo</text>
+<text x="485" y="395">02 · Poros visibles</text>
+<text x="879" y="395">03 · Brotes</text></g>
+<g font-size="20" fill="#37465E">
+<text x="91" y="433">Revisar limpieza, textura</text>
+<text x="91" y="463">y sensación tras el lavado.</text>
+<text x="91" y="514">Evitar limpieza agresiva.</text>
+<text x="485" y="433">Hablar de apariencia, no</text>
+<text x="485" y="463">de cierre permanente.</text>
+<text x="485" y="514">Revisar expectativas.</text>
+<text x="879" y="433">Preguntar por dolor,</text>
+<text x="879" y="463">duración y empeoramiento.</text>
+<text x="879" y="514">No diagnosticar.</text></g>
+<rect x="60" y="590" width="1160" height="138" rx="18" fill="#26365A"/>
+<text x="88" y="632" fill="#FFFFFF" font-size="26" font-weight="700">Decisión de seguridad</text>
+<text x="88" y="673" fill="#FFFFFF" font-size="21">Si hay lesiones profundas, dolorosas o cambios persistentes:</text>
+<text x="88" y="705" fill="#FFFFFF" font-size="21" font-weight="700">detener la recomendación de tratamientos y orientar evaluación profesional.</text>
+<text x="60" y="778" fill="#596378" font-size="17">Fuente: AAD · cuidado de poros y hábitos ante brotes · Consultado 25-10-2026.</text>
+<text x="60" y="805" fill="#596378" font-size="17">Guía educativa de atención en tienda; no es un algoritmo diagnóstico.</text>
+</g>
+</svg>
