@@ -325,7 +325,7 @@ const cases={
         "$5.300"
       ],
       0,
-      "Markup = 5.000 × 1,60 = 8.000 CLP.",
+      "Recargo del 60 % sobre el costo: 5.000 × (1 + 0,60) = 8.000 CLP netos. El denominador del recargo es el costo.",
       false
     ],
     [
@@ -360,7 +360,7 @@ const cases={
         "$23.800"
       ],
       0,
-      "23.800 ÷ 1,19 = 20.000 CLP.",
+      "La venta neta se obtiene dividiendo el precio bruto por 1,19: 23.800 ÷ 1,19 = 20.000 CLP sin IVA.",
       false
     ],
     [
@@ -406,7 +406,7 @@ const cases={
         "Ambos $500"
       ],
       1,
-      "A = 600 + 500 = 1.100; B = 750.",
+      "Con venta neta de 5.000 CLP, el canal A cobra 12 % (600) más 500 fijo = 1.100 CLP; el canal B cobra 15 % = 750 CLP.",
       false
     ],
     [
@@ -441,7 +441,7 @@ const cases={
         "10 %"
       ],
       1,
-      "(9.000 − 6.000) ÷ 9.000 = 33,33 %.",
+      "Después del descuento, el margen sobre venta neta es (9.000 − 6.000) ÷ 9.000 = 33,33 %, antes de gastos de canal.",
       false
     ],
     [
@@ -465,7 +465,7 @@ const cases={
         "$50/ml"
       ],
       0,
-      "10.000 ÷ 50 = 200 CLP/ml.",
+      "Dividir el precio de 10.000 CLP por los 50 ml contenidos: el precio unitario es 200 CLP por ml.",
       false
     ],
     [
@@ -476,7 +476,7 @@ const cases={
         "$350/ml"
       ],
       1,
-      "17.500 ÷ 100 = 175 CLP/ml.",
+      "La segunda presentación contiene 100 ml: 17.500 ÷ 100 = 175 CLP/ml, inferior a 200 CLP/ml del formato anterior.",
       false
     ],
     [
