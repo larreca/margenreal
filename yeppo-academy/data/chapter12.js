@@ -9,7 +9,7 @@ const heartleaf="https://pmc.ncbi.nlm.nih.gov/articles/PMC12552693/";
 const glucan="https://pubmed.ncbi.nlm.nih.gov/34237364/";
 
 const chapter12 = {
- id:"c12",n:12,title:"Ingredientes calmantes",summary:"Centella, pantenol, heartleaf, mugwort, aloe, beta-glucano y alantoína: historia, evidencia, formulación y recomendación prudente.",tip:"‘Calmante’ describe un objetivo cosmético; la tolerancia depende de la fórmula completa y de cada persona.",assessmentRequired:true,
+ id:"c12",n:12,contentVersion:3,title:"Ingredientes calmantes",summary:"Centella, pantenol, heartleaf, mugwort, aloe, beta-glucano y alantoína: historia, evidencia, formulación y recomendación prudente.",tip:"‘Calmante’ describe un objetivo cosmético; la tolerancia depende de la fórmula completa y de cada persona.",assessmentRequired:true,
  modules:[
  {id:"c12m1",label:"12.1",title:"Qué significa calmar la piel",html:lesson("12.1","CRITERIO","Calmar no es diagnosticar",[
  "Una persona puede decir que su piel está roja, tirante o incómoda. Esas descripciones son útiles para elegir una textura y una rutina más sencilla, pero no permiten al vendedor identificar la causa clínica. La prioridad es preguntar cuándo comenzó, qué cambió en su rutina, qué producto ya tolera y si hay dolor, hinchazón o empeoramiento.",
