@@ -1,3 +1,4 @@
+import {upgradeSebumChapter} from './chapter13-upgrade.js';
 const link=(url,label)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
 const sourceBox=items=>`<div class="sources-box"><h4>Fuentes para profundizar</h4><ul>${items.map(([url,label])=>`<li>${link(url,label)}</li>`).join("")}</ul></div>`;
 const takeaway=(title,text)=>`<div class="module-takeaway"><b>${title}</b><p>${text}</p></div>`;
@@ -15,7 +16,7 @@ const teaTree="https://pmc.ncbi.nlm.nih.gov/articles/PMC10295805/";
 const product="https://yeppo.cl/collections/purito/products/purito-azelaic-acid-10-kojic-tea-tree-serum-30ml";
 const glossary=`<div class="course-case"><small>GLOSARIO QUE SE SUMA A LA ACADEMIA</small><h4>Cinco palabras para recordar</h4><p><strong>Sebo:</strong> mezcla lipídica producida por glándulas sebáceas. <strong>Comedón:</strong> folículo obstruido que puede verse como punto negro o blanco. <strong>BHA:</strong> familia de beta hidroxiácidos; en este capítulo se estudia el ácido salicílico. <strong>LHA:</strong> derivado lipofílico del salicílico que se identifica en INCI como Capryloyl Salicylic Acid. <strong>No comedogénico:</strong> afirmación de formulación orientada a reducir la obstrucción de poros; no garantiza cero brotes en toda persona.</p></div>`;
 
-export default {
+const chapter13 = {
  id:"c13",n:13,title:"Sebo, poros e imperfecciones",
  summary:"Brillo, poros visibles y brotes: cómo orientar una rutina cosmética, leer BHA, LHA, niacinamida, zinc, azelaico, tea tree y retinoides sin prometer tratar acné.",
  tip:"No seques la piel para 'eliminar' el sebo: pregunta por limpieza, hidratación, activos actuales y tolerancia.",
@@ -63,3 +64,5 @@ export default {
  ].map(([q,opts,answer,explanation],i)=>`<div class="challenge-q" data-answer="${"abc"[answer]}" data-explanation="${explanation}"><p>${i+1}. ${q}</p>${opts.map((option,j)=>`<label><input type="radio" name="q13${i}" value="${"abc"[j]}"> ${option}</label>`).join("")}</div>`).join("")}<button class="primary challenge-submit" type="button">Corregir evaluación</button><div class="challenge-result">Responde las siete preguntas.</div></div>`)},
  ]
 };
+
+export default upgradeSebumChapter(chapter13);
