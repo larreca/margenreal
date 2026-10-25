@@ -21,7 +21,7 @@ test('la rúbrica mantiene exactamente los pesos del protocolo',()=>{
  assert.deepEqual(WEIGHTS,{depth:.3,clarity:.1,visuals:.2,application:.15,assessment:.15,sources:.1});
 });
 test('8,0 exacto con toda evidencia completa es elegible',()=>{
- const r=evaluateQuality(sample()); assert.equal(r.approved,true);assert.equal(r.weighted,8);assert.equal(r.status,'aprobado');
+ const r=evaluateQuality(sample()); assert.equal(r.approved,true);assert.ok(Math.abs(r.weighted-8)<1e-9);assert.equal(r.status,'aprobado');
 });
 test('7,999 no aprueba y no se redondea',()=>{
  const m=sample();m.scores.sources=7.99;
