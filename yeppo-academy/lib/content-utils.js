@@ -1,7 +1,7 @@
 // Cuatro imágenes históricas .webp del capítulo 2 quedaron sin archivo.
 // Reutilizar diagramas SVG existentes con el mismo tema y nombre; no fingir fotografías.
 export const repairLegacyImagePaths=(html='')=>String(html).replace(
-  /\\/assets\\/chapter2\\/(cap2-2\\.[1-4]-[a-z-]+)\\.webp/g,
+  /\/assets\/chapter2\/(cap2-2\.[1-4]-[a-z-]+)\.webp/g,
   (_,name)=>'/assets/chapter2/'+name+'.svg'
 );
 const clean=(v="")=>String(v).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
