@@ -24,7 +24,7 @@ export default function LessonAssessment({module,state,onSubmit,busy,ready}) {
   return <section className="learn-lesson-assessment" aria-labelledby="lesson-assessment-title">
     <small>COMPRUEBA TU CRITERIO · LECCIÓN {module.label}</small>
     <h3 id="lesson-assessment-title">Decide antes de avanzar</h3>
-    <p>Responde las {questions.length} preguntas. Necesitas {Math.ceil(questions.length*passPercent/100)} correctas ({passPercent} %) y responder bien todas las preguntas de seguridad señaladas. Al aprobar, la lección queda completada. Puedes consultar el contenido y volver a intentarlo.</p>
+    <p>Responde las {questions.length} preguntas. Para aprobar necesitas {Math.ceil(questions.length*passPercent/100)} de {questions.length} correctas (umbral mínimo de {passPercent} %) y acertar todas las preguntas de seguridad señaladas. Al aprobar, la lección queda completada. Puedes consultar el contenido y volver a intentarlo.</p>
     {complete&&!result&&<p className="learn-assessment-success" role="status">Actividad aprobada y avance guardado. Puedes repetirla para practicar.</p>}
     <form onSubmit={submit}>
       {questions.map((q,i)=><fieldset key={q.id} disabled={busy||Boolean(result)} aria-describedby={result?'feedback-'+q.id:undefined}>
