@@ -16,7 +16,7 @@ const detail={
   body:'En el trimestre simulado, A deja $900.000 de margen bruto sobre $600.000 de inventario promedio a costo: GMROI 1,5. B deja $700.000 sobre $250.000: GMROI 2,8. B usa mejor el capital, pero A aporta $200.000 más de margen bruto absoluto. Calcula inventario promedio con fechas comparables y costo puesto en bodega consistente. Antes de elegir incorpora disponibilidad, devoluciones, caducidad y costos de canal: GMROI no es margen neto ni pronóstico de demanda.',
   trap:'Comparar un margen bruto trimestral con inventario de un solo día o mezclar inventario a precio de venta con costo.',
   figure:['/assets/chapter28/cap28-gmroi-worked.svg','/assets/chapter28/cap28-gmroi-worked-mobile.svg','Comparación de dos SKU simulados: GMROI A 1,5 y B 2,8, con distinto margen bruto absoluto'],
-  source:['Shopify · GMROI y costo promedio de inventario','https://www.shopify.com/blog/demand-planning-kpis']},
+  source:['Shopify · definición y cálculo de GMROI','https://www.shopify.com/blog/gmroi']},
  '28.4':{
   title:'Ficha de misión antes de seleccionar producto',
   body:'Para “protector solar cómodo cada día”, registra público, textura deseada, presupuesto, forma de aplicación, documentación del producto y oferta ya existente. Recién después compara candidatos. Una novedad solo merece lugar si cubre mejor un atributo concreto o llega a un segmento que hoy no está resuelto. Para piel reactiva evita prometer tolerancia universal; revisa ficha y modo de uso, y deja espacio a la prueba individual y la derivación profesional cuando corresponda.',
