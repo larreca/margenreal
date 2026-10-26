@@ -50,7 +50,11 @@ export function enhanceInventoryLesson(html,label){
  const d=detail[label];if(!d)throw new Error('Sin detalle '+label);
  let result=html;
  if(label==='29.7')result=result.replace('lectura en vivo del 1 de octubre de 2026','captura histórica del 1 de octubre de 2026; no representa inventario vigente');
- if(label==='29.2')result=result.replace('Sell-through compara lo vendido contra lo recibido.','En el ejercicio de una cohorte cerrada, la proporción vendida compara lo vendido contra lo recibido; el informe Sell-through de Shopify usa vendido / (vendido + inventario final).');
+ if(label==='29.2')result=result
+  .replace('<strong>Sell-through</strong> compara lo vendido contra lo recibido.','<strong>Porcentaje vendido de una cohorte cerrada</strong> compara las unidades de esa compra que se vendieron con las recibidas. El informe Sell-through de Shopify usa vendidas / (vendidas + inventario final).')
+  .replace('<b>Sell-through</b><code>vendido ÷ recibido ×100</code>','<b>Cohorte cerrada</b><code>vendido ÷ recibido ×100</code>')
+  .replace('Sell-through = 70%.','En esta cohorte cerrada, 70/100 = 70 % vendido.')
+  .replace('<span>Sell-through</span><p>¿Qué parte de lo recibido salió?</p>','<span>Cohorte cerrada</span><p>¿Qué parte de esta compra se vendió?</p>');
  if(label==='29.8')result=result.replace('2. Sell-through es:', '2. En una cohorte cerrada, el porcentaje vendido es:');
  return result+'<section class="lesson-box academy-decision-detail"><h4>'+d.title+'</h4><p>'+d.body+'</p><p><strong>Error a evitar:</strong> '+d.trap+'</p>'+figure(d)+'<p class="source-course">Para verificar: <a href="'+d.source[1]+'" target="_blank" rel="noopener noreferrer">'+d.source[0]+'</a>.</p></section>';
 }
