@@ -117,12 +117,16 @@ const lines=[
  ]]
 ];
 const questionBank=Object.fromEntries(lines);
-const form=(c)=>'<section class="academy-applied-practice" aria-label="Aplicación de surtido"><small>EJERCICIO APLICADO · CIFRAS SIMULADAS</small><h4>Objetivo: '+c.objective+'</h4><p><strong>Datos del caso:</strong> '+c.scenario+'</p><p><strong>Tu decisión y cálculo:</strong> '+c.task+'</p><label class="academy-case-input">Escribe tu decisión antes de revisar la solución<textarea rows="4" maxlength="2500" placeholder="Explica el dato, la decisión y qué comprobarías. El texto no se guarda automáticamente."></textarea></label><p class="academy-case-hint" role="status" aria-live="polite">Escribe al menos una frase para habilitar la resolución.</p><details class="academy-case-answer"><summary>Consultar resolución razonada</summary><p>'+c.resolution+'</p><p><strong>Límite del ejemplo:</strong> '+c.limit+'</p></details></section>';
+const figures={
+ "28.4":'<figure class="course-image academy-infographic"><img src="/assets/chapter28/cap28-mission-decision.svg" alt="Diagrama de cuatro etapas para elegir surtido por misión: necesidad, atributos, opciones y medición" loading="lazy"><figcaption>Infografía didáctica: empezar por la necesidad del cliente y comprobar la decisión con datos; los ejemplos son simulados.</figcaption></figure>',
+ "28.5":'<figure class="course-image academy-infographic"><img src="/assets/chapter28/cap28-stock-versus-demand.svg" alt="Cobertura hipotética: 7560 unidades dividido por 120 al día equivale a 63 días; dividido por 40 equivale a 189 días" loading="lazy"><figcaption>Stock histórico del material con velocidades de venta ficticias. No representa rotación ni sobrestock actual de Yeppo.</figcaption></figure>'
+};
+const form=(c,label)=>'<section class="academy-applied-practice" aria-label="Aplicación de surtido"><small>EJERCICIO APLICADO · CIFRAS SIMULADAS</small><h4>Objetivo: '+c.objective+'</h4><p><strong>Datos del caso:</strong> '+c.scenario+'</p><p><strong>Tu decisión y cálculo:</strong> '+c.task+'</p>'+(figures[label]||'')+'<label class="academy-case-input">Escribe tu decisión antes de revisar la solución<textarea rows="4" maxlength="2500" placeholder="Explica el dato, la decisión y qué comprobarías. El texto no se guarda automáticamente."></textarea></label><p class="academy-case-hint" role="status" aria-live="polite">Escribe al menos una frase para habilitar la resolución.</p><details class="academy-case-answer"><summary>Consultar resolución razonada</summary><p>'+c.resolution+'</p><p><strong>Límite del ejemplo:</strong> '+c.limit+'</p></details></section>';
 export function upgradeAssortmentChapter(chapter){
  if(chapter?.id!=='c28')throw new Error('El complemento de surtido requiere c28');
  return {...chapter,contentVersion:Math.max(3,Number(chapter.contentVersion||0)),modules:chapter.modules.map(m=>{
   const c=cases[m.label],qs=questionBank[m.label];
   if(!c||qs?.length!==5)throw new Error('Caso sin completar para '+m.label);
-  return {...m,html:m.html+form(c),assessment:{version:1,passPercent:80,questions:qs.map(([prompt,options,correct,explanation,critical],i)=>({id:'q'+(i+1),prompt,options,correct,explanation,critical:Boolean(critical)}))}};
+  return {...m,html:m.html+form(c,m.label),assessment:{version:1,passPercent:80,questions:qs.map(([prompt,options,correct,explanation,critical],i)=>({id:'q'+(i+1),prompt,options,correct,explanation,critical:Boolean(critical)}))}};
  })};
 }
