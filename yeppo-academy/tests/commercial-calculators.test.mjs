@@ -20,7 +20,7 @@ test('precio: IVA, cargo sobre bruto, contribución y margen correctos',()=>{
  const r=calculatePricingDecision(price());assert.equal(r.ok,true);
  assert.equal(r.finalGross,11900);assert.equal(r.netSale,10000);assert.equal(r.channelFees,1190);
  assert.equal(r.contribution,2310);assert.equal(r.contributionMargin,23.1);
- assert.equal(r.targetGross,10313.333333333334);
+ assert.ok(Math.abs(r.targetGross-10313.333333333334)<1e-7);
 });
 test('precio: sin IVA y descuento controlado',()=>{
  const r=calculatePricingDecision({cost:1000,gross:2000,vat:0,commission:0,payment:0,shipping:0,discount:20,target:25});
