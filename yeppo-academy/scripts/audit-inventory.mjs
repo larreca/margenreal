@@ -4,13 +4,14 @@ import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {repairLegacyImagePaths} from '../lib/content-utils.js';
+import {upgradeHydrationChapter} from '../data/chapter11-upgrade.js';
 const app=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const dataDir=join(app,'data'),publicDir=join(app,'public');
 const readJSON=name=>JSON.parse(readFileSync(join(dataDir,name),'utf8'));
 const seed=readJSON('academy.seed.json');
 const catalog=new Map(seed.schools.flatMap(s=>s.chapters).map(c=>[c.id,c]));
 for(const chapter of readJSON('new-chapters.json'))catalog.set(chapter.id,chapter);
-catalog.set('c11',readJSON('chapter11.json'));
+catalog.set('c11',upgradeHydrationChapter(readJSON('chapter11.json')));
 for(const n of [1,...Array.from({length:39},(_,i)=>i+12)]){
  const filename=n===1?'chapter01.js':'chapter'+n+'.js';
  const {default:chapter}=await import(pathToFileURL(join(dataDir,filename)).href);
