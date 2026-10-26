@@ -1,4 +1,5 @@
-export default {
+import {upgradeAssortmentChapter} from './chapter28-upgrade.js';
+const chapter28 = {
   "id": "c28",
   "n": 28,
   "title": "Cómo elegir surtido",
@@ -59,3 +60,4 @@ export default {
   ],
   "contentVersion": 2
 };
+export default upgradeAssortmentChapter(chapter28);
