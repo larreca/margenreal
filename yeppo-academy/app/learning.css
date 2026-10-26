@@ -108,3 +108,9 @@
 .learning-app .academy-applied-practice .course-image{background:#fff}
 .learning-app .academy-applied-practice img{height:auto;max-width:100%;object-fit:contain}
 @media(max-width:660px){.learning-app .academy-applied-practice{margin:24px 0;padding:20px 17px}.learning-app .academy-applied-practice>h4{font-size:21px}.learning-app .academy-applied-practice>p,.learning-app .academy-applied-practice details p{font-size:16px}.learning-app .academy-applied-practice details{padding:15px}}
+
+
+.learning-app .academy-case-input{display:block;margin-top:22px;font-weight:700;font-size:16px;color:#283750}
+.learning-app .academy-case-input textarea{display:block;box-sizing:border-box;width:100%;min-height:96px;margin-top:10px;padding:13px 15px;border:1px solid #a9a7b3;border-radius:9px;resize:vertical;background:#fff;color:#252d3a;font:400 16px/1.6 Arial,sans-serif}
+.learning-app .academy-case-input textarea:focus-visible{outline:3px solid #6755c7;outline-offset:2px}
+.learning-app .academy-case-hint{font-size:15px!important;line-height:1.55;color:#6b5366!important;margin:9px 0 0!important}
