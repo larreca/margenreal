@@ -49,3 +49,12 @@ Fecha: 2026-10-25. Rama recuperable: `codex/academy-autonomia-mvp8-20261025`. Ba
 **Inventario objetivo:** 50 capítulos, 400 módulos, 40 evaluaciones independientes en el código desplegable (8 previas + 32 nuevas) y 96 preguntas añadidas. Confirmar siempre el último CI. Aún 0 módulos acreditados con nota nueva >= 8 por falta de inspección visual completa y reauditoría.
 
 **Reanudación:** verificar el último CI y preview; inspeccionar 11.1–11.8 y 13.1–13.8 a todos los anchos, zoom 200 % y teclado; registrar hallazgos; continuar con seguridad 8–9 y 45–47, precio 28–30 y simuladores 48–49. No publicar producción sin aprobación final.
+
+## Continuación: integración visual y práctica de 12.1
+
+- La corrección inicial de seguridad 14.8/50.8 y las imágenes activas se publicó desde `ad6dc5a` y se comprobó en la URL pública. Esto no constituye el hito A ni autoriza preventa.
+- El trabajo paralelo de PR #3 ya incorporaba evaluación propia en 12.1 y otros módulos. Esta integración conserva su banco de preguntas y veto crítico; amplía la explicación de 12.1 con objetivo, cuatro preguntas de contexto, caso simulado resuelto, glosario y tres fuentes revisadas.
+- Infografía de decisión en versiones escritorio y móvil, con `picture`, texto alternativo y enlace para ampliación. Los PNG renderizados se inspeccionaron para desbordes y se corrigieron. La prueba de anchos y zoom dentro de la versión integrada queda pendiente.
+- En una vista previa aislada se probó el flujo de 12.1: una respuesta de urgencia incorrecta dejó la actividad pendiente; al corregir las tres respuestas, el capítulo mostró 1/8 y la actividad aprobada. La integración con el banco de PR #3 todavía debe probarse en su propia vista previa.
+- El porcentaje de feedback se redondea para presentación; el umbral se calcula con el valor exacto. En la base integrada, 52 pruebas automáticas y el build local pasan; el inventario encuentra 50 capítulos, 400 módulos y 48 evaluaciones independientes.
+- La nota actual de 12.1 permanece vacía: faltan la verificación del recurso renderizado a 360/390/768/1280 y zoom 200 %, la revisión pedagógica separada y la reauditoría. Próximo paso: integrar y probar la vista previa común, actualizar la matriz sin convertir la nota histórica en aprobación.
