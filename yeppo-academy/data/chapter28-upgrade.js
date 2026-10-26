@@ -1,3 +1,4 @@
+import {enhanceAssortmentLesson} from './chapter28-detail.js';
 // Ruta 6, capítulo 28. Casos comerciales hipotéticos, sin ventas reales atribuidas a Yeppo.
 // Conservar los ejemplos originales: las cifras del snapshot de 01/10/2026 son HISTÓRICAS.
 const cases={
@@ -124,9 +125,9 @@ const figures={
 const form=(c,label)=>'<section class="academy-applied-practice" aria-label="Aplicación de surtido"><small>EJERCICIO APLICADO · CIFRAS SIMULADAS</small><h4>Objetivo: '+c.objective+'</h4><p><strong>Datos del caso:</strong> '+c.scenario+'</p><p><strong>Tu decisión y cálculo:</strong> '+c.task+'</p>'+(figures[label]||'')+'<label class="academy-case-input">Escribe tu decisión antes de revisar la solución<textarea rows="4" maxlength="2500" placeholder="Explica el dato, la decisión y qué comprobarías. El texto no se guarda automáticamente."></textarea></label><p class="academy-case-hint" role="status" aria-live="polite">Escribe al menos una frase para habilitar la resolución.</p><details class="academy-case-answer"><summary>Consultar resolución razonada</summary><p>'+c.resolution+'</p><p><strong>Límite del ejemplo:</strong> '+c.limit+'</p></details></section>';
 export function upgradeAssortmentChapter(chapter){
  if(chapter?.id!=='c28')throw new Error('El complemento de surtido requiere c28');
- return {...chapter,contentVersion:Math.max(3,Number(chapter.contentVersion||0)),modules:chapter.modules.map(m=>{
+ return {...chapter,contentVersion:Math.max(4,Number(chapter.contentVersion||0)),modules:chapter.modules.map(m=>{
   const c=cases[m.label],qs=questionBank[m.label];
   if(!c||qs?.length!==5)throw new Error('Caso sin completar para '+m.label);
-  return {...m,html:m.html+form(c,m.label),assessment:{version:1,passPercent:80,questions:qs.map(([prompt,options,correct,explanation,critical],i)=>({id:'q'+(i+1),prompt,options,correct,explanation,critical:Boolean(critical)}))}};
+  return {...m,html:enhanceAssortmentLesson(m.html,m.label)+form(c,m.label),assessment:{version:1,passPercent:80,questions:qs.map(([prompt,options,correct,explanation,critical],i)=>({id:'q'+(i+1),prompt,options,correct,explanation,critical:Boolean(critical)}))}};
  })};
 }
