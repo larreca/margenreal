@@ -47,7 +47,8 @@ const additions={
  'En el catálogo público de Yeppo figura Round Lab Birch Juice Moisturizing Cream. La ficha revisada menciona savia de abedul, glicerina y pantenol, y describe una textura fresca.',
  'Identifica una afirmación documentada y una que no puedas respaldar sin ensayos de la fórmula.',
  'Documentada en la ficha consultada: ingredientes declarados y descripción comercial de textura. No está documentada por la sola ficha: que eliminará una enfermedad o funcionará igual en todas las personas. Registra la fecha y vuelve a contrastar la presentación real antes de vender.',
- 'Ficha comercial no equivale a evaluación clínica; la formulación y disponibilidad pueden cambiar.'
+ 'Ficha comercial no equivale a evaluación clínica; la formulación y disponibilidad pueden cambiar.',
+ '<figure class="course-image academy-product-photo"><img loading="lazy" width="700" height="700" src="https://yeppo.cl/cdn/shop/products/Round-Lab-Birch-Juice-Moisturizing-Cream-1_700x700.jpg?v=1705401328" alt="Envase original de Round Lab Birch Juice Moisturizing Cream, fotografía de producto del catálogo Yeppo"><figcaption>Fotografía de producto del catálogo Yeppo, consultada el 25-10-2026. La presentación puede actualizarse; verificar variante vigente.</figcaption></figure>'
  )+'<p class="source-course"><strong>Ejemplo real:</strong> <a href="https://yeppo.cl/products/round-lab-birch-juice-moisturizing-cream" target="_blank" rel="noopener noreferrer">Yeppo · Round Lab Birch Juice Moisturizing Cream</a> (consulta 25-10-2026). No se fijan precios ni stock.</p>',
  "11.7":practice(
  'armar un surtido B2B por necesidades sin duplicar referencias',
