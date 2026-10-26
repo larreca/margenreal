@@ -9,7 +9,7 @@ export function gradeLesson(module, answers) {
   }
   const correct = questions.filter((q,i) => q.correct === answers[i]).length;
   const score = correct / questions.length * 100;
-  return {correct, total:questions.length, score, passed:score >= (assessment.passPercent ?? 80), assessmentVersion:assessment.version};
+  return {correct, total:questions.length, score:Math.round(score), passed:score >= (assessment.passPercent ?? 80), assessmentVersion:assessment.version};
 }
 
 export function isModuleComplete(module, state={}) {

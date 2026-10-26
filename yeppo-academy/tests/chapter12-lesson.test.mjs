@@ -12,6 +12,7 @@ test('12.1 exige una decisión comprobada y no acepta la lectura heredada',()=>{
   const wrongUrgency=[1,0,1];
   const result=gradeLesson(module,wrongUrgency);
   assert.equal(result.correct,2);
+  assert.equal(result.score,67);
   assert.equal(result.passed,false);
   const attempt=recordLessonAttempt(module,wrongUrgency);
   assert.equal(isModuleComplete(module,{completed:{[module.id]:attempt}}),false);
