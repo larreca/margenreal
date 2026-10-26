@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
+<title id="title">Mensajes operativos separados de publicidad en el primer tramo poscompra</title>
+<desc id="desc">Ejemplo de pedido simulado: primer mensaje confirma pedido realmente creado; segundo informa despacho cuando transportista lo recibe; tercero confirma entrega real y ofrece uso y ayuda. Una ruta separada de marketing solo procede con elegibilidad y consentimiento, no mezclada en correo transaccional.</desc>
+<rect width="1280" height="810" fill="#FCFAF7"/>
+<g font-family="Arial,sans-serif">
+<text x="60" y="80" font-size="39" font-weight="700" fill="#1B2945">Primero cumple la compra. Después, acompaña.</text>
+<text x="60" y="125" font-size="21" fill="#546279">Klaviyo: los mensajes transaccionales deben limitarse a la operación, sin promociones.</text>
+<rect x="63" y="167" width="1148" height="96" rx="19" fill="#253657"/>
+<text x="91" y="209" font-size="26" font-weight="700" fill="white">A. Mensajes necesarios: solo hechos confirmados</text>
+<text x="91" y="244" font-size="19" fill="#F2F4FC">No anuncies despacho, entrega ni retiro antes de recibir el evento correspondiente.</text>
+<rect x="63" y="311" width="347" height="198" rx="22" fill="#E5EEF8"/>
+<rect x="465" y="311" width="344" height="198" rx="22" fill="#E7F2EB"/>
+<rect x="864" y="311" width="347" height="198" rx="22" fill="#F8EDDF"/>
+<g fill="#1E304C" font-size="25" font-weight="700">
+<text x="91" y="356">Pedido registrado</text>
+<text x="493" y="356">Despacho verificado</text>
+<text x="893" y="356">Entrega confirmada</text></g>
+<g fill="#30465A" font-size="19">
+<text x="91" y="402">Detalle / precio / ayuda</text>
+<text x="91" y="437">No equivale a despacho.</text>
+<text x="493" y="402">Transportista / tracking</text>
+<text x="493" y="437">Solo cuando ocurrió.</text>
+<text x="893" y="402">Instrucciones y soporte</text>
+<text x="893" y="437">Antes del cross-sell.</text></g>
+<path d="M410 404 H455 M809 404 H855" stroke="#BA748C" stroke-width="6" fill="none"/>
+<rect x="63" y="563" width="1148" height="142" rx="22" fill="#F2E5EE"/>
+<text x="92" y="607" font-size="26" font-weight="700" fill="#813653">B. Mensajes promocionales: flujo separado</text>
+<text x="92" y="643" font-size="20" fill="#533C50">Reseñas incentivadas, descuentos y venta cruzada requieren condiciones y elegibilidad.</text>
+<text x="92" y="676" font-size="20" fill="#533C50">Comprobar permisos, exclusiones y compras recientes antes de cada envío.</text>
+<text x="64" y="758" font-size="17" fill="#5D6979">Fuente: Klaviyo Help Center, How to create a post-purchase flow, consultado 26-10-2026.</text></g></svg>
