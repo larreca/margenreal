@@ -136,6 +136,26 @@ function attachInteractions(container,onAssessment){
    b.addEventListener("click",fn);cleanups.push(()=>b.removeEventListener("click",fn));
  });
 
+ // En las prácticas guiadas de capítulos 11/13 primero se redacta una decisión.
+ // Es un borrador local de aprendizaje, NO una respuesta calificada ni persistida.
+ container.querySelectorAll(".academy-applied-practice .academy-case-answer > summary").forEach(summary=>{
+   const practice=summary.closest(".academy-applied-practice");
+   const input=practice?.querySelector(".academy-case-input textarea");
+   const hint=practice?.querySelector(".academy-case-hint");
+   if(!input)return;
+   const guard=(event)=>{
+     if(input.value.trim().length>=20){
+       if(hint)hint.textContent="Decisión registrada en esta pantalla. Compara ahora tu razonamiento con el ejemplo.";
+       return;
+     }
+     event.preventDefault();
+     input.focus();
+     if(hint)hint.textContent="Antes de abrir la solución, escribe una decisión de al menos 20 caracteres.";
+   };
+   summary.addEventListener("click",guard);
+   cleanups.push(()=>summary.removeEventListener("click",guard));
+ });
+
  container.querySelectorAll(".challenge-submit").forEach((b)=>{
    const fn=async()=>{
      const box=b.closest("[data-challenge]"),qs=[...(box?.querySelectorAll(".challenge-q")||[])],out=box?.querySelector(".challenge-result");
