@@ -1,4 +1,5 @@
-export default {
+import {upgradeVideoChapter} from './chapter35-upgrade.js';
+const chapter35 = {
   "id": "c35",
   "n": 35,
   "title": "Cómo vender un producto en video",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeVideoChapter(chapter35);
