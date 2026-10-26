@@ -30,3 +30,22 @@ Fecha: 2026-10-25. Rama recuperable: `codex/academy-autonomia-mvp8-20261025`. Ba
 2. Importar el CSV de CI / Excel de seguimiento y actualizar la fila correspondiente después de inspeccionar evidencias reales.
 3. Auditar 12.1 a 12.8, incluyendo visual del capítulo 12 y preguntas; luego 30.1 a 30.8 y calculadoras.
 4. Continuar los lotes del protocolo en orden sin cambiar rúbrica. Guardar commits y registrar bloqueos parciales.
+
+
+## Continuación: capítulos 11 y 13 · 25/10/2026
+
+**Nueva autorización editorial:** se permite sustituir contenidos, infografías, fotografías y prácticas si mejora la comprensión, exactitud y UX, preservando las reglas originales de la rúbrica y la evidencia. No mantener un recurso débil por inercia. Preservar PNG aprobados si siguen cumpliendo la calidad exigida.
+
+**Capítulo 11:** ocho casos didácticos con resolución y límites, 24 preguntas independientes, diagramas H-E-O-B y barrera cutánea; foto real de Round Lab Birch Juice Moisturizing Cream del catálogo Yeppo en 11.6. Fuentes contrastadas con DermNet, AAD y yeppo.cl.
+
+**Capítulo 13:** ocho casos didácticos, 24 preguntas independientes con vetos de seguridad y dos diagramas nuevos (brillo/poros/brotes y precauciones BHA/LHA). Fuentes AAD. No extrapolar usos médicos a claims cosméticos.
+
+**UX:** las soluciones de casos guiados solo se muestran cuando el alumno escribe previamente una decisión de al menos 20 caracteres. La respuesta se mantiene localmente en pantalla; no es examen ni se persiste. El examen formal de tres preguntas exige 3/3 correctas, al ser un umbral de al menos 80 %.
+
+**Calidad:** la regla técnica de 8/10 y las pruebas de regresión están en lib/quality-gate.js y tests/quality-gate.test.mjs. Se mantienen vacías las notas no verificadas. Exige fuentes, revisión sustantiva, práctica, recursos visuales, anchos 360/390/768/1280, zoom 200 % y reauditoría.
+
+**Matriz de seguimiento:** archivo generado en la conversación YEPPO_Academy_Matriz_MVP8_Revision_Capitulos_11_13_2026-10-25.xlsx, con 400 filas, 16 en corrección, evidencia y fuentes. No sustituye pruebas visuales ni certifica módulos.
+
+**Inventario objetivo:** 50 capítulos, 400 módulos, 40 evaluaciones independientes en el código desplegable (8 previas + 32 nuevas) y 96 preguntas añadidas. Confirmar siempre el último CI. Aún 0 módulos acreditados con nota nueva >= 8 por falta de inspección visual completa y reauditoría.
+
+**Reanudación:** verificar el último CI y preview; inspeccionar 11.1–11.8 y 13.1–13.8 a todos los anchos, zoom 200 % y teclado; registrar hallazgos; continuar con seguridad 8–9 y 45–47, precio 28–30 y simuladores 48–49. No publicar producción sin aprobación final.
