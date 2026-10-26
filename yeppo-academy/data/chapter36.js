@@ -1,4 +1,5 @@
-export default {
+import {upgradeJourneyChapter} from './chapter36-upgrade.js';
+const chapter36 = {
   "id": "c36",
   "n": 36,
   "title": "Viaje del cliente",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeJourneyChapter(chapter36);
