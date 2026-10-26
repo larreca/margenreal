@@ -1,4 +1,5 @@
-export default {
+import {upgradeLoyaltyChapter} from './chapter39-upgrade.js';
+const chapter39 = {
   "id": "c39",
   "n": 39,
   "title": "Fidelización",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeLoyaltyChapter(chapter39);
