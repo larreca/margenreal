@@ -38,7 +38,7 @@ test('32.5: errores críticos sobre testers vetan aprobación aunque se alcance 
  for(const idx of critical){
   const answers=q.map(v=>v.correct);answers[idx]=(answers[idx]+1)%3;
   const result=gradeLesson(m,answers);
-  assert.equal(result.scorePercent,80);
+  assert.equal(result.score,80);
   assert.equal(result.passed,false);
   assert.equal(result.criticalMistakes,1);
  }
@@ -49,7 +49,7 @@ test('32.2 32.7 32.8: cálculos reproducibles, sin atribuir datos a Yeppo',()=>{
  assert.equal(19/20*100,95);
  assert.equal((21000-20000)/20000*100,5);
  for(const m of [chapter.modules[1],chapter.modules[6],chapter.modules[7]])
-  assert.ok(m.html.includes('simulad')||m.html.includes('fictici'),m.label);
+  assert.ok(m.html.toLowerCase().includes('simulad')||m.html.toLowerCase().includes('fictici'),m.label);
 });
 test('diagramas nuevos: existen, tienen alt visible y SVG accesible',()=>{
  for(const [idx,file] of [[2,'cap32-store-route-decision.svg'],[4,'cap32-tester-safe-decision.svg']]){
