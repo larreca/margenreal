@@ -9,10 +9,10 @@ export function enrichChapterCases(chapter,bank,{version=6,sources=[],visuals={}
   }
   const questions=[
    {id:'q1',prompt:'¿Qué decisión es más defendible en este caso?',options:[c.wrong1,c.decision,c.wrong2],correct:1,explanation:c.solution,critical:!!c.critical},
-   {id:'q2',prompt:'¿Qué evidencia necesitas antes de confirmar esa decisión?',options:['Elegir según popularidad sin datos',c.evidence,'Asumir que el stock de otra tienda es propio'],correct:1,explanation:'La verificación requerida en este caso es: '+c.evidence},
+   {id:'q2',prompt:'¿Qué evidencia necesitas antes de confirmar esa decisión?',options:['Elegir según popularidad sin datos',c.evidence,'Asumir que el stock de otra tienda es propio'],correct:1,explanation:'La verificación requerida en este caso es: '+c.evidence,critical:false},
    {id:'q3',prompt:'¿Cuál de estas actuaciones sería un error en este escenario?',options:[c.risk,'Verificar los hechos documentados en la ficha','Registrar una decisión reversible con responsable'],correct:0,explanation:'Debe evitarse: '+c.risk+'. '+c.control,critical:!!c.critical},
-   {id:'q4',prompt:'¿Qué control demuestra que la decisión fue realizada correctamente?',options:['La estética de la presentación',c.control,'Solo la opinión inicial del vendedor'],correct:1,explanation:'El control verificable es: '+c.control},
-   {id:'q5',prompt:'¿Qué paso operativo corresponde después del análisis?',options:['Cerrar sin responsable ni fecha','Enviar un descuento idéntico a todos',c.next],correct:2,explanation:'La siguiente acción defendible es: '+c.next}
+   {id:'q4',prompt:'¿Qué control demuestra que la decisión fue realizada correctamente?',options:['La estética de la presentación',c.control,'Solo la opinión inicial del vendedor'],correct:1,explanation:'El control verificable es: '+c.control,critical:false},
+   {id:'q5',prompt:'¿Qué paso operativo corresponde después del análisis?',options:['Cerrar sin responsable ni fecha','Enviar un descuento idéntico a todos',c.next],correct:2,explanation:'La siguiente acción defendible es: '+c.next,critical:false}
   ];
   const img=visuals[m.label]||'';
   const resource=sources.map(s=>'<a href="'+escapeHTML(s.url)+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(s.label)+'</a>').join(' · ');
