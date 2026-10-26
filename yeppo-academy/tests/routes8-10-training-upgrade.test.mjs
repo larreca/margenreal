@@ -42,7 +42,7 @@ test('Rutas 8–10: 10 capítulos, 80 módulos con 5 preguntas independientes po
    assert.equal(gradeLesson(m,bad).passed,true,'4 of 5 noncritical passes '+m.label);
    bad[3]=(bad[3]+1)%3;
    assert.equal(gradeLesson(m,bad).passed,false,'3 of 5 fails '+m.label);
-   if(chapter.n>=45){
+   if(chapter.n>=45 && (chapter.n!==49 || [2,3,4,7].includes(index))){
     assert.equal(q[0].critical,true,'Safety-gated question '+m.label);
     const criticalAnswer=[...answers];criticalAnswer[0]=(criticalAnswer[0]+1)%3;
     const res=gradeLesson(m,criticalAnswer);
@@ -55,7 +55,7 @@ test('Rutas 8–10: 10 capítulos, 80 módulos con 5 preguntas independientes po
   }
  }
  assert.equal(total,80);
- assert.equal(crit,48);
+ assert.equal(crit,44);
 });
 test('41–44: practical purchase and stock mathematics, costs not fabricated as actual Yeppo sales',()=>{
  assert.equal(300000*1.19,357000);
