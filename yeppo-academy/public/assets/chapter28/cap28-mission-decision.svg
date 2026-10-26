@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="title description">
+<title id="title">Diseñar un surtido por misión de compra, no por marca</title>
+<desc id="description">Flujo de cuatro decisiones: escuchar necesidad, definir atributos, elegir opciones diferenciadas, comprobar indicadores. Ejemplo de necesidad realista: protector solar de textura ligera, sin asociarlo a una marca o resultado clínico.</desc>
+<rect width="1280" height="800" fill="#FAF8F4"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="65" y="85" font-size="39" font-weight="700" fill="#192442">Primero la misión. Después, la marca.</text>
+<text x="65" y="129" font-size="22" fill="#46576C">Surtido por necesidad del cliente: ejemplo de fotoprotección de acabado ligero.</text>
+<rect x="65" y="183" width="560" height="197" rx="22" fill="#E8EFF9"/>
+<rect x="655" y="183" width="560" height="197" rx="22" fill="#E8F3EE"/>
+<rect x="65" y="409" width="560" height="197" rx="22" fill="#FFF0E3"/>
+<rect x="655" y="409" width="560" height="197" rx="22" fill="#F9EBF4"/>
+<g fill="#192442" font-size="27" font-weight="700">
+<text x="95" y="240">1 · Escuchar la necesidad</text>
+<text x="685" y="240">2 · Definir atributos</text>
+<text x="95" y="466">3 · Comparar candidatos</text>
+<text x="685" y="466">4 · Medir y ajustar</text>
+</g>
+<g fill="#273B4F" font-size="21">
+<text x="95" y="286">«Busco protector solar cómodo</text>
+<text x="95" y="320">para usar todos los días».</text>
+<text x="95" y="354">Anotar presupuesto y rutina.</text>
+<text x="685" y="286">SPF/uso declarado, textura,</text>
+<text x="685" y="320">formato, precio y tolerancia.</text>
+<text x="685" y="354">Consultar etiqueta vigente.</text>
+<text x="95" y="511">¿Cuál cubre un hueco real?</text>
+<text x="95" y="545">¿Cuál duplica lo existente?</text>
+<text x="95" y="579">No elegir por viralidad sola.</text>
+<text x="685" y="511">Disponibilidad, rotación,</text>
+<text x="685" y="545">margen y devolución.</text>
+<text x="685" y="579">Revisar tras vender.</text>
+</g>
+<rect x="65" y="649" width="1150" height="97" rx="18" fill="#1B2A49"/>
+<text x="93" y="688" font-size="24" font-weight="700" fill="#FFFFFF">Decisión comercial</text>
+<text x="93" y="723" font-size="20" fill="#FFFFFF">Comprar el SKU que cubre una necesidad comprobable, no el que solo suma variedad.</text>
+<text x="65" y="782" font-size="17" fill="#536075">Caso simulado · Referencia conceptual: Oracle Retail Assortment Planning · Yeppo Academy.</text>
+</g>
+</svg>
