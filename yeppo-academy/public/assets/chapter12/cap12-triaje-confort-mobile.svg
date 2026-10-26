@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1080" viewBox="0 0 390 1080" role="img" aria-labelledby="title desc">
+<title id="title">Decisiones de asesoría cosmética</title><desc id="desc">Escucha síntomas y cambios. Ante dificultad respiratoria o labios hinchados, indica atención urgente. Ante síntomas intensos o persistentes, evaluación profesional. Ante molestia leve sin alarma, simplificar y observar tolerancia.</desc>
+<rect width="390" height="1080" fill="#fffaf8"/>
+<text x="22" y="38" fill="#713956" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2">YEPPO ACADEMY · 12.1</text>
+<text x="22" y="79" fill="#35263b" font-family="Georgia,serif" font-size="25">¿Qué cabe en una</text>
+<text x="22" y="110" fill="#35263b" font-family="Georgia,serif" font-size="25">asesoría cosmética?</text>
+<text x="22" y="146" fill="#685e68" font-family="Arial,sans-serif" font-size="15">Escuchar · reconocer límites · decidir</text>
+<rect x="20" y="176" width="350" height="130" rx="18" fill="#482b46"/>
+<text x="38" y="211" fill="#fff" font-family="Arial,sans-serif" font-size="18" font-weight="700">01 Escucha antes de ofrecer</text>
+<text x="38" y="243" fill="#fff" font-family="Arial,sans-serif" font-size="16">¿Cuándo comenzó? ¿Qué cambió?</text>
+<text x="38" y="271" fill="#fff" font-family="Arial,sans-serif" font-size="16">¿Qué tolera? ¿Hay dolor o hinchazón?</text>
+<path d="M195 306 V331" stroke="#8a6379" stroke-width="3"/><path d="M187 323 L195 333 L203 323" fill="none" stroke="#8a6379" stroke-width="3"/>
+<rect x="20" y="342" width="350" height="111" rx="18" fill="#f4e5ed" stroke="#d9bac9"/>
+<text x="38" y="377" fill="#482b46" font-family="Arial,sans-serif" font-size="17" font-weight="700">02 Clasifica sin diagnosticar</text>
+<text x="38" y="408" fill="#544b54" font-family="Arial,sans-serif" font-size="15">Una sensación no demuestra la causa</text>
+<text x="38" y="433" fill="#544b54" font-family="Arial,sans-serif" font-size="15">ni valida un ingrediente.</text>
+<path d="M195 453 V480" stroke="#8a6379" stroke-width="3"/><path d="M187 472 L195 482 L203 472" fill="none" stroke="#8a6379" stroke-width="3"/>
+<rect x="20" y="490" width="350" height="151" rx="18" fill="#fbeae9" stroke="#e0b1ad"/>
+<text x="38" y="524" fill="#7b302f" font-family="Arial,sans-serif" font-size="17" font-weight="700">URGENCIA</text>
+<text x="38" y="552" fill="#352b34" font-family="Arial,sans-serif" font-size="14">Labios hinchados o dificultad respiratoria.</text>
+<text x="38" y="592" fill="#7b302f" font-family="Arial,sans-serif" font-size="17" font-weight="700">Atención médica urgente</text>
+<text x="38" y="619" fill="#7b302f" font-family="Arial,sans-serif" font-size="14">Detén la recomendación de cosméticos.</text>
+<path d="M195 641 V666" stroke="#8a6379" stroke-width="3"/><path d="M187 658 L195 668 L203 658" fill="none" stroke="#8a6379" stroke-width="3"/><text x="230" y="660" fill="#76500d" font-family="Arial,sans-serif" font-size="13" font-weight="700">SI NO</text>
+<rect x="20" y="678" width="350" height="151" rx="18" fill="#fff1d9" stroke="#e7c58c"/>
+<text x="38" y="712" fill="#76500d" font-family="Arial,sans-serif" font-size="14" font-weight="700">SÍNTOMAS INTENSOS O PERSISTENTES</text>
+<text x="38" y="741" fill="#352b34" font-family="Arial,sans-serif" font-size="16">Incluye molestias que empeoran.</text>
+<text x="38" y="781" fill="#76500d" font-family="Arial,sans-serif" font-size="17" font-weight="700">Evaluación profesional</text>
+<text x="38" y="808" fill="#76500d" font-family="Arial,sans-serif" font-size="14">No intentes resolverlo con otro activo.</text>
+<path d="M195 829 V854" stroke="#8a6379" stroke-width="3"/><path d="M187 846 L195 856 L203 846" fill="none" stroke="#8a6379" stroke-width="3"/><text x="230" y="849" fill="#2f694d" font-family="Arial,sans-serif" font-size="13" font-weight="700">SI NO</text>
+<rect x="20" y="866" width="350" height="150" rx="18" fill="#e9f3ed" stroke="#aecbb8"/>
+<text x="38" y="900" fill="#2f694d" font-family="Arial,sans-serif" font-size="17" font-weight="700">MOLESTIA LEVE SIN ALARMAS</text>
+<text x="38" y="929" fill="#352b34" font-family="Arial,sans-serif" font-size="16">Con contexto claro y rutina conocida.</text>
+<text x="38" y="968" fill="#2f694d" font-family="Arial,sans-serif" font-size="17" font-weight="700">Simplificar y observar</text>
+<text x="38" y="994" fill="#2f694d" font-family="Arial,sans-serif" font-size="14">Revisar tolerancia, sin prometer curación.</text>
+<text x="22" y="1051" fill="#6a6169" font-family="Arial,sans-serif" font-size="13">Guía educativa basada en AAD; no diagnostica.</text>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+<title id="title">Decidir si una consulta de piel pertenece a la asesoría cosmética</title>
+<desc id="desc">Escuchar qué cambió y qué síntomas hay. Dificultad para respirar o hinchazón de labios: atención médica urgente. Síntomas intensos o persistentes: evaluación profesional. Molestia leve sin alarmas: simplificar, no añadir activos y revisar tolerancia.</desc>
+<rect width="1200" height="860" fill="#fffaf8"/>
+<text x="72" y="76" fill="#713956" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="3">YEPPO ACADEMY · 12.1</text>
+<text x="72" y="128" fill="#35263b" font-family="Georgia,serif" font-size="40">¿Qué cabe en una asesoría cosmética?</text>
+<text x="72" y="170" fill="#685e68" font-family="Arial,sans-serif" font-size="23">Un camino para escuchar, decidir y reconocer el límite del rol comercial.</text>
+<rect x="72" y="216" width="1056" height="138" rx="22" fill="#482b46"/>
+<text x="110" y="269" fill="#fff" font-family="Arial,sans-serif" font-size="25" font-weight="700">01  Escucha antes de ofrecer</text>
+<text x="110" y="310" fill="#fff" font-family="Arial,sans-serif" font-size="22">¿Cuándo comenzó? ¿Qué cambió? ¿Qué tolera? ¿Hay dolor o hinchazón?</text>
+<path d="M600 354 V403" stroke="#8a6379" stroke-width="5" fill="none"/>
+<path d="M587 390 L600 405 L613 390" fill="none" stroke="#8a6379" stroke-width="5"/>
+<rect x="72" y="414" width="1056" height="107" rx="22" fill="#f4e5ed" stroke="#d9bac9" stroke-width="2"/>
+<text x="110" y="460" fill="#482b46" font-family="Arial,sans-serif" font-size="25" font-weight="700">02  Clasifica la señal, sin diagnosticar</text>
+<text x="110" y="497" fill="#544b54" font-family="Arial,sans-serif" font-size="21">La sensación no identifica por sí sola la causa ni valida un ingrediente.</text>
+<path d="M285 521 V561 M600 521 V561 M915 521 V561" stroke="#8a6379" stroke-width="4" fill="none"/>
+<path d="M275 551 L285 565 L295 551 M590 551 L600 565 L610 551 M905 551 L915 565 L925 551" stroke="#8a6379" stroke-width="4" fill="none"/>
+<rect x="72" y="574" width="300" height="209" rx="20" fill="#fbeae9" stroke="#e0b1ad" stroke-width="2"/>
+<text x="99" y="615" fill="#7b302f" font-family="Arial,sans-serif" font-size="22" font-weight="700">URGENCIA</text>
+<text x="99" y="654" fill="#352b34" font-family="Arial,sans-serif" font-size="20">Labios hinchados o</text>
+<text x="99" y="684" fill="#352b34" font-family="Arial,sans-serif" font-size="20">dificultad respiratoria</text>
+<text x="99" y="736" fill="#7b302f" font-family="Arial,sans-serif" font-size="18" font-weight="700">Atención médica urgente</text>
+<rect x="388" y="574" width="424" height="209" rx="20" fill="#fff1d9" stroke="#e7c58c" stroke-width="2"/>
+<text x="416" y="615" fill="#76500d" font-family="Arial,sans-serif" font-size="19" font-weight="700">FUERA DEL ALCANCE COMERCIAL</text>
+<text x="416" y="654" fill="#352b34" font-family="Arial,sans-serif" font-size="20">Síntomas intensos, persistentes</text>
+<text x="416" y="684" fill="#352b34" font-family="Arial,sans-serif" font-size="20">o que empeoran</text>
+<text x="416" y="736" fill="#76500d" font-family="Arial,sans-serif" font-size="18" font-weight="700">Orientar a evaluación profesional</text>
+<rect x="828" y="574" width="300" height="209" rx="20" fill="#e9f3ed" stroke="#aecbb8" stroke-width="2"/>
+<text x="855" y="615" fill="#2f694d" font-family="Arial,sans-serif" font-size="22" font-weight="700">MOLESTIA LEVE</text>
+<text x="855" y="654" fill="#352b34" font-family="Arial,sans-serif" font-size="20">Sin señales de alarma</text>
+<text x="855" y="684" fill="#352b34" font-family="Arial,sans-serif" font-size="20">y con contexto claro</text>
+<text x="855" y="736" fill="#2f694d" font-family="Arial,sans-serif" font-size="20" font-weight="700">Simplificar y observar</text>
+<text x="72" y="830" fill="#6a6169" font-family="Arial,sans-serif" font-size="18">Guía educativa basada en AAD. No sustituye una evaluación médica ni diagnostica la causa.</text>
+</svg>
