@@ -44,7 +44,7 @@ for(const i of [1,3,6,7]){
 }
 test('38.3, 38.4, 38.5 y 38.8: cálculos consistentes',()=>{
  assert.equal(1000-80,920);assert.equal(18/24*100,75);
- assert.equal(40/120*100,100/3);
+ assert.ok(Math.abs(40/120*100-100/3)<1e-9);
  assert.equal(10/40*100,25);
  assert.equal(150/200*100,75);
  assert.ok(chapter.modules[2].html.includes('920 registros'));
