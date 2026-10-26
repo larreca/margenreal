@@ -1,4 +1,5 @@
-export default {
+import {upgradeSocialChapter} from './chapter34-upgrade.js';
+const chapter34 = {
   "id": "c34",
   "n": 34,
   "title": "Instagram y TikTok",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeSocialChapter(chapter34);
