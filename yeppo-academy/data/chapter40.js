@@ -1,4 +1,5 @@
-export default {
+import {upgradeKPIsChapter} from './chapter40-upgrade.js';
+const chapter40 = {
   "id": "c40",
   "n": 40,
   "title": "Métricas del negocio",
@@ -60,3 +61,5 @@ export default {
   "contentVersion": 3,
   "updatedAt": "2026-10-03"
 };
+
+export default upgradeKPIsChapter(chapter40);
