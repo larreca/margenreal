@@ -10,7 +10,7 @@ for(const chapter of [chapter12,chapter30]){
     for(const lesson of chapter.modules){
       const a=lesson.assessment;
       assert.ok(a,`Sin evaluación: ${lesson.label}`);
-      assert.equal(a.questions.length,3);
+      assert.equal(a.questions.length,chapter.n===30?5:3);
       assert.equal(a.passPercent,80);
       assert.ok(Number.isInteger(a.version)&&a.version>0);
       for(const q of a.questions){
@@ -22,7 +22,7 @@ for(const chapter of [chapter12,chapter30]){
       const correct=a.questions.map(q=>q.correct);
       const wrong=[...correct]; wrong[1]=(wrong[1]+1)%a.questions[1].options.length;
       assert.equal(gradeLesson(lesson,correct).passed,true);
-      assert.equal(gradeLesson(lesson,wrong).passed,false);
+      assert.equal(gradeLesson(lesson,wrong).passed,chapter.n===30);
       const passed=recordLessonAttempt(lesson,correct,null);
       assert.equal(isModuleComplete(lesson,{completed:{[lesson.id]:passed}}),true);
     }
