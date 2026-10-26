@@ -10,7 +10,7 @@ export function gradeLesson(module, answers) {
   const correct = questions.filter((q,i) => q.correct === answers[i]).length;
   const score = correct / questions.length * 100;
   const criticalMistakes = questions.filter((question,index) => question.critical === true && question.correct !== answers[index]).length;
-  return {correct, total:questions.length, score, criticalMistakes, passed:score >= (assessment.passPercent ?? 80) && criticalMistakes === 0, assessmentVersion:assessment.version};
+  return {correct, total:questions.length, score:Math.round(score), criticalMistakes, passed:score >= (assessment.passPercent ?? 80) && criticalMistakes === 0, assessmentVersion:assessment.version};
 }
 
 export function isModuleComplete(module, state={}) {
