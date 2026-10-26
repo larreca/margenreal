@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import chapter from '../data/chapter28.js';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 import {gradeLesson,recordLessonAttempt,isModuleComplete} from '../lib/lesson-assessment.js';
 test('28.1–28.8: cada módulo ofrece caso comercial resuelto y 5 preguntas independientes',()=>{
  assert.equal(chapter.id,'c28');assert.equal(chapter.modules.length,8);assert.ok(chapter.contentVersion>=3);
@@ -32,4 +32,16 @@ test('capítulo 28 conserva sus recursos visuales y contenido original mientras 
  assert.ok(m.html.includes('Oracle Retail'));
  const ui=readFileSync('components/ChapterReader.js','utf8');
  assert.ok(ui.includes('.academy-case-input textarea'));
+});
+
+test('28.4 y 28.5 tienen infografías temáticas accesibles e instaladas',()=>{
+ for(const [i,file] of [[3,'cap28-mission-decision.svg'],[4,'cap28-stock-versus-demand.svg']]){
+  const html=chapter.modules[i].html;
+  assert.ok(html.includes('/assets/chapter28/'+file));
+  assert.ok(/alt="[^"]{50,}"/.test(html));
+  assert.ok(existsSync('public/assets/chapter28/'+file));
+  const svg=readFileSync('public/assets/chapter28/'+file,'utf8');
+  assert.ok(svg.includes('<title')&&svg.includes('<desc'));
+  assert.ok(svg.includes('1280')&&svg.includes('800')||svg.includes('810'));
+ }
 });
