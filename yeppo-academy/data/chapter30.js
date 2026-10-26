@@ -1,4 +1,5 @@
 import {withIndependentAssessments} from './module-assessment-bank.js';
+import {upgradePricingChapter} from './chapter30-upgrade.js';
 const chapter30 = {
   "id": "c30",
   "n": 30,
@@ -61,4 +62,4 @@ const chapter30 = {
   "contentVersion": 3
 };
 
-export default withIndependentAssessments(chapter30);
+export default upgradePricingChapter(withIndependentAssessments(chapter30));
