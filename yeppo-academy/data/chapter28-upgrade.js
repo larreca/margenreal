@@ -81,9 +81,9 @@ const lines=[
  ["¿Cuál variable falta antes de decidir la compra definitiva?",["Solo color del envase","Disponibilidad, demanda y riesgo de quiebres","Un promedio de reseñas sin fechas"],1,"Un buen índice de capital no reemplaza revisión de nivel de servicio y riesgo comercial.",false]
  ]],
  ["28.4",[
- ["Una misión de compra es…",["Una campaña de descuentos universal","La cantidad de marcas en un expositor","Una necesidad o trabajo que el cliente quiere resolver"],2,"La misión organiza primero qué necesita la persona y después qué producto podría cubrirlo.",false],
+ ["¿Qué significa organizar el surtido por una misión de compra del cliente?",["Una campaña de descuentos universal","La cantidad de marcas en un expositor","Una necesidad o trabajo que el cliente quiere resolver"],2,"La misión organiza primero qué necesita la persona y después qué producto podría cubrirlo.",false],
  ["Si la tienda carece de una opción de SPF ligero…",["Evaluar si hay hueco documentado de fotoprotección","Comprar más limpiadores sin revisión","Agregar cualquier viral"],0,"La selección de SKU se justifica por misión, requisitos del producto y demanda verificable.",false],
- ["La marca se elige mejor…",["Antes de conocer al cliente","Después de definir necesidades y atributos","Siempre por la de más seguidores"],1,"La arquitectura por misión prioriza función, textura, presupuesto y uso sobre nombre comercial.",false],
+ ["¿En qué momento conviene elegir una marca para cubrir una necesidad comercial?",["Antes de conocer al cliente","Después de definir necesidades y atributos","Siempre por la de más seguidores"],1,"La arquitectura por misión prioriza función, textura, presupuesto y uso sobre nombre comercial.",false],
  ["Una opción complementaria debe…",["Ser la más cara","Repetir exactamente la función existente","Aportar una función relacionada y defendible"],2,"Los productos complementarios tienen sentido cuando añaden utilidad real al recorrido del cliente.",false],
  ["Un surtido orientado a cliente evita…",["Duplicación y huecos de solución","Preguntar por textura","Verificar ficha del fabricante"],0,"Organizar por misión vuelve visibles ausencias y redundancias que no se detectan por marca.",false]
  ]],
@@ -97,7 +97,7 @@ const lines=[
  ["28.6",[
  ["Se vendieron 24 de 40 recibidas. El sell-through inicial es…",["60 %","40 %","24 %"],0,"24 dividido por 40 multiplicado por 100 es 60 por ciento en el período indicado.",false],
  ["El 60 % del ejercicio autoriza pedir 200 unidades sin más datos:",["Siempre","No; faltan lead time, margen y tendencia","Sí, porque confirma recompra"],1,"Una señal inicial requiere validarse con abastecimiento, beneficio, devoluciones y período.",false],
- ["Test-buy es…",["Una compra de todo el catálogo","Una promesa de venta futura","Una compra acotada con hipótesis y umbral de revisión"],2,"La compra de prueba reduce exposición y crea datos para una decisión de escalamiento.",false],
+ ["¿Qué define una compra de prueba o test-buy antes de escalar inventario?",["Una compra de todo el catálogo","Una promesa de venta futura","Una compra acotada con hipótesis y umbral de revisión"],2,"La compra de prueba reduce exposición y crea datos para una decisión de escalamiento.",false],
  ["¿Qué harías si una novedad pierde tracción?",["Revisar reposición y riesgo de quedar con stock","Comprar profundo por orgullo","Cambiar de nombre sin análisis"],0,"La ausencia de tracción sostenida obliga a revisar profundidad y permanencia antes de comprar.",false],
  ["¿Cuál es una señal que conviene registrar?",["Solo el color preferido","Sell-through por cohorte y fechas","Solo una reseña positiva"],1,"El indicador requiere denominador, período y datos comparables para evitar interpretaciones erróneas.",false]
  ]],
