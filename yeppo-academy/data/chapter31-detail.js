@@ -9,7 +9,10 @@ const visuals={
  '31.7':['31-break-even','Cien unidades a diez mil aportan un millón; con aporte seis mil por unidad hacen falta ciento sesenta y siete unidades para igualar','Se necesitan 67 unidades adicionales, antes de medir adelanto de compras y efecto posterior.'],
  '31.8':['31-playbook-cierre','Cinco etapas promocionales: aprobar condiciones y stock, verificar publicación, controlar campaña, revertir precios, conciliar resultados','El cierre por canal y el aprendizaje posterior son parte del plan, no tareas opcionales.']
 };
-const figure=([name,alt,caption])=>`<figure class="course-image academy-infographic"><picture><source media="(max-width: 640px)" srcset="/assets/chapter31/${name}-mobile.svg"><img loading="lazy" src="/assets/chapter31/${name}.svg" alt="${alt}"></picture><figcaption>${caption} Cifras simuladas en CLP.</figcaption></figure>`;
+const figure=([name,alt,caption])=>{
+ const note=name==='31-stock-prometible'?'Unidades simuladas.':name==='31-playbook-cierre'?'Secuencia ilustrativa.':'Cifras simuladas en CLP.';
+ return `<figure class="course-image academy-infographic"><picture><source media="(max-width: 640px)" srcset="/assets/chapter31/${name}-mobile.svg"><img loading="lazy" src="/assets/chapter31/${name}.svg" alt="${alt}"></picture><figcaption>${caption} ${note}</figcaption></figure>`;
+};
 const source=(url,label)=>`<p class="source-course">Fuente: <a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>.</p>`;
 const edits={
  '31.1':html=>html
@@ -40,6 +43,7 @@ const edits={
   .replace(/<div class="course-case">/,'<div class="lesson-box"><h4>Lectura del resultado</h4><p>El punto de equilibrio de 167 unidades significa empatar el aporte total de $1.000.000: 167 × $6.000 = $1.002.000. Si se venden 160, el aporte baja a $960.000 pese al crecimiento de 60 % en unidades. Observa después la demanda adelantada y compara un período o grupo equivalente.</p></div><div class="course-case">')
   +source('https://www.shopify.com/blog/retail-math','Shopify · matemáticas de promociones y margen, 2026'),
  '31.8':html=>html
+  .replace('Promo mayor a portal.','Descuento distinto al aprobado.')
   .replace('https://www.sernac.cl/portal/617/w3-article-57431.html','https://www.sernac.cl/portal/609/w3-article-52758.html')
   .replace('https://www.sernac.cl/portal/609/w3-article-52753.html','https://www.sernac.cl/portal/607/w3-propertyvalue-20898.html')
   .replace('Para analizar retrospectivamente el Cyber de Yeppo de octubre de 2026, este framework puede aterrizarse con reglas ya definidas: participación condicionada por stock, descuentos distintos por prioridad/rotación, best sellers y novedades con límites conservadores, vencimiento como excepción y control de margen post-canal antes de publicar.','Para llevar el playbook a un caso inspirado en Cyber Yeppo, plantea elegibilidad por stock, descuentos diferenciados por rol y velocidad, best sellers con cobertura protegida y margen posterior a cargos de cada canal. El ejemplo no certifica las reglas ni los resultados de una campaña real.')
