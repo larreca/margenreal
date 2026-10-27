@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
+<title id="title">Seguimiento de cliente mayorista por ciclo y cobertura, caso ficticio</title>
+<desc id="desc">Cuenta B2B de práctica con ciclo medio de compra 45 días, 40 días transcurridos, 24 unidades de stock informado y consumo 2 unidades al día. Cobertura 12 días. Revisar proveedor, lead time, stock válido y margen por SKU antes de hacer oferta.</desc>
+<rect width="1280" height="810" fill="#FBF9F6"/>
+<g font-family="Arial,sans-serif"><text x="61" y="84" font-size="39" font-weight="700" fill="#1A2946">Seguimiento B2B basado en señales, no en insistencia</text>
+<text x="61" y="130" font-size="21" fill="#526176">Datos completamente ficticios: ciclo y cobertura no son inventario de clientes Yeppo.</text>
+<rect x="64" y="179" width="550" height="219" rx="22" fill="#E6ECF8"/>
+<rect x="662" y="179" width="551" height="219" rx="22" fill="#E8F2EB"/>
+<text x="92" y="235" font-size="25" font-weight="700" fill="#1C2D4A">Señal de recompra</text>
+<text x="690" y="235" font-size="25" font-weight="700" fill="#1C2D4A">Señal de cobertura</text>
+<text x="92" y="303" font-size="34" font-weight="700" fill="#253658">Día 40 de 45</text>
+<text x="690" y="303" font-size="34" font-weight="700" fill="#253658">24 ÷ 2 = 12 días</text>
+<text x="92" y="350" font-size="19" fill="#41546A">Revisar intención y próxima orden.</text>
+<text x="690" y="350" font-size="19" fill="#41546A">Revisar demanda y reposición.</text>
+<rect x="64" y="459" width="1149" height="215" rx="24" fill="#243454"/>
+<text x="91" y="513" font-size="27" font-weight="700" fill="white">Agenda del contacto</text>
+<g fill="white" font-size="21"><text x="92" y="556">1. Confirmar stock compartido, venta real y próximos eventos.</text><text x="92" y="596">2. Comprobar lead time, mínimos y disponibilidad para el cliente.</text><text x="92" y="636">3. Cotizar preservando margen por SKU y acordar siguiente paso.</text></g>
+<text x="62" y="749" font-size="18" fill="#546276">Una venta hipotética no es un forecast verificado: registrar fecha, fuente, responsable y supuesto.</text>
+<text x="62" y="781" font-size="17" fill="#546276">Fuente: experiencia comercial B2B y cálculos de cobertura explicados en capítulos 29–30.</text>
+</g></svg>

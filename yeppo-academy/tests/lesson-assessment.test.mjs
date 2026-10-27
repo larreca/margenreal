@@ -71,3 +71,19 @@ test('el progreso heredado conserva intentos actuales y no aprueba actividades n
  assert.equal(isModuleComplete(module,merged),true);
  assert.equal(merged.completed.m1.completedAt,entry.completedAt);
 });
+
+test('un error crítico impide aprobar aun con 80 % de respuestas correctas',()=>{
+ const safety={...module,assessment:{...module.assessment,version:99,questions:module.assessment.questions.map((q,i)=>({...q,critical:i===0}))}};
+ const answers=safety.assessment.questions.map(q=>q.correct);
+ answers[0]=(answers[0]+1)%safety.assessment.questions[0].options.length;
+ const grade=gradeLesson(safety,answers);
+ assert.equal(grade.score,80);assert.equal(grade.criticalMistakes,1);assert.equal(grade.passed,false);
+ const entry=recordLessonAttempt(safety,answers,null);
+ assert.equal(entry.completedAt,null);
+ assert.equal(isModuleComplete(safety,{completed:{[module.id]:entry}}),false);
+ assert.throws(()=>assertCanConfirm(safety,{completed:{[module.id]:entry}}));
+ answers[0]=safety.assessment.questions[0].correct;
+ answers[4]=(answers[4]+1)%safety.assessment.questions[4].options.length;
+ const safeGrade=gradeLesson(safety,answers);
+ assert.equal(safeGrade.criticalMistakes,0);assert.equal(safeGrade.passed,true);
+});

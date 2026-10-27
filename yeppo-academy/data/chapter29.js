@@ -1,4 +1,5 @@
-export default {
+import {upgradeInventoryChapter} from './chapter29-upgrade.js';
+const chapter29 = {
   "id": "c29",
   "n": 29,
   "title": "Stock y rotación",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeInventoryChapter(chapter29);

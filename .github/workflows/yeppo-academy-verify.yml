@@ -6,6 +6,11 @@ on:
     paths:
       - "yeppo-academy/**"
       - ".github/workflows/yeppo-academy-verify.yml"
+  pull_request:
+    branches: [main, codex/preventa-evaluaciones-visuales]
+    paths:
+      - "yeppo-academy/**"
+      - ".github/workflows/yeppo-academy-verify.yml"
   workflow_dispatch:
 
 jobs:
@@ -27,6 +32,22 @@ jobs:
 
       - name: Install
         run: npm install --no-audit --no-fund
+
+      - name: Unit tests
+        run: node --test tests/*.test.mjs
+
+      - name: Static inventory and asset checks
+        run: node scripts/audit-inventory.mjs
+
+      - name: Upload evidence matrix
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: academy-evidence-matrix
+          path: |
+            yeppo-academy/reports/matriz-evidencias-400.csv
+            yeppo-academy/reports/auditoria-estatica.json
+          if-no-files-found: warn
 
       - name: Build
         env:

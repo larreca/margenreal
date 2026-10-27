@@ -24,17 +24,17 @@ export default function LessonAssessment({module,state,onSubmit,busy,ready}) {
   return <section className="learn-lesson-assessment" aria-labelledby="lesson-assessment-title">
     <small>COMPRUEBA TU CRITERIO · LECCIÓN {module.label}</small>
     <h3 id="lesson-assessment-title">Decide antes de avanzar</h3>
-    <p>Responde las {questions.length} preguntas. Necesitas {Math.ceil(questions.length*passPercent/100)} correctas ({passPercent} %). Al aprobar, la lección queda completada. Puedes consultar el contenido y volver a intentarlo.</p>
+    <p>Responde las {questions.length} preguntas. Para aprobar necesitas {Math.ceil(questions.length*passPercent/100)} de {questions.length} correctas (umbral mínimo de {passPercent} %) y acertar todas las preguntas de seguridad señaladas. Al aprobar, la lección queda completada. Puedes consultar el contenido y volver a intentarlo.</p>
     {complete&&!result&&<p className="learn-assessment-success" role="status">Actividad aprobada y avance guardado. Puedes repetirla para practicar.</p>}
     <form onSubmit={submit}>
       {questions.map((q,i)=><fieldset key={q.id} disabled={busy||Boolean(result)} aria-describedby={result?'feedback-'+q.id:undefined}>
-        <legend>{i+1}. {q.prompt}</legend>
+        <legend>{i+1}. {q.prompt} {q.critical&&<strong>(seguridad: respuesta obligatoria)</strong>}</legend>
         {q.options.map((option,j)=><label key={j} className={answers[q.id]===j?'is-selected':''}><input type="radio" required name={'lesson-'+module.id+'-'+q.id} value={j} checked={answers[q.id]===j} onChange={()=>setAnswers(a=>({...a,[q.id]:j}))}/><span>{option}</span></label>)}
         {result&&<p id={'feedback-'+q.id} className={'learn-question-feedback '+(answers[q.id]===q.correct?'is-correct':'needs-review')}><strong>{answers[q.id]===q.correct?'Correcto.':'Para revisar.'}</strong> {answers[q.id]!==q.correct&&<>Respuesta: {q.options[q.correct]} </>}{q.explanation}</p>}
       </fieldset>)}
       {!result&&<button type="submit" className="learn-button" disabled={busy||!ready}>{busy?'Guardando…':'Corregir actividad'}</button>}
     </form>
     {message&&<p role="alert" className="learn-error">{message}</p>}
-    {result&&<div tabIndex={-1} ref={resultRef} className="learn-assessment-result" role="status"><h4>{result.correct} de {result.total} · {result.score} %</h4><p>{result.passed?'Actividad aprobada. Tu avance quedó guardado.':complete?'Este intento necesita repaso; conservas tu aprobación anterior.':'Revisa las explicaciones y vuelve a intentarlo. La lección sigue pendiente.'}</p><button type="button" className="learn-button secondary" disabled={busy} onClick={retry}>Volver a practicar</button></div>}
+    {result&&<div tabIndex={-1} ref={resultRef} className="learn-assessment-result" role="status"><h4>{result.correct} de {result.total} · {result.score} %</h4><p>{result.passed?'Actividad aprobada. Tu avance quedó guardado.':result.criticalMistakes?'Hay una respuesta de seguridad incorrecta: la actividad sigue pendiente aunque el porcentaje general sea suficiente.':complete?'Este intento necesita repaso; conservas tu aprobación anterior.':'Revisa las explicaciones y vuelve a intentarlo. La lección sigue pendiente.'}</p><button type="button" className="learn-button secondary" disabled={busy} onClick={retry}>Volver a practicar</button></div>}
   </section>;
 }

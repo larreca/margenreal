@@ -1,3 +1,9 @@
+// Cuatro imágenes históricas .webp del capítulo 2 quedaron sin archivo.
+// Reutilizar diagramas SVG existentes con el mismo tema y nombre; no fingir fotografías.
+export const repairLegacyImagePaths=(html='')=>String(html).replace(
+  /\/assets\/chapter2\/(cap2-2\.[1-4]-[a-z0-9-]+)\.webp/g,
+  (_,name)=>'/assets/chapter2/'+name+'.svg'
+);
 const clean=(v="")=>String(v).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
 const attr=(tag,name)=>tag.match(new RegExp(name+'="([^"]*)"',"i"))?.[1]||"";
 function sectionEnd(html,start){
@@ -7,12 +13,12 @@ function sectionEnd(html,start){
 }
 const stripLegacy=(html)=>html.replace(/<div class="module-nav-bottom">[\s\S]*?<\/div>/gi,"").replace(/<script[\s\S]*?<\/script>/gi,"");
 export function extractModules(chapter){
-  if(Array.isArray(chapter.modules)&&chapter.modules.length)return chapter.modules;
+  if(Array.isArray(chapter.modules)&&chapter.modules.length)return chapter.modules.map(m=>({...m,html:repairLegacyImagePaths(m.html||'')}));
   const html=chapter.richHtml||"",re=/<section\b[^>]*data-course-module-panel="[^"]+"[^>]*>/gi,out=[];let m;
   while((m=re.exec(html))){
     const end=sectionEnd(html,re.lastIndex);if(!end)break;
     const body=html.slice(re.lastIndex,end.start),heading=body.match(/<div class="module-heading"[\s\S]*?<span>([\s\S]*?)<\/span>[\s\S]*?<h3>([\s\S]*?)<\/h3>[\s\S]*?<\/div>/i);
-    out.push({id:attr(m[0],"data-course-module-panel")||"m"+(out.length+1),label:heading?clean(heading[1]):chapter.n+"."+(out.length+1),title:attr(m[0],"data-module-title")||(heading?clean(heading[2]):chapter.title),html:stripLegacy(body).trim()});
+    out.push({id:attr(m[0],"data-course-module-panel")||"m"+(out.length+1),label:heading?clean(heading[1]):chapter.n+"."+(out.length+1),title:attr(m[0],"data-module-title")||(heading?clean(heading[2]):chapter.title),html:repairLegacyImagePaths(stripLegacy(body).trim())});
     re.lastIndex=end.end;
   }
   if(out.length)return out;

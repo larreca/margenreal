@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
+<title id="title">Triaje de seguimiento para separar dudas, problemas y publicidad</title>
+<desc id="desc">Diagrama orientativo de una respuesta poscompra: duda de uso habitual se responde con ficha verificada; pedido no recibido abre incidente logístico; reacción intensa o inflamación suspende venta automatizada y escala a atención apropiada; opt-out detiene publicidad. No es diagnóstico ni protocolo médico.</desc>
+<rect width="1280" height="810" fill="#FCFAF7"/>
+<g font-family="Arial,sans-serif"><text x="60" y="82" font-size="38" font-weight="700" fill="#192846">Escucha la señal antes de activar el siguiente mensaje</text>
+<text x="60" y="125" font-size="21" fill="#586579">Un seguimiento sin salida humana puede empeorar una incidencia.</text>
+<rect x="75" y="163" width="1130" height="113" rx="22" fill="#243654"/>
+<text x="103" y="215" font-size="27" font-weight="700" fill="#FFFFFF">¿Qué respondió la clienta?</text>
+<text x="103" y="252" font-size="20" fill="#F1F4FC">Clasificar el motivo y respetar su preferencia antes de automatizar.</text>
+<g font-size="25" font-weight="700" fill="#20324E">
+<rect x="75" y="328" width="541" height="172" rx="23" fill="#E5F0E8"/>
+<text x="101" y="377">Duda de uso</text>
+<rect x="667" y="328" width="538" height="172" rx="23" fill="#E7EEF9"/>
+<text x="693" y="377">Problema con pedido</text>
+<rect x="75" y="537" width="541" height="173" rx="23" fill="#FCE7E5"/>
+<text x="101" y="587">Molestia intensa</text>
+<rect x="667" y="537" width="538" height="173" rx="23" fill="#F8ECDF"/>
+<text x="693" y="587">«No quiero más ofertas»</text>
+</g>
+<g font-size="20" fill="#33465D">
+<text x="101" y="425">Información de uso verificada.</text><text x="101" y="460">No diagnosticar problemas.</text>
+<text x="693" y="425">Consultar tracking y orden.</text><text x="693" y="460">Abrir ticket con responsable.</text>
+<text x="101" y="636">Pausar promociones; suspender</text><text x="101" y="670">uso y derivar apropiadamente.</text>
+<text x="693" y="636">Registrar opt-out y bloquear</text><text x="693" y="670">próxima publicidad aplicable.</text>
+</g>
+<text x="75" y="771" font-size="17" fill="#5C6A7E">Marco de servicio pedagógico · No sustituye asesoría clínica ni revisión legal de preferencias comerciales.</text></g></svg>

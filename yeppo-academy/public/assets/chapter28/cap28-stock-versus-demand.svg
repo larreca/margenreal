@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title description">
+<title id="title">El mismo inventario puede significar coberturas muy diferentes</title>
+<desc id="description">Datos de aprendizaje: 7560 unidades como fotografía histórica del 1 octubre 2026 en el material del capítulo, no stock actual. Velocidades de venta simuladas: 120 por día son 63 días; 40 por día son 189 días. La cobertura no demuestra sobrestock sin considerar demanda, vencimiento, disponibilidad y compromisos.</desc>
+<rect width="1280" height="810" fill="#FCFAF8"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="64" y="82" font-size="38" font-weight="700" fill="#1A2545">Inventario no es demanda</text>
+<text x="64" y="122" font-size="20" fill="#566176">Un número histórico de stock, dos velocidades HIPOTÉTICAS de venta.</text>
+<rect x="64" y="164" width="1152" height="129" rx="21" fill="#1B2B4F"/>
+<text x="94" y="218" font-size="28" font-weight="700" fill="#FFFFFF">7.560 unidades observadas en el material del 01/10/2026</text>
+<text x="94" y="256" font-size="19" fill="#E9EFF9">Fotografía histórica. No representa inventario disponible hoy.</text>
+<path d="M640 293 V333 M349 333 H931 M349 333 V370 M931 333 V370" stroke="#A8849B" stroke-width="5" fill="none"/>
+<rect x="64" y="370" width="548" height="246" rx="22" fill="#E7EFFA"/>
+<rect x="668" y="370" width="548" height="246" rx="22" fill="#F6EAF1"/>
+<g fill="#1B2B4F">
+<text x="94" y="421" font-size="24" font-weight="700">Escenario A · SIMULADO</text>
+<text x="698" y="421" font-size="24" font-weight="700">Escenario B · SIMULADO</text>
+<text x="94" y="470" font-size="21">120 unidades vendidas por día</text>
+<text x="698" y="470" font-size="21">40 unidades vendidas por día</text>
+<text x="94" y="526" font-size="36" font-weight="700">63 días de cobertura</text>
+<text x="698" y="526" font-size="36" font-weight="700">189 días de cobertura</text>
+<text x="94" y="572" font-size="19">7.560 ÷ 120 = 63</text>
+<text x="698" y="572" font-size="19">7.560 ÷ 40 = 189</text>
+</g>
+<rect x="64" y="655" width="1152" height="99" rx="19" fill="#EEF2EA"/>
+<text x="91" y="696" font-size="24" font-weight="700" fill="#243C39">¿Se puede concluir «sobrestock»?</text>
+<text x="91" y="730" font-size="20" fill="#243C39">No sin ventas reales, vencimiento, reposición, ubicación y compromisos.</text>
+<text x="64" y="794" font-size="17" fill="#586678">Las velocidades son ficticias; no atribuibles a ventas, clientes ni reportes reales de Yeppo.</text>
+</g>
+</svg>

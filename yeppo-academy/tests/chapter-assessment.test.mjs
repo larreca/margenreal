@@ -4,6 +4,7 @@ import chapter14 from '../data/chapter14.js';
 import chapter50 from '../data/chapter50.js';
 import {gradeChapterQuiz,quizQuestions,QUIZ_RULE_VERSION} from '../lib/chapter-assessment.js';
 import {chapterProgress,withLegacyCompletion} from '../lib/learning-model.js';
+import {recordLessonAttempt} from '../lib/lesson-assessment.js';
 
 for (const chapter of [chapter14,chapter50]) {
   const html=chapter.modules.at(-1).html;
@@ -24,6 +25,13 @@ for (const chapter of [chapter14,chapter50]) {
   test(`capítulo ${chapter.n}: avance antiguo requiere aprobación con regla actual`,()=>{
     const old=withLegacyCompletion(chapter,{legacyCompleted:true,passed:true});
     assert.equal(chapterProgress(chapter,old).finished,false);
-    assert.equal(chapterProgress(chapter,{...old,quizVersion:QUIZ_RULE_VERSION}).finished,true);
+    if(chapter.n===50){
+      // Las nuevas ocho evaluaciones independientes no se pueden saltar desde un avance heredado.
+      assert.equal(chapterProgress(chapter,{...old,quizVersion:QUIZ_RULE_VERSION}).finished,false);
+      const completed=Object.fromEntries(chapter.modules.map(m=>[m.id,recordLessonAttempt(m,m.assessment.questions.map(q=>q.correct),null)]));
+      assert.equal(chapterProgress(chapter,{...old,completed,quizVersion:QUIZ_RULE_VERSION}).finished,true);
+    } else {
+      assert.equal(chapterProgress(chapter,{...old,quizVersion:QUIZ_RULE_VERSION}).finished,true);
+    }
   });
 }

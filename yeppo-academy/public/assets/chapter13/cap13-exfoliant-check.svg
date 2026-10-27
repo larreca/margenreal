@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="780" viewBox="0 0 1280 780" role="img" aria-labelledby="t d">
+<title id="t">BHA y LHA: cuatro comprobaciones antes de incorporar un ácido</title>
+<desc id="d">Diagrama de decisión: identificar preocupación, comprobar ingredientes y modo de uso de la fórmula, revisar exfoliantes y retinoides de la rutina actual y evaluar tolerancia. Si hay ardor, tirantez intensa o daño visible, no añadir otro ácido sin orientación competente.</desc>
+<rect width="1280" height="780" fill="#FCFAF7"/>
+<g font-family="Arial,sans-serif">
+<text x="68" y="88" font-size="41" font-weight="700" fill="#172646">BHA y LHA: antes de sumar un ácido</text>
+<text x="68" y="130" font-size="21" fill="#4D5A6D">Salicylic Acid y Capryloyl Salicylic Acid no son nombres intercambiables.</text>
+<rect x="68" y="183" width="546" height="171" rx="20" fill="#EAEFFA"/>
+<rect x="664" y="183" width="546" height="171" rx="20" fill="#EDF6F1"/>
+<rect x="68" y="384" width="546" height="171" rx="20" fill="#FFF0E3"/>
+<rect x="664" y="384" width="546" height="171" rx="20" fill="#FAEAF2"/>
+<g font-size="26" font-weight="700" fill="#182849">
+<text x="98" y="237">01 · Necesidad</text>
+<text x="694" y="237">02 · Fórmula concreta</text>
+<text x="98" y="438">03 · Rutina actual</text>
+<text x="694" y="438">04 · Tolerancia</text></g>
+<g font-size="20" fill="#324058">
+<text x="98" y="281">¿Brillo, textura o congestión?</text>
+<text x="98" y="313">No asumir un diagnóstico.</text>
+<text x="694" y="281">Verificar INCI, instrucciones</text>
+<text x="694" y="313">y concentración declarada.</text>
+<text x="98" y="482">¿Usa retinoide, exfoliante</text>
+<text x="98" y="514">u otros activos irritantes?</text>
+<text x="694" y="482">¿Ardor, tirantez o descamación?</text>
+<text x="694" y="514">No aumentar intensidad.</text></g>
+<rect x="68" y="600" width="1142" height="99" rx="18" fill="#1C2B4B"/>
+<text x="96" y="645" fill="#FFFFFF" font-size="24" font-weight="700">Decisión responsable:</text>
+<text x="96" y="681" fill="#FFFFFF" font-size="20">La fórmula, la tolerancia y la rutina pesan más que un reclamo viral.</text>
+<text x="68" y="748" fill="#596579" font-size="16">Fuente: AAD · cuidado de piel con brotes · Esquema educativo no terapéutico.</text>
+</g>
+</svg>

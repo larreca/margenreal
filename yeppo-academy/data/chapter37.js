@@ -1,4 +1,5 @@
-export default {
+import {upgradeFollowUpChapter} from './chapter37-upgrade.js';
+const chapter37 = {
   "id": "c37",
   "n": 37,
   "title": "Seguimiento",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeFollowUpChapter(chapter37);

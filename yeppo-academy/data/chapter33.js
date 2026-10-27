@@ -1,4 +1,5 @@
-export default {
+import {upgradeEcommerceChapter} from './chapter33-upgrade.js';
+const chapter33 = {
   "id": "c33",
   "n": 33,
   "title": "Ecommerce",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeEcommerceChapter(chapter33);

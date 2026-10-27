@@ -1,4 +1,5 @@
-export default {
+import {upgradeCRMChapter} from './chapter38-upgrade.js';
+const chapter38 = {
   "id": "c38",
   "n": 38,
   "title": "CRM para tiendas de belleza",
@@ -59,3 +60,5 @@ export default {
   ],
   "contentVersion": 2
 };
+
+export default upgradeCRMChapter(chapter38);

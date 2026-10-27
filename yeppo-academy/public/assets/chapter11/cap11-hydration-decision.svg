@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" role="img" aria-labelledby="t d">
+<title id="t">Cómo elegir hidratante: funciones H, E, O y B</title>
+<desc id="d">Infografía de cuatro funciones de una hidratante: H humectantes retienen agua, E emolientes suavizan, O oclusivos disminuyen la evaporación y B ingredientes orientados a barrera. Incluye tres preguntas de asesoría y una señal de derivación.</desc>
+<rect width="1280" height="840" fill="#FAF9F6"/>
+<g font-family="Arial,sans-serif">
+<text x="62" y="81" font-size="42" font-weight="700" fill="#192344">¿Qué hace realmente una hidratante?</text>
+<text x="62" y="121" font-size="21" fill="#505A70">Matriz H–E–O–B: distintas funciones pueden coexistir en una misma fórmula.</text>
+<rect x="62" y="168" width="568" height="172" rx="22" fill="#EBEFFC"/>
+<rect x="650" y="168" width="568" height="172" rx="22" fill="#EAF4F1"/>
+<rect x="62" y="362" width="568" height="172" rx="22" fill="#FFF2E4"/>
+<rect x="650" y="362" width="568" height="172" rx="22" fill="#FBEAF2"/>
+<g font-size="27" font-weight="700" fill="#192344">
+<text x="92" y="225">H · Humectantes</text><text x="680" y="225">E · Emolientes</text>
+<text x="92" y="419">O · Oclusivos</text><text x="680" y="419">B · Enfoque barrera</text></g>
+<g font-size="21" fill="#29394D">
+<text x="92" y="273">Favorecen retención de agua.</text><text x="92" y="310">Ej.: glicerina.</text>
+<text x="680" y="273">Suavizan la superficie.</text><text x="680" y="310">Importan tacto y acabado.</text>
+<text x="92" y="467">Reducen pérdida evaporativa.</text><text x="92" y="504">Ej.: dimeticona.</text>
+<text x="680" y="467">Puede incorporar lípidos.</text><text x="680" y="504">La fórmula necesita evidencia.</text></g>
+<rect x="62" y="563" width="1156" height="174" rx="22" fill="#1D294B"/>
+<text x="90" y="608" font-size="27" font-weight="700" fill="#FFFFFF">En tienda: tres preguntas antes de elegir</text>
+<g fill="#F7F7F9" font-size="21">
+<text x="90" y="651">1. ¿Qué sensación quieres mejorar?</text>
+<text x="90" y="682">2. ¿Qué productos y limpieza utilizas hoy?</text>
+<text x="90" y="713">3. ¿Qué textura puedes usar con constancia?</text></g>
+<text x="62" y="778" font-size="20" fill="#7B3153" font-weight="700">Alerta: dolor, hinchazón o reacción intensa → detener consejo comercial y derivar.</text>
+<text x="62" y="810" font-size="16" fill="#596275">Fuentes: DermNet y AAD · Esquema funcional, no resultados de ensayo ni diagnóstico.</text>
+</g>
+</svg>
