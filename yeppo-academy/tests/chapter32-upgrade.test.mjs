@@ -51,16 +51,20 @@ test('32.2 32.7 32.8: cálculos reproducibles, sin atribuir datos a Yeppo',()=>{
  for(const m of [chapter.modules[1],chapter.modules[6],chapter.modules[7]])
   assert.ok(m.html.toLowerCase().includes('simulad')||m.html.toLowerCase().includes('fictici'),m.label);
 });
-test('diagramas nuevos: existen, tienen alt visible y SVG accesible',()=>{
- for(const [idx,file] of [[2,'cap32-store-route-decision.svg'],[4,'cap32-tester-safe-decision.svg']]){
-  const html=chapter.modules[idx].html;
-  assert.ok(html.includes(file));
-  assert.ok(/alt="[^"]{55,}"/.test(html));
-  const fp='public/assets/chapter32/'+file;
-  assert.ok(existsSync(fp),fp);
-  const svg=readFileSync(fp,'utf8');
-  assert.ok(svg.includes('<title')&&svg.includes('<desc'));
-  assert.ok(svg.includes('viewBox="0 0 1280'));
+test('ocho infografías de decisión accesibles tienen versiones de escritorio y móvil',()=>{
+ for(const m of chapter.modules){
+  assert.match(m.html,/<picture><source media="\(max-width: 640px\)"/);
+  assert.equal((m.html.match(/class="course-image academy-infographic"/g)||[]).length,1);
+  assert.ok(/alt="[^"]{55,}"/.test(m.html));
+  const files=[...m.html.matchAll(/\/assets\/chapter32\/([\w-]+\.svg)/g)].map(x=>x[1]);
+  assert.equal(files.length,2,m.label);
+  for(const file of files){
+   const fp='public/assets/chapter32/'+file;
+   assert.ok(existsSync(fp),fp);
+   const svg=readFileSync(fp,'utf8');
+   assert.ok(svg.includes('<title')&&svg.includes('<desc'));
+   assert.ok(svg.includes('role="img"'));
+  }
  }
 });
 test('32.4 y 32.5 distinguen fundamentos normativos y estudio piloto',()=>{
@@ -68,4 +72,19 @@ test('32.4 y 32.5 distinguen fundamentos normativos y estudio piloto',()=>{
  assert.ok(chapter.modules[4].html.includes('fda.gov/cosmetics'));
  assert.ok(chapter.modules[4].html.includes('pubmed.ncbi.nlm.nih.gov/42795700'));
  assert.ok(chapter.modules[4].html.includes('no prueban infección de clientes'));
+});
+test('32.4: PPUM y discrepancia de precio se enseñan con números y respuesta crítica',()=>{
+ const m=chapter.modules[3];
+ assert.ok(m.html.includes('$31.980 por 100 ml'));
+ assert.ok(m.html.includes('bcn.cl/leychile/navegar?idNorma=1209198'));
+ assert.ok(m.html.includes('sernac.cl/portal/609/w3-article-52738.html'));
+ assert.equal(m.assessment.questions[1].critical,true);
+ const a=m.assessment.questions.map(q=>q.correct);a[1]=0;
+ assert.equal(gradeLesson(m,a).passed,false);
+});
+test('32.8: separa puntos porcentuales, ticket y causalidad',()=>{
+ const m=chapter.modules[7];
+ assert.ok(m.html.includes('15 puntos porcentuales'));
+ assert.ok(m.html.includes('no puede atribuirse'));
+ assert.equal(m.assessment.questions[3].critical,true);
 });

@@ -1,4 +1,5 @@
 import {upgradeMerchandisingChapter} from './chapter32-upgrade.js';
+import {detailMerchandisingChapter} from './chapter32-detail.js';
 const chapter32 = {
   "id": "c32",
   "n": 32,
@@ -61,4 +62,4 @@ const chapter32 = {
   "contentVersion": 2
 };
 
-export default upgradeMerchandisingChapter(chapter32);
+export default detailMerchandisingChapter(upgradeMerchandisingChapter(chapter32));
